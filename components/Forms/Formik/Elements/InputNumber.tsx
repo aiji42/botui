@@ -1,26 +1,19 @@
-import { FC, useEffect } from 'react';
+import { FC, useCallback } from 'react';
 import { useField } from 'formik'
-import InputWithIcon from './InputWithIcon';
-import Moji from 'moji';
+import InputWithIcon, { InputWithIconProps } from './InputWithIcon';
 
-const onlyNum = (value: string | number): string => (new Moji(`${value}`)).convert('ZE', 'HE').toString().replace(/[^0-9]/g, '');
+const onlyNum = (value: string | number): string => `${value}`.normalize('NFKC').replace(/[^0-9]/g, '');
 
-type Props = {
-  name: string
-}
-
-const InputNumber: FC<Props> = ({ name, ...props }) => {
-  const [field, meta, helpers] = useField(name);
+const InputNumber: FC<InputWithIconProps> = ({ name, ...props }) => {
+  const [field,, helpers] = useField(name);
   const { setValue } = helpers
-  const { value } = meta
+  const { onChange } = field
+  const handleChange = useCallback((e) => {
+    onChange(e)
+    setValue(onlyNum(e.target.value))
+  }, [onChange, setValue])
 
-  useEffect(() => {
-    setValue(onlyNum(value));
-  }, [value]);
-
-  return (
-    <InputWithIcon type="tel" {...props} />
-  );
+  return <InputWithIcon {...field} type="tel" onChange={handleChange} {...props} />
 };
 
 export default InputNumber;

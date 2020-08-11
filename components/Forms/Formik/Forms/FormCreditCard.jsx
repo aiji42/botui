@@ -6,7 +6,7 @@ import { formPropTypes } from '../PropTypes';
 import { dataStore } from '../../../../dataStore';
 import CreditCard from 'credit-card';
 import InputCreditNumber, * as cardNumber from '../Elements/InputCreditNumber';
-import InputCreditCvc, * as cardCvc from '../Elements/InputCreditCvc';
+import InputNumber from '../Elements/InputNumber';
 import SelectCreditExpiryYear, * as cardYear from '../Elements/SelectCreditExpiryYear';
 import SelectCreditExpiryMonth, * as cardMonth from '../Elements/SelectCreditExpiryMonth';
 import InputWithIcon from '../Elements/InputWithIcon';
@@ -95,7 +95,7 @@ const form = (props) => {
       <ErrorMessage name="creditCardExpiryYear" component={SpanErrorMessage} />
       <ErrorMessage name="creditCardExpiryMonth" component={SpanErrorMessage} />
 
-      <Field component={InputCreditCvc} name="creditCardCvc" title={<span>CVC <small>(通常裏面に刻印されています)</small></span>} />
+      <Field component={InputNumber} autoComplete="cc-csc" placeholder="123" name="creditCardCvc" title={<span>CVC <small>(通常裏面に刻印されています)</small></span>} />
       <ErrorMessage name="creditCardCvc" component={SpanErrorMessage} />
 
       <Field component={ButtonSubmit} onClick={() => { validate(values, setErrors); }} />
@@ -111,17 +111,17 @@ form.propTypes = {
 const FormBirthDay = withFormik({
   mapPropsToValues: () => ({
     ...cardNumber.initialValue('creditCardNumber'),
-    ...cardCvc.initialValue('creditCardCvc'),
     ...cardYear.initialValue('creditCardExpiryYear'),
     ...cardMonth.initialValue('creditCardExpiryMonth'),
     creditCardName: '',
+    creditCardCvc: ''
   }),
   validationSchema: yup.object().shape({
     ...cardNumber.validation('creditCardNumber'),
-    ...cardCvc.validation('creditCardCvc'),
     ...cardYear.validation('creditCardExpiryYear'),
     ...cardMonth.validation('creditCardExpiryMonth'),
     creditCardName: yup.string().required('入力して下さい'),
+    creditCardCvc: yup.string().required('入力してください').matches(/^\d{3,4}$/, '正しい形式で入力してください')
   }),
   validateOnMount: true,
   handleSubmit: (values, { props, setSubmitting }) => {

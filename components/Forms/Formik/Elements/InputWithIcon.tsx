@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, MutableRefObject } from 'react';
+import React, { FC, useEffect, useRef, MutableRefObject, InputHTMLAttributes, ReactNode } from 'react';
 import { useField, FieldMetaProps } from 'formik'
 import { css, SerializedStyles } from '@emotion/core';
 import { okColor, errorColor, baseBorderColor } from '../../shared/baseStyle';
@@ -52,22 +52,22 @@ const styles = ({ error, touched, initialValue }: FieldMetaProps<any>): Serializ
   return style.base
 };
 
-type Props = {
-  name: string,
-  title: string,
+export type InputWithIconProps = {
+  name: string
+  title: string | ReactNode
   autoFocus?: boolean
-  innerRef: MutableRefObject<HTMLInputElement>
-}
+  innerRef?: MutableRefObject<HTMLInputElement>
+} & InputHTMLAttributes<Element>
 
-const InputWithIcon: FC<Props> = ({ name, innerRef, autoFocus, title, ...props }) => {
-  const ref = useRef({ focus: () => {} });
+const InputWithIcon: FC<InputWithIconProps> = ({ name, innerRef, autoFocus, title, ...props }) => {
+  const ref = useRef<HTMLInputElement>(null);
   const [field, meta] = useField(name)
   const { error } = meta
 
   useEffect(() => {
     if (!autoFocus) return;
     if (innerRef) innerRef.current.focus();
-    else ref.current.focus();
+    else ref.current?.focus();
   }, []);
 
   return (
