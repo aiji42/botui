@@ -3,16 +3,17 @@ import { withFormik, Field, ErrorMessage } from 'formik';
 import { formPropTypes } from '../PropTypes';
 import * as yup from 'yup';
 import { dataStore, saveStoreValue } from '../../../../dataStore';
-import InputTel, * as tel from '../Elements/InputTel';
+import InputNumber from '../Elements/InputNumber';
 import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
+import { isValidNumber as isValidPhoneNumber } from 'libphonenumber-js';
 
 const form = (props) => {
   const { handleSubmit } = props;
 
   return (
     <form onSubmit={handleSubmit}>
-      <Field component={InputTel} name="tel" title="電話番号(ハイフン無し)" autoFocus />
+      <Field component={InputNumber} name="tel" placeholder="09012345678" title="電話番号(ハイフン無し)" autoFocus />
       <ErrorMessage name="tel" component={SpanErrorMessage} />
 
       <Field component={ButtonSubmit} />
@@ -25,8 +26,14 @@ form.propTypes = {
 };
 
 const FormTel = withFormik({
-  mapPropsToValues: () => ({ ...tel.initialValue('tel') }),
-  validationSchema: yup.object().shape({ ...tel.validation('tel') }),
+  mapPropsToValues: () => ({
+    tel: ''
+  }),
+  validationSchema: yup.object().shape({
+    tel: yup.string()
+      .matches(/^(0{1}\d{9,10})$/, '半角数字で正しく入力してください')
+      .test('tel-format', '半角数字で正しく入力してください', (value) => value ? isValidPhoneNumber(value, 'JP') : false)
+  }),
   validateOnMount: true,
   handleSubmit: (values, { props, setSubmitting }) => {
     if (Object.keys(values).every(key => dataStore[key] !== null)) props.onUpdate();

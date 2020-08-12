@@ -3,33 +3,41 @@ import { withFormik, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import { formPropTypes } from '../PropTypes';
 import { dataStore, saveStoreValue } from '../../../../dataStore';
-import InputPostalCode, * as postalCode from '../Elements/InputPostalCode';
+import InputNumber from '../Elements/InputNumber';
 import SelectPref, * as pref from '../Elements/SelectPref';
 import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
-import { postalCode as postalCodeApi } from '../../../../apis';
+import { usePostalJp } from 'use-postal-jp'
 
 const form = (props) => {
-  const { handleSubmit, setFieldValue, values } = props;
+  const { handleSubmit } = props;
+
+  const { address, sanitizedCode, setPostalCode } = usePostalJp()
+  const [, postalCodeMeta, postalCodeHelper] = useField('postalCode')
+  const [, , prefHelper] = useField('pref')
+  const [, , cityHelper] = useField('city')
 
   const inputStreetEl = useRef(null);
 
   useEffect(() => {
-    const autoComplete = async () => {
-      const val = postalCode.validation('')[''].cast(values.postalCode);
-      if (val.length === 7) inputStreetEl.current.focus();
-      const data = await postalCodeApi.search(val);
-      if (!data) return;
-      const { prefcode, city, town, street } = data;
-      setFieldValue('pref', prefcode);
-      setFieldValue('city', city + town + street);
-    };
-    autoComplete();
-  }, [values.postalCode]);
+    const { prefectureCode, address1, address2, address3, address4 } = address
+    if (prefectureCode) prefHelper.setValue(prefectureCode)
+    if (address1) cityHelper.setValue(address1 + address2 + address3 + address4)
+  }, [address, prefHelper.setValue, cityHelper.setValue])
+
+  useEffect(() => {
+    setPostalCode(postalCodeMeta.value)
+  }, [setPostalCode, postalCodeMeta.value]);
+
+  useEffect(() => {
+    if (sanitizedCode.length !== 7) return
+    postalCodeHelper.setValue(sanitizedCode)
+    inputStreetEl.current.focus()
+  }, [sanitizedCode, postalCodeHelper.setValue])
 
   return (
     <form onSubmit={handleSubmit}>
-      <Field component={InputPostalCode} name="postalCode" title="郵便番号" autoFocus />
+      <Field component={InputNumber} name="postalCode" placeholder="1500002" title="郵便番号" autoFocus/>
       <ErrorMessage name="postalCode" component={SpanErrorMessage} />
 
       <Field component={SelectPref} name="pref" title="都道府県" />
@@ -52,13 +60,13 @@ form.propTypes = {
 
 const FormAddress = withFormik({
   mapPropsToValues: () => ({
-    ...postalCode.initialValue('postalCode'),
+    postalCode: '',
     ...pref.initialValue('pref'),
     city: '',
     street: '',
   }),
   validationSchema: yup.object().shape({
-    ...postalCode.validation('postalCode'),
+    postalCode: yup.string().required('入力してください').matches(/^\d{7}$/, '7桁の数字で正しく入力してください'),
     ...pref.validation('pref'),
     city: yup.string().required('入力してください').max(200, '入力内容が長すぎます'),
     street: yup.string().required('入力してください').max(200, '入力内容が長すぎます')
