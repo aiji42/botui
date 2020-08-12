@@ -16,6 +16,8 @@
     "@types/node": "^14.0.27",
     "@types/react": "^16.9.45",
     "@types/react-dom": "^16.9.8",
+    "@types/yup": "^0.29.4",
+    "credit-card": "^3.0.2",
     "formik": "^2.1.5",
     "moji": "^0.5.1",
     "next": "^9.5.1",

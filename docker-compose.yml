@@ -5,12 +5,9 @@ services:
     tty: true
     volumes:
       - ./:/app
-      - node_modules:/app/node_modules
+      - ./node_modules:/app/node_modules:delegated
       - ~/.ssh/id_rsa.default:/root/.ssh/id_rsa
     ports:
       - 3000:3000
     working_dir: /app
     command: sh -c "yarn && yarn dev"
-
-volumes:
-  node_modules:

@@ -80,7 +80,7 @@ const form = (props) => {
         </div>
       }
 
-      <Field component={InputCreditNumber} name="creditCardNumber" title="カード番号" autoFocus />
+      <Field component={InputCreditNumber} autoComplete="cc-number" placeholder="0123 4567 8901 2345" name="creditCardNumber" title="カード番号" autoFocus />
       <ErrorMessage name="creditCardNumber" component={SpanErrorMessage} />
 
       <Field component={InputWithIcon} type="text" autoComplete="cc-name" placeholder="TARO YAMADA" name="creditCardName" title="クレジットカード名義人" />
@@ -110,14 +110,20 @@ form.propTypes = {
 
 const FormBirthDay = withFormik({
   mapPropsToValues: () => ({
-    ...cardNumber.initialValue('creditCardNumber'),
+    creditCardNumber: '',
     ...cardYear.initialValue('creditCardExpiryYear'),
     ...cardMonth.initialValue('creditCardExpiryMonth'),
     creditCardName: '',
     creditCardCvc: ''
   }),
   validationSchema: yup.object().shape({
-    ...cardNumber.validation('creditCardNumber'),
+    creditCardNumber: yup.string()
+      .required('入力してください')
+      .transform((val) => CreditCard.sanitizeNumberString(val))
+      .matches(/\d{14,16}/, '正しい形式で入力してください')
+      .test('credit-card-number', '正しい形式で入力してください',
+        (val) => !!CreditCard.determineCardType(val) && CreditCard.isValidCardNumber(val, CreditCard.determineCardType(val))
+      ),
     ...cardYear.validation('creditCardExpiryYear'),
     ...cardMonth.validation('creditCardExpiryMonth'),
     creditCardName: yup.string().required('入力して下さい'),
