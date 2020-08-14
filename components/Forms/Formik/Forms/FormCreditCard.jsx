@@ -5,10 +5,9 @@ import * as yup from 'yup';
 import { formPropTypes } from '../PropTypes';
 import { dataStore } from '../../../../dataStore';
 import CreditCard from 'credit-card';
-import InputCreditNumber, * as cardNumber from '../Elements/InputCreditNumber';
+import InputCreditNumber from '../Elements/InputCreditNumber';
 import InputNumber from '../Elements/InputNumber';
-import SelectCreditExpiryYear, * as cardYear from '../Elements/SelectCreditExpiryYear';
-import SelectCreditExpiryMonth, * as cardMonth from '../Elements/SelectCreditExpiryMonth';
+import SelectWithIcon from '../Elements/SelectWithIcon';
 import InputWithIcon from '../Elements/InputWithIcon';
 import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
@@ -67,6 +66,8 @@ const validate = ({ creditCardNumber, creditCardExpiryMonth, creditCardExpiryYea
 
 const form = (props) => {
   const { handleSubmit, values, setErrors, brands } = props;
+  const years = useMemo(() => [...Array(15)].map((_, k) => new Date().getFullYear() + k), [])
+  const monthes = useMemo(() => [...Array(12)].map((_, k) => k + 1), [])
 
   return (
     <form onSubmit={handleSubmit}>
@@ -87,10 +88,16 @@ const form = (props) => {
       <ErrorMessage name="creditCardName" component={SpanErrorMessage} />
 
       <div css={[narrowField, left]}>
-        <Field component={SelectCreditExpiryMonth} name="creditCardExpiryMonth" title="月" />
+        <Field component={SelectWithIcon} name="creditCardExpiryMonth" title="月" autoComplete="cc-exp-month">
+          <option value="">MM</option>
+          {monthes.map((month) => (<option key={month} value={`0${month}`.slice(-2)}>{`0${month}`.slice(-2)}</option>))}
+        </Field>
       </div>
       <div css={[narrowField]}>
-        <Field component={SelectCreditExpiryYear} name="creditCardExpiryYear" title="年" />
+        <Field component={SelectWithIcon} name="creditCardExpiryYear" title="年" autoComplete="cc-exp-year">
+          <option value="">YY</option>
+          {years.map((year) => (<option key={year} value={year}>{`${year}`.slice(-2)}</option>))}
+        </Field>
       </div>
       <ErrorMessage name="creditCardExpiryYear" component={SpanErrorMessage} />
       <ErrorMessage name="creditCardExpiryMonth" component={SpanErrorMessage} />
@@ -111,8 +118,8 @@ form.propTypes = {
 const FormBirthDay = withFormik({
   mapPropsToValues: () => ({
     creditCardNumber: '',
-    ...cardYear.initialValue('creditCardExpiryYear'),
-    ...cardMonth.initialValue('creditCardExpiryMonth'),
+    creditCardExpiryYear: '',
+    creditCardExpiryMonth: '',
     creditCardName: '',
     creditCardCvc: ''
   }),
@@ -124,8 +131,8 @@ const FormBirthDay = withFormik({
       .test('credit-card-number', '正しい形式で入力してください',
         (val) => !!CreditCard.determineCardType(val) && CreditCard.isValidCardNumber(val, CreditCard.determineCardType(val))
       ),
-    ...cardYear.validation('creditCardExpiryYear'),
-    ...cardMonth.validation('creditCardExpiryMonth'),
+    creditCardExpiryYear: yup.string().required('選択してください'),
+    creditCardExpiryMonth: : yup.string().required('選択してください'),
     creditCardName: yup.string().required('入力して下さい'),
     creditCardCvc: yup.string().required('入力してください').matches(/^\d{3,4}$/, '正しい形式で入力してください')
   }),

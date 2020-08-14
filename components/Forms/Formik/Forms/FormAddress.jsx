@@ -4,10 +4,19 @@ import * as yup from 'yup';
 import { formPropTypes } from '../PropTypes';
 import { dataStore, saveStoreValue } from '../../../../dataStore';
 import InputNumber from '../Elements/InputNumber';
-import SelectPref, * as pref from '../Elements/SelectPref';
+import SelectWithIcon from '../Elements/SelectWithIcon'
 import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import { usePostalJp } from 'use-postal-jp'
+
+const prefectures = [
+  '北海道', '青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県', '茨城県',
+  '栃木県', '群馬県', '埼玉県', '千葉県', '東京都', '神奈川県', '新潟県', '富山県',
+  '石川県', '福井県', '山梨県', '長野県', '岐阜県', '静岡県', '愛知県', '三重県',
+  '滋賀県', '京都府', '大阪府', '兵庫県', '奈良県', '和歌山県', '鳥取県', '島根県',
+  '岡山県', '広島県', '山口県', '徳島県', '香川県', '愛媛県', '高知県', '福岡県',
+  '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県',
+]
 
 const form = (props) => {
   const { handleSubmit } = props;
@@ -40,7 +49,10 @@ const form = (props) => {
       <Field component={InputNumber} name="postalCode" placeholder="1500002" title="郵便番号" autoFocus/>
       <ErrorMessage name="postalCode" component={SpanErrorMessage} />
 
-      <Field component={SelectPref} name="pref" title="都道府県" />
+      <Field component={SelectWithIcon} name="pref" title="都道府県">
+        <option value=""></option>
+        {prefectures.map((title, index) => (<option key={index + 1} value={index + 1}>{title}</option>))}
+      </Field>
       <ErrorMessage name="pref" component={SpanErrorMessage} />
 
       <Field component={InputWithIcon} type="text" placeholder="〇〇市〇〇町" name="city" title="市区町村" />
@@ -61,13 +73,13 @@ form.propTypes = {
 const FormAddress = withFormik({
   mapPropsToValues: () => ({
     postalCode: '',
-    ...pref.initialValue('pref'),
+    pref: '',
     city: '',
     street: '',
   }),
   validationSchema: yup.object().shape({
     postalCode: yup.string().required('入力してください').matches(/^\d{7}$/, '7桁の数字で正しく入力してください'),
-    ...pref.validation('pref'),
+    pref: yup.string().required('選択してください'),
     city: yup.string().required('入力してください').max(200, '入力内容が長すぎます'),
     street: yup.string().required('入力してください').max(200, '入力内容が長すぎます')
   }),

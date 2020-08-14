@@ -23,13 +23,9 @@ const form = (props) => {
     <form onSubmit={handleSubmit}>
       {sanitizedSelects.map(({ name, title, options }, index) => (
         <Fragment key={index}>
-          <Field name={name}>
-            {({ field, form }) => (
-              <SelectWithIcon field={field} form={form} title={title}>
-                {Array.isArray(options) && options.map(({ value, label }, index) => <option key={index} value={value}>{label}</option>)}
-                {!Array.isArray(options) && Object.keys(options).map((key, index) => <option key={index} value={key}>{options[key]}</option>)}
-              </SelectWithIcon>
-            )}
+          <Field component={SelectWithIcon} name={name} title={title}>
+            {Array.isArray(options) && options.map(({ value, label }, index) => <option key={index} value={value}>{label}</option>)}
+            {!Array.isArray(options) && Object.keys(options).map((key, index) => <option key={index} value={key}>{options[key]}</option>)}
           </Field>
           <ErrorMessage name={name} component={SpanErrorMessage} />
         </Fragment>

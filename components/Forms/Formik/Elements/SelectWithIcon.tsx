@@ -1,6 +1,6 @@
-import React, { FC, useEffect, useRef, MutableRefObject, InputHTMLAttributes, ReactNode } from 'react';
-import { useField, FieldMetaProps } from 'formik'
+import { FC, ReactNode, InputHTMLAttributes } from 'react';
 import { css, SerializedStyles } from '@emotion/core';
+import { FieldMetaProps, useField } from 'formik'
 import { okColor, errorColor, baseBorderColor } from '../../shared/baseStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
@@ -12,8 +12,10 @@ const style = {
     background-color: #ffffff;
     width: 100%;
     height: 42px;
-    box-sizing: border-box;
-    font-size: 1.05em;
+    font-size: 1.1em;
+    font-weight: normal;
+    color: #000;
+    margin-bottom: 0px;
     box-sizing: border-box;
     &:focus {
       border-left-width 5px;
@@ -26,6 +28,9 @@ const style = {
     padding-top: 6px;
     padding-bottom: 4px;
   `,
+  noValue: css`
+    color: rgb(0,0,0,0.5);
+  `,
   isOk: css`
     border: solid 2px ${okColor};
   `,
@@ -36,44 +41,34 @@ const style = {
     border: solid 2px ${errorColor};
   `,
   okIcon: css`
-    float: right;
-    position: relative;
-    right: 5px;
-    top: -31px;
-    color: ${okColor};
-    height: 0px;
-  `
+  float: right;
+  position: relative;
+  right: 5px;
+  top: -31px;
+  height: 0px;
+  color: ${okColor};
+`
 }
 
-const styles = ({ error, touched, initialValue }: FieldMetaProps<any>): SerializedStyles | SerializedStyles[] => {
+const styles = ({ value, error, touched, initialValue }: FieldMetaProps<any>): SerializedStyles | SerializedStyles[] => {
   if (!error) return [style.base, style.isOk];
-  if (!touched && error && initialValue.length === 0) return [style.base, style.noTouched];
-  if (error) return [style.base, style.withError];
+  if (!touched && error && initialValue.length === 0) return [style.base, style.noTouched, ...(!value ? [style.noValue] : [])];
+  if (error) return [style.base, style.withError, ...(!value ? [style.noValue] : [])];
   return style.base
 };
 
-export type InputWithIconProps = {
+export type SelectWithIconProps = {
   name: string
   title: string | ReactNode
-  autoFocus?: boolean
-  innerRef?: MutableRefObject<HTMLInputElement>
 } & InputHTMLAttributes<Element>
 
-const InputWithIcon: FC<InputWithIconProps> = ({ innerRef, autoFocus, title, ...props }) => {
-  const ref = useRef<HTMLInputElement>(null);
+const SelectWithIcon: FC<SelectWithIconProps> = ({ title, ...props }) => {
   const [field, meta] = useField(props)
   const { error } = meta
-
-  useEffect(() => {
-    if (!autoFocus) return;
-    if (innerRef) innerRef.current.focus();
-    else ref.current?.focus();
-  }, []);
-
   return (
     <>
       <div css={style.title}>{title}</div>
-      <input {...field} {...props} ref={innerRef || ref} css={styles(meta)} />
+      <select {...field} {...props} css={styles(meta)} />
       {!error &&
         <div css={style.okIcon}>
           <FontAwesomeIcon icon={faCheckCircle} />
@@ -83,8 +78,4 @@ const InputWithIcon: FC<InputWithIconProps> = ({ innerRef, autoFocus, title, ...
   );
 };
 
-InputWithIcon.defaultProps = {
-  autoFocus: false
-};
-
-export default InputWithIcon;
+export default SelectWithIcon;
