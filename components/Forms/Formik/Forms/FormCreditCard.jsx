@@ -132,7 +132,7 @@ const FormBirthDay = withFormik({
         (val) => !!CreditCard.determineCardType(val) && CreditCard.isValidCardNumber(val, CreditCard.determineCardType(val))
       ),
     creditCardExpiryYear: yup.string().required('選択してください'),
-    creditCardExpiryMonth: : yup.string().required('選択してください'),
+    creditCardExpiryMonth: yup.string().required('選択してください'),
     creditCardName: yup.string().required('入力して下さい'),
     creditCardCvc: yup.string().required('入力してください').matches(/^\d{3,4}$/, '正しい形式で入力してください')
   }),
