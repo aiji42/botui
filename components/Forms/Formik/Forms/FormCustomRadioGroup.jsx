@@ -26,9 +26,9 @@ const form = (props) => {
   return (
     <form>
       <Field name={name}>
-        {({ field, form }) => Object.keys(sanitizedChoices).map((key, index) => (
+        {Object.keys(sanitizedChoices).map((key, index) => (
           <div key={index} css={index > 0 ? mergin : ''}>
-            <RadioInput id={key} title={sanitizedChoices[key]} field={field} form={form} />
+            <RadioInput id={key} title={sanitizedChoices[key]} name={name} />
           </div>
         ))}
       </Field>
