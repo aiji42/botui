@@ -1,6 +1,6 @@
 import { FC, ReactNode, InputHTMLAttributes, useMemo } from 'react';
 import { css } from '@emotion/core';
-import { useField } from 'formik'
+import { useField, FieldAttributes } from 'formik'
 import { okColor, baseBorderColor } from '../../shared/baseStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDotCircle, faCircle } from '@fortawesome/free-solid-svg-icons';
@@ -46,10 +46,9 @@ const style = {
 }
 
 type Props = {
-  name: string
   title: string | ReactNode
   id: string
-} & InputHTMLAttributes<Element>
+} & FieldAttributes<any> & InputHTMLAttributes<Element>
 
 const RadioInput: FC<Props> = ({ id, title, ...props }) => {
   const [field, { value }] = useField(props)

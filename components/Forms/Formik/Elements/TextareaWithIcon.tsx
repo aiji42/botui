@@ -1,9 +1,11 @@
-import React, { FC, useEffect, useRef, MutableRefObject, InputHTMLAttributes, ReactNode } from 'react';
-import { useField, FieldMetaProps, FieldAttributes } from 'formik'
+import { useState, FC, useCallback, ReactNode, FocusEvent } from 'react';
 import { css, SerializedStyles } from '@emotion/core';
 import { okColor, errorColor, baseBorderColor } from '../../shared/baseStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import TextareaAutosize, { TextareaAutosizeProps } from 'react-textarea-autosize';
+import { FieldMetaProps, useField, FieldAttributes } from 'formik';
+
 
 const style = {
   base: css`
@@ -42,7 +44,7 @@ const style = {
     top: -31px;
     color: ${okColor};
     height: 0px;
-  `
+  `,
 }
 
 const styles = ({ error, touched, initialValue }: FieldMetaProps<any>): SerializedStyles | SerializedStyles[] => {
@@ -52,27 +54,25 @@ const styles = ({ error, touched, initialValue }: FieldMetaProps<any>): Serializ
   return style.base
 };
 
-export type InputWithIconProps = {
+type Props = {
   title: string | ReactNode
-  autoFocus?: boolean
-  innerRef?: MutableRefObject<HTMLInputElement>
-} & FieldAttributes<any> & InputHTMLAttributes<Element>
+} & FieldAttributes<any>  & TextareaAutosizeProps
 
-const InputWithIcon: FC<InputWithIconProps> = ({ innerRef, autoFocus, title, ...props }) => {
-  const ref = useRef<HTMLInputElement>(null);
+const TextareaWithIcon: FC<Props> = ({ title, ...props }) => {
+  const [minRows, setMinRows] = useState<number>(0);
   const [field, meta] = useField(props)
   const { error } = meta
-
-  useEffect(() => {
-    if (!autoFocus) return;
-    if (innerRef) innerRef.current.focus();
-    else ref.current?.focus();
-  }, []);
+  const { onBlur } = field
+  const handleFocus = useCallback(() => setMinRows(2), [setMinRows])
+  const handleBlur = useCallback((e: FocusEvent<HTMLTextAreaElement>) => {
+    onBlur(e);
+    setMinRows(0);
+  }, [setMinRows, onBlur])
 
   return (
     <>
       <div css={style.title}>{title}</div>
-      <input {...field} {...props} ref={innerRef || ref} css={styles(meta)} />
+      <TextareaAutosize {...field} {...props} minRows={minRows} css={styles(meta)} onFocus={handleFocus} onBlur={handleBlur} />
       {!error &&
         <div css={style.okIcon}>
           <FontAwesomeIcon icon={faCheckCircle} />
@@ -82,8 +82,8 @@ const InputWithIcon: FC<InputWithIconProps> = ({ innerRef, autoFocus, title, ...
   );
 };
 
-InputWithIcon.defaultProps = {
+TextareaWithIcon.defaultProps = {
   autoFocus: false
 };
 
-export default InputWithIcon;
+export default TextareaWithIcon;

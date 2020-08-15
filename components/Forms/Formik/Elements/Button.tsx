@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, ButtonHTMLAttributes } from 'react';
 import { css } from '@emotion/core';
 
 const style = css`
@@ -25,6 +25,6 @@ const style = css`
   }
 `;
 
-const Button: FC = (props) => <button css={style} {...props} />;
+const Button: FC<ButtonHTMLAttributes<HTMLButtonElement>> = (props) => <button css={style} {...props} />;
 
 export default Button;

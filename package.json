@@ -23,6 +23,7 @@
     "next": "^9.5.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-textarea-autosize": "^8.2.0",
     "react-use-kana": "^2.2.0",
     "typescript": "^3.9.7",
     "use-postal-jp": "^1.0.0",
