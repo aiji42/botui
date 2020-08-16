@@ -1,6 +1,5 @@
-import React from 'react';
-import { withFormik, Field, ErrorMessage } from 'formik';
-import { formPropTypes } from '../PropTypes';
+import { FC } from 'react';
+import { withFormik, Field, ErrorMessage, FormikProps, FormikHelpers } from 'formik';
 import * as yup from 'yup';
 import { dataStore, saveStoreValue } from '../../../../dataStore';
 import InputNumber from '../Elements/InputNumber';
@@ -8,7 +7,12 @@ import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import { isValidNumber as isValidPhoneNumber } from 'libphonenumber-js';
 
-const form = (props) => {
+type Values = {
+  tel: string
+  [key: string]: string
+}
+
+const Form: FC<FormikProps<Values>> = (props) => {
   const { handleSubmit } = props;
 
   return (
@@ -21,9 +25,12 @@ const form = (props) => {
   );
 };
 
-form.propTypes = {
-  ...formPropTypes
-};
+type FormikBag = {
+  props: {
+    onSubmited: () => void
+    onUpdate: () => void
+  }
+} & FormikHelpers<Values>
 
 const FormTel = withFormik({
   mapPropsToValues: () => ({
@@ -35,13 +42,13 @@ const FormTel = withFormik({
       .test('tel-format', '半角数字で正しく入力してください', (value) => value ? isValidPhoneNumber(value, 'JP') : false)
   }),
   validateOnMount: true,
-  handleSubmit: (values, { props, setSubmitting }) => {
+  handleSubmit: (values: Values, { props, setSubmitting }: FormikBag) => {
     if (Object.keys(values).every(key => dataStore[key] !== null)) props.onUpdate();
     Object.keys(values).forEach(key => saveStoreValue(key, values[key]));
     Object.keys(values).forEach(key => dataStore[key] = values[key]);
     props.onSubmited();
     setSubmitting(false);
   },
-})(form);
+})(Form);
 
 export default FormTel;

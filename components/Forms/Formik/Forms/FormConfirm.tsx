@@ -1,6 +1,5 @@
-import React from 'react';
-import { withFormik, Field } from 'formik';
-import PropTypes from 'prop-types';
+import { FC } from 'react';
+import { withFormik, Field, FormikProps, FormikHelpers } from 'formik';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import { css } from '@emotion/core';
 import { dataStore } from '../../../../dataStore';
@@ -18,7 +17,12 @@ const base = css`
   }
 `;
 
-const form = (props) => {
+type Values = {
+  confirmed: boolean
+  [key: string]: boolean
+}
+
+const Form: FC<FormikProps<Values>> = (props) => {
   const { handleSubmit } = props;
 
   return (
@@ -32,18 +36,21 @@ const form = (props) => {
   );
 };
 
-form.propTypes = {
-  handleSubmit: PropTypes.func.isRequired
-};
+type FormikBag = {
+  props: {
+    onSubmited: () => void
+    onUpdate: () => void
+  }
+} & FormikHelpers<Values>
 
-const FormConfirmWithInnerHTML = withFormik({
+const FormConfirm = withFormik({
   mapPropsToValues: () => ({ confirmed: true }),
-  handleSubmit: (values, { props, setSubmitting }) => {
+  handleSubmit: (values: Values, { props, setSubmitting }: FormikBag) => {
     if (Object.keys(values).every(key => dataStore[key] !== null)) props.onUpdate();
     Object.keys(values).forEach(key => dataStore[key] = values[key]);
     props.onSubmited();
     setSubmitting(false);
   },
-})(form);
+})(Form);
 
-export default FormConfirmWithInnerHTML;
+export default FormConfirm;

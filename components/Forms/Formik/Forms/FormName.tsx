@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
-import { withFormik, Field, ErrorMessage, useField } from 'formik';
+import React, { useEffect, FC, KeyboardEvent } from 'react';
+import { withFormik, Field, ErrorMessage, useField, FormikProps, FormikHelpers } from 'formik';
 import * as yup from 'yup';
-import { formPropTypes } from '../PropTypes';
 import { dataStore, saveStoreValue } from '../../../../dataStore';
 import InputName from '../Elements/InputName';
 import InputNameKana from '../Elements/InputNameKana';
@@ -10,22 +9,32 @@ import ButtonSubmit from '../Elements/ButtonSubmit';
 import { css } from '@emotion/core';
 import { useKana } from 'react-use-kana'
 
-const formBlockDetailHalf = css`
-  display: inline-block;
-  vertical-align: top;
-  margin-bottom: 3px;
-  width: 49%;
-`;
+const style = {
+  formBlockDetailHalf: css`
+    display: inline-block;
+    vertical-align: top;
+    margin-bottom: 3px;
+    width: 49%;
+  `,
+  left: css`
+    margin-right: 3px;
+  `
+}
 
-const left = css`
-  margin-right: 3px;
-`;
 
-const toKatakana = (value) => value.normalize('NFKC')
+type Values = {
+  familyName: string
+  familyNameKana: string
+  firstName: string
+  firstNameKana: string
+  [key: string]: string
+}
+
+const toKatakana = (value: string) => value.normalize('NFKC')
   .replace(/[\u3041-\u3096]/g, (match) => String.fromCharCode(match.charCodeAt(0) + 0x60))
   .replace(/[^ァ-ン]/g, '')
 
-const form = (props) => {
+const Form: FC<FormikProps<Values>> = (props) => {
   const { handleSubmit } = props;
   const { kana: familyNameKana, setKanaSource: setFamilyNameKanaSource } = useKana()
   const { kana: firstNameKana, setKanaSource: setFirstNameKanaSource } = useKana()
@@ -37,23 +46,23 @@ const form = (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div css={[formBlockDetailHalf, left]}>
+      <div css={[style.formBlockDetailHalf, style.left]}>
         <Field component={InputName} name="familyName" placeholder="山田" title="姓" autoFocus
-          onKeyUp={(e) => setFamilyNameKanaSource(e.target.value)}
+          onKeyUp={(e: KeyboardEvent<HTMLInputElement>) => setFamilyNameKanaSource(e.currentTarget.value)}
         />
         <ErrorMessage name="familyName" component={SpanErrorMessage} />
       </div>
-      <div css={formBlockDetailHalf}>
+      <div css={style.formBlockDetailHalf}>
         <Field component={InputName} name="firstName" placeholder="太郎" title="名"
-          onKeyUp={(e) => setFirstNameKanaSource(e.target.value)}
+          onKeyUp={(e: KeyboardEvent<HTMLInputElement>) => setFirstNameKanaSource(e.currentTarget.value)}
         />
         <ErrorMessage name="firstName" component={SpanErrorMessage} />
       </div>
-      <div css={[formBlockDetailHalf, left]}>
+      <div css={[style.formBlockDetailHalf, style.left]}>
         <Field component={InputNameKana} name="familyNameKana" placeholder="ヤマダ" title="セイ" />
         <ErrorMessage name="familyNameKana" component={SpanErrorMessage} />
       </div>
-      <div css={formBlockDetailHalf}>
+      <div css={style.formBlockDetailHalf}>
         <Field component={InputNameKana} name="firstNameKana" placeholder="タロウ" title="メイ" />
         <ErrorMessage name="firstNameKana" component={SpanErrorMessage} />
       </div>
@@ -62,9 +71,12 @@ const form = (props) => {
   );
 };
 
-form.propTypes = {
-  ...formPropTypes
-};
+type FormikBag = {
+  props: {
+    onSubmited: () => void
+    onUpdate: () => void
+  }
+} & FormikHelpers<Values>
 
 const FormName = withFormik({
   mapPropsToValues: () => ({
@@ -86,13 +98,13 @@ const FormName = withFormik({
       .matches(/^[ァ-ヶ]+$/, '全角カナで入力してください'),
   }),
   validateOnMount: true,
-  handleSubmit: (values, { props, setSubmitting }) => {
+  handleSubmit: (values: Values, { props, setSubmitting }: FormikBag) => {
     if (Object.keys(values).every(key => dataStore[key] !== null)) props.onUpdate();
     Object.keys(values).forEach(key => saveStoreValue(key, values[key]));
     Object.keys(values).forEach(key => dataStore[key] = values[key]);
     props.onSubmited();
     setSubmitting(false);
   },
-})(form);
+})(Form);
 
 export default FormName;

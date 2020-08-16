@@ -19,6 +19,7 @@
     "@types/yup": "^0.29.4",
     "credit-card": "^3.0.2",
     "formik": "^2.1.5",
+    "libphonenumber-js": "^1.7.56",
     "moji": "^0.5.1",
     "next": "^9.5.1",
     "react": "^16.13.1",

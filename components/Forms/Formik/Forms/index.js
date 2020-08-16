@@ -1,6 +1,5 @@
 export { default as FormAddress } from './FormAddress';
 export { default as FormBirthDay } from './FormBirthDay';
-export { default as FormConfirmWithInnerHTML } from './FormConfirmWithInnerHTML';
 export { default as FormConfirm } from './FormConfirm';
 export { default as FormEmail } from './FormEmail';
 export { default as FormName } from './FormName';

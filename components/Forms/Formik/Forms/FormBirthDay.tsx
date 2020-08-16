@@ -1,25 +1,32 @@
-import React, { useMemo } from 'react';
-import { withFormik, Field, ErrorMessage } from 'formik';
+import { FC, useMemo } from 'react';
+import { withFormik, Field, ErrorMessage, FormikProps, FormikHelpers } from 'formik';
 import * as yup from 'yup';
-import { formPropTypes } from '../PropTypes';
 import { dataStore, saveStoreValue } from '../../../../dataStore';
 import SelectWithIcon from '../Elements/SelectWithIcon';
 import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import { css } from '@emotion/core';
 
-const formBlockDetailHalfField = css`
-  display: inline-block;
-  vertical-align: top;
-  margin-bottom: 2px;
-  width: 49%;
-`;
+const style = {
+  formBlockDetailHalfField: css`
+    display: inline-block;
+    vertical-align: top;
+    margin-bottom: 2px;
+    width: 49%;
+  `,
+  left: css`
+    margin-right: 3px;
+  `
+}
 
-const left = css`
-  margin-right: 3px;
-`;
+type Values = {
+  birthdayYear: string
+  birthdayMonth: string
+  birthdayDay: string
+  [key: string]: string
+}
 
-const form = (props) => {
+const Form: FC<FormikProps<Values>> = (props) => {
   const { handleSubmit } = props;
   const years = useMemo(() => {
     const y = [...Array(100)].map((_, k) => new Date().getFullYear() - k)
@@ -35,14 +42,14 @@ const form = (props) => {
       </Field>
       <ErrorMessage name="birthdayYear" component={SpanErrorMessage} />
 
-      <div css={[formBlockDetailHalfField, left]}>
+      <div css={[style.formBlockDetailHalfField, style.left]}>
         <Field component={SelectWithIcon} name="birthdayMonth" title="月">
           <option value=""></option>
           {monthes.map((month) => (<option key={month} value={month}>{month}月</option>))}
         </Field>
         <ErrorMessage name="birthdayMonth" component={SpanErrorMessage} />
       </div>
-      <div css={formBlockDetailHalfField}>
+      <div css={style.formBlockDetailHalfField}>
         <Field component={SelectWithIcon} name="birthdayDay" title="日">
           <option value=""></option>
           {days.map((day) => (<option key={day} value={day}>{day}日</option>))}
@@ -54,9 +61,12 @@ const form = (props) => {
   );
 };
 
-form.propTypes = {
-  ...formPropTypes
-};
+type FormikBag = {
+  props: {
+    onSubmited: () => void
+    onUpdate: () => void
+  }
+} & FormikHelpers<Values>
 
 const FormBirthDay = withFormik({
   mapPropsToValues: () => ({
@@ -69,22 +79,22 @@ const FormBirthDay = withFormik({
     birthdayMonth: yup.string().required('選択してください'),
     birthdayDay: yup.string().required('選択してください'),
   }),
-  validate: (values) => {
+  validate: (values: Values) => {
     const { birthdayYear, birthdayMonth, birthdayDay } = values;
-    const date = new Date(birthdayYear, birthdayMonth - 1, birthdayDay);
+    const date = new Date(Number(birthdayYear), Number(birthdayMonth) - 1, Number(birthdayDay));
     if (!!birthdayYear && !!birthdayMonth && !!birthdayDay && String(date.getMonth() + 1) !== birthdayMonth) {
       return { birthdayYear: '存在しない日付です', birthdayMonth: true, birthdayDay: true };
     }
     return {};
   },
   validateOnMount: true,
-  handleSubmit: (values, { props, setSubmitting }) => {
+  handleSubmit: (values: Values, { props, setSubmitting }: FormikBag) => {
     if (Object.keys(values).every(key => dataStore[key] !== null)) props.onUpdate();
     Object.keys(values).forEach(key => saveStoreValue(key, values[key]));
     Object.keys(values).forEach(key => dataStore[key] = values[key]);
     props.onSubmited();
     setSubmitting(false);
   },
-})(form);
+})(Form);
 
 export default FormBirthDay;

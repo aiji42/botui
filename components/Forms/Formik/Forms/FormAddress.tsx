@@ -1,10 +1,10 @@
-import React, { useRef, useEffect } from 'react';
-import { withFormik, Field, ErrorMessage } from 'formik';
+import { FC, useRef, useEffect } from 'react';
+import { withFormik, Field, ErrorMessage, FormikProps, useField, FormikHelpers } from 'formik';
 import * as yup from 'yup';
-import { formPropTypes } from '../PropTypes';
 import { dataStore, saveStoreValue } from '../../../../dataStore';
 import InputNumber from '../Elements/InputNumber';
 import SelectWithIcon from '../Elements/SelectWithIcon'
+import InputWithIcon from '../Elements/InputWithIcon'
 import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import { usePostalJp } from 'use-postal-jp'
@@ -18,7 +18,15 @@ const prefectures = [
   '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県',
 ]
 
-const form = (props) => {
+type Values = {
+  postalCode: string
+  pref: string
+  city: string
+  street: string
+  [key: string]: string
+}
+
+const Form: FC<FormikProps<Values>> = (props) => {
   const { handleSubmit } = props;
 
   const { address, sanitizedCode, setPostalCode } = usePostalJp()
@@ -26,7 +34,7 @@ const form = (props) => {
   const [, , prefHelper] = useField('pref')
   const [, , cityHelper] = useField('city')
 
-  const inputStreetEl = useRef(null);
+  const inputStreetEl = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const { prefectureCode, address1, address2, address3, address4 } = address
@@ -41,7 +49,7 @@ const form = (props) => {
   useEffect(() => {
     if (sanitizedCode.length !== 7) return
     postalCodeHelper.setValue(sanitizedCode)
-    inputStreetEl.current.focus()
+    inputStreetEl.current?.focus()
   }, [sanitizedCode, postalCodeHelper.setValue])
 
   return (
@@ -66,9 +74,12 @@ const form = (props) => {
   );
 };
 
-form.propTypes = {
-  ...formPropTypes
-};
+type FormikBag = {
+  props: {
+    onSubmited: () => void
+    onUpdate: () => void
+  }
+} & FormikHelpers<Values>
 
 const FormAddress = withFormik({
   mapPropsToValues: () => ({
@@ -84,13 +95,13 @@ const FormAddress = withFormik({
     street: yup.string().required('入力してください').max(200, '入力内容が長すぎます')
   }),
   validateOnMount: true,
-  handleSubmit: (values, { props, setSubmitting }) => {
+  handleSubmit: (values: Values, { props, setSubmitting }: FormikBag) => {
     if (Object.keys(values).every(key => dataStore[key] !== null)) props.onUpdate();
     Object.keys(values).forEach(key => saveStoreValue(key, values[key]));
     Object.keys(values).forEach(key => dataStore[key] = values[key]);
     props.onSubmited();
     setSubmitting(false);
   },
-})(form);
+})(Form);
 
 export default FormAddress;
