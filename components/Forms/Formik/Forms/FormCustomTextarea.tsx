@@ -1,14 +1,29 @@
-import React from 'react';
+import { FC } from 'react';
 import PropTypes from 'prop-types';
-import { withFormik, Field, ErrorMessage } from 'formik';
-import { formPropTypes } from '../PropTypes';
+import { withFormik, Field, ErrorMessage, FormikProps, FormikHelpers } from 'formik';
 import * as yup from 'yup';
-import { dataStore, saveStoreValue, findStoredValue } from '../../../../dataStore';
+import { dataStore, saveStoreValue } from '../../../../dataStore';
 import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import TextareaWithIcon from '../Elements/TextareaWithIcon';
 
-const form = (props) => {
+type Values = {
+  [key: string]: string
+}
+
+type ValidationKeys = 'min' | 'max' | 'required'
+
+type PropTypes = {
+  name: string
+  title: string
+  placeholder?: string
+  secure?: boolean
+  validation?: {
+    [key in ValidationKeys]: any[]
+  } & { type: 'string' | 'number' }
+}
+
+const form: FC<FormikProps<Values> & PropTypes> = (props) => {
   const { name, placeholder, title, handleSubmit } = props;
 
   return (
@@ -20,24 +35,22 @@ const form = (props) => {
   );
 };
 
-form.propTypes = {
-  ...formPropTypes,
-  name: PropTypes.string.isRequired,
-  title: PropTypes.string,
-  placeholder: PropTypes.string,
-  secure: PropTypes.bool,
-  validation: PropTypes.object
-};
+type FormikBag = {
+  props: {
+    onSubmited: () => void
+    onUpdate: () => void
+  } & PropTypes
+} & FormikHelpers<Values>
 
 const FormCustomTextarea = withFormik({
-  mapPropsToValues: ({ name, secure }) => ({ [name]: (dataStore[name] || (secure ? '' : findStoredValue(name, ''))) }),
-  validationSchema: ({ name, validation }) => {
+  mapPropsToValues: ({ name }: PropTypes) => ({ [name]: '' }),
+  validationSchema: ({ name, validation }: PropTypes) => {
     if (!validation) return yup.object().shape({ [name]: yup.string() });
     const { type, ...others } = validation;
-    return yup.object().shape({ [name]: Object.keys(others).reduce((res, key) => (res[key](...others[key])), yup[type]()) });
+    // return yup.object().shape({ [name]: Object.keys(others).reduce((res, key) => (res[key](...others[key])), yup[type]()) });
   },
   validateOnMount: true,
-  handleSubmit: (values, { props: { onSubmited, onUpdate, secure }, setSubmitting }) => {
+  handleSubmit: (values: Values, { props: { onSubmited, onUpdate, secure }, setSubmitting }: FormikBag) => {
     if (Object.keys(values).every(key => dataStore[key] != null)) onUpdate();
     Object.keys(values).forEach(key => {
       if (!secure) saveStoreValue(key, values[key]);
