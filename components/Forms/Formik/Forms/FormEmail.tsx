@@ -1,17 +1,16 @@
 import { FC } from 'react';
-import { withFormik, Field, ErrorMessage, FormikProps, FormikHelpers } from 'formik';
+import { withFormik, Field, ErrorMessage, FormikProps } from 'formik';
 import * as yup from 'yup';
-import { dataStore, saveStoreValue } from '../../../../dataStore';
 import InputWithIcon from '../Elements/InputWithIcon'
 import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
+import { customHandleSubmit, HandleSubmitProps } from './modules'
 
 type Values = {
   email: string
-  [key: string]: string
 }
 
-const Form: FC<FormikProps<Values>> = (props) => {
+const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
   const { handleSubmit } = props;
 
   return (
@@ -23,14 +22,7 @@ const Form: FC<FormikProps<Values>> = (props) => {
   );
 };
 
-type FormikBag = {
-  props: {
-    onSubmited: () => void
-    onUpdate: () => void
-  }
-} & FormikHelpers<Values>
-
-const FormEmail = withFormik({
+const FormEmail = withFormik<HandleSubmitProps, Values>({
   mapPropsToValues: () => ({ email: '' }),
   validationSchema: yup.object().shape({
     email: yup.string()
@@ -38,13 +30,7 @@ const FormEmail = withFormik({
       .matches(/^([a-z0-9+_.-]+)@([a-z0-9-]+\.)+[a-z]{2,6}$/, '正しい形式で入力してください')
   }),
   validateOnMount: true,
-  handleSubmit: (values: Values, { props, setSubmitting }: FormikBag) => {
-    if (Object.keys(values).every(key => dataStore[key] !== null)) props.onUpdate();
-    Object.keys(values).forEach(key => saveStoreValue(key, values[key]));
-    Object.keys(values).forEach(key => dataStore[key] = values[key]);
-    props.onSubmited();
-    setSubmitting(false);
-  },
+  handleSubmit: customHandleSubmit,
 })(Form);
 
 export default FormEmail;
