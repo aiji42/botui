@@ -11,7 +11,7 @@ interface Values {
 }
 
 interface Props {
-  inputs: ({ title?: string } & InputHTMLAttributes<Element> & CustomYupProps)[]
+  inputs: ({ title?: string } & InputHTMLAttributes<HTMLIFrameElement> & { type: 'text' | 'number' | 'tel' } & CustomYupProps)[]
 }
 
 const Form: FC<FormikProps<Values> & Props & HandleSubmitProps> = (props) => {

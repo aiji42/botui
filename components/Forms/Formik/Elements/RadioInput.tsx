@@ -47,12 +47,12 @@ const style = {
 
 type Props = {
   title: string | ReactNode
-  id: string
-} & FieldAttributes<any> & InputHTMLAttributes<Element>
+  value: any
+} & FieldAttributes<any> & InputHTMLAttributes<HTMLInputElement>
 
-const RadioInput: FC<Props> = ({ id, title, ...props }) => {
-  const [field, { value }] = useField(props)
-  const checked = useMemo(() => id === value, [id, value])
+const RadioInput: FC<Props> = ({ value, title, ...props }) => {
+  const [field, { value: formValue }] = useField(props)
+  const checked = useMemo(() => formValue === value, [formValue, value])
 
   return (
     <label css={[style.base, (checked ? style.checkedStyle : style.unCheckedStyle)]}>
@@ -60,7 +60,7 @@ const RadioInput: FC<Props> = ({ id, title, ...props }) => {
         {checked ? <FontAwesomeIcon icon={faDotCircle} /> : <FontAwesomeIcon icon={faCircle} />}
       </div>
       <span>{title}</span>
-      <input {...field} {...props} value={id} type="radio" css={style.input} checked={checked} />
+      <input {...field} {...props} value={value} type="radio" css={style.input} checked={checked} />
     </label>
   );
 };
