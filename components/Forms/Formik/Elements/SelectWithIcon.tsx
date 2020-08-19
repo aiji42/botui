@@ -59,7 +59,7 @@ const styles = ({ value, error, touched, initialValue }: FieldMetaProps<any>): S
 
 export type SelectWithIconProps = {
   title: string | ReactNode
-} & FieldAttributes<any> & InputHTMLAttributes<Element>
+} & FieldAttributes<any> & InputHTMLAttributes<HTMLInputElement>
 
 const SelectWithIcon: FC<SelectWithIconProps> = ({ title, ...props }) => {
   const [field, meta] = useField(props)

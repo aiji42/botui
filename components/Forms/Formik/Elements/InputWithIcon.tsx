@@ -56,7 +56,7 @@ export type InputWithIconProps = {
   title: string | ReactNode
   autoFocus?: boolean
   innerRef?: MutableRefObject<HTMLInputElement>
-} & FieldAttributes<any> & InputHTMLAttributes<Element>
+} & FieldAttributes<any> & InputHTMLAttributes<HTMLInputElement>
 
 const InputWithIcon: FC<InputWithIconProps> = ({ innerRef, autoFocus, title, ...props }) => {
   const ref = useRef<HTMLInputElement>(null);

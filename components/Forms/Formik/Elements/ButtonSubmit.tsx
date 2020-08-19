@@ -6,7 +6,7 @@ import { useField, useFormikContext, FormikValues, FieldAttributes } from 'formi
 const isSubmitedOnce = (values: FormikValues): boolean => Object.keys(values).every(key => dataStore[key] !== null);
 const isModified = (values: FormikValues): boolean => Object.keys(values).some(key => findStoredValue(key) !== values[key]);
 
-type Props = FieldAttributes<any> & InputHTMLAttributes<Element>
+type Props = FieldAttributes<any> & InputHTMLAttributes<HTMLButtonElement>
 
 const ButtonSubmit: FC<Props> = ({ children, ...props }) => {
   const [modified, setModified] = useState<boolean>(false);
