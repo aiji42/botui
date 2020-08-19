@@ -1,7 +1,6 @@
 import { FC, useMemo } from 'react';
-import { withFormik, Field, ErrorMessage, FormikProps, FormikHelpers } from 'formik';
+import { withFormik, Field, ErrorMessage, FormikProps, FormikErrors } from 'formik';
 import * as yup from 'yup';
-import { dataStore } from '../../../../dataStore';
 import CreditCard from 'credit-card';
 import InputCreditNumber from '../Elements/InputCreditNumber';
 import InputNumber from '../Elements/InputNumber';
@@ -10,6 +9,7 @@ import InputWithIcon from '../Elements/InputWithIcon';
 import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import { css } from '@emotion/core';
+import { customHandleSubmit, HandleSubmitProps } from './modules'
 
 const style = {
   narrowField: css`
@@ -31,14 +31,12 @@ const style = {
   `
 }
 
-
-type Values = {
+interface Values {
   creditCardNumber: string
   creditCardExpiryYear: string
   creditCardExpiryMonth: string
   creditCardName: string
   creditCardCvc: string
-  [key: string]: string
 }
 
 const makeValidate = ({ values, setErrors }: FormikProps<Values>) => () => {
@@ -62,7 +60,7 @@ const makeValidate = ({ values, setErrors }: FormikProps<Values>) => () => {
     return true;
   }
 
-  const errors: { [key in keyof Values] ?: string } = {};
+  const errors: FormikErrors<Values> = {};
   if (!validCardNumber) errors.creditCardNumber = '正しいカード番号を入力してください';
   if (!validExpiryMonth || isExpired) errors.creditCardExpiryMonth = '正しい有効期限を選択してください';
   if (!validExpiryYear || isExpired) errors.creditCardExpiryYear = '正しい有効期限を選択してください';
@@ -71,7 +69,7 @@ const makeValidate = ({ values, setErrors }: FormikProps<Values>) => () => {
   return false;
 };
 
-const Form: FC<FormikProps<Values>> = (props) => {
+const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
   const { handleSubmit } = props;
   const years = useMemo(() => [...Array(15)].map((_, k) => new Date().getFullYear() + k), [])
   const monthes = useMemo(() => [...Array(12)].map((_, k) => k + 1), [])
@@ -108,14 +106,7 @@ const Form: FC<FormikProps<Values>> = (props) => {
   );
 };
 
-type FormikBag = {
-  props: {
-    onSubmited: () => void
-    onUpdate: () => void
-  }
-} & FormikHelpers<Values>
-
-const FormBirthDay = withFormik({
+const FormBirthDay = withFormik<HandleSubmitProps, Values>({
   mapPropsToValues: () => ({
     creditCardNumber: '',
     creditCardExpiryYear: '',
@@ -137,12 +128,7 @@ const FormBirthDay = withFormik({
     creditCardCvc: yup.string().required('入力してください').matches(/^\d{3,4}$/, '正しい形式で入力してください')
   }),
   validateOnMount: true,
-  handleSubmit: (values: Values, { props, setSubmitting }: FormikBag) => {
-    if (Object.keys(values).every(key => dataStore[key] !== null)) props.onUpdate();
-    Object.keys(values).forEach(key => dataStore[key] = values[key]);
-    props.onSubmited();
-    setSubmitting(false);
-  },
+  handleSubmit: customHandleSubmit
 })(Form);
 
 export default FormBirthDay;

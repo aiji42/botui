@@ -1,11 +1,11 @@
 import { FC, useMemo } from 'react';
-import { withFormik, Field, ErrorMessage, FormikProps, FormikHelpers } from 'formik';
+import { withFormik, Field, ErrorMessage, FormikProps } from 'formik';
 import * as yup from 'yup';
-import { dataStore, saveStoreValue } from '../../../../dataStore';
 import SelectWithIcon from '../Elements/SelectWithIcon';
 import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import { css } from '@emotion/core';
+import { customHandleSubmit, HandleSubmitProps } from './modules'
 
 const style = {
   formBlockDetailHalfField: css`
@@ -19,14 +19,13 @@ const style = {
   `
 }
 
-type Values = {
+interface Values {
   birthdayYear: string
   birthdayMonth: string
   birthdayDay: string
-  [key: string]: string
 }
 
-const Form: FC<FormikProps<Values>> = (props) => {
+const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
   const { handleSubmit } = props;
   const years = useMemo(() => {
     const y = [...Array(100)].map((_, k) => new Date().getFullYear() - k)
@@ -61,14 +60,7 @@ const Form: FC<FormikProps<Values>> = (props) => {
   );
 };
 
-type FormikBag = {
-  props: {
-    onSubmited: () => void
-    onUpdate: () => void
-  }
-} & FormikHelpers<Values>
-
-const FormBirthDay = withFormik({
+const FormBirthDay = withFormik<HandleSubmitProps, Values>({
   mapPropsToValues: () => ({
     birthdayYear: '',
     birthdayMonth: '',
@@ -88,13 +80,7 @@ const FormBirthDay = withFormik({
     return {};
   },
   validateOnMount: true,
-  handleSubmit: (values: Values, { props, setSubmitting }: FormikBag) => {
-    if (Object.keys(values).every(key => dataStore[key] !== null)) props.onUpdate();
-    Object.keys(values).forEach(key => saveStoreValue(key, values[key]));
-    Object.keys(values).forEach(key => dataStore[key] = values[key]);
-    props.onSubmited();
-    setSubmitting(false);
-  },
+  handleSubmit: customHandleSubmit
 })(Form);
 
 export default FormBirthDay;

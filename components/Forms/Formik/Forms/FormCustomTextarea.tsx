@@ -6,7 +6,7 @@ import ButtonSubmit from '../Elements/ButtonSubmit';
 import TextareaWithIcon from '../Elements/TextareaWithIcon';
 import { customYup, CustomYupProps, customHandleSubmit, HandleSubmitProps } from './modules'
 
-type Values = {
+interface Values {
   [key: string]: string
 }
 
@@ -27,7 +27,7 @@ const Form: FC<FormikProps<Values> & PropTypes> = (props) => {
   );
 };
 
-const FormCustomTextarea = withFormik({
+const FormCustomTextarea = withFormik<PropTypes, Values>({
   mapPropsToValues: ({ name }: PropTypes) => ({ [name]: '' }),
   validationSchema: customYup,
   validateOnMount: true,

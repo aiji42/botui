@@ -1,13 +1,13 @@
 import { FC, useRef, useEffect } from 'react';
-import { withFormik, Field, ErrorMessage, FormikProps, useField, FormikHelpers } from 'formik';
+import { withFormik, Field, ErrorMessage, FormikProps, useField } from 'formik';
 import * as yup from 'yup';
-import { dataStore, saveStoreValue } from '../../../../dataStore';
 import InputNumber from '../Elements/InputNumber';
 import SelectWithIcon from '../Elements/SelectWithIcon'
 import InputWithIcon from '../Elements/InputWithIcon'
 import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import { usePostalJp } from 'use-postal-jp'
+import { customHandleSubmit, HandleSubmitProps } from './modules'
 
 const prefectures = [
   '北海道', '青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県', '茨城県',
@@ -18,15 +18,14 @@ const prefectures = [
   '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県',
 ]
 
-type Values = {
+interface Values {
   postalCode: string
   pref: string
   city: string
   street: string
-  [key: string]: string
 }
 
-const Form: FC<FormikProps<Values>> = (props) => {
+const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
   const { handleSubmit } = props;
 
   const { address, sanitizedCode, setPostalCode } = usePostalJp()
@@ -74,14 +73,7 @@ const Form: FC<FormikProps<Values>> = (props) => {
   );
 };
 
-type FormikBag = {
-  props: {
-    onSubmited: () => void
-    onUpdate: () => void
-  }
-} & FormikHelpers<Values>
-
-const FormAddress = withFormik({
+const FormAddress = withFormik<HandleSubmitProps, Values>({
   mapPropsToValues: () => ({
     postalCode: '',
     pref: '',
@@ -95,13 +87,7 @@ const FormAddress = withFormik({
     street: yup.string().required('入力してください').max(200, '入力内容が長すぎます')
   }),
   validateOnMount: true,
-  handleSubmit: (values: Values, { props, setSubmitting }: FormikBag) => {
-    if (Object.keys(values).every(key => dataStore[key] !== null)) props.onUpdate();
-    Object.keys(values).forEach(key => saveStoreValue(key, values[key]));
-    Object.keys(values).forEach(key => dataStore[key] = values[key]);
-    props.onSubmited();
-    setSubmitting(false);
-  },
+  handleSubmit: customHandleSubmit
 })(Form);
 
 export default FormAddress;

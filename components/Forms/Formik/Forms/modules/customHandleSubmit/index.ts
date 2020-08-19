@@ -1,16 +1,16 @@
 import { FormikHelpers, FormikBag } from 'formik'
 
-type DataStoreType = {
+interface DataStoreType {
   [key: string]: string
 }
 const dataStore: DataStoreType = {}
 const saveStoreValue = (key: string, value: any) => {} // TODO: this is dummy for save localstrage
 
-type Values = {
+interface Values {
   [key: string]: any
 }
 
-export type HandleSubmitProps = {
+export interface HandleSubmitProps {
   onSubmited: () => void
   onUpdate: () => void
   secure?: boolean

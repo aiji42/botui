@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-type ValidationTypeString = {
+interface ValidationTypeString {
   type: 'string'
   min?: [number, yup.StringLocale['min']]
   max?: [number, yup.StringLocale['max']]
@@ -21,7 +21,7 @@ const customYupString = (name: string, validation: ValidationTypeString) => {
   })
 }
 
-type ValidationTypeNumber = {
+interface ValidationTypeNumber {
   type: 'number'
   min?: [number, yup.NumberLocale['min']]
   max?: [number, yup.NumberLocale['max']]
@@ -40,7 +40,7 @@ const customYupNumber = (name: string, validation: ValidationTypeNumber) => {
   })
 }
 
-export type CustomYupProps = {
+export interface CustomYupProps {
   name: string
   validation?: ValidationTypeString | ValidationTypeNumber
 }

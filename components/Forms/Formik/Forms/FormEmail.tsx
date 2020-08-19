@@ -6,7 +6,7 @@ import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import { customHandleSubmit, HandleSubmitProps } from './modules'
 
-type Values = {
+interface Values {
   email: string
 }
 

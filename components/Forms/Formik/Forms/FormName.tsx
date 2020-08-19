@@ -1,13 +1,13 @@
 import React, { useEffect, FC, KeyboardEvent } from 'react';
-import { withFormik, Field, ErrorMessage, useField, FormikProps, FormikHelpers } from 'formik';
+import { withFormik, Field, ErrorMessage, useField, FormikProps } from 'formik';
 import * as yup from 'yup';
-import { dataStore, saveStoreValue } from '../../../../dataStore';
 import InputName from '../Elements/InputName';
 import InputNameKana from '../Elements/InputNameKana';
 import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import { css } from '@emotion/core';
 import { useKana } from 'react-use-kana'
+import { customHandleSubmit, HandleSubmitProps } from './modules'
 
 const style = {
   formBlockDetailHalf: css`
@@ -21,20 +21,18 @@ const style = {
   `
 }
 
-
-type Values = {
-  familyName: string
-  familyNameKana: string
-  firstName: string
-  firstNameKana: string
-  [key: string]: string
-}
-
 const toKatakana = (value: string) => value.normalize('NFKC')
   .replace(/[\u3041-\u3096]/g, (match) => String.fromCharCode(match.charCodeAt(0) + 0x60))
   .replace(/[^ァ-ン]/g, '')
 
-const Form: FC<FormikProps<Values>> = (props) => {
+interface Values {
+  familyName: string
+  familyNameKana: string
+  firstName: string
+  firstNameKana: string
+}
+
+const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
   const { handleSubmit } = props;
   const { kana: familyNameKana, setKanaSource: setFamilyNameKanaSource } = useKana()
   const { kana: firstNameKana, setKanaSource: setFirstNameKanaSource } = useKana()
@@ -71,14 +69,7 @@ const Form: FC<FormikProps<Values>> = (props) => {
   );
 };
 
-type FormikBag = {
-  props: {
-    onSubmited: () => void
-    onUpdate: () => void
-  }
-} & FormikHelpers<Values>
-
-const FormName = withFormik({
+const FormName = withFormik<HandleSubmitProps, Values>({
   mapPropsToValues: () => ({
     familyName: '',
     familyNameKana: '',
@@ -98,13 +89,7 @@ const FormName = withFormik({
       .matches(/^[ァ-ヶ]+$/, '全角カナで入力してください'),
   }),
   validateOnMount: true,
-  handleSubmit: (values: Values, { props, setSubmitting }: FormikBag) => {
-    if (Object.keys(values).every(key => dataStore[key] !== null)) props.onUpdate();
-    Object.keys(values).forEach(key => saveStoreValue(key, values[key]));
-    Object.keys(values).forEach(key => dataStore[key] = values[key]);
-    props.onSubmited();
-    setSubmitting(false);
-  },
+  handleSubmit: customHandleSubmit
 })(Form);
 
 export default FormName;
