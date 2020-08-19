@@ -21,7 +21,7 @@ interface Props {
   inputs: (InputHTMLAttributes<HTMLIFrameElement> & { title: string })[]
 }
 
-const form: FC<FormikProps<Values> & Props & HandleSubmitProps> = (props) => {
+const Form: FC<FormikProps<Values> & Props & HandleSubmitProps> = (props) => {
   const { name, inputs, handleSubmit } = props;
 
   return (
@@ -45,6 +45,6 @@ const FormCustomRadioGroup = withFormik<Props & HandleSubmitProps, Values>({
   }),
   validateOnMount: true,
   handleSubmit: customHandleSubmit
-})(form);
+})(Form);
 
 export default FormCustomRadioGroup;
