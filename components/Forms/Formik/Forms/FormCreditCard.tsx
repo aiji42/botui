@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react';
-import { withFormik, Field, ErrorMessage, FormikProps, FormikErrors } from 'formik';
+import { withFormik, Field, ErrorMessage, FormikProps } from 'formik';
 import * as yup from 'yup';
-import CreditCard from 'credit-card';
+import cardValidator from 'card-validator'
 import InputCreditNumber from '../Elements/InputCreditNumber';
 import InputNumber from '../Elements/InputNumber';
 import SelectWithIcon from '../Elements/SelectWithIcon';
@@ -39,41 +39,10 @@ interface Values {
   creditCardCvc: string
 }
 
-const makeValidate = ({ values, setErrors }: FormikProps<Values>) => () => {
-  const { creditCardNumber, creditCardExpiryMonth, creditCardExpiryYear, creditCardCvc } =  values
-  const {
-    validCardNumber,
-    validExpiryMonth,
-    validExpiryYear,
-    validCvv,
-    isExpired
-  } = CreditCard.validate({
-    cardType: CreditCard.determineCardType(creditCardNumber),
-    number: creditCardNumber,
-    expiryMonth: creditCardExpiryMonth,
-    expiryYear: creditCardExpiryYear,
-    cvv: creditCardCvc
-  });
-
-  if ([validCardNumber, validExpiryMonth, validExpiryYear, validCvv, !isExpired].every(bool => bool)) {
-    setErrors({});
-    return true;
-  }
-
-  const errors: FormikErrors<Values> = {};
-  if (!validCardNumber) errors.creditCardNumber = '正しいカード番号を入力してください';
-  if (!validExpiryMonth || isExpired) errors.creditCardExpiryMonth = '正しい有効期限を選択してください';
-  if (!validExpiryYear || isExpired) errors.creditCardExpiryYear = '正しい有効期限を選択してください';
-  if (!validCvv) errors.creditCardCvc = '正しいセキュリティコードを入力してください';
-  setErrors(errors);
-  return false;
-};
-
 const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
   const { handleSubmit } = props;
   const years = useMemo(() => [...Array(15)].map((_, k) => new Date().getFullYear() + k), [])
   const monthes = useMemo(() => [...Array(12)].map((_, k) => k + 1), [])
-  const validate = useMemo(() => makeValidate(props), [props])
 
   return (
     <form onSubmit={handleSubmit}>
@@ -101,7 +70,7 @@ const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
       <Field component={InputNumber} autoComplete="cc-csc" placeholder="123" name="creditCardCvc" title={<span>CVC <small>(通常裏面に刻印されています)</small></span>} />
       <ErrorMessage name="creditCardCvc" component={SpanErrorMessage} />
 
-      <Field component={ButtonSubmit} onClick={validate} />
+      <Field component={ButtonSubmit} />
     </form>
   );
 };
@@ -117,15 +86,20 @@ const FormBirthDay = withFormik<HandleSubmitProps, Values>({
   validationSchema: yup.object().shape({
     creditCardNumber: yup.string()
       .required('入力してください')
-      .transform((val) => CreditCard.sanitizeNumberString(val))
-      .matches(/\d{14,16}/, '正しい形式で入力してください')
-      .test('credit-card-number', '正しい形式で入力してください',
-        (val) => !!CreditCard.determineCardType(val) && CreditCard.isValidCardNumber(val, CreditCard.determineCardType(val))
-      ),
+      .test('credit-card-number', '正しい番号を入力してください', (val) => cardValidator.number(val).isValid),
     creditCardExpiryYear: yup.string().required('選択してください'),
-    creditCardExpiryMonth: yup.string().required('選択してください'),
+    creditCardExpiryMonth: yup.string()
+      .required('選択してください')
+      .test('credit-card-date', '正しい有効期限を選択してください', function (val) {
+        return cardValidator.expirationDate({ month: val, year: this.parent.creditCardExpiryYear }).isValid
+      }),
     creditCardName: yup.string().required('入力して下さい'),
-    creditCardCvc: yup.string().required('入力してください').matches(/^\d{3,4}$/, '正しい形式で入力してください')
+    creditCardCvc: yup.string()
+      .required('入力してください')
+      .matches(/^\d{3,4}$/, '正しい形式で入力してください')
+      .test('credit-card-cvc', '正しいコードを入力してください', function (val) {
+        return cardValidator.cvv(val, cardValidator.number(this.parent.creditCardNumber).card?.code.size).isValid
+      })
   }),
   validateOnMount: true,
   handleSubmit: customHandleSubmit
