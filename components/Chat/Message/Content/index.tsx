@@ -1,7 +1,7 @@
-import { FC, ReactElement } from 'react'
+import { FC } from 'react'
 
 type Props = {
-  content: string | ReactElement
+  content: string | JSX.Element
 }
 
 const Content: FC<Props> = ({ content }) => (

@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef, MutableRefObject, InputHTMLAttributes, ReactNode } from 'react';
-import { useField, FieldMetaProps, FieldAttributes } from 'formik'
+import { useField, FieldMetaProps, FieldInputProps, FormikProps } from 'formik'
 import { css, SerializedStyles } from '@emotion/core';
 import { okColor, errorColor, baseBorderColor } from '../../shared/baseStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -56,11 +56,13 @@ export type InputWithIconProps = {
   title: string | ReactNode
   autoFocus?: boolean
   innerRef?: MutableRefObject<HTMLInputElement>
-} & FieldAttributes<any> & InputHTMLAttributes<HTMLInputElement>
+  field: FieldInputProps<any>
+  form: FormikProps<any>
+} & InputHTMLAttributes<HTMLInputElement>
 
-const InputWithIcon: FC<InputWithIconProps> = ({ innerRef, autoFocus, title, ...props }) => {
+const InputWithIcon: FC<InputWithIconProps> = ({ innerRef, autoFocus, title, field, ...props }) => {
   const ref = useRef<HTMLInputElement>(null);
-  const [field, meta] = useField(props)
+  const [, meta] = useField(field)
   const { error } = meta
 
   useEffect(() => {

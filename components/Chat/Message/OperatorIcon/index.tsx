@@ -1,10 +1,6 @@
 import { FC } from 'react'
 import { css } from '@emotion/core'
 
-type Props = {
-  display?: boolean
-}
-
 const style = {
   display: css({
     position: 'relative',
@@ -24,6 +20,10 @@ const style = {
     borderRadius: '50%',
     border: '2px solid #0f84fe'
   })
+}
+
+interface Props {
+  display?: boolean
 }
 
 const OperatorIcon: FC<Props> = ({ display }) => {

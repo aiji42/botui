@@ -1,18 +1,23 @@
 import { FC, useState, useEffect, InputHTMLAttributes } from 'react';
 import Button from './Button';
-import { findStoredValue, dataStore } from '../../../../dataStore';
-import { useField, useFormikContext, FormikValues, FieldAttributes } from 'formik';
+// import { findStoredValue, dataStore } from '../../../../dataStore';
+import { useFormikContext, FormikValues, FieldAttributes, FormikProps } from 'formik';
+
+const dataStore: { [x: string]: any } = {}
+const findStoredValue = (arg: any): any => arg
 
 const isSubmitedOnce = (values: FormikValues): boolean => Object.keys(values).every(key => dataStore[key] !== null);
 const isModified = (values: FormikValues): boolean => Object.keys(values).some(key => findStoredValue(key) !== values[key]);
 
-type Props = FieldAttributes<any> & InputHTMLAttributes<HTMLButtonElement>
+type Props = {
+  field: FieldAttributes<any>
+  form: FormikProps<any>
+} & InputHTMLAttributes<HTMLButtonElement>
 
-const ButtonSubmit: FC<Props> = ({ children, ...props }) => {
+const ButtonSubmit: FC<Props> = ({ children, field, form, ...props }) => {
   const [modified, setModified] = useState<boolean>(false);
   const [submitedOnce, setSubmitedOnce] = useState<boolean>(false);
-  const [field] = useField(props)
-  const { values, isValid, isSubmitting } = useFormikContext<FormikValues>()
+  const { values, isValid, isSubmitting } = form
   useEffect(() => { Object.keys(values).forEach(key => dataStore[key] = null); }, []);
   useEffect(() => { setModified(isModified(values)); }, [values]);
   useEffect(() => {

@@ -7,7 +7,7 @@ interface ValidationTypeString {
   required?: [yup.TestOptionsMessage]
   matches?: [RegExp, yup.StringLocale['matches']]
 }
-const isValidationTypeString = (arg: any): arg is ValidationTypeString => arg.type === 'string'
+const isValidationTypeString = (arg: any): arg is ValidationTypeString => arg?.type === 'string'
 
 const customYupString = (name: string, validation: ValidationTypeString) => {
   const { min, max, required, matches } = validation
@@ -16,9 +16,9 @@ const customYupString = (name: string, validation: ValidationTypeString) => {
   if (max) yupper = yupper.max(...max)
   if (required) yupper = yupper.required(...required)
   if (matches) yupper = yupper.matches(...matches)
-  return yup.object().shape({
+  return {
     [name]: yupper
-  })
+  }
 }
 
 interface ValidationTypeNumber {
@@ -27,7 +27,7 @@ interface ValidationTypeNumber {
   max?: [number, yup.NumberLocale['max']]
   required?: [yup.TestOptionsMessage]
 }
-const isValidationTypeNumber = (arg: any): arg is ValidationTypeNumber => arg.type === 'number'
+const isValidationTypeNumber = (arg: any): arg is ValidationTypeNumber => arg?.type === 'number'
 
 const customYupNumber = (name: string, validation: ValidationTypeNumber) => {
   const { min, max, required } = validation
@@ -35,9 +35,9 @@ const customYupNumber = (name: string, validation: ValidationTypeNumber) => {
   if (min) yupper = yupper.min(...min)
   if (max) yupper = yupper.max(...max)
   if (required) yupper = yupper.required(...required)
-  return yup.object().shape({
+  return {
     [name]: yupper
-  })
+  }
 }
 
 export interface CustomYupProps {

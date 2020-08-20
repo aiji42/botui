@@ -4,12 +4,6 @@ import Bubble from './Bubble'
 import Content from './Content'
 import { css } from '@emotion/core'
 
-type Props = {
-  human: boolean,
-  iconDisplay?: boolean,
-  content: string
-}
-
 const style = {
   base: css({
     margin: '10px 0',
@@ -21,7 +15,13 @@ const style = {
   })
 }
 
-const Message: FC<Props> = ({ human, iconDisplay, content }) => {
+interface Props {
+  human: boolean,
+  iconDisplay?: boolean,
+  content: string | JSX.Element
+}
+
+const Message: FC<Props> = ({ human, iconDisplay = true, content }) => {
   return (
     <div css={style.base}>
       {!human && <OperatorIcon display={iconDisplay} />}
@@ -30,10 +30,6 @@ const Message: FC<Props> = ({ human, iconDisplay, content }) => {
       </Bubble>
     </div>
   )
-}
-
-Message.defaultProps = {
-  iconDisplay: true
 }
 
 export default Message

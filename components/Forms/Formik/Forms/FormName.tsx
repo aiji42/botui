@@ -6,7 +6,7 @@ import InputNameKana from '../Elements/InputNameKana';
 import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import { css } from '@emotion/core';
-import { useKana } from 'react-use-kana'
+// import { useKana } from 'react-use-kana'
 import { customHandleSubmit, HandleSubmitProps } from './modules'
 
 const style = {
@@ -34,25 +34,25 @@ interface Values {
 
 const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
   const { handleSubmit } = props;
-  const { kana: familyNameKana, setKanaSource: setFamilyNameKanaSource } = useKana()
-  const { kana: firstNameKana, setKanaSource: setFirstNameKanaSource } = useKana()
+  // const { kana: familyNameKana, setKanaSource: setFamilyNameKanaSource } = useKana()
+  // const { kana: firstNameKana, setKanaSource: setFirstNameKanaSource } = useKana()
   const [, , { setValue: setFamilyNameKana }] = useField('familyNameKana')
   const [, , { setValue: setFirstNameKana }] = useField('firstNameKana')
 
-  useEffect(() => { setFamilyNameKana(toKatakana(familyNameKana)) }, [familyNameKana, setFamilyNameKana])
-  useEffect(() => { setFirstNameKana(toKatakana(firstNameKana)) }, [firstNameKana, setFirstNameKana])
+  // useEffect(() => { setFamilyNameKana(toKatakana(familyNameKana)) }, [familyNameKana, setFamilyNameKana])
+  // useEffect(() => { setFirstNameKana(toKatakana(firstNameKana)) }, [firstNameKana, setFirstNameKana])
 
   return (
     <form onSubmit={handleSubmit}>
       <div css={[style.formBlockDetailHalf, style.left]}>
         <Field component={InputName} name="familyName" placeholder="山田" title="姓" autoFocus
-          onKeyUp={(e: KeyboardEvent<HTMLInputElement>) => setFamilyNameKanaSource(e.currentTarget.value)}
+          // onKeyUp={(e: KeyboardEvent<HTMLInputElement>) => setFamilyNameKanaSource(e.currentTarget.value)}
         />
         <ErrorMessage name="familyName" component={SpanErrorMessage} />
       </div>
       <div css={style.formBlockDetailHalf}>
         <Field component={InputName} name="firstName" placeholder="太郎" title="名"
-          onKeyUp={(e: KeyboardEvent<HTMLInputElement>) => setFirstNameKanaSource(e.currentTarget.value)}
+          // onKeyUp={(e: KeyboardEvent<HTMLInputElement>) => setFirstNameKanaSource(e.currentTarget.value)}
         />
         <ErrorMessage name="firstName" component={SpanErrorMessage} />
       </div>
@@ -64,7 +64,7 @@ const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
         <Field component={InputNameKana} name="firstNameKana" placeholder="タロウ" title="メイ" />
         <ErrorMessage name="firstNameKana" component={SpanErrorMessage} />
       </div>
-      <Field component={ButtonSubmit} />
+      <Field component={ButtonSubmit} name="submit" />
     </form>
   );
 };
