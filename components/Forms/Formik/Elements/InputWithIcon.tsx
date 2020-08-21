@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef, MutableRefObject, InputHTMLAttributes, ReactNode } from 'react';
-import { useField, FieldMetaProps, FieldInputProps, FormikProps } from 'formik'
+import { useField, FieldMetaProps, FieldInputProps } from 'formik'
 import { css, SerializedStyles } from '@emotion/core';
 import { okColor, errorColor, baseBorderColor } from '../../shared/baseStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -47,7 +47,7 @@ const style = {
 
 const styles = ({ error, touched, initialValue }: FieldMetaProps<any>): SerializedStyles | SerializedStyles[] => {
   if (!error) return [style.base, style.isOk];
-  if (!touched && error && initialValue.length === 0) return [style.base, style.noTouched];
+  if (!touched && error && initialValue?.length === 0) return [style.base, style.noTouched];
   if (error) return [style.base, style.withError];
   return style.base
 };
@@ -56,13 +56,11 @@ export type InputWithIconProps = {
   title: string | ReactNode
   autoFocus?: boolean
   innerRef?: MutableRefObject<HTMLInputElement>
-  field: FieldInputProps<any>
-  form: FormikProps<any>
-} & InputHTMLAttributes<HTMLInputElement>
+} & FieldInputProps<any> & InputHTMLAttributes<HTMLInputElement>
 
-const InputWithIcon: FC<InputWithIconProps> = ({ innerRef, autoFocus, title, field, ...props }) => {
+const InputWithIcon: FC<InputWithIconProps> = ({ innerRef, autoFocus, title, ...props }) => {
   const ref = useRef<HTMLInputElement>(null);
-  const [, meta] = useField(field)
+  const [, meta] = useField(props)
   const { error } = meta
 
   useEffect(() => {
@@ -74,7 +72,7 @@ const InputWithIcon: FC<InputWithIconProps> = ({ innerRef, autoFocus, title, fie
   return (
     <>
       <div css={style.title}>{title}</div>
-      <input {...field} {...props} ref={innerRef || ref} css={styles(meta)} />
+      <input {...props} ref={innerRef || ref} css={styles(meta)} />
       {!error &&
         <div css={style.okIcon}>
           <FontAwesomeIcon icon={faCheckCircle} />

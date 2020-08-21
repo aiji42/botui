@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import Message from './Message'
-import { FormCustomInput, FormName, FormAddress } from '../Forms/Formik/Forms'
+import { FormCustomInput, FormName, FormAddress, FormBirthDay, FormCreditCard } from '../Forms/Formik/Forms'
 
 const Chat: FC = () => {
   const messages = [
@@ -16,16 +16,24 @@ const Chat: FC = () => {
       content: 'そうですね',
       human: true,
     },
-    {
-      content: <FormCustomInput inputs={[{ name: 'hoge', type: 'text' }]} onSubmited={() => { }} onUpdate={() => { }} />,
-      human: true
-    },
-    {
-      content: <FormName onSubmited={() => { }} onUpdate={() => { }} />,
-      human: true
-    },
+    // {
+    //   content: <FormCustomInput inputs={[{ name: 'hoge', type: 'text' }]} onSubmited={() => { }} onUpdate={() => { }} />,
+    //   human: true
+    // },
+    // {
+    //   content: <FormName onSubmited={() => { }} onUpdate={() => { }} />,
+    //   human: true
+    // },
     {
       content: <FormAddress onSubmited={() => { }} onUpdate={() => { }} />,
+      human: true
+    },
+    {
+      content: <FormBirthDay onSubmited={() => { }} onUpdate={() => { }} />,
+      human: true
+    },
+    {
+      content: <FormCreditCard onSubmited={() => { }} onUpdate={() => { }} />,
       human: true
     }
   ]

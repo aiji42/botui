@@ -1,4 +1,4 @@
-import { FC, useState, useCallback, ChangeEvent } from 'react';
+import { FC, useState, useCallback, ChangeEvent, FocusEvent, useEffect } from 'react';
 import InputWithIcon, { InputWithIconProps } from './InputWithIcon';
 import { useField, Field } from 'formik'
 
@@ -7,23 +7,13 @@ const splitCardNum = (nums: string | number): string => `${nums}`.split('').map(
 const onlyNum = (value: string | number): string => `${value}`.normalize('NFKC').replace(/[^0-9]/g, '');
 
 const InputCreditNumber: FC<InputWithIconProps> = ({ innerRef, ...props }) => {
-  const [field, , { setValue }] = useField(props)
-  const [dummyValue, setDummyValue] = useState<string>('')
+  const [, , helper] = useField(props)
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    field.onChange(e)
-    const newValue = onlyNum(e.target.value)
-    setDummyValue(splitCardNum(newValue))
-    setValue(newValue)
-  }, [field.onChange, setValue, setDummyValue])
+    helper.setValue(splitCardNum(onlyNum(e.target.value)))
+  }, [helper.setValue])
 
-  return (
-    <>
-      <InputWithIcon type="tel" {...field} value={dummyValue}
-        onChange={handleChange} onBlur={field.onBlur} innerRef={innerRef} {...props} name="cardNumberDummy"
-      />
-      <Field type="hidden" {...field} />
-    </>
-  );
+
+  return <InputWithIcon type="tel" {...props} innerRef={innerRef} onChange={handleChange} />
 };
 
 export default InputCreditNumber;

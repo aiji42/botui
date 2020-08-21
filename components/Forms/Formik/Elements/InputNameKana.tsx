@@ -7,7 +7,7 @@ const toKatakana = (value: string): string => value.normalize('NFKC')
   .replace(/[^ァ-ン]/g, '')
 
 const InputNameKana: FC<InputWithIconProps> = ({ innerRef, ...props }) => {
-  const [field, , { setValue }] = useField(props.field)
+  const [field, , { setValue }] = useField(props)
   const handleBuler = useCallback((e: FocusEvent<HTMLInputElement>) => {
     field.onBlur(e)
     setValue(toKatakana(e.target.value))

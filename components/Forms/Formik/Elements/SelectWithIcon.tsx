@@ -1,6 +1,6 @@
-import { FC, ReactNode, InputHTMLAttributes } from 'react';
+import { FC, ReactNode, InputHTMLAttributes, SelectHTMLAttributes } from 'react';
 import { css, SerializedStyles } from '@emotion/core';
-import { FieldMetaProps, useField, FieldAttributes } from 'formik'
+import { FieldMetaProps, useField, FieldInputProps } from 'formik'
 import { okColor, errorColor, baseBorderColor } from '../../shared/baseStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
@@ -59,15 +59,15 @@ const styles = ({ value, error, touched, initialValue }: FieldMetaProps<any>): S
 
 export type SelectWithIconProps = {
   title: string | ReactNode
-} & FieldAttributes<any> & InputHTMLAttributes<HTMLInputElement>
+} & FieldInputProps<any> & SelectHTMLAttributes<HTMLSelectElement>
 
 const SelectWithIcon: FC<SelectWithIconProps> = ({ title, ...props }) => {
-  const [field, meta] = useField(props)
+  const [, meta] = useField(props)
   const { error } = meta
   return (
     <>
       <div css={style.title}>{title}</div>
-      <select {...field} {...props} css={styles(meta)} />
+      <select {...props} css={styles(meta)} />
       {!error &&
         <div css={style.okIcon}>
           <FontAwesomeIcon icon={faCheckCircle} />

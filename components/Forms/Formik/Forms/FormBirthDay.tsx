@@ -36,26 +36,26 @@ const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Field component={SelectWithIcon} name="birthdayYear" title="年">
+      <Field as={SelectWithIcon} name="birthdayYear" title="年">
         {years.map((year) => (<option key={year} value={year}>{year !== '' ? `${year}年` : year}</option>))}
       </Field>
       <ErrorMessage name="birthdayYear" component={SpanErrorMessage} />
 
       <div css={[style.formBlockDetailHalfField, style.left]}>
-        <Field component={SelectWithIcon} name="birthdayMonth" title="月">
+        <Field as={SelectWithIcon} name="birthdayMonth" title="月">
           <option value=""></option>
           {monthes.map((month) => (<option key={month} value={month}>{month}月</option>))}
         </Field>
         <ErrorMessage name="birthdayMonth" component={SpanErrorMessage} />
       </div>
       <div css={style.formBlockDetailHalfField}>
-        <Field component={SelectWithIcon} name="birthdayDay" title="日">
+        <Field as={SelectWithIcon} name="birthdayDay" title="日">
           <option value=""></option>
           {days.map((day) => (<option key={day} value={day}>{day}日</option>))}
         </Field>
         <ErrorMessage name="birthdayDay" component={SpanErrorMessage} />
       </div>
-      <Field component={ButtonSubmit} />
+      <Field as={ButtonSubmit} />
     </form>
   );
 };

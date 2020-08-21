@@ -5,7 +5,7 @@ import { useField } from 'formik'
 const removeSpace = (value: string): string => value.replace(/[\s]/g, '');
 
 const InputName: FC<InputWithIconProps> = ({ innerRef, ...props }) => {
-  const [field, , { setValue }] = useField(props.field)
+  const [field, , { setValue }] = useField(props)
   const handleBuler = useCallback((e: FocusEvent<HTMLInputElement>) => {
     field.onBlur(e)
     setValue(removeSpace(e.target.value))

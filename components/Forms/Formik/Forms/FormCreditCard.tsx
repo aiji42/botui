@@ -1,5 +1,5 @@
-import { FC, useMemo } from 'react';
-import { withFormik, Field, ErrorMessage, FormikProps } from 'formik';
+import { FC, useMemo, useEffect } from 'react';
+import { withFormik, Field, ErrorMessage, FormikProps, useField } from 'formik';
 import * as yup from 'yup';
 import cardValidator from 'card-validator'
 import InputCreditNumber from '../Elements/InputCreditNumber';
@@ -31,6 +31,8 @@ const style = {
   `
 }
 
+const onlyNum = (value: string | number): string => `${value}`.normalize('NFKC').replace(/[^0-9]/g, '');
+
 interface Values {
   creditCardNumber: string
   creditCardExpiryYear: string
@@ -43,23 +45,29 @@ const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
   const { handleSubmit } = props;
   const years = useMemo(() => [...Array(15)].map((_, k) => new Date().getFullYear() + k), [])
   const monthes = useMemo(() => [...Array(12)].map((_, k) => k + 1), [])
+  const [, { value: dummyNum }] = useField('creditCardNumberDummy')
+  const [, , { setValue: setNum }] = useField('creditCardNumber')
+  useEffect(() => {
+    setNum(onlyNum(dummyNum))
+  }, [dummyNum])
 
   return (
     <form onSubmit={handleSubmit}>
-      <Field component={InputCreditNumber} autoComplete="cc-number" placeholder="0123 4567 8901 2345" name="creditCardNumber" title="カード番号" autoFocus />
-      <ErrorMessage name="creditCardNumber" component={SpanErrorMessage} />
+      <Field as={InputCreditNumber} autoComplete="cc-number" placeholder="0123 4567 8901 2345" name="creditCardNumberDummy" title="カード番号" autoFocus />
+      <ErrorMessage name="creditCardNumberDummy" component={SpanErrorMessage} />
+      <Field type="hidden" name="creditCardNumber" />
 
-      <Field component={InputWithIcon} type="text" autoComplete="cc-name" placeholder="TARO YAMADA" name="creditCardName" title="クレジットカード名義人" />
+      <Field as={InputWithIcon} type="text" autoComplete="cc-name" placeholder="TARO YAMADA" name="creditCardName" title="クレジットカード名義人" />
       <ErrorMessage name="creditCardName" component={SpanErrorMessage} />
 
       <div css={[style.narrowField, style.left]}>
-        <Field component={SelectWithIcon} name="creditCardExpiryMonth" title="月" autoComplete="cc-exp-month">
+        <Field as={SelectWithIcon} name="creditCardExpiryMonth" title="月" autoComplete="cc-exp-month">
           <option value="">MM</option>
           {monthes.map((month) => (<option key={month} value={`0${month}`.slice(-2)}>{`0${month}`.slice(-2)}</option>))}
         </Field>
       </div>
       <div css={[style.narrowField]}>
-        <Field component={SelectWithIcon} name="creditCardExpiryYear" title="年" autoComplete="cc-exp-year">
+        <Field as={SelectWithIcon} name="creditCardExpiryYear" title="年" autoComplete="cc-exp-year">
           <option value="">YY</option>
           {years.map((year) => (<option key={year} value={year}>{`${year}`.slice(-2)}</option>))}
         </Field>
@@ -67,10 +75,10 @@ const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
       <ErrorMessage name="creditCardExpiryYear" component={SpanErrorMessage} />
       <ErrorMessage name="creditCardExpiryMonth" component={SpanErrorMessage} />
 
-      <Field component={InputNumber} autoComplete="cc-csc" placeholder="123" name="creditCardCvc" title={<span>CVC <small>(通常裏面に刻印されています)</small></span>} />
+      <Field as={InputNumber} autoComplete="cc-csc" placeholder="123" name="creditCardCvc" title={<span>CVC <small>(通常裏面に刻印されています)</small></span>} />
       <ErrorMessage name="creditCardCvc" component={SpanErrorMessage} />
 
-      <Field component={ButtonSubmit} />
+      <Field as={ButtonSubmit} />
     </form>
   );
 };
@@ -78,21 +86,22 @@ const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
 const FormBirthDay = withFormik<HandleSubmitProps, Values>({
   mapPropsToValues: () => ({
     creditCardNumber: '',
+    creditCardNumberDummy: '',
     creditCardExpiryYear: '',
     creditCardExpiryMonth: '',
     creditCardName: '',
     creditCardCvc: ''
   }),
   validationSchema: yup.object().shape({
-    creditCardNumber: yup.string()
+    creditCardNumberDummy: yup.string()
       .required('入力してください')
-      .test('credit-card-number', '正しい番号を入力してください', (val) => cardValidator.number(val).isValid),
-    creditCardExpiryYear: yup.string().required('選択してください'),
-    creditCardExpiryMonth: yup.string()
+      .test('credit-card-number-duumy', '正しい番号を入力してください', function () { return cardValidator.number(this.parent.creditCardNumber).isValid }),
+    creditCardExpiryYear: yup.string()
       .required('選択してください')
       .test('credit-card-date', '正しい有効期限を選択してください', function (val) {
-        return cardValidator.expirationDate({ month: val, year: this.parent.creditCardExpiryYear }).isValid
+        return cardValidator.expirationDate({ month: this.parent.creditCardExpiryMonth, year: val }).isValid
       }),
+    creditCardExpiryMonth: yup.string().required('選択してください'),
     creditCardName: yup.string().required('入力して下さい'),
     creditCardCvc: yup.string()
       .required('入力してください')

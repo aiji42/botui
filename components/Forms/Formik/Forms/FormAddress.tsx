@@ -28,7 +28,7 @@ interface Values {
 const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
   const { handleSubmit } = props;
 
-  const { address, sanitizedCode, setPostalCode } = usePostalJp()
+  const { address, sanitizedCode, error: postalError, pending, setPostalCode } = usePostalJp()
   const [, postalCodeMeta, postalCodeHelper] = useField('postalCode')
   const [, , prefHelper] = useField('pref')
   const [, , cityHelper] = useField('city')
@@ -39,7 +39,7 @@ const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
     const { prefectureCode, address1, address2, address3, address4 } = address
     if (prefectureCode) prefHelper.setValue(prefectureCode)
     if (address1) cityHelper.setValue(address1 + address2 + address3 + address4)
-  }, [address, prefHelper.setValue, cityHelper.setValue])
+  }, [address])
 
   useEffect(() => {
     setPostalCode(postalCodeMeta.value)
@@ -48,27 +48,27 @@ const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
   useEffect(() => {
     if (sanitizedCode.length !== 7) return
     postalCodeHelper.setValue(sanitizedCode)
-    inputStreetEl.current?.focus()
-  }, [sanitizedCode, postalCodeHelper.setValue])
+    !pending && !postalError && inputStreetEl.current?.focus()
+  }, [sanitizedCode, postalError, pending])
 
   return (
     <form onSubmit={handleSubmit}>
-      <Field component={InputNumber} name="postalCode" placeholder="1500002" title="郵便番号" autoFocus/>
+      <Field as={InputNumber} name="postalCode" placeholder="1500002" title="郵便番号" autoFocus/>
       <ErrorMessage name="postalCode" component={SpanErrorMessage} />
 
-      <Field component={SelectWithIcon} name="pref" title="都道府県">
+      <Field as={SelectWithIcon} name="pref" title="都道府県">
         <option value=""></option>
         {prefectures.map((title, index) => (<option key={index + 1} value={index + 1}>{title}</option>))}
       </Field>
       <ErrorMessage name="pref" component={SpanErrorMessage} />
 
-      <Field component={InputWithIcon} type="text" placeholder="〇〇市〇〇町" name="city" title="市区町村" />
+      <Field as={InputWithIcon} type="text" placeholder="〇〇市〇〇町" name="city" title="市区町村" />
       <ErrorMessage name="city" component={SpanErrorMessage} />
 
-      <Field component={InputWithIcon} type="text" placeholder="1-2-3" innerRef={inputStreetEl} name="street" title="番地・マンション名・部屋番号" />
+      <Field as={InputWithIcon} type="text" placeholder="1-2-3" innerRef={inputStreetEl} name="street" title="番地・マンション名・部屋番号" />
       <ErrorMessage name="street" component={SpanErrorMessage} />
 
-      <Field component={ButtonSubmit} />
+      <Field as={ButtonSubmit} />
     </form>
   );
 };
