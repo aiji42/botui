@@ -1,68 +1,56 @@
-import { FC } from 'react'
+import { FC, useState, useEffect } from 'react'
 import Message from './Message'
-import { FormCustomInput, FormName, FormEmail, FormTel, FormAddress, FormBirthDay, FormCreditCard, FormCustomRadioGroup, FormCustomSelect, FormCustomTextarea } from '../Forms/Formik/Forms'
+import * as Forms from '../Forms/Formik/Forms'
+
+interface MessageString {
+  content: string
+  human: boolean
+}
+
+type ComponentKeys = 'FormAddress' | 'FormBirthDay' | 'FormEmail' | 'FormName' | 'FormTel' | 'FormCreditCard'
+  | 'FormCustomRadioGroup' | 'FormCustomSelect' | 'FormCustomInput' | 'FormCustomTextarea' | 'FormConfirm'
+
+interface MessageComponentDefinition {
+  content: { component: ComponentKeys, props: any }
+  human: boolean
+}
+const isMessageComponentDefinition = (arg: MessageString | MessageComponentDefinition): arg is MessageComponentDefinition => typeof arg.content !== 'string'
+
+interface MessageComponent {
+  content: JSX.Element
+  human: boolean
+}
+
+const useMessages = (messages: Array<MessageString | MessageComponentDefinition>): Array<MessageString | MessageComponent> => {
+  return messages.reduce<Array<MessageString | MessageComponent>>((res, message) => {
+    if (isMessageComponentDefinition(message)) {
+      const Component = Forms[message.content.component]
+      return [...res, { ...message, content: <Component {...message.content.props} /> }]
+    }
+    else return [...res, message]
+  }, [])
+}
 
 const Chat: FC = () => {
-  const messages = [
-    {
-      content: 'テストです。',
-      human: false,
-    },
-    {
-      content: 'いい感じです',
-      human: false,
-    },
-    {
-      content: 'そうですね',
-      human: true,
-    },
-    {
-      content: <FormName onSubmited={() => { }} onUpdate={() => { }} />,
-      human: true
-    },
-    {
-      content: <FormAddress onSubmited={() => { }} onUpdate={() => { }} />,
-      human: true
-    },
-    {
-      content: <FormBirthDay onSubmited={() => { }} onUpdate={() => { }} />,
-      human: true
-    },
-    {
-      content: <FormCreditCard onSubmited={() => { }} onUpdate={() => { }} />,
-      human: true
-    },
-    {
-      content: <FormCustomRadioGroup name="sex" inputs={[{ title: '男性', value: 'male' }, {title: '女性', value: 'female'}]} onSubmited={() => { }} onUpdate={() => { }} />,
-      human: true
-    },
-    {
-      content: <FormCustomSelect selects={[{ name: 'hoge', select: { title: 'aaaa' }, options: [{ value: '', label: '選択' }, { value: 'a', label: 'aaa' }] }]} onSubmited={() => { }} onUpdate={() => { }} />,
-      human: true
-    },
-    {
-      content: <FormCustomTextarea name="hoge" title="aaa" onSubmited={() => { }} onUpdate={() => { }} />,
-      human: true
-    },
-    {
-      content: <FormCustomInput inputs={[{ name: 'hoge', title: 'hjoe' }]} onSubmited={() => { }} onUpdate={() => { }} />,
-      human: true
-    },
-    {
-      content: <FormTel onSubmited={() => { }} onUpdate={() => { }} />,
-      human: true
-    },
-    {
-      content: <FormEmail onSubmited={() => { }} onUpdate={() => { }} />,
-      human: true
-    },
-  ]
+  const [messages, setMessages] = useState([{
+    content: 'テストです。',
+    human: false,
+  }])
+  useEffect(() => {
+    
+  }, [messages])
 
   return (
     <div>
-      {messages.map((msg, i) => (
+      {useMessages(messages).map((msg, i) => (
         <Message {...msg} key={i} />
       ))}
+      <button onClick={() => {
+        setMessages([...messages, {
+          content: 'テストです。',
+          human: false,
+        }])
+      }}>追加</button>
     </div>
   )
 }
