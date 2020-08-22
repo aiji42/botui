@@ -1,5 +1,3 @@
-import { FormName } from '../..';
-
 export { default as FormAddress } from './FormAddress';
 export { default as FormBirthDay } from './FormBirthDay';
 export { default as FormConfirm } from './FormConfirm';
