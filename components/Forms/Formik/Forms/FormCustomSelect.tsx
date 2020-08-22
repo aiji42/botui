@@ -12,7 +12,7 @@ interface Values {
 
 interface Select {
   name: string
-  select: SelectHTMLAttributes<HTMLSelectElement> & { title: string }
+  select: SelectHTMLAttributes<HTMLSelectElement> & { title?: string }
   options: OptionHTMLAttributes<HTMLOptionElement>[]
 }
 
@@ -25,15 +25,15 @@ const Form: FC<FormikProps<Values> & Props & HandleSubmitProps> = (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      {selects.map(({ name, select: { title, ...selectAttributes }, options }, index) => (
+      {selects.map(({ name, select, options }, index) => (
         <Fragment key={index}>
-          <Field component={SelectWithIcon} name={name} {...selectAttributes} title={title}>
+          <Field as={SelectWithIcon} name={name} {...select}>
             {options.map((attributes, index) => <option key={index} {...attributes} />)}
           </Field>
           <ErrorMessage name={name} component={SpanErrorMessage} />
         </Fragment>
       ))}
-      <Field component={ButtonSubmit} />
+      <Field as={ButtonSubmit} />
     </form>
   );
 };

@@ -58,7 +58,7 @@ const styles = ({ value, error, touched, initialValue }: FieldMetaProps<any>): S
 };
 
 export type SelectWithIconProps = {
-  title: string | ReactNode
+  title?: string | Element
 } & FieldInputProps<any> & SelectHTMLAttributes<HTMLSelectElement>
 
 const SelectWithIcon: FC<SelectWithIconProps> = ({ title, ...props }) => {
@@ -66,7 +66,7 @@ const SelectWithIcon: FC<SelectWithIconProps> = ({ title, ...props }) => {
   const { error } = meta
   return (
     <>
-      <div css={style.title}>{title}</div>
+      {title && <div css={style.title}>{title}</div>}
       <select {...props} css={styles(meta)} />
       {!error &&
         <div css={style.okIcon}>

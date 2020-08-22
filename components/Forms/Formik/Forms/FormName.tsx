@@ -1,4 +1,4 @@
-import React, { useEffect, FC, KeyboardEvent } from 'react';
+import React, { useEffect, FC, KeyboardEvent, useReducer } from 'react';
 import { withFormik, Field, ErrorMessage, useField, FormikProps } from 'formik';
 import * as yup from 'yup';
 import InputName from '../Elements/InputName';
@@ -6,7 +6,7 @@ import InputNameKana from '../Elements/InputNameKana';
 import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import { css } from '@emotion/core';
-// import { useKana } from 'react-use-kana'
+import historyKana from 'historykana'
 import { customHandleSubmit, HandleSubmitProps } from './modules'
 
 const style = {
@@ -32,39 +32,50 @@ interface Values {
   firstNameKana: string
 }
 
+const reducer = (state: string[], input: string) => {
+  return [...state, input]
+}
+
 const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
   const { handleSubmit } = props;
-  // const { kana: familyNameKana, setKanaSource: setFamilyNameKanaSource } = useKana()
-  // const { kana: firstNameKana, setKanaSource: setFirstNameKanaSource } = useKana()
-  const [, , { setValue: setFamilyNameKana }] = useField('familyNameKana')
-  const [, , { setValue: setFirstNameKana }] = useField('firstNameKana')
+  const [, , familyNameKanaHelper] = useField('familyNameKana')
+  const [, , firstNameKanaHelper] = useField('firstNameKana')
+  const [familyNameHistory, pushFamilyNameHistory] = useReducer(reducer, [])
+  const [firstNameHistory, pushFirstNameHistory] = useReducer(reducer, [])
 
-  // useEffect(() => { setFamilyNameKana(toKatakana(familyNameKana)) }, [familyNameKana, setFamilyNameKana])
-  // useEffect(() => { setFirstNameKana(toKatakana(firstNameKana)) }, [firstNameKana, setFirstNameKana])
+  useEffect(() => {
+    familyNameKanaHelper.setValue(toKatakana(historyKana(familyNameHistory)))
+    familyNameHistory.length && familyNameKanaHelper.setTouched(true)
+  }, [familyNameHistory])
+
+  useEffect(() => {
+    firstNameKanaHelper.setValue(toKatakana(historyKana(firstNameHistory)))
+    firstNameHistory.length && firstNameKanaHelper.setTouched(true)
+  }, [firstNameHistory])
 
   return (
     <form onSubmit={handleSubmit}>
       <div css={[style.formBlockDetailHalf, style.left]}>
-        <Field component={InputName} name="familyName" placeholder="山田" title="姓" autoFocus
-          // onKeyUp={(e: KeyboardEvent<HTMLInputElement>) => setFamilyNameKanaSource(e.currentTarget.value)}
+        <Field as={InputName} name="familyName" placeholder="山田" title="姓" autoFocus
+          onInput={(e: KeyboardEvent<HTMLInputElement>) => pushFamilyNameHistory(e.currentTarget.value)}
         />
         <ErrorMessage name="familyName" component={SpanErrorMessage} />
       </div>
       <div css={style.formBlockDetailHalf}>
-        <Field component={InputName} name="firstName" placeholder="太郎" title="名"
-          // onKeyUp={(e: KeyboardEvent<HTMLInputElement>) => setFirstNameKanaSource(e.currentTarget.value)}
+        <Field as={InputName} name="firstName" placeholder="太郎" title="名"
+          onInput={(e: KeyboardEvent<HTMLInputElement>) => pushFirstNameHistory(e.currentTarget.value)}
         />
         <ErrorMessage name="firstName" component={SpanErrorMessage} />
       </div>
       <div css={[style.formBlockDetailHalf, style.left]}>
-        <Field component={InputNameKana} name="familyNameKana" placeholder="ヤマダ" title="セイ" />
+        <Field as={InputNameKana} name="familyNameKana" placeholder="ヤマダ" title="セイ" />
         <ErrorMessage name="familyNameKana" component={SpanErrorMessage} />
       </div>
       <div css={style.formBlockDetailHalf}>
-        <Field component={InputNameKana} name="firstNameKana" placeholder="タロウ" title="メイ" />
+        <Field as={InputNameKana} name="firstNameKana" placeholder="タロウ" title="メイ" />
         <ErrorMessage name="firstNameKana" component={SpanErrorMessage} />
       </div>
-      <Field component={ButtonSubmit} name="submit" />
+      <Field as={ButtonSubmit} name="submit" />
     </form>
   );
 };

@@ -1,7 +1,7 @@
 import { FC, useState, useEffect, ButtonHTMLAttributes } from 'react';
 import Button from './Button';
 // import { findStoredValue, dataStore } from '../../../../dataStore';
-import { useFormikContext, FormikValues, FormikProps } from 'formik';
+import { useFormikContext, FormikValues } from 'formik';
 
 const dataStore: { [x: string]: any } = {}
 const findStoredValue = (arg: any): any => arg

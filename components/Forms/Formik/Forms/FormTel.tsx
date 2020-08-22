@@ -16,10 +16,10 @@ const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Field component={InputNumber} name="tel" placeholder="09012345678" title="電話番号(ハイフン無し)" autoFocus />
+      <Field as={InputNumber} name="tel" placeholder="09012345678" title="電話番号(ハイフン無し)" autoFocus />
       <ErrorMessage name="tel" component={SpanErrorMessage} />
 
-      <Field component={ButtonSubmit} />
+      <Field as={ButtonSubmit} />
     </form>
   );
 };

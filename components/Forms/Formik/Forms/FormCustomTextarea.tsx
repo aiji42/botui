@@ -1,6 +1,7 @@
-import { FC } from 'react';
+import { FC, TextareaHTMLAttributes } from 'react';
 import PropTypes from 'prop-types';
 import { withFormik, Field, ErrorMessage, FormikProps } from 'formik';
+import * as yup from 'yup';
 import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import TextareaWithIcon from '../Elements/TextareaWithIcon';
@@ -11,16 +12,15 @@ interface Values {
 }
 
 type PropTypes = {
-  title: string
-  placeholder?: string
-} & CustomYupProps & HandleSubmitProps
+  title?: string
+} & TextareaHTMLAttributes<HTMLTextAreaElement> & CustomYupProps & HandleSubmitProps
 
 const Form: FC<FormikProps<Values> & PropTypes> = (props) => {
-  const { name, placeholder, title, handleSubmit } = props;
+  const { name, title, placeholder, handleSubmit } = props;
 
   return (
     <form onSubmit={handleSubmit}>
-      <Field name={name} component={TextareaWithIcon} placeholder={placeholder} title={title} autoFocus />
+      <Field as={TextareaWithIcon} name={name} title={title} placeholder={placeholder} autoFocus />
       <ErrorMessage name={name} component={SpanErrorMessage} />
       <Field component={ButtonSubmit} />
     </form>
@@ -29,7 +29,7 @@ const Form: FC<FormikProps<Values> & PropTypes> = (props) => {
 
 const FormCustomTextarea = withFormik<PropTypes, Values>({
   mapPropsToValues: ({ name }: PropTypes) => ({ [name]: '' }),
-  validationSchema: customYup,
+  validationSchema: (props: PropTypes) => yup.object().shape<object>(customYup(props)),
   validateOnMount: true,
   handleSubmit: customHandleSubmit,
 })(Form);

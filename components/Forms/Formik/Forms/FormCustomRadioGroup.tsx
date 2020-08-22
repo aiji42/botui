@@ -18,21 +18,19 @@ interface Values {
 
 interface Props {
   name: string
-  inputs: (InputHTMLAttributes<HTMLIFrameElement> & { title: string })[]
+  inputs: (InputHTMLAttributes<HTMLInputElement> & { title: string })[]
 }
 
 const Form: FC<FormikProps<Values> & Props & HandleSubmitProps> = (props) => {
   const { name, inputs, handleSubmit } = props;
 
   return (
-    <form onChange={handleSubmit}>
-      <Field name={name}>
-        {inputs.map(({ title, ...attributes }, index) => (
-          <div key={index} css={index > 0 ? style.mergin : ''}>
-            <RadioInput title={title} {...attributes} name={name} />
-          </div>
-        ))}
-      </Field>
+    <form onSubmit={handleSubmit}>
+      {inputs.map(({ title, ...attributes }, index) => (
+        <div key={index} css={index > 0 ? style.mergin : ''}>
+          <Field name={name} title={title} {...attributes} as={RadioInput} />
+        </div>
+      ))}
       <ErrorMessage name={name} component={SpanErrorMessage} />
     </form>
   );

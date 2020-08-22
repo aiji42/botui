@@ -1,4 +1,4 @@
-import { useState, FC, useCallback, ReactNode, FocusEvent } from 'react';
+import { useState, FC, useCallback, FocusEvent } from 'react';
 import { css, SerializedStyles } from '@emotion/core';
 import { okColor, errorColor, baseBorderColor } from '../../shared/baseStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -55,7 +55,7 @@ const styles = ({ error, touched, initialValue }: FieldMetaProps<any>): Serializ
 };
 
 type Props = {
-  title: string | ReactNode
+  title?: string | Element
 } & FieldAttributes<any>  & TextareaAutosizeProps
 
 const TextareaWithIcon: FC<Props> = ({ title, ...props }) => {
@@ -72,7 +72,7 @@ const TextareaWithIcon: FC<Props> = ({ title, ...props }) => {
   return (
     <>
       <div css={style.title}>{title}</div>
-      <TextareaAutosize {...field} {...props} minRows={minRows} css={styles(meta)} onFocus={handleFocus} onBlur={handleBlur} />
+      <TextareaAutosize {...props} minRows={minRows} css={styles(meta)} onFocus={handleFocus} onBlur={handleBlur} />
       {!error &&
         <div css={style.okIcon}>
           <FontAwesomeIcon icon={faCheckCircle} />

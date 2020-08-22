@@ -1,6 +1,6 @@
 import { FC, ReactNode, InputHTMLAttributes, useMemo } from 'react';
 import { css } from '@emotion/core';
-import { useField, FieldAttributes } from 'formik'
+import { useField, FieldAttributes, FieldInputProps } from 'formik'
 import { okColor, baseBorderColor } from '../../shared/baseStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDotCircle, faCircle } from '@fortawesome/free-solid-svg-icons';
@@ -48,10 +48,10 @@ const style = {
 type Props = {
   title: string | ReactNode
   value: any
-} & FieldAttributes<any> & InputHTMLAttributes<HTMLInputElement>
+} & FieldInputProps<any> & InputHTMLAttributes<HTMLInputElement>
 
 const RadioInput: FC<Props> = ({ value, title, ...props }) => {
-  const [field, { value: formValue }] = useField(props)
+  const [, { value: formValue }] = useField(props)
   const checked = useMemo(() => formValue === value, [formValue, value])
 
   return (
@@ -60,7 +60,7 @@ const RadioInput: FC<Props> = ({ value, title, ...props }) => {
         {checked ? <FontAwesomeIcon icon={faDotCircle} /> : <FontAwesomeIcon icon={faCircle} />}
       </div>
       <span>{title}</span>
-      <input {...field} {...props} value={value} type="radio" css={style.input} checked={checked} />
+      <input {...props} value={value} type="radio" css={style.input} checked={checked} />
     </label>
   );
 };

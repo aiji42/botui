@@ -11,7 +11,7 @@ interface Values {
 }
 
 interface Props {
-  inputs: ({ title?: string } & InputHTMLAttributes<HTMLIFrameElement> & { type: 'text' | 'number' | 'tel' } & CustomYupProps)[]
+  inputs: ({ title?: string } & InputHTMLAttributes<HTMLIFrameElement> & { type?: 'text' | 'number' | 'tel' } & CustomYupProps)[]
 }
 
 const Form: FC<FormikProps<Values> & Props & HandleSubmitProps> = (props) => {
@@ -21,7 +21,7 @@ const Form: FC<FormikProps<Values> & Props & HandleSubmitProps> = (props) => {
     <form onSubmit={handleSubmit}>
       {inputs.map(({ validation: _, title, ...attributes }, index) => (
         <Fragment key={index}>
-          <Field component={InputWithIcon} {...attributes} title={title} autoFocus={index === 0} />
+          <Field as={InputWithIcon} {...attributes} title={title} autoFocus={index === 0} />
           <ErrorMessage name={attributes.name} component={SpanErrorMessage} />
         </Fragment>
       ))}
