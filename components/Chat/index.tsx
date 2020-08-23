@@ -15,8 +15,8 @@ const Chat: FC = () => {
       ))}
       <button onClick={() => {
         action.add({
-          content: 'テストです。',
-          human: false,
+          content: { component: 'FormAddress', props: {} },
+          human: true,
           delay: 1000
         })
       }}>追加</button>
