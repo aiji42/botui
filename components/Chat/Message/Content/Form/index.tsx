@@ -14,7 +14,10 @@ export interface FormType {
 const Form: FC = () => {
   const { message, handleUpdate } = useContext(MessageContext)
   const props = message.content.props as FormType
-  const handleComplete = useCallback(() => { handleUpdate({ ...message, completed: true }) }, [handleUpdate])
+  const handleComplete = useCallback((p: FormType) => {
+    const newContent = { ...message.content, props: { ...props, props: p } }
+    handleUpdate({ ...message, content: newContent, completed: true })
+  }, [props])
 
   if (props.type === 'FormAddress') return <Forms.FormAddress {...props.props} onSubmited={handleComplete} />
   if (props.type === 'FormBirthDay') return <Forms.FormBirthDay {...props.props} onSubmited={handleComplete} />

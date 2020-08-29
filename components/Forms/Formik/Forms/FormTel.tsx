@@ -19,7 +19,7 @@ const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
       <Field as={InputNumber} name="tel" placeholder="09012345678" title="電話番号(ハイフン無し)" autoFocus />
       <ErrorMessage name="tel" component={SpanErrorMessage} />
 
-      <Field as={ButtonSubmit} />
+      <Field as={ButtonSubmit} name="submit" />
     </form>
   );
 };

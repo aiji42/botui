@@ -78,7 +78,7 @@ const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
       <Field as={InputNumber} autoComplete="cc-csc" placeholder="123" name="creditCardCvc" title={<span>CVC <small>(通常裏面に刻印されています)</small></span>} />
       <ErrorMessage name="creditCardCvc" component={SpanErrorMessage} />
 
-      <Field as={ButtonSubmit} />
+      <Field as={ButtonSubmit} name="submit" />
     </form>
   );
 };

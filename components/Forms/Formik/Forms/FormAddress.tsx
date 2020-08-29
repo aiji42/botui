@@ -68,7 +68,7 @@ const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
       <Field as={InputWithIcon} type="text" placeholder="1-2-3" innerRef={inputStreetEl} name="street" title="番地・マンション名・部屋番号" />
       <ErrorMessage name="street" component={SpanErrorMessage} />
 
-      <Field as={ButtonSubmit} />
+      <Field as={ButtonSubmit} name="submit" />
     </form>
   );
 };

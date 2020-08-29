@@ -1,4 +1,4 @@
-import React, { useEffect, FC, KeyboardEvent, useReducer } from 'react';
+import React, { useEffect, FC, KeyboardEvent, useRef } from 'react';
 import { withFormik, Field, ErrorMessage, useField, FormikProps } from 'formik';
 import * as yup from 'yup';
 import InputName from '../Elements/InputName';
@@ -6,7 +6,7 @@ import InputNameKana from '../Elements/InputNameKana';
 import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import { css } from '@emotion/core';
-import historyKana from 'historykana'
+import { useKana } from 'react-use-kana'
 import { customHandleSubmit, HandleSubmitProps } from './modules'
 
 const style = {
@@ -32,38 +32,45 @@ interface Values {
   firstNameKana: string
 }
 
-const reducer = (state: string[], input: string) => {
-  return [...state, input]
-}
-
 const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
   const { handleSubmit } = props;
+  const { kana: familyNameKana, setKanaSource: setFamilyNameKanaSource } = useKana()
+  const { kana: firstNameKana, setKanaSource: setFirstNameKanaSource } = useKana()
   const [, , familyNameKanaHelper] = useField('familyNameKana')
   const [, , firstNameKanaHelper] = useField('firstNameKana')
-  const [familyNameHistory, pushFamilyNameHistory] = useReducer(reducer, [])
-  const [firstNameHistory, pushFirstNameHistory] = useReducer(reducer, [])
+  const FamilyNameMounted = useRef(false)
+  const FirstNameMounted = useRef(false)
 
   useEffect(() => {
-    familyNameKanaHelper.setValue(toKatakana(historyKana(familyNameHistory)))
-    familyNameHistory.length && familyNameKanaHelper.setTouched(true)
-  }, [familyNameHistory])
+    if (!FamilyNameMounted.current) {
+      FamilyNameMounted.current = true
+      return
+    }
+    familyNameKanaHelper.setValue(toKatakana(familyNameKana))
+    !!familyNameKana && familyNameKanaHelper.setTouched(true)
+
+  }, [familyNameKana])
 
   useEffect(() => {
-    firstNameKanaHelper.setValue(toKatakana(historyKana(firstNameHistory)))
-    firstNameHistory.length && firstNameKanaHelper.setTouched(true)
-  }, [firstNameHistory])
+    if (!FirstNameMounted.current) {
+      FirstNameMounted.current = true
+      return
+    }
+    firstNameKanaHelper.setValue(toKatakana(firstNameKana))
+    !!firstNameKana && firstNameKanaHelper.setTouched(true)
+  }, [firstNameKana])
 
   return (
     <form onSubmit={handleSubmit}>
       <div css={[style.formBlockDetailHalf, style.left]}>
         <Field as={InputName} name="familyName" placeholder="山田" title="姓" autoFocus
-          onInput={(e: KeyboardEvent<HTMLInputElement>) => pushFamilyNameHistory(e.currentTarget.value)}
+          onInput={(e: KeyboardEvent<HTMLInputElement>) => setFamilyNameKanaSource(e.currentTarget.value)}
         />
         <ErrorMessage name="familyName" component={SpanErrorMessage} />
       </div>
       <div css={style.formBlockDetailHalf}>
         <Field as={InputName} name="firstName" placeholder="太郎" title="名"
-          onInput={(e: KeyboardEvent<HTMLInputElement>) => pushFirstNameHistory(e.currentTarget.value)}
+          onInput={(e: KeyboardEvent<HTMLInputElement>) => setFirstNameKanaSource(e.currentTarget.value)}
         />
         <ErrorMessage name="firstName" component={SpanErrorMessage} />
       </div>
@@ -80,12 +87,13 @@ const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
   );
 };
 
-const FormName = withFormik<HandleSubmitProps, Values>({
-  mapPropsToValues: () => ({
+const FormName = withFormik<HandleSubmitProps & { values: any }, Values>({
+  mapPropsToValues: ({ values }) => ({
     familyName: '',
     familyNameKana: '',
     firstName: '',
     firstNameKana: '',
+    ...values
   }),
   validationSchema: yup.object().shape({
     familyName: yup.string().required('入力してください').max(50, '入力内容が長すぎます'),

@@ -22,7 +22,7 @@ const Form: FC<FormikProps<Values> & PropTypes> = (props) => {
     <form onSubmit={handleSubmit}>
       <Field as={TextareaWithIcon} name={name} title={title} placeholder={placeholder} autoFocus />
       <ErrorMessage name={name} component={SpanErrorMessage} />
-      <Field component={ButtonSubmit} />
+      <Field component={ButtonSubmit} name="submit" />
     </form>
   );
 };

@@ -17,7 +17,7 @@ const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
     <form onSubmit={handleSubmit}>
       <Field as={InputWithIcon} type="email" placeholder="yamada@example.com" name="email" title="メールアドレス" autoFocus />
       <ErrorMessage name="email" component={SpanErrorMessage} />
-      <Field as={ButtonSubmit} />
+      <Field as={ButtonSubmit} name="submit" />
     </form>
   );
 };

@@ -55,7 +55,7 @@ const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
         </Field>
         <ErrorMessage name="birthdayDay" component={SpanErrorMessage} />
       </div>
-      <Field as={ButtonSubmit} />
+      <Field as={ButtonSubmit} name="submit" />
     </form>
   );
 };

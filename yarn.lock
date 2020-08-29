@@ -2797,10 +2797,10 @@ for-in@^1.0.2:
   resolved "https://registry.yarnpkg.com/for-in/-/for-in-1.0.2.tgz#81068d295a8142ec0ac726c6e2200c30fb6d5e80"
   integrity sha1-gQaNKVqBQuwKxybG4iAMMPttXoA=
 
-formik@^2.1.5:
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/formik/-/formik-2.1.5.tgz#de5bbbe35543fa6d049fe96b8ee329d6cd6892b8"
-  integrity sha512-bWpo3PiqVDYslvrRjTq0Isrm0mFXHiO33D8MS6t6dWcqSFGeYF52nlpCM2xwOJ6tRVRznDkL+zz/iHPL4LDuvQ==
+formik@2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/formik/-/formik-2.1.4.tgz#8deef07ec845ea98f75e03da4aad7aab4ac46570"
+  integrity sha512-oKz8S+yQBzuQVSEoxkqqJrKQS5XJASWGVn6mrs+oTWrBoHgByVwwI1qHiVc9GKDpZBU9vAxXYAKz2BvujlwunA==
   dependencies:
     deepmerge "^2.1.1"
     hoist-non-react-statics "^3.3.0"
@@ -4349,6 +4349,11 @@ react-textarea-autosize@^8.2.0:
     "@babel/runtime" "^7.10.2"
     use-composed-ref "^1.0.0"
     use-latest "^1.0.0"
+
+react-use-kana@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/react-use-kana/-/react-use-kana-2.2.1.tgz#36729dbe7680564e4e28f3b43a16a91ad41ee1a8"
+  integrity sha512-kKRvgqdRQk47JTwmrhEQ7CLiT3IXjTXYrZeV4fmkpZIXHEqGoe6oDPm+zAUOSkwWcQ6Abw8al+a5TIdRb9oZew==
 
 react@^16.13.1:
   version "16.13.1"

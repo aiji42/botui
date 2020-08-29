@@ -33,7 +33,7 @@ const Form: FC<FormikProps<Values> & Props & HandleSubmitProps> = (props) => {
           <ErrorMessage name={name} component={SpanErrorMessage} />
         </Fragment>
       ))}
-      <Field as={ButtonSubmit} />
+      <Field as={ButtonSubmit} name="submit" />
     </form>
   );
 };
