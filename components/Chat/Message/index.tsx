@@ -1,8 +1,9 @@
-import { FC } from 'react'
+import { FC, useContext } from 'react'
 import OperatorIcon from './OperatorIcon'
 import Bubble from './Bubble'
-import Content from './Content'
+import Content, { ContentType } from './Content'
 import { css } from '@emotion/core'
+import { MessageContext } from '..'
 
 const style = {
   base: css({
@@ -15,18 +16,21 @@ const style = {
   })
 }
 
-interface Props {
-  human: boolean,
-  iconDisplay?: boolean,
-  content: string | JSX.Element
+export interface MessageType {
+  human: boolean
+  iconDisplay?: boolean
+  content: ContentType
+  completed: boolean
 }
 
-const Message: FC<Props> = ({ human, iconDisplay = true, content }) => {
+const Message: FC = () => {
+  const { message: { human, iconDisplay } } = useContext(MessageContext)
+
   return (
     <div css={style.base}>
       {!human && <OperatorIcon display={iconDisplay} />}
       <Bubble human={human}>
-        <Content content={content} />
+        <Content />
       </Bubble>
     </div>
   )

@@ -1,26 +1,35 @@
-import { FC } from 'react'
-import Message from './Message'
-import { useMessages } from '../../hooks/use-messages'
+import { FC, useCallback, createContext } from 'react'
+import Message, { MessageType } from './Message'
+import { useCorsState } from 'use-cors-state'
+
+interface MessageContextType {
+  handleUpdate: (arg: MessageType) => void
+  message: MessageType
+}
+
+export const MessageContext = createContext<MessageContextType>({
+  handleUpdate: () => { },
+  message: {
+    human: true,
+    content: { type: 'string', props: {} },
+    completed: false
+  }
+})
 
 const Chat: FC = () => {
-  const [messages, action] = useMessages([{
-    content: 'テストです。',
-    human: false,
-  }])
+  const [messages, setMessages] = useCorsState<Array<MessageType>>('chat-messages', { window: window.parent }, [])
+
+  const updater = useCallback((index: number) => (updatedMessage: MessageType) => {
+    setMessages(Object.entries(messages).map(([i, message]) => Number(i) === index ? updatedMessage : message))
+  }, [messages])
 
   return (
     <>
-      {messages.map((msg, i) => (
-        <Message {...msg} key={i} />
+      {messages.map((message, i) => (
+        <MessageContext.Provider value={{ message, handleUpdate: updater(i) }} key={i}>
+          <Message />
+        </MessageContext.Provider>
       ))}
-      <button onClick={() => {
-        action.add({
-          content: { component: 'FormAddress', props: {} },
-          human: true,
-          delay: 1000
-        })
-      }}>追加</button>
-      <button onClick={action.remove}>削除</button>
     </>
   )
 }

@@ -1,6 +1,8 @@
 import Head from 'next/head'
+import dynamic from 'next/dynamic'
 import { FC } from 'react'
-import Chat from '../components/Chat'
+
+const Chat = dynamic(() => import("../components/Chat"), { ssr: false });
 
 const Home: FC = () => {
   return (

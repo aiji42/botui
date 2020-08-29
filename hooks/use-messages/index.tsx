@@ -1,12 +1,14 @@
-import { useState, useRef, useEffect, useReducer, useCallback } from "react"
+import { useState, useRef, useEffect } from "react"
+import { useCorsState } from 'use-cors-state'
 import * as Forms from '../../components/Forms'
-import Loading from '../../components/Loading'
+import Loading from '../../components/Chat/Message/Content/Loading'
 const Components = { ...Forms, Loading }
 
 interface MessageString {
   content: string
   human: boolean
   delay?: number
+  completed: boolean
 }
 
 type ComponentKeys = 'FormAddress' | 'FormBirthDay' | 'FormEmail' | 'FormName' | 'FormTel' | 'FormCreditCard'
@@ -18,12 +20,14 @@ interface MessageComponentDefinition {
   content: ComponentDefinition
   human: boolean
   delay?: number
+  completed: boolean
 }
 
 interface MessageComponent {
   content: JSX.Element
   human: boolean
   delay?: number
+  completed: boolean
 }
 
 type MessageDefinition = MessageString | MessageComponentDefinition
@@ -43,43 +47,22 @@ const convert = (messages: Array<MessageDefinition>) => {
 
 const loadingContent: ComponentDefinition = { component: 'Loading', props: {} }
 
-interface ActionAdd { type: 'add', message: Array<MessageDefinition> | MessageDefinition }
-interface ActionRemove { type: 'remove' }
-
-const reducer = (state: Array<MessageDefinition>, action: ActionAdd | ActionRemove): Array<MessageDefinition> => {
-  const { type } = action
-  switch (type) {
-    case 'add':
-      const { message } = action as ActionAdd
-      return [...state, ...(Array.isArray(message) ? message : [message])]
-    case 'remove':
-      return state.slice(0, -1)
-    default:
-      return state
-  }
-}
-
-export const useMessages = (initMessageDefinitions: Array<MessageDefinition>): [Array<Message>, {
-  add: (message: any) => void
-  remove: () => void
-}] => {
-  const [messageDefinitions, messageDefinitionsDispatch] = useReducer(reducer, initMessageDefinitions)
-  const [convertedMessage, setConvertedMessages] = useState<Array<Message>>(convert(initMessageDefinitions))
+export const useMessages = (): [Array<Message>] => {
+  const [messageDefinitions, setMessageDefinitions] = useCorsState<Array<MessageDefinition>>('chat-messages', { window: window.parent }, [])
+  const [convertedMessage, setConvertedMessages] = useState<Array<Message>>(convert(messageDefinitions))
   const countor = useRef<number>(messageDefinitions.length)
-
-  const add = useCallback((message) => messageDefinitionsDispatch({ type: 'add', message }), [messageDefinitionsDispatch])
-  const remove = useCallback(() => messageDefinitionsDispatch({ type: 'remove' }), [messageDefinitionsDispatch])
 
   useEffect(() => {
     const last = messageDefinitions.slice(-1)[0]
     if (countor.current < messageDefinitions.length && last.delay) {
-      setConvertedMessages(convert([...messageDefinitions.slice(0, -1), { content: loadingContent, human: last.human }]))
+      setConvertedMessages(convert([...messageDefinitions.slice(0, -1), { ...last, content: loadingContent }]))
       setTimeout(() => {
         setConvertedMessages(convert(messageDefinitions))
+        setMessageDefinitions([...messageDefinitions.slice(0, -1), { ...last, completed: true }])
       }, last.delay)
     } else setConvertedMessages(convert(messageDefinitions))
     countor.current = messageDefinitions.length
   }, [messageDefinitions])
 
-  return [convertedMessage, { add, remove }]
+  return [convertedMessage]
 }
