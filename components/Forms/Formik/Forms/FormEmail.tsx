@@ -22,8 +22,8 @@ const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
   );
 };
 
-const FormEmail = withFormik<HandleSubmitProps, Values>({
-  mapPropsToValues: () => ({ email: '' }),
+const FormEmail = withFormik<HandleSubmitProps & { values: any }, Values>({
+  mapPropsToValues: ({ values }) => ({ email: '', ...values }),
   validationSchema: yup.object().shape({
     email: yup.string()
       .required('入力して下さい')

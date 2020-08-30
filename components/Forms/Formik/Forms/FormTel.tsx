@@ -24,8 +24,8 @@ const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
   );
 };
 
-const FormTel = withFormik<HandleSubmitProps, Values>({
-  mapPropsToValues: () => ({ tel: '' }),
+const FormTel = withFormik<HandleSubmitProps & { values: any }, Values>({
+  mapPropsToValues: ({ values }) => ({ tel: '', ...values }),
   validationSchema: yup.object().shape({
     tel: yup.string()
       .matches(/^(0{1}\d{9,10})$/, '半角数字で正しく入力してください')

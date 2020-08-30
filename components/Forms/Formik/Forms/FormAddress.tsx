@@ -73,12 +73,13 @@ const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
   );
 };
 
-const FormAddress = withFormik<HandleSubmitProps, Values>({
-  mapPropsToValues: () => ({
+const FormAddress = withFormik<HandleSubmitProps & { values: any }, Values>({
+  mapPropsToValues: ({ values }) => ({
     postalCode: '',
     pref: '',
     city: '',
     street: '',
+    ...values
   }),
   validationSchema: yup.object().shape({
     postalCode: yup.string().required('入力してください').matches(/^\d{7}$/, '7桁の数字で正しく入力してください'),

@@ -21,6 +21,7 @@ export interface MessageType {
   iconDisplay?: boolean
   content: ContentType
   completed: boolean
+  updated?: boolean
 }
 
 const Message: FC = () => {

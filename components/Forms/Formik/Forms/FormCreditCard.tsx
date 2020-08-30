@@ -83,14 +83,15 @@ const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
   );
 };
 
-const FormBirthDay = withFormik<HandleSubmitProps, Values>({
-  mapPropsToValues: () => ({
+const FormBirthDay = withFormik<HandleSubmitProps & { values: any }, Values>({
+  mapPropsToValues: ({ values }) => ({
     creditCardNumber: '',
     creditCardNumberDummy: '',
     creditCardExpiryYear: '',
     creditCardExpiryMonth: '',
     creditCardName: '',
-    creditCardCvc: ''
+    creditCardCvc: '',
+    ...values
   }),
   validationSchema: yup.object().shape({
     creditCardNumberDummy: yup.string()

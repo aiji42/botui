@@ -16,7 +16,8 @@ const Form: FC = () => {
   const props = message.content.props as FormType
   const handleComplete = useCallback((p: FormType) => {
     const newContent = { ...message.content, props: { ...props, props: p } }
-    handleUpdate({ ...message, content: newContent, completed: true })
+    if (message.completed) handleUpdate({ ...message, content: newContent, updated: true })
+    else handleUpdate({ ...message, content: newContent, completed: true })
   }, [props])
 
   if (props.type === 'FormAddress') return <Forms.FormAddress {...props.props} onSubmited={handleComplete} />
