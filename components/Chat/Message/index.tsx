@@ -1,9 +1,10 @@
-import { FC, useContext } from 'react'
+import { FC, useEffect, useMemo } from 'react'
 import OperatorIcon from './OperatorIcon'
 import Bubble from './Bubble'
 import Content, { ContentType } from './Content'
 import { css, keyframes } from '@emotion/core'
-import { MessageContext } from '..'
+import Scroll from 'react-scroll'
+import nextId from 'react-id-generator'
 
 const keyFrames = {
   slideIn: keyframes({
@@ -39,13 +40,18 @@ export interface MessageType {
 }
 
 const Message: FC = () => {
+  const name = useMemo(() => nextId(), [])
+  useEffect(() => {
+    setTimeout(() => Scroll.scroller.scrollTo(name, {}), 500)
+  }, [])
+
   return (
-    <div css={style.base}>
+    <Scroll.Element css={style.base} name={name}>
       <OperatorIcon />
       <Bubble>
         <Content />
       </Bubble>
-    </div>
+    </Scroll.Element>
   )
 }
 
