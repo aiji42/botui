@@ -1,9 +1,6 @@
-import { FC } from 'react'
+import { FC, useContext, useMemo } from 'react'
 import { css } from '@emotion/core'
-
-type Props = {
-  human: boolean
-}
+import { MessageContext } from '../..'
 
 const style = {
   base: css({
@@ -19,20 +16,27 @@ const style = {
   human: css({
     color: '#000000',
     backgroundColor: '#eeeeee',
-    width: '80%',
+    width: 'auto',
     maxWidth: '80%',
     float: 'right'
+  }),
+  form: css({
+    width: '80%'
   })
 }
 
-const Bubble: FC<Props> = ({ human, ...props }) => {
-  return (
-    <div css={human ? [style.base, style.human] : style.base} {...props} />
-  )
-}
+const Bubble: FC = (props) => {
+  const { message: { human, content: { type } } } = useContext(MessageContext)
+  const styles = useMemo(() => {
+    const s = [style.base]
+    if (human) s.push(style.human)
+    if (type === 'form') s.push(style.form)
+    return s
+  }, [human, type])
 
-Bubble.defaultProps = {
-  human: false
+  return (
+    <div css={styles} {...props} />
+  )
 }
 
 export default Bubble

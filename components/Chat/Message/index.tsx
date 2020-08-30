@@ -2,16 +2,30 @@ import { FC, useContext } from 'react'
 import OperatorIcon from './OperatorIcon'
 import Bubble from './Bubble'
 import Content, { ContentType } from './Content'
-import { css } from '@emotion/core'
+import { css, keyframes } from '@emotion/core'
 import { MessageContext } from '..'
+
+const keyFrames = {
+  slideIn: keyframes({
+    '0%': {
+      marginTop: 50,
+      opacity: 0
+    },
+    '100%': {
+      marginTop: 0,
+      opacity: 1
+    }
+  })
+}
 
 const style = {
   base: css({
     margin: '10px 0',
+    animation: `${keyFrames.slideIn} .5s ease-out`,
     ':after': {
       display: 'block',
       content: '""',
-      clear: 'both'
+      clear: 'both',
     }
   })
 }
@@ -25,12 +39,10 @@ export interface MessageType {
 }
 
 const Message: FC = () => {
-  const { message: { human, iconDisplay } } = useContext(MessageContext)
-
   return (
     <div css={style.base}>
-      {!human && <OperatorIcon display={iconDisplay} />}
-      <Bubble human={human}>
+      <OperatorIcon />
+      <Bubble>
         <Content />
       </Bubble>
     </div>

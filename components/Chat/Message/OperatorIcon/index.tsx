@@ -1,5 +1,6 @@
-import { FC } from 'react'
+import { FC, useContext } from 'react'
 import { css } from '@emotion/core'
+import { MessageContext } from '../..'
 
 const style = {
   display: css({
@@ -22,20 +23,16 @@ const style = {
   })
 }
 
-interface Props {
-  display?: boolean
-}
+const OperatorIcon: FC = () => {
+  const { message: { human, iconDisplay } } = useContext(MessageContext)
+  const display = iconDisplay === undefined ? true : iconDisplay
 
-const OperatorIcon: FC<Props> = ({ display }) => {
+  if (human) return <></>
   return (
     <div css={display ? style.display : style.hidden}>
       {display && <img css={style.image} src="/operator.jpg" />}
     </div>
   )
-}
-
-OperatorIcon.defaultProps = {
-  display: true
 }
 
 export default OperatorIcon
