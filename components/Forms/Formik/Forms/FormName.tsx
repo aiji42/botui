@@ -7,7 +7,8 @@ import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import { css } from '@emotion/core';
 import { useKana } from 'react-use-kana'
-import { customHandleSubmit, HandleSubmitProps } from './modules'
+import { customHandleSubmit } from './modules'
+import { FormNameValues, FormName as FormNameType } from '../../../../@types/form';
 
 const style = {
   formBlockDetailHalf: css`
@@ -25,14 +26,7 @@ const toKatakana = (value: string) => value.normalize('NFKC')
   .replace(/[\u3041-\u3096]/g, (match) => String.fromCharCode(match.charCodeAt(0) + 0x60))
   .replace(/[^ァ-ン]/g, '')
 
-interface Values {
-  familyName: string
-  familyNameKana: string
-  firstName: string
-  firstNameKana: string
-}
-
-const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
+const Form: FC<FormikProps<FormNameValues>> = (props) => {
   const { handleSubmit } = props;
   const { kana: familyNameKana, setKanaSource: setFamilyNameKanaSource } = useKana()
   const { kana: firstNameKana, setKanaSource: setFirstNameKanaSource } = useKana()
@@ -87,7 +81,7 @@ const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
   );
 };
 
-const FormName = withFormik<HandleSubmitProps & { values: any }, Values>({
+const FormName = withFormik<FormNameType, FormNameValues>({
   mapPropsToValues: ({ values }) => ({
     familyName: '',
     familyNameKana: '',

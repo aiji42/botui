@@ -1,6 +1,6 @@
-import { FC, useContext, useMemo } from 'react'
+import { FC, useMemo } from 'react'
 import { css } from '@emotion/core'
-import { MessageContext } from '../..'
+import { useMessageContext } from '../../../../hooks/use-message-context'
 
 const style = {
   base: css({
@@ -26,7 +26,7 @@ const style = {
 }
 
 const Bubble: FC = (props) => {
-  const { message: { human, content: { type } } } = useContext(MessageContext)
+  const { message: { human, content: { type } } } = useMessageContext()
   const styles = useMemo(() => {
     const s = [style.base]
     if (human) s.push(style.human)

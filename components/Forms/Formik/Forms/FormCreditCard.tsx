@@ -9,7 +9,8 @@ import InputWithIcon from '../Elements/InputWithIcon';
 import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import { css } from '@emotion/core';
-import { customHandleSubmit, HandleSubmitProps } from './modules'
+import { customHandleSubmit } from './modules'
+import { FormCreditCardValues, FormCreditCard as FormCreditCardType } from '../../../../@types/form';
 
 const style = {
   narrowField: css`
@@ -33,15 +34,7 @@ const style = {
 
 const onlyNum = (value: string | number): string => `${value}`.normalize('NFKC').replace(/[^0-9]/g, '');
 
-interface Values {
-  creditCardNumber: string
-  creditCardExpiryYear: string
-  creditCardExpiryMonth: string
-  creditCardName: string
-  creditCardCvc: string
-}
-
-const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
+const Form: FC<FormikProps<FormCreditCardValues>> = (props) => {
   const { handleSubmit } = props;
   const years = useMemo(() => [...Array(15)].map((_, k) => new Date().getFullYear() + k), [])
   const monthes = useMemo(() => [...Array(12)].map((_, k) => k + 1), [])
@@ -83,7 +76,7 @@ const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
   );
 };
 
-const FormBirthDay = withFormik<HandleSubmitProps & { values: any }, Values>({
+const FormBirthDay = withFormik<FormCreditCardType, FormCreditCardValues>({
   mapPropsToValues: ({ values }) => ({
     creditCardNumber: '',
     creditCardNumberDummy: '',

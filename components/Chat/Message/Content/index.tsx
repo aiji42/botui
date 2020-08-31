@@ -1,25 +1,11 @@
 import { FC, useEffect, useState, useContext } from 'react'
-import String, { StringType } from './String'
-import Form, { FormType } from './Form'
+import String from './String'
+import Form from './Form'
 import Loading from './Loading'
-import { MessageContext } from '../..'
-
-interface ContentFormType {
-  type: 'form'
-  props: FormType
-}
-
-interface ContentStringType {
-  type: 'string'
-  props: StringType
-}
-
-export type ContentType = {
-  delay?: number
-} & (ContentFormType | ContentStringType)
+import { useMessageContext } from '../../../../hooks/use-message-context'
 
 const Content: FC = () => {
-  const { message: { content: { delay, type } } } = useContext(MessageContext)
+  const { message: { content: { delay, type } } } = useMessageContext()
   const [loading, setLoading] = useState<boolean>(true)
   useEffect(() => {
     if (!delay) {

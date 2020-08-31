@@ -1,6 +1,6 @@
-import { FC, useContext } from 'react'
+import { FC } from 'react'
 import { css } from '@emotion/core'
-import { MessageContext } from '../..'
+import { useMessageContext } from '../../../../hooks/use-message-context'
 
 const style = {
   display: css({
@@ -24,7 +24,7 @@ const style = {
 }
 
 const OperatorIcon: FC = () => {
-  const { message: { human, iconDisplay } } = useContext(MessageContext)
+  const { message: { human, iconDisplay } } = useMessageContext()
   const display = iconDisplay === undefined ? true : iconDisplay
 
   if (human) return <></>

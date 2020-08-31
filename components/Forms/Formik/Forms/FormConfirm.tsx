@@ -2,7 +2,8 @@ import { FC } from 'react';
 import { withFormik, Field, FormikProps } from 'formik';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import { css } from '@emotion/core';
-import { customHandleSubmit, HandleSubmitProps } from './modules'
+import { customHandleSubmit } from './modules'
+import { FormConfirmValues, FormConfirm as FormConfirmType } from '../../../../@types/form';
 
 const base = css`
   color: #676879;
@@ -17,16 +18,8 @@ const base = css`
   }
 `;
 
-interface Values {
-  confirmed: boolean
-}
-
-interface Props {
-  confirmHTML: string
-}
-
-const Form: FC<FormikProps<Values> & Props & HandleSubmitProps> = (props) => {
-  const { handleSubmit, confirmHTML } = props;
+const Form: FC<FormikProps<FormConfirmValues>> = (props) => {
+  const { handleSubmit, values: { confirmHTML } } = props;
 
   return (
     <form css={base} onSubmit={handleSubmit}>
@@ -34,13 +27,13 @@ const Form: FC<FormikProps<Values> & Props & HandleSubmitProps> = (props) => {
       <p css={{ textAlign: 'center', marginTop: 5 }}>下記の内容にお間違いなければボタンを押してください。</p>
       <div dangerouslySetInnerHTML={{ __html: confirmHTML }} />
       <Field name="confirmed" type="hidden" />
-      <Field component={ButtonSubmit} />
+      <Field component={ButtonSubmit} name="submit" />
     </form>
   );
 };
 
-const FormConfirm = withFormik<Props & HandleSubmitProps, Values>({
-  mapPropsToValues: () => ({ confirmed: true }),
+const FormConfirm = withFormik<FormConfirmType, FormConfirmValues>({
+  mapPropsToValues: ({ values }) => ({ ...values, confirmed: true }),
   handleSubmit: customHandleSubmit
 })(Form);
 

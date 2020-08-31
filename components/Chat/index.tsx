@@ -1,20 +1,8 @@
-import { FC, useCallback, createContext } from 'react'
-import Message, { MessageType } from './Message'
+import { FC, useCallback } from 'react'
+import Message from './Message'
 import { useCorsState } from 'use-cors-state'
-
-interface MessageContextType {
-  handleUpdate: (arg: MessageType) => void
-  message: MessageType
-}
-
-export const MessageContext = createContext<MessageContextType>({
-  handleUpdate: () => { },
-  message: {
-    human: true,
-    content: { type: 'string', props: {} },
-    completed: false
-  }
-})
+import { Message as MessageType } from '../../@types/message'
+import MessageContext from '../../hooks/use-message-context'
 
 const Chat: FC = () => {
   const [messages, setMessages] = useCorsState<Array<MessageType>>('chat-messages', { window: window.parent }, [])
@@ -26,9 +14,9 @@ const Chat: FC = () => {
   return (
     <>
       {messages.map((message, i) => (
-        <MessageContext.Provider value={{ message, handleUpdate: updater(i) }} key={i}>
+        <MessageContext message={message} handleUpdate={updater(i)} key={i}>
           <Message />
-        </MessageContext.Provider>
+        </MessageContext>
       ))}
     </>
   )

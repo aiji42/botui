@@ -1,6 +1,6 @@
-import { FC, useState, useCallback, ChangeEvent, FocusEvent, useEffect } from 'react';
+import { FC, useCallback, ChangeEvent } from 'react';
 import InputWithIcon, { InputWithIconProps } from './InputWithIcon';
-import { useField, Field } from 'formik'
+import { useField } from 'formik'
 
 const splitCardNum = (nums: string | number): string => `${nums}`.split('').map((num, i) => (i > 0 && i % 4 === 0) ? ` ${num}` : num).join('');
 

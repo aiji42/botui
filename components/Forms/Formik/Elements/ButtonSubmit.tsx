@@ -1,10 +1,10 @@
-import { FC, ButtonHTMLAttributes, useContext } from 'react';
+import { FC, ButtonHTMLAttributes } from 'react';
 import Button from './Button';
-import { MessageContext } from '../../../Chat';
 import { useFormikContext } from 'formik';
+import { useMessageContext } from '../../../../hooks/use-message-context';
 
 const ButtonSubmit: FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({ children, ...props }) => {
-  const { message: { completed } } = useContext(MessageContext)
+  const { message: { completed } } = useMessageContext()
   const { isValid, isSubmitting, dirty } = useFormikContext()
   const disabled = !dirty && completed || !isValid || isSubmitting
   const updated = dirty && completed

@@ -5,13 +5,10 @@ import InputNumber from '../Elements/InputNumber';
 import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import { isValidNumber as isValidPhoneNumber } from 'libphonenumber-js';
-import { customHandleSubmit, HandleSubmitProps } from './modules'
+import { customHandleSubmit } from './modules'
+import { FormTelValues, FormTel as FormTelType } from '../../../../@types/form';
 
-interface Values {
-  tel: string
-}
-
-const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
+const Form: FC<FormikProps<FormTelValues>> = (props) => {
   const { handleSubmit } = props;
 
   return (
@@ -24,7 +21,7 @@ const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
   );
 };
 
-const FormTel = withFormik<HandleSubmitProps & { values: any }, Values>({
+const FormTel = withFormik<FormTelType, FormTelValues>({
   mapPropsToValues: ({ values }) => ({ tel: '', ...values }),
   validationSchema: yup.object().shape({
     tel: yup.string()

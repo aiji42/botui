@@ -1,18 +1,10 @@
-import { FC, useContext, useCallback } from 'react'
+import { FC, useCallback } from 'react'
 import * as Forms from '../../../../Forms'
-import { MessageContext } from '../../..'
-
-type TypeKeys = 'FormAddress' | 'FormBirthDay' | 'FormEmail' | 'FormName' | 'FormTel' | 'FormCreditCard'
-  | 'FormCustomRadioGroup' | 'FormCustomSelect' | 'FormCustomInput' | 'FormCustomTextarea' | 'FormConfirm'
-
-export interface FormType {
-  type: TypeKeys
-  props: any
-}
-
+import { Form as FormType } from '../../../../../@types/form'
+import { useMessageContext } from '../../../../../hooks/use-message-context'
 
 const Form: FC = () => {
-  const { message, handleUpdate } = useContext(MessageContext)
+  const { message, handleUpdate } = useMessageContext()
   const props = message.content.props as FormType
   const handleComplete = useCallback((p: FormType) => {
     const newContent = { ...message.content, props: { ...props, props: p } }
@@ -20,7 +12,7 @@ const Form: FC = () => {
     else handleUpdate({ ...message, content: newContent, completed: true })
   }, [props])
 
-  if (props.type === 'FormAddress') return <Forms.FormAddress {...props.props} onSubmited={handleComplete} />
+  if (props.type === 'FormAddress') return <Forms.FormAddress {...props.values} onSubmited={handleComplete} />
   if (props.type === 'FormBirthDay') return <Forms.FormBirthDay {...props.props} onSubmited={handleComplete} />
   if (props.type === 'FormEmail') return <Forms.FormEmail {...props.props} onSubmited={handleComplete} />
   if (props.type === 'FormName') return <Forms.FormName {...props.props} onSubmited={handleComplete} />

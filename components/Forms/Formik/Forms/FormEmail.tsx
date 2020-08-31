@@ -4,13 +4,10 @@ import * as yup from 'yup';
 import InputWithIcon from '../Elements/InputWithIcon'
 import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
-import { customHandleSubmit, HandleSubmitProps } from './modules'
+import { customHandleSubmit } from './modules'
+import { FormEmailValues, FormEmail as FormEmailType } from '../../../../@types/form';
 
-interface Values {
-  email: string
-}
-
-const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
+const Form: FC<FormikProps<FormEmailValues>> = (props) => {
   const { handleSubmit } = props;
 
   return (
@@ -22,7 +19,7 @@ const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
   );
 };
 
-const FormEmail = withFormik<HandleSubmitProps & { values: any }, Values>({
+const FormEmail = withFormik<FormEmailType, FormEmailValues>({
   mapPropsToValues: ({ values }) => ({ email: '', ...values }),
   validationSchema: yup.object().shape({
     email: yup.string()

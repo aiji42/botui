@@ -1,7 +1,7 @@
 import { FC, useEffect, useMemo } from 'react'
 import OperatorIcon from './OperatorIcon'
 import Bubble from './Bubble'
-import Content, { ContentType } from './Content'
+import Content from './Content'
 import { css, keyframes } from '@emotion/core'
 import Scroll from 'react-scroll'
 import nextId from 'react-id-generator'
@@ -29,14 +29,6 @@ const style = {
       clear: 'both',
     }
   })
-}
-
-export interface MessageType {
-  human: boolean
-  iconDisplay?: boolean
-  content: ContentType
-  completed: boolean
-  updated?: boolean
 }
 
 const Message: FC = () => {

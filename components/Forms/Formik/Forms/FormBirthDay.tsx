@@ -5,7 +5,8 @@ import SelectWithIcon from '../Elements/SelectWithIcon';
 import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import { css } from '@emotion/core';
-import { customHandleSubmit, HandleSubmitProps } from './modules'
+import { customHandleSubmit } from './modules'
+import { FormBirthDayValues, FormBirthDay as FormBirthDayType } from '../../../../@types/form';
 
 const style = {
   formBlockDetailHalfField: css`
@@ -19,13 +20,7 @@ const style = {
   `
 }
 
-interface Values {
-  birthdayYear: string
-  birthdayMonth: string
-  birthdayDay: string
-}
-
-const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
+const Form: FC<FormikProps<FormBirthDayValues>> = (props) => {
   const { handleSubmit } = props;
   const years = useMemo(() => {
     const y = [...Array(100)].map((_, k) => new Date().getFullYear() - k)
@@ -60,7 +55,7 @@ const Form: FC<FormikProps<Values> & HandleSubmitProps> = (props) => {
   );
 };
 
-const FormBirthDay = withFormik<HandleSubmitProps & { values: any }, Values>({
+const FormBirthDay = withFormik<FormBirthDayType, FormBirthDayValues>({
   mapPropsToValues: ({ values }) => ({
     birthdayYear: '',
     birthdayMonth: '',
@@ -72,7 +67,7 @@ const FormBirthDay = withFormik<HandleSubmitProps & { values: any }, Values>({
     birthdayMonth: yup.string().required('選択してください'),
     birthdayDay: yup.string().required('選択してください'),
   }),
-  validate: (values: Values) => {
+  validate: (values: FormBirthDayValues) => {
     const { birthdayYear, birthdayMonth, birthdayDay } = values;
     const date = new Date(Number(birthdayYear), Number(birthdayMonth) - 1, Number(birthdayDay));
     if (!!birthdayYear && !!birthdayMonth && !!birthdayDay && String(date.getMonth() + 1) !== birthdayMonth) {
