@@ -12,17 +12,17 @@ const Form: FC = () => {
     else handleUpdate({ ...message, content: newContent, completed: true })
   }, [props])
 
-  if (props.type === 'FormAddress') return <Forms.FormAddress {...props.values} onSubmited={handleComplete} />
-  if (props.type === 'FormBirthDay') return <Forms.FormBirthDay {...props.props} onSubmited={handleComplete} />
-  if (props.type === 'FormEmail') return <Forms.FormEmail {...props.props} onSubmited={handleComplete} />
-  if (props.type === 'FormName') return <Forms.FormName {...props.props} onSubmited={handleComplete} />
-  if (props.type === 'FormTel') return <Forms.FormTel {...props.props} onSubmited={handleComplete} />
-  if (props.type === 'FormCreditCard') return <Forms.FormCreditCard {...props.props} onSubmited={handleComplete} />
-  if (props.type === 'FormCustomRadioGroup') return <Forms.FormCustomRadioGroup {...props.props} onSubmited={handleComplete} />
-  if (props.type === 'FormCustomSelect') return <Forms.FormCustomSelect {...props.props} onSubmited={handleComplete} />
-  if (props.type === 'FormCustomInput') return <Forms.FormCustomInput {...props.props} onSubmited={handleComplete} />
-  if (props.type === 'FormCustomTextarea') return <Forms.FormCustomTextarea {...props.props} onSubmited={handleComplete} />
-  if (props.type === 'FormConfirm') return <Forms.FormConfirm {...props.props} onSubmited={handleComplete} />
+  if (props.type === 'FormAddress') return <Forms.FormAddress {...props} onSubmited={handleComplete} />
+  if (props.type === 'FormBirthDay') return <Forms.FormBirthDay {...props} onSubmited={handleComplete} />
+  if (props.type === 'FormEmail') return <Forms.FormEmail {...props} onSubmited={handleComplete} />
+  if (props.type === 'FormName') return <Forms.FormName {...props} onSubmited={handleComplete} />
+  if (props.type === 'FormTel') return <Forms.FormTel {...props} onSubmited={handleComplete} />
+  if (props.type === 'FormCreditCard') return <Forms.FormCreditCard {...props} onSubmited={handleComplete} />
+  if (props.type === 'FormCustomRadioGroup') return <Forms.FormCustomRadioGroup {...props} onSubmited={handleComplete} />
+  if (props.type === 'FormCustomSelect') return <Forms.FormCustomSelect {...props} onSubmited={handleComplete} />
+  if (props.type === 'FormCustomInput') return <Forms.FormCustomInput {...props} onSubmited={handleComplete} />
+  if (props.type === 'FormCustomTextarea') return <Forms.FormCustomTextarea {...props} onSubmited={handleComplete} />
+  if (props.type === 'FormConfirm') return <Forms.FormConfirm {...props} onSubmited={handleComplete} />
   return <></>
 }
 

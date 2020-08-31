@@ -1,10 +1,11 @@
-import React, { InputHTMLAttributes, FC } from 'react';
+import React, { FC } from 'react';
 import { withFormik, Field, ErrorMessage, FormikProps } from 'formik';
 import * as yup from 'yup';
 import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import RadioInput from '../Elements/RadioInput';
 import { css } from '@emotion/core';
-import { customHandleSubmit, HandleSubmitProps } from './modules'
+import { customHandleSubmit } from './modules'
+import { FormCustomRadioGroup as FormCustomRadioGroupType, FormCustomRadioGroupValues } from '../../../../@types/form';
 
 const style = {
   mergin: css({
@@ -12,23 +13,14 @@ const style = {
   })
 }
 
-interface Values {
-  [x: string]: any
-}
-
-interface Props {
-  name: string
-  inputs: (InputHTMLAttributes<HTMLInputElement> & { title: string })[]
-}
-
-const Form: FC<FormikProps<Values> & Props & HandleSubmitProps> = (props) => {
+const Form: FC<FormikProps<FormCustomRadioGroupValues> & FormCustomRadioGroupType> = (props) => {
   const { name, inputs, handleSubmit } = props;
 
   return (
     <form onSubmit={handleSubmit}>
       {inputs.map(({ title, ...attributes }, index) => (
         <div key={index} css={index > 0 ? style.mergin : ''}>
-          <Field name={name} title={title} {...attributes} as={RadioInput} />
+          <Field title={title} {...attributes} name={name} as={RadioInput} />
         </div>
       ))}
       <ErrorMessage name={name} component={SpanErrorMessage} />
@@ -36,9 +28,9 @@ const Form: FC<FormikProps<Values> & Props & HandleSubmitProps> = (props) => {
   );
 };
 
-const FormCustomRadioGroup = withFormik<Props & HandleSubmitProps, Values>({
+const FormCustomRadioGroup = withFormik<FormCustomRadioGroupType, FormCustomRadioGroupValues>({
   mapPropsToValues: ({ name }) => ({ [name]: '' }),
-  validationSchema: ({ name }: Props) => yup.object().shape({
+  validationSchema: ({ name }: FormCustomRadioGroupType) => yup.object().shape({
     [name]: yup.string().required('選択してください')
   }),
   validateOnMount: true,

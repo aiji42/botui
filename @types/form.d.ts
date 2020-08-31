@@ -1,4 +1,4 @@
-import { SelectHTMLAttributes, OptionHTMLAttributes } from "react";
+import { SelectHTMLAttributes, OptionHTMLAttributes, TextareaHTMLAttributes } from "react";
 import { Validation } from "./validation";
 
 interface FormBase<Type extends string, Values extends {}>{
@@ -84,9 +84,12 @@ interface CustomRadio extends InputHTMLAttributes<HTMLInputElement> {
   title: string
 }
 
-export interface FormCustomRadioGroup extends FormBase<'FormCustomRadioGroup', {
+export interface FormCustomRadioGroupValues {
   [x: string]: number | string | boolean
-}> {
+}
+
+export interface FormCustomRadioGroup extends FormBase<'FormCustomRadioGroup', FormCustomRadioGroupValues> {
+  name: string
   inputs: Array<CustomRadio>
   validation?: Validation
 }
@@ -98,9 +101,11 @@ interface CustomSelect extends SelectHTMLAttributes<HTMLSelectElement> {
   validation?: Validation
 }
 
-export interface FormCustomSelect extends FormBase<'FormCustomSelect', {
+export interface FormCustomSelectValues {
   [x: string]: number | string
-}> {
+}
+
+export interface FormCustomSelect extends FormBase<'FormCustomSelect', FormCustomSelectValues> {
   selects: Array<CustomSelect>
 }
 
@@ -111,15 +116,19 @@ interface CustomInput extends InputHTMLAttributes<HTMLIFrameElement> {
   validation?: Validation
 }
 
-export interface FormCustomInput extends FormBase<'FormCustomInput', {
+export interface FormCustomInputValues {
   [x: string]: number | string
-}> {
+}
+
+export interface FormCustomInput extends FormBase<'FormCustomInput', FormCustomInputValues> {
   inputs: Array<CustomInput>
 }
 
-export interface FormCustomTextarea extends FormBase<'FormCustomTextarea', {
+export interface FormCustomTextareaValues {
   [x: string]: string
-}> extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+}
+
+export interface FormCustomTextarea extends FormBase<'FormCustomTextarea', FormCustomTextareaValues>, TextareaHTMLAttributes<HTMLTextAreaElement>{
   name: string
   title?: string
   validation?: Validation

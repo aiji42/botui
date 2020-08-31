@@ -1,36 +1,23 @@
-import React, { Fragment, FC, SelectHTMLAttributes, OptionHTMLAttributes } from 'react';
+import React, { Fragment, FC } from 'react';
 import { withFormik, Field, ErrorMessage, FormikProps } from 'formik';
 import * as yup from 'yup';
 import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import SelectWithIcon from '../Elements/SelectWithIcon';
-import { customHandleSubmit, HandleSubmitProps } from './modules'
+import { customHandleSubmit } from './modules'
+import { FormCustomSelectValues, FormCustomSelect as FormCustomSelectType } from '../../../../@types/form';
 
-interface Values {
-  [x: string]: any
-}
-
-interface Select {
-  name: string
-  select: SelectHTMLAttributes<HTMLSelectElement> & { title?: string }
-  options: OptionHTMLAttributes<HTMLOptionElement>[]
-}
-
-interface Props {
-  selects: Select[]
-}
-
-const Form: FC<FormikProps<Values> & Props & HandleSubmitProps> = (props) => {
+const Form: FC<FormikProps<FormCustomSelectValues> & FormCustomSelectType> = (props) => {
   const { selects, handleSubmit } = props;
 
   return (
     <form onSubmit={handleSubmit}>
-      {selects.map(({ name, select, options }, index) => (
+      {selects.map(({ options, validation: _, ...select }, index) => (
         <Fragment key={index}>
-          <Field as={SelectWithIcon} name={name} {...select}>
+          <Field as={SelectWithIcon} {...select}>
             {options.map((attributes, index) => <option key={index} {...attributes} />)}
           </Field>
-          <ErrorMessage name={name} component={SpanErrorMessage} />
+          <ErrorMessage name={select.name} component={SpanErrorMessage} />
         </Fragment>
       ))}
       <Field as={ButtonSubmit} name="submit" />
@@ -38,9 +25,9 @@ const Form: FC<FormikProps<Values> & Props & HandleSubmitProps> = (props) => {
   );
 };
 
-const FormCustomSelect = withFormik<Props & HandleSubmitProps, Values>({
+const FormCustomSelect = withFormik<FormCustomSelectType, FormCustomSelectValues>({
   mapPropsToValues: ({ selects }) => (selects.reduce((res, { name }) => ({ ...res, [name]: '' }), {})),
-  validationSchema: ({ selects }: Props) => yup.object().shape(
+  validationSchema: ({ selects }: FormCustomSelectType) => yup.object().shape(
     selects.reduce((res, { name }) => ({ ...res, [name]: yup.mixed().required('選択してください') }), {})
   ),
   validateOnMount: true,

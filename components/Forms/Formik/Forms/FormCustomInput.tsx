@@ -1,27 +1,20 @@
-import { FC, Fragment, InputHTMLAttributes } from 'react';
+import { FC, Fragment } from 'react';
 import { withFormik, Field, ErrorMessage, FormikProps } from 'formik';
 import * as yup from 'yup';
 import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import InputWithIcon from '../Elements/InputWithIcon';
-import { customHandleSubmit, HandleSubmitProps, customYup, CustomYupProps } from './modules'
+import { customHandleSubmit, customYup, CustomYupProps } from './modules'
+import { FormCustomInputValues, FormCustomInput as FormCustomInputType } from '../../../../@types/form';
 
-interface Values {
-  [x: string]: any
-}
-
-interface Props {
-  inputs: ({ title?: string } & InputHTMLAttributes<HTMLIFrameElement> & { type?: 'text' | 'number' | 'tel' } & CustomYupProps)[]
-}
-
-const Form: FC<FormikProps<Values> & Props & HandleSubmitProps> = (props) => {
+const Form: FC<FormikProps<FormCustomInputValues> & FormCustomInputType> = (props) => {
   const { inputs, handleSubmit } = props;
 
   return (
     <form onSubmit={handleSubmit}>
-      {inputs.map(({ validation: _, title, ...attributes }, index) => (
+      {inputs.map(({ validation: _, ...attributes }, index) => (
         <Fragment key={index}>
-          <Field as={InputWithIcon} {...attributes} title={title} autoFocus={index === 0} />
+          <Field as={InputWithIcon} {...attributes} autoFocus={index === 0} />
           <ErrorMessage name={attributes.name} component={SpanErrorMessage} />
         </Fragment>
       ))}
@@ -30,9 +23,9 @@ const Form: FC<FormikProps<Values> & Props & HandleSubmitProps> = (props) => {
   );
 };
 
-const FormCustomInput = withFormik<Props & HandleSubmitProps, Values>({
+const FormCustomInput = withFormik<FormCustomInputType, FormCustomInputValues>({
   mapPropsToValues: ({ inputs }) => (inputs.reduce((res, { name }) => ({ ...res, [name]: '' }), {})),
-  validationSchema: ({ inputs }: Props) => yup.object().shape(inputs.reduce((res, input) => ({ ...res, ...customYup(input) }), {})),
+  validationSchema: ({ inputs }: FormCustomInputType) => yup.object().shape(inputs.reduce((res, input) => ({ ...res, ...customYup(input) }), {})),
   validateOnMount: true,
   handleSubmit: customHandleSubmit
 })(Form);
