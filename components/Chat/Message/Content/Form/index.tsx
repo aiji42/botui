@@ -6,8 +6,8 @@ import { useMessageContext } from '../../../../../hooks/use-message-context'
 const Form: FC = () => {
   const { message, handleUpdate } = useMessageContext()
   const props = message.content.props as FormType
-  const handleComplete = useCallback((p: FormType) => {
-    const newContent = { ...message.content, props: { ...props, props: p } }
+  const handleComplete = useCallback((props: FormType) => {
+    const newContent = { ...message.content, props }
     if (message.completed) handleUpdate({ ...message, content: newContent, updated: true })
     else handleUpdate({ ...message, content: newContent, completed: true })
   }, [props])
