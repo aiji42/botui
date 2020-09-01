@@ -14,7 +14,7 @@ const Form: FC<FormikProps<FormCustomTextareaValues> & FormCustomTextareaType> =
     <form onSubmit={handleSubmit}>
       <Field as={TextareaWithIcon} name={name} title={title} placeholder={placeholder} autoFocus />
       <ErrorMessage name={name} component={SpanErrorMessage} />
-      <Field component={ButtonSubmit} name="submit" />
+      <Field as={ButtonSubmit} name="submit" />
     </form>
   );
 };

@@ -18,13 +18,13 @@ const Form: FC<FormikProps<FormCustomInputValues> & FormCustomInputType> = (prop
           <ErrorMessage name={attributes.name} component={SpanErrorMessage} />
         </Fragment>
       ))}
-      <Field component={ButtonSubmit} name="submit" />
+      <Field as={ButtonSubmit} name="submit" />
     </form>
   );
 };
 
 const FormCustomInput = withFormik<FormCustomInputType, FormCustomInputValues>({
-  mapPropsToValues: ({ inputs }) => (inputs.reduce((res, { name }) => ({ ...res, [name]: '' }), {})),
+  mapPropsToValues: ({ inputs, values }) => ({...inputs.reduce((res, { name }) => ({ ...res, [name]: '' }), {}), ...values}),
   validationSchema: ({ inputs }: FormCustomInputType) => yup.object().shape(inputs.reduce((res, input) => ({ ...res, ...customYup(input) }), {})),
   validateOnMount: true,
   handleSubmit: customHandleSubmit

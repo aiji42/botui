@@ -26,7 +26,7 @@ const Form: FC<FormikProps<FormCustomSelectValues> & FormCustomSelectType> = (pr
 };
 
 const FormCustomSelect = withFormik<FormCustomSelectType, FormCustomSelectValues>({
-  mapPropsToValues: ({ selects }) => (selects.reduce((res, { name }) => ({ ...res, [name]: '' }), {})),
+  mapPropsToValues: ({ selects, values }) => ({ ...selects.reduce((res, { name }) => ({ ...res, [name]: '' }), {}), ...values}),
   validationSchema: ({ selects }: FormCustomSelectType) => yup.object().shape(
     selects.reduce((res, { name }) => ({ ...res, [name]: yup.mixed().required('選択してください') }), {})
   ),
