@@ -8,7 +8,7 @@ import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import { usePostalJp } from 'use-postal-jp'
 import { customHandleSubmit } from './modules'
-import { FormAddressValues, FormAddress as FormAddressType } from '../../../../@types/form';
+import { FormAddressValues, FormAddress as FormAddressType } from '@botui/types';
 
 const prefectures = [
   '北海道', '青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県', '茨城県',

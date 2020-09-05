@@ -10,7 +10,7 @@ import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import { css } from '@emotion/core';
 import { customHandleSubmit } from './modules'
-import { FormCreditCardValues, FormCreditCard as FormCreditCardType } from '../../../../@types/form';
+import { FormCreditCardValues, FormCreditCard as FormCreditCardType } from '@botui/types';
 
 const style = {
   narrowField: css`

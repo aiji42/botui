@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react'
 import * as Forms from '../../../../Forms'
-import { Form as FormType } from '../../../../../@types/form'
+import { Form as FormType } from '@botui/types'
 import { useMessageContext } from '../../../../../hooks/use-message-context'
 
 const Form: FC = () => {

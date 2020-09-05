@@ -3,7 +3,7 @@ import { withFormik, Field, FormikProps } from 'formik';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import { css } from '@emotion/core';
 import { customHandleSubmit } from './modules'
-import { FormConfirmValues, FormConfirm as FormConfirmType } from '../../../../@types/form';
+import { FormConfirmValues, FormConfirm as FormConfirmType } from '@botui/types';
 
 const base = css`
   color: #676879;

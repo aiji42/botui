@@ -1,5 +1,5 @@
 import { FC, createContext, useContext, ReactNode } from 'react'
-import { Message } from '../../@types/message'
+import { Message } from '@botui/types'
 
 interface MessageContextType {
   handleUpdate: (arg: Message) => void
@@ -11,7 +11,10 @@ const Context = createContext<MessageContextType>({
   message: {
     human: true,
     content: { type: 'string', props: {} },
-    completed: false
+    completed: false,
+    updated: false,
+    before: '',
+    after: ''
   }
 })
 

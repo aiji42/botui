@@ -1,7 +1,7 @@
 import { FC, useCallback } from 'react'
 import Message from './Message'
 import { useCorsState } from 'use-cors-state'
-import { Message as MessageType } from '../../@types/message'
+import { Message as MessageType } from '@botui/types'
 import MessageContext from '../../hooks/use-message-context'
 
 const Chat: FC = () => {

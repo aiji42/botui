@@ -5,7 +5,7 @@ import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import InputWithIcon from '../Elements/InputWithIcon';
 import { customHandleSubmit, customYup, CustomYupProps } from './modules'
-import { FormCustomInputValues, FormCustomInput as FormCustomInputType } from '../../../../@types/form';
+import { FormCustomInputValues, FormCustomInput as FormCustomInputType } from '@botui/types';
 
 const Form: FC<FormikProps<FormCustomInputValues> & FormCustomInputType> = (props) => {
   const { inputs, handleSubmit } = props;

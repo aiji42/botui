@@ -1037,6 +1037,14 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
+"@botui/types@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@botui/types/-/types-0.2.1.tgz#2ca92c980de62a5d0480c9753a2f6cd61b2dfa34"
+  integrity sha512-wQnaKA6+8/QdL53xoyi7tURLsLfqGVN+zV4FjE18P0GaKNB3YJmB5PHuC2WQQkwmR1jfmrDG9no4h/4wqV2T1w==
+  dependencies:
+    "@types/react" "*"
+    "@types/yup" "*"
+
 "@emotion/babel-plugin-jsx-pragmatic@^0.1.5":
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin-jsx-pragmatic/-/babel-plugin-jsx-pragmatic-0.1.5.tgz#27debfe9c27c4d83574d509787ae553bf8a34d7e"
@@ -1225,7 +1233,7 @@
     "@types/prop-types" "*"
     csstype "^3.0.2"
 
-"@types/yup@^0.29.5":
+"@types/yup@*", "@types/yup@^0.29.5":
   version "0.29.6"
   resolved "https://registry.yarnpkg.com/@types/yup/-/yup-0.29.6.tgz#0920303c0298ac53945e9feb0b4dcad79cc755b2"
   integrity sha512-YPDo5L5uHyxQ4UkyJST+33stD8Z6IT9fvmKyaPAGxkZ6q19foEi6sQGkmqBvzSyRPdstFEeJiS2rKuTn8rfO5g==

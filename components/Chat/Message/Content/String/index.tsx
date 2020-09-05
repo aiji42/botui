@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react'
-import { StringType } from '../../../../../@types/message'
+import { StringType } from '@botui/types'
 import { useMessageContext } from '../../../../../hooks/use-message-context'
 
 const String: FC = () => {

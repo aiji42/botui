@@ -5,7 +5,7 @@ import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import RadioInput from '../Elements/RadioInput';
 import { css } from '@emotion/core';
 import { customHandleSubmit } from './modules'
-import { FormCustomRadioGroup as FormCustomRadioGroupType, FormCustomRadioGroupValues } from '../../../../@types/form';
+import { FormCustomRadioGroup as FormCustomRadioGroupType, FormCustomRadioGroupValues } from '@botui/types';
 
 const style = {
   mergin: css({

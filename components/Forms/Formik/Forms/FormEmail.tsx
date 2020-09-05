@@ -5,7 +5,7 @@ import InputWithIcon from '../Elements/InputWithIcon'
 import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import { customHandleSubmit } from './modules'
-import { FormEmailValues, FormEmail as FormEmailType } from '../../../../@types/form';
+import { FormEmailValues, FormEmail as FormEmailType } from '@botui/types';
 
 const Form: FC<FormikProps<FormEmailValues>> = (props) => {
   const { handleSubmit } = props;

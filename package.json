@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@botui/types": "^0.2.1",
     "@emotion/babel-preset-css-prop": "^10.0.27",
     "@emotion/core": "^10.0.34",
     "@fortawesome/fontawesome-svg-core": "^1.2.30",

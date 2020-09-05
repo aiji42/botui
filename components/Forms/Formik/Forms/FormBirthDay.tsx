@@ -6,7 +6,7 @@ import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import { css } from '@emotion/core';
 import { customHandleSubmit } from './modules'
-import { FormBirthDayValues, FormBirthDay as FormBirthDayType } from '../../../../@types/form';
+import { FormBirthDayValues, FormBirthDay as FormBirthDayType } from '@botui/types';
 
 const style = {
   formBlockDetailHalfField: css`

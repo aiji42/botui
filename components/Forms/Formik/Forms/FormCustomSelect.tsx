@@ -5,7 +5,7 @@ import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import SelectWithIcon from '../Elements/SelectWithIcon';
 import { customHandleSubmit } from './modules'
-import { FormCustomSelectValues, FormCustomSelect as FormCustomSelectType } from '../../../../@types/form';
+import { FormCustomSelectValues, FormCustomSelect as FormCustomSelectType } from '@botui/types';
 
 const Form: FC<FormikProps<FormCustomSelectValues> & FormCustomSelectType> = (props) => {
   const { selects, handleSubmit } = props;

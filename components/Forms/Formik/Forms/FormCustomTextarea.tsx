@@ -5,7 +5,7 @@ import SpanErrorMessage from '../Elements/SpanErrorMessage';
 import ButtonSubmit from '../Elements/ButtonSubmit';
 import TextareaWithIcon from '../Elements/TextareaWithIcon';
 import { customYup, customHandleSubmit } from './modules'
-import { FormCustomTextareaValues, FormCustomTextarea as FormCustomTextareaType } from '../../../../@types/form';
+import { FormCustomTextareaValues, FormCustomTextarea as FormCustomTextareaType } from '@botui/types';
 
 const Form: FC<FormikProps<FormCustomTextareaValues> & FormCustomTextareaType> = (props) => {
   const { name, title, placeholder, handleSubmit } = props;
