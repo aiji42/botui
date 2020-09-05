@@ -22,14 +22,10 @@ const style = {
   `
 }
 
-const toKatakana = (value: string) => value.normalize('NFKC')
-  .replace(/[\u3041-\u3096]/g, (match) => String.fromCharCode(match.charCodeAt(0) + 0x60))
-  .replace(/[^ァ-ン]/g, '')
-
 const Form: FC<FormikProps<FormNameValues>> = (props) => {
   const { handleSubmit } = props;
-  const { kana: familyNameKana, setKanaSource: setFamilyNameKanaSource } = useKana()
-  const { kana: firstNameKana, setKanaSource: setFirstNameKanaSource } = useKana()
+  const { kana: familyNameKana, setKanaSource: setFamilyNameKanaSource } = useKana({ kanaType: 'katakana' })
+  const { kana: firstNameKana, setKanaSource: setFirstNameKanaSource } = useKana({ kanaType: 'katakana' })
   const [, , familyNameKanaHelper] = useField('familyNameKana')
   const [, , firstNameKanaHelper] = useField('firstNameKana')
   const FamilyNameMounted = useRef(false)
@@ -40,7 +36,7 @@ const Form: FC<FormikProps<FormNameValues>> = (props) => {
       FamilyNameMounted.current = true
       return
     }
-    familyNameKanaHelper.setValue(toKatakana(familyNameKana))
+    familyNameKanaHelper.setValue(familyNameKana)
     !!familyNameKana && familyNameKanaHelper.setTouched(true)
 
   }, [familyNameKana])
@@ -50,7 +46,7 @@ const Form: FC<FormikProps<FormNameValues>> = (props) => {
       FirstNameMounted.current = true
       return
     }
-    firstNameKanaHelper.setValue(toKatakana(firstNameKana))
+    firstNameKanaHelper.setValue(firstNameKana)
     !!firstNameKana && firstNameKanaHelper.setTouched(true)
   }, [firstNameKana])
 
