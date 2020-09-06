@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-botui-dev-91221-authRole",
+      "UnauthRoleArn": "arn:aws:iam::998366166562:role/amplify-botui-dev-91221-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::998366166562:role/amplify-botui-dev-91221-authRole",
+      "Region": "ap-northeast-1",
+      "DeploymentBucketName": "amplify-botui-dev-91221-deployment",
+      "UnauthRoleName": "amplify-botui-dev-91221-unauthRole",
+      "StackName": "amplify-botui-dev-91221",
+      "StackId": "arn:aws:cloudformation:ap-northeast-1:998366166562:stack/amplify-botui-dev-91221/e8f9f530-ef57-11ea-bac7-0aa2cd508fc6",
+      "AmplifyAppId": "d31hxi1y8c9337"
+    },
+    "categories": {
+      "auth": {
+        "botuia48ad328": {}
+      }
+    }
+  }
+}

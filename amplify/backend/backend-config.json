@@ -1,0 +1,11 @@
+{
+  "auth": {
+    "botuia48ad328": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  },
+  "api": {}
+}
