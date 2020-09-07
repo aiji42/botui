@@ -20,8 +20,6 @@ const style = css`
       }
     }
     font-family: 'Noto Sans JP', sans-serif;
-    padding: 0px 15px 100px 15px;
-    margin: 0;
   }
 `
 
