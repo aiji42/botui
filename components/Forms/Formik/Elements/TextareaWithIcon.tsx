@@ -1,11 +1,12 @@
-import { useState, FC, useCallback, FocusEvent } from 'react';
-import { css, SerializedStyles } from '@emotion/core';
-import { okColor, errorColor, baseBorderColor } from '../../shared/baseStyle';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import TextareaAutosize, { TextareaAutosizeProps } from 'react-textarea-autosize';
-import { FieldMetaProps, useField, FieldAttributes } from 'formik';
-
+import { useState, FC, useCallback, FocusEvent } from 'react'
+import { css, SerializedStyles } from '@emotion/core'
+import { okColor, errorColor, baseBorderColor } from '../../shared/baseStyle'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
+import TextareaAutosize, {
+  TextareaAutosizeProps
+} from 'react-textarea-autosize'
+import { FieldMetaProps, useField, FieldAttributes } from 'formik'
 
 const style = {
   base: css`
@@ -44,46 +45,61 @@ const style = {
     top: -31px;
     color: ${okColor};
     height: 0px;
-  `,
+  `
 }
 
-const styles = ({ error, touched, initialValue }: FieldMetaProps<any>): SerializedStyles | SerializedStyles[] => {
-  if (!error) return [style.base, style.isOk];
-  if (!touched && error && initialValue.length === 0) return [style.base, style.noTouched];
-  if (error) return [style.base, style.withError];
+const styles = ({
+  error,
+  touched,
+  initialValue
+}: FieldMetaProps<any>): SerializedStyles | SerializedStyles[] => {
+  if (!error) return [style.base, style.isOk]
+  if (!touched && error && initialValue.length === 0)
+    return [style.base, style.noTouched]
+  if (error) return [style.base, style.withError]
   return style.base
-};
+}
 
 type Props = {
   title?: string | Element
-} & FieldAttributes<any>  & TextareaAutosizeProps
+} & FieldAttributes<any> &
+  TextareaAutosizeProps
 
 const TextareaWithIcon: FC<Props> = ({ title, ...props }) => {
-  const [minRows, setMinRows] = useState<number>(0);
+  const [minRows, setMinRows] = useState<number>(0)
   const [field, meta] = useField(props)
   const { error } = meta
   const { onBlur } = field
   const handleFocus = useCallback(() => setMinRows(2), [setMinRows])
-  const handleBlur = useCallback((e: FocusEvent<HTMLTextAreaElement>) => {
-    onBlur(e);
-    setMinRows(0);
-  }, [setMinRows, onBlur])
+  const handleBlur = useCallback(
+    (e: FocusEvent<HTMLTextAreaElement>) => {
+      onBlur(e)
+      setMinRows(0)
+    },
+    [setMinRows, onBlur]
+  )
 
   return (
     <>
       <div css={style.title}>{title}</div>
-      <TextareaAutosize {...props} minRows={minRows} css={styles(meta)} onFocus={handleFocus} onBlur={handleBlur} />
-      {!error &&
+      <TextareaAutosize
+        {...props}
+        minRows={minRows}
+        css={styles(meta)}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+      />
+      {!error && (
         <div css={style.okIcon}>
           <FontAwesomeIcon icon={faCheckCircle} />
         </div>
-      }
+      )}
     </>
-  );
-};
+  )
+}
 
 TextareaWithIcon.defaultProps = {
   autoFocus: false
-};
+}
 
-export default TextareaWithIcon;
+export default TextareaWithIcon

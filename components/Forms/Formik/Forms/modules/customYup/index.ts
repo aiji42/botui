@@ -1,4 +1,4 @@
-import * as yup from 'yup';
+import * as yup from 'yup'
 
 interface ValidationTypeString {
   type: 'string'
@@ -7,9 +7,17 @@ interface ValidationTypeString {
   required?: [yup.TestOptionsMessage]
   matches?: [RegExp, yup.StringLocale['matches']]
 }
-const isValidationTypeString = (arg: any): arg is ValidationTypeString => arg?.type === 'string'
+const isValidationTypeString = (arg: any): arg is ValidationTypeString =>
+  arg?.type === 'string'
 
-const customYupString = (name: string, validation: ValidationTypeString) => {
+interface CustomYupString {
+  [x: string]: yup.StringSchema
+}
+
+const customYupString = (
+  name: string,
+  validation: ValidationTypeString
+): CustomYupString => {
   const { min, max, required, matches } = validation
   let yupper = yup.string()
   if (min) yupper = yupper.min(...min)
@@ -27,9 +35,17 @@ interface ValidationTypeNumber {
   max?: [number, yup.NumberLocale['max']]
   required?: [yup.TestOptionsMessage]
 }
-const isValidationTypeNumber = (arg: any): arg is ValidationTypeNumber => arg?.type === 'number'
+const isValidationTypeNumber = (arg: any): arg is ValidationTypeNumber =>
+  arg?.type === 'number'
 
-const customYupNumber = (name: string, validation: ValidationTypeNumber) => {
+interface CustomYupNumber {
+  [x: string]: yup.NumberSchema
+}
+
+const customYupNumber = (
+  name: string,
+  validation: ValidationTypeNumber
+): CustomYupNumber => {
   const { min, max, required } = validation
   let yupper = yup.number()
   if (min) yupper = yupper.min(...min)
@@ -45,8 +61,13 @@ export interface CustomYupProps {
   validation?: ValidationTypeString | ValidationTypeNumber
 }
 
-export const customYup = ({ name, validation }: CustomYupProps) => {
-  if (isValidationTypeString(validation)) return customYupString(name, validation)
-  if (isValidationTypeNumber(validation)) return customYupNumber(name, validation)
+export const customYup = ({
+  name,
+  validation
+}: CustomYupProps): CustomYupString | CustomYupNumber => {
+  if (isValidationTypeString(validation))
+    return customYupString(name, validation)
+  if (isValidationTypeNumber(validation))
+    return customYupNumber(name, validation)
   return customYupString(name, { type: 'string' })
 }

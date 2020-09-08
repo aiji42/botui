@@ -1,14 +1,14 @@
-import React, { useEffect, FC, KeyboardEvent, useRef } from 'react';
-import { withFormik, Field, ErrorMessage, useField, FormikProps } from 'formik';
-import * as yup from 'yup';
-import InputName from '../Elements/InputName';
-import InputNameKana from '../Elements/InputNameKana';
-import SpanErrorMessage from '../Elements/SpanErrorMessage';
-import ButtonSubmit from '../Elements/ButtonSubmit';
-import { css } from '@emotion/core';
+import { useEffect, FC, KeyboardEvent, useRef } from 'react'
+import { withFormik, Field, ErrorMessage, useField, FormikProps } from 'formik'
+import * as yup from 'yup'
+import InputName from '../Elements/InputName'
+import InputNameKana from '../Elements/InputNameKana'
+import SpanErrorMessage from '../Elements/SpanErrorMessage'
+import ButtonSubmit from '../Elements/ButtonSubmit'
+import { css } from '@emotion/core'
 import { useKana } from 'react-use-kana'
 import { customHandleSubmit } from './modules'
-import { FormNameValues, FormName as FormNameType } from '@botui/types';
+import { FormNameValues, FormName as FormNameType } from '@botui/types'
 
 const style = {
   formBlockDetailHalf: css`
@@ -23,9 +23,15 @@ const style = {
 }
 
 const Form: FC<FormikProps<FormNameValues>> = (props) => {
-  const { handleSubmit } = props;
-  const { kana: familyNameKana, setKanaSource: setFamilyNameKanaSource } = useKana({ kanaType: 'katakana' })
-  const { kana: firstNameKana, setKanaSource: setFirstNameKanaSource } = useKana({ kanaType: 'katakana' })
+  const { handleSubmit } = props
+  const {
+    kana: familyNameKana,
+    setKanaSource: setFamilyNameKanaSource
+  } = useKana({ kanaType: 'katakana' })
+  const {
+    kana: firstNameKana,
+    setKanaSource: setFirstNameKanaSource
+  } = useKana({ kanaType: 'katakana' })
   const [, , familyNameKanaHelper] = useField('familyNameKana')
   const [, , firstNameKanaHelper] = useField('firstNameKana')
   const FamilyNameMounted = useRef(false)
@@ -38,7 +44,6 @@ const Form: FC<FormikProps<FormNameValues>> = (props) => {
     }
     familyNameKanaHelper.setValue(familyNameKana)
     !!familyNameKana && familyNameKanaHelper.setTouched(true)
-
   }, [familyNameKana])
 
   useEffect(() => {
@@ -53,29 +58,52 @@ const Form: FC<FormikProps<FormNameValues>> = (props) => {
   return (
     <form onSubmit={handleSubmit}>
       <div css={[style.formBlockDetailHalf, style.left]}>
-        <Field as={InputName} name="familyName" placeholder="山田" title="姓" autoFocus
-          onInput={(e: KeyboardEvent<HTMLInputElement>) => setFamilyNameKanaSource(e.currentTarget.value)}
+        <Field
+          as={InputName}
+          name="familyName"
+          placeholder="山田"
+          title="姓"
+          autoFocus
+          onInput={(e: KeyboardEvent<HTMLInputElement>) =>
+            setFamilyNameKanaSource(e.currentTarget.value)
+          }
         />
         <ErrorMessage name="familyName" component={SpanErrorMessage} />
       </div>
       <div css={style.formBlockDetailHalf}>
-        <Field as={InputName} name="firstName" placeholder="太郎" title="名"
-          onInput={(e: KeyboardEvent<HTMLInputElement>) => setFirstNameKanaSource(e.currentTarget.value)}
+        <Field
+          as={InputName}
+          name="firstName"
+          placeholder="太郎"
+          title="名"
+          onInput={(e: KeyboardEvent<HTMLInputElement>) =>
+            setFirstNameKanaSource(e.currentTarget.value)
+          }
         />
         <ErrorMessage name="firstName" component={SpanErrorMessage} />
       </div>
       <div css={[style.formBlockDetailHalf, style.left]}>
-        <Field as={InputNameKana} name="familyNameKana" placeholder="ヤマダ" title="セイ" />
+        <Field
+          as={InputNameKana}
+          name="familyNameKana"
+          placeholder="ヤマダ"
+          title="セイ"
+        />
         <ErrorMessage name="familyNameKana" component={SpanErrorMessage} />
       </div>
       <div css={style.formBlockDetailHalf}>
-        <Field as={InputNameKana} name="firstNameKana" placeholder="タロウ" title="メイ" />
+        <Field
+          as={InputNameKana}
+          name="firstNameKana"
+          placeholder="タロウ"
+          title="メイ"
+        />
         <ErrorMessage name="firstNameKana" component={SpanErrorMessage} />
       </div>
       <Field as={ButtonSubmit} name="submit" />
     </form>
-  );
-};
+  )
+}
 
 const FormName = withFormik<FormNameType, FormNameValues>({
   mapPropsToValues: ({ values }) => ({
@@ -86,19 +114,27 @@ const FormName = withFormik<FormNameType, FormNameValues>({
     ...values
   }),
   validationSchema: yup.object().shape({
-    familyName: yup.string().required('入力してください').max(50, '入力内容が長すぎます'),
-    familyNameKana: yup.string()
+    familyName: yup
+      .string()
+      .required('入力してください')
+      .max(50, '入力内容が長すぎます'),
+    familyNameKana: yup
+      .string()
       .required('入力してください')
       .max(50, '入力内容が長すぎます')
       .matches(/^[ァ-ヶ]+$/, '全角カナで入力してください'),
-    firstName: yup.string().required('入力してください').max(50, '入力内容が長すぎます'),
-    firstNameKana: yup.string()
+    firstName: yup
+      .string()
+      .required('入力してください')
+      .max(50, '入力内容が長すぎます'),
+    firstNameKana: yup
+      .string()
       .required('入力してください')
       .max(50, '入力内容が長すぎます')
-      .matches(/^[ァ-ヶ]+$/, '全角カナで入力してください'),
+      .matches(/^[ァ-ヶ]+$/, '全角カナで入力してください')
   }),
   validateOnMount: true,
   handleSubmit: customHandleSubmit
-})(Form);
+})(Form)
 
-export default FormName;
+export default FormName

@@ -1,32 +1,35 @@
-import { FC, useMemo } from 'react';
-import dynamic from "next/dynamic";
+import { FC, useMemo } from 'react'
+import dynamic from 'next/dynamic'
 
 const AceEditor = dynamic(
   async () => {
-    const reactAce = await import("react-ace");
-    await import("ace-builds/src-noconflict/ext-language_tools");
-    await import("ace-builds/src-noconflict/ext-error_marker")
-    await import("ace-builds/src-noconflict/mode-json");
-    await import("ace-builds/src-noconflict/theme-monokai");
+    const reactAce = await import('react-ace')
+    await import('ace-builds/src-noconflict/ext-language_tools')
+    await import('ace-builds/src-noconflict/ext-error_marker')
+    await import('ace-builds/src-noconflict/mode-json')
+    await import('ace-builds/src-noconflict/theme-monokai')
 
-    const ace = require("ace-builds/src-noconflict/ace");
+    const ace = await import('ace-builds/src-noconflict/ace')
     ace.config.set(
-      "basePath",
-      "https://cdn.jsdelivr.net/npm/ace-builds@1.4.12/src-noconflict/"
-    );
+      'basePath',
+      'https://cdn.jsdelivr.net/npm/ace-builds@1.4.12/src-noconflict/'
+    )
     ace.config.setModuleUrl(
-      "ace/mode/json_worker",
-      "https://cdn.jsdelivr.net/npm/ace-builds@1.4.12/src-noconflict/worker-json.js"
-    );
+      'ace/mode/json_worker',
+      'https://cdn.jsdelivr.net/npm/ace-builds@1.4.12/src-noconflict/worker-json.js'
+    )
 
-    return reactAce;
+    return reactAce
   },
   {
     ssr: false
   }
-);
+)
 
-const JsonViewer: FC<{ source: string, record?: any }> = ({ source, record }) => {
+const JsonViewer: FC<{ source: string; record?: any }> = ({
+  source,
+  record
+}) => {
   const parsedValue = useMemo(() => {
     try {
       const parsed = JSON.stringify(JSON.parse(record[source]), null, 2)
@@ -47,7 +50,7 @@ const JsonViewer: FC<{ source: string, record?: any }> = ({ source, record }) =>
       setOptions={{
         showLineNumbers: true,
         readOnly: true,
-        tabSize: 2,
+        tabSize: 2
       }}
     />
   )

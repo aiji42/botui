@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 import { FC } from 'react'
 import { Global, css } from '@emotion/core'
 
-const Chat = dynamic(() => import("../components/Chat"), { ssr: false });
+const Chat = dynamic(() => import('../components/Chat'), { ssr: false })
 
 const style = css`
   body {

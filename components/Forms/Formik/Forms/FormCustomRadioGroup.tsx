@@ -1,11 +1,14 @@
-import React, { FC } from 'react';
-import { withFormik, Field, ErrorMessage, FormikProps } from 'formik';
-import * as yup from 'yup';
-import SpanErrorMessage from '../Elements/SpanErrorMessage';
-import RadioInput from '../Elements/RadioInput';
-import { css } from '@emotion/core';
+import { FC } from 'react'
+import { withFormik, Field, ErrorMessage, FormikProps } from 'formik'
+import * as yup from 'yup'
+import SpanErrorMessage from '../Elements/SpanErrorMessage'
+import RadioInput from '../Elements/RadioInput'
+import { css } from '@emotion/core'
 import { customHandleSubmit } from './modules'
-import { FormCustomRadioGroup as FormCustomRadioGroupType, FormCustomRadioGroupValues } from '@botui/types';
+import {
+  FormCustomRadioGroup as FormCustomRadioGroupType,
+  FormCustomRadioGroupValues
+} from '@botui/types'
 
 const style = {
   mergin: css({
@@ -13,8 +16,10 @@ const style = {
   })
 }
 
-const Form: FC<FormikProps<FormCustomRadioGroupValues> & FormCustomRadioGroupType> = (props) => {
-  const { name, inputs, handleSubmit } = props;
+const Form: FC<
+  FormikProps<FormCustomRadioGroupValues> & FormCustomRadioGroupType
+> = (props) => {
+  const { name, inputs, handleSubmit } = props
 
   return (
     <form onSubmit={handleSubmit}>
@@ -25,16 +30,20 @@ const Form: FC<FormikProps<FormCustomRadioGroupValues> & FormCustomRadioGroupTyp
       ))}
       <ErrorMessage name={name} component={SpanErrorMessage} />
     </form>
-  );
-};
+  )
+}
 
-const FormCustomRadioGroup = withFormik<FormCustomRadioGroupType, FormCustomRadioGroupValues>({
+const FormCustomRadioGroup = withFormik<
+  FormCustomRadioGroupType,
+  FormCustomRadioGroupValues
+>({
   mapPropsToValues: ({ name }) => ({ [name]: '' }),
-  validationSchema: ({ name }: FormCustomRadioGroupType) => yup.object().shape({
-    [name]: yup.string().required('選択してください')
-  }),
+  validationSchema: ({ name }: FormCustomRadioGroupType) =>
+    yup.object().shape({
+      [name]: yup.string().required('選択してください')
+    }),
   validateOnMount: true,
   handleSubmit: customHandleSubmit
-})(Form);
+})(Form)
 
-export default FormCustomRadioGroup;
+export default FormCustomRadioGroup

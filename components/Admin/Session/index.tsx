@@ -22,7 +22,7 @@ import JsonViewer from '../JsonViewer'
 
 export const SessionList: FC = (props) => {
   return (
-    <List {...props} >
+    <List {...props}>
       <Datagrid>
         <TextField source="title" sortable={false} />
         <BooleanField source="active" />
@@ -37,7 +37,7 @@ export const SessionShow: FC = (props) => {
   return (
     <Show {...props}>
       <TabbedShowLayout>
-        <Tab label="main" >
+        <Tab label="main">
           <TextField source="title" />
           <BooleanField source="active" />
         </Tab>
@@ -49,7 +49,7 @@ export const SessionShow: FC = (props) => {
   )
 }
 
-const validateName = [required()];
+const validateName = [required()]
 
 export const SessionCreate: FC = (props) => {
   return (

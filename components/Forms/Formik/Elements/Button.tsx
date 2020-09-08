@@ -1,5 +1,5 @@
-import { FC, ButtonHTMLAttributes } from 'react';
-import { css } from '@emotion/core';
+import { FC, ButtonHTMLAttributes } from 'react'
+import { css } from '@emotion/core'
 
 const style = css`
   display: block;
@@ -15,7 +15,7 @@ const style = css`
   font-weight: bold;
   border-bottom: solid 4px #a97171;
   &:disabled {
-    opacity: 0.5
+    opacity: 0.5;
   }
   &:active {
     -webkit-transform: translateY(4px);
@@ -23,8 +23,10 @@ const style = css`
     border-bottom: none;
     margin-bottom: 4px;
   }
-`;
+`
 
-const Button: FC<ButtonHTMLAttributes<HTMLButtonElement>> = (props) => <button css={style} {...props} />;
+const Button: FC<ButtonHTMLAttributes<HTMLButtonElement>> = (props) => (
+  <button css={style} {...props} />
+)
 
-export default Button;
+export default Button

@@ -1,4 +1,4 @@
-import { Translations } from "@aws-amplify/ui-components";
+import { Translations } from '@aws-amplify/ui-components'
 
 export default {
   ja: {
@@ -24,7 +24,8 @@ export default {
     [Translations.EMPTY_USERNAME]: 'メールアドレスを入力してください',
     [Translations.EMPTY_PASSWORD]: 'パスワードを入力してください',
     [Translations.FORGOT_PASSWORD_TEXT]: 'パスワードをお忘れですか？',
-    [Translations.LESS_THAN_TWO_MFA_VALUES_MESSAGE]: '2つ未満のMFAタイプが利用可能です',
+    [Translations.LESS_THAN_TWO_MFA_VALUES_MESSAGE]:
+      '2つ未満のMFAタイプが利用可能です',
     [Translations.NEW_PASSWORD_LABEL]: '新しいパスワード',
     [Translations.NEW_PASSWORD_PLACEHOLDER]: '新しいパスワードを入力',
     [Translations.NO_ACCOUNT_TEXT]: 'アカウントが未登録ですか？',
@@ -61,11 +62,13 @@ export default {
     [Translations.TOTP_SETUP_FAILURE]: 'TOTPセットアップに失敗しました',
     [Translations.TOTP_SUBMIT_BUTTON_TEXT]: 'セキュリティトークンを検証',
     [Translations.TOTP_SUCCESS_MESSAGE]: 'TOTPセットアップが成功しました',
-    [Translations.UNABLE_TO_SETUP_MFA_AT_THIS_TIME]: '失敗しました。現在MFA設定ができません。',
+    [Translations.UNABLE_TO_SETUP_MFA_AT_THIS_TIME]:
+      '失敗しました。現在MFA設定ができません。',
     [Translations.USERNAME_LABEL]: 'ユーザー名 *',
     [Translations.USERNAME_PLACEHOLDER]: 'ユーザー名を入力',
     [Translations.VERIFY_CONTACT_EMAIL_LABEL]: 'Eメール',
-    [Translations.VERIFY_CONTACT_HEADER_TEXT]: 'アカウントの復元には確認済みの連絡先情報が必要です',
+    [Translations.VERIFY_CONTACT_HEADER_TEXT]:
+      'アカウントの復元には確認済みの連絡先情報が必要です',
     [Translations.VERIFY_CONTACT_PHONE_LABEL]: '電話番号',
     [Translations.VERIFY_CONTACT_SUBMIT_LABEL]: '送信',
     [Translations.VERIFY_CONTACT_VERIFY_LABEL]: '検証',
@@ -92,7 +95,8 @@ export default {
     [Translations.LOCALE_LABEL]: 'ロケール',
     [Translations.LOCALE_PLACEHOLDER]: 'ロケールを入力',
     [Translations.UPDATED_AT_LABEL]: '更新日時',
-    [Translations.UPDATED_AT_PLACEHOLDER]: '情報が最後に更新された時刻を入力してください',
+    [Translations.UPDATED_AT_PLACEHOLDER]:
+      '情報が最後に更新された時刻を入力してください',
     [Translations.MIDDLE_NAME_LABEL]: 'ミドルネーム',
     [Translations.MIDDLE_NAME_PLACEHOLDER]: 'ミドルネームを入力',
     [Translations.WEBSITE_LABEL]: 'ウェブサイト',
@@ -100,11 +104,13 @@ export default {
     [Translations.NAME_LABEL]: 'フルネーム',
     [Translations.NAME_PLACEHOLDER]: 'フルネームを入力',
     [Translations.PHOTO_PICKER_TITLE]: 'タイトル',
-    [Translations.PHOTO_PICKER_HINT]: '補助的なテキストまたはコンテンツがこのスペースを占める可能性があります',
+    [Translations.PHOTO_PICKER_HINT]:
+      '補助的なテキストまたはコンテンツがこのスペースを占める可能性があります',
     [Translations.PHOTO_PICKER_PLACEHOLDER_HINT]: 'プレースホルダーヒント',
     [Translations.PHOTO_PICKER_BUTTON_TEXT]: 'ボタン',
     [Translations.IMAGE_PICKER_TITLE]: 'プロフィール写真を追加',
-    [Translations.IMAGE_PICKER_HINT]: 'アップロードする前に画像をプレビューする',
+    [Translations.IMAGE_PICKER_HINT]:
+      'アップロードする前に画像をプレビューする',
     [Translations.IMAGE_PICKER_PLACEHOLDER_HINT]: 'タップして画像を選択',
     [Translations.IMAGE_PICKER_BUTTON_TEXT]: 'アップロード',
     [Translations.PICKER_TEXT]: 'ファイルを選択',
@@ -116,19 +122,29 @@ export default {
     'User is not confirmed.': 'ユーザーは検証されていません',
     'User already exists': 'ユーザーは既に存在します',
     'Invalid email address format.': '正しいメールアドレスを入力してください',
-    'Invalid verification code provided, please try again.': '指定された確認コードが無効です。もう一度お試しください',
+    'Invalid verification code provided, please try again.':
+      '指定された確認コードが無効です。もう一度お試しください',
     'Invalid password format': 'パスワードのフォーマットが不正です',
-    'Invalid phone number format': '不正な電話番号フォーマットです。 電話番号は次のフォーマットで入力してください: +12345678900',
-    'An account with the given email already exists.': 'そのメールアドレスは既に存在します',
+    'Invalid phone number format':
+      '不正な電話番号フォーマットです。 電話番号は次のフォーマットで入力してください: +12345678900',
+    'An account with the given email already exists.':
+      'そのメールアドレスは既に存在します',
     'Password attempts exceeded': 'パスワード試行回数が超過しました',
-    'Attempt limit exceeded, please try after some time.': '試行制限を超過しました。しばらくしてからもう一度お試しください',
+    'Attempt limit exceeded, please try after some time.':
+      '試行制限を超過しました。しばらくしてからもう一度お試しください',
     'Username/client id combination not found.': 'ユーザーが存在しません',
     'CUSTOM_AUTH is not enabled for the client.': 'パスワードは必須です', // 本来の意味とは異なるが、パスワード未入力時に発生するのでこの訳としている
-    'Password does not conform to policy: Password not long enough': 'パスワードは8文字以上を入力してください (8文字以上の大文字小文字を含む英数字)', // 適宜修正
-    'Password does not conform to policy: Password must have uppercase characters': 'パスワードには大文字を含めてください (8文字以上の大文字小文字を含む英数字)', // 適宜修正
-    'Password does not conform to policy: Password must have lowercase characters': 'パスワードには小文字を含めてください (8文字以上の大文字小文字を含む英数字)', // 適宜修正
-    'Password does not conform to policy: Password must have numeric characters': 'パスワードには数字を含めてください (8文字以上の大文字小文字を含む英数字)', // 適宜修正
-    "1 validation error detected: Value at 'password' failed to satisfy constraint: Member must have length greater than or equal to 6": 'パスワードは8文字以上、大文字小文字を含む英数字を指定してください', // 適宜修正。本来の意味とは異なるがこれで明示している。
-    "2 validation errors detected: Value at 'password' failed to satisfy constraint: Member must have length greater than or equal to 6; Value at 'password' failed to satisfy constraint: Member must satisfy regular expression pattern: ^[\S]+.*[\S]+$": 'パスワードは8文字以上、大文字小文字を含む英数字を指定してください', // 適宜修正。本来の意味とは異なるがこれで明示している。
-  },
-};
+    'Password does not conform to policy: Password not long enough':
+      'パスワードは8文字以上を入力してください (8文字以上の大文字小文字を含む英数字)', // 適宜修正
+    'Password does not conform to policy: Password must have uppercase characters':
+      'パスワードには大文字を含めてください (8文字以上の大文字小文字を含む英数字)', // 適宜修正
+    'Password does not conform to policy: Password must have lowercase characters':
+      'パスワードには小文字を含めてください (8文字以上の大文字小文字を含む英数字)', // 適宜修正
+    'Password does not conform to policy: Password must have numeric characters':
+      'パスワードには数字を含めてください (8文字以上の大文字小文字を含む英数字)', // 適宜修正
+    "1 validation error detected: Value at 'password' failed to satisfy constraint: Member must have length greater than or equal to 6":
+      'パスワードは8文字以上、大文字小文字を含む英数字を指定してください', // 適宜修正。本来の意味とは異なるがこれで明示している。
+    "2 validation errors detected: Value at 'password' failed to satisfy constraint: Member must have length greater than or equal to 6; Value at 'password' failed to satisfy constraint: Member must satisfy regular expression pattern: ^[S]+.*[S]+$":
+      'パスワードは8文字以上、大文字小文字を含む英数字を指定してください' // 適宜修正。本来の意味とは異なるがこれで明示している。
+  }
+}

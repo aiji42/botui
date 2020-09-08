@@ -10,7 +10,10 @@ Amplify.I18n.setLanguage('ja')
 
 const style = css`
   body {
-    input, button, textarea, select {
+    input,
+    button,
+    textarea,
+    select {
       -webkit-appearance: none;
       -moz-appearance: none;
       -ms-appearance: none;

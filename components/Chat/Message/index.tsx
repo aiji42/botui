@@ -26,7 +26,7 @@ const style = {
     ':after': {
       display: 'block',
       content: '""',
-      clear: 'both',
+      clear: 'both'
     }
   })
 }
@@ -34,7 +34,10 @@ const style = {
 const Message: FC = () => {
   const name = useMemo(() => nextId(), [])
   useEffect(() => {
-    setTimeout(() => Scroll.scroller.scrollTo(name, { smooth: true, duration: 700 }), 500)
+    setTimeout(
+      () => Scroll.scroller.scrollTo(name, { smooth: true, duration: 700 }),
+      500
+    )
   }, [])
 
   return (

@@ -26,7 +26,12 @@ const style = {
 }
 
 const Bubble: FC = (props) => {
-  const { message: { human, content: { type } } } = useMessageContext()
+  const {
+    message: {
+      human,
+      content: { type }
+    }
+  } = useMessageContext()
   const styles = useMemo(() => {
     const s = [style.base]
     if (human) s.push(style.human)
@@ -34,9 +39,7 @@ const Bubble: FC = (props) => {
     return s
   }, [human, type])
 
-  return (
-    <div css={styles} {...props} />
-  )
+  return <div css={styles} {...props} />
 }
 
 export default Bubble

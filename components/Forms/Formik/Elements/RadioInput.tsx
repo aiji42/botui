@@ -1,9 +1,9 @@
-import { FC, ReactNode, InputHTMLAttributes, useMemo } from 'react';
-import { css } from '@emotion/core';
-import { useField, FieldAttributes, FieldInputProps } from 'formik'
-import { okColor, baseBorderColor } from '../../shared/baseStyle';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDotCircle, faCircle } from '@fortawesome/free-solid-svg-icons';
+import { FC, ReactNode, InputHTMLAttributes, useMemo } from 'react'
+import { css } from '@emotion/core'
+import { useField, FieldInputProps } from 'formik'
+import { okColor, baseBorderColor } from '../../shared/baseStyle'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faDotCircle, faCircle } from '@fortawesome/free-solid-svg-icons'
 
 const style = {
   base: css`
@@ -42,27 +42,42 @@ const style = {
   checkedStyle: css`
     border: solid 3px ${okColor};
     background-color: #fffdcf;
-  `,
+  `
 }
 
 type Props = {
   title: string | ReactNode
   value: any
-} & FieldInputProps<any> & InputHTMLAttributes<HTMLInputElement>
+} & FieldInputProps<any> &
+  InputHTMLAttributes<HTMLInputElement>
 
 const RadioInput: FC<Props> = ({ value, title, ...props }) => {
   const [, { value: formValue }] = useField(props)
   const checked = useMemo(() => formValue === value, [formValue, value])
 
   return (
-    <label css={[style.base, (checked ? style.checkedStyle : style.unCheckedStyle)]}>
-      <div css={[style.icon, (checked ? style.checkedIcon : style.unCheckedIcon)]}>
-        {checked ? <FontAwesomeIcon icon={faDotCircle} /> : <FontAwesomeIcon icon={faCircle} />}
+    <label
+      css={[style.base, checked ? style.checkedStyle : style.unCheckedStyle]}
+    >
+      <div
+        css={[style.icon, checked ? style.checkedIcon : style.unCheckedIcon]}
+      >
+        {checked ? (
+          <FontAwesomeIcon icon={faDotCircle} />
+        ) : (
+          <FontAwesomeIcon icon={faCircle} />
+        )}
       </div>
       <span>{title}</span>
-      <input {...props} value={value} type="radio" css={style.input} checked={checked} />
+      <input
+        {...props}
+        value={value}
+        type="radio"
+        css={style.input}
+        checked={checked}
+      />
     </label>
-  );
-};
+  )
+}
 
-export default RadioInput;
+export default RadioInput

@@ -1,12 +1,15 @@
-import { FC, useMemo } from 'react';
-import { withFormik, Field, ErrorMessage, FormikProps } from 'formik';
-import * as yup from 'yup';
-import SelectWithIcon from '../Elements/SelectWithIcon';
-import SpanErrorMessage from '../Elements/SpanErrorMessage';
-import ButtonSubmit from '../Elements/ButtonSubmit';
-import { css } from '@emotion/core';
+import { FC, useMemo } from 'react'
+import { withFormik, Field, ErrorMessage, FormikProps } from 'formik'
+import * as yup from 'yup'
+import SelectWithIcon from '../Elements/SelectWithIcon'
+import SpanErrorMessage from '../Elements/SpanErrorMessage'
+import ButtonSubmit from '../Elements/ButtonSubmit'
+import { css } from '@emotion/core'
 import { customHandleSubmit } from './modules'
-import { FormBirthDayValues, FormBirthDay as FormBirthDayType } from '@botui/types';
+import {
+  FormBirthDayValues,
+  FormBirthDay as FormBirthDayType
+} from '@botui/types'
 
 const style = {
   formBlockDetailHalfField: css`
@@ -21,7 +24,7 @@ const style = {
 }
 
 const Form: FC<FormikProps<FormBirthDayValues>> = (props) => {
-  const { handleSubmit } = props;
+  const { handleSubmit } = props
   const years = useMemo(() => {
     const y = [...Array(100)].map((_, k) => new Date().getFullYear() - k)
     return [...y.slice(0, 35), '', ...y.slice(35)].reverse()
@@ -32,28 +35,40 @@ const Form: FC<FormikProps<FormBirthDayValues>> = (props) => {
   return (
     <form onSubmit={handleSubmit}>
       <Field as={SelectWithIcon} name="birthdayYear" title="年">
-        {years.map((year) => (<option key={year} value={year}>{year !== '' ? `${year}年` : year}</option>))}
+        {years.map((year) => (
+          <option key={year} value={year}>
+            {year !== '' ? `${year}年` : year}
+          </option>
+        ))}
       </Field>
       <ErrorMessage name="birthdayYear" component={SpanErrorMessage} />
 
       <div css={[style.formBlockDetailHalfField, style.left]}>
         <Field as={SelectWithIcon} name="birthdayMonth" title="月">
           <option value=""></option>
-          {monthes.map((month) => (<option key={month} value={month}>{month}月</option>))}
+          {monthes.map((month) => (
+            <option key={month} value={month}>
+              {month}月
+            </option>
+          ))}
         </Field>
         <ErrorMessage name="birthdayMonth" component={SpanErrorMessage} />
       </div>
       <div css={style.formBlockDetailHalfField}>
         <Field as={SelectWithIcon} name="birthdayDay" title="日">
           <option value=""></option>
-          {days.map((day) => (<option key={day} value={day}>{day}日</option>))}
+          {days.map((day) => (
+            <option key={day} value={day}>
+              {day}日
+            </option>
+          ))}
         </Field>
         <ErrorMessage name="birthdayDay" component={SpanErrorMessage} />
       </div>
       <Field as={ButtonSubmit} name="submit" />
     </form>
-  );
-};
+  )
+}
 
 const FormBirthDay = withFormik<FormBirthDayType, FormBirthDayValues>({
   mapPropsToValues: ({ values }) => ({
@@ -65,18 +80,31 @@ const FormBirthDay = withFormik<FormBirthDayType, FormBirthDayValues>({
   validationSchema: yup.object().shape({
     birthdayYear: yup.string().required('選択してください'),
     birthdayMonth: yup.string().required('選択してください'),
-    birthdayDay: yup.string().required('選択してください'),
+    birthdayDay: yup.string().required('選択してください')
   }),
   validate: (values: FormBirthDayValues) => {
-    const { birthdayYear, birthdayMonth, birthdayDay } = values;
-    const date = new Date(Number(birthdayYear), Number(birthdayMonth) - 1, Number(birthdayDay));
-    if (!!birthdayYear && !!birthdayMonth && !!birthdayDay && String(date.getMonth() + 1) !== birthdayMonth) {
-      return { birthdayYear: '存在しない日付です', birthdayMonth: true, birthdayDay: true };
+    const { birthdayYear, birthdayMonth, birthdayDay } = values
+    const date = new Date(
+      Number(birthdayYear),
+      Number(birthdayMonth) - 1,
+      Number(birthdayDay)
+    )
+    if (
+      !!birthdayYear &&
+      !!birthdayMonth &&
+      !!birthdayDay &&
+      String(date.getMonth() + 1) !== birthdayMonth
+    ) {
+      return {
+        birthdayYear: '存在しない日付です',
+        birthdayMonth: true,
+        birthdayDay: true
+      }
     }
-    return {};
+    return {}
   },
   validateOnMount: true,
   handleSubmit: customHandleSubmit
-})(Form);
+})(Form)
 
-export default FormBirthDay;
+export default FormBirthDay

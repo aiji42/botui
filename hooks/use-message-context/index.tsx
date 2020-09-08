@@ -6,8 +6,12 @@ interface MessageContextType {
   message: Message
 }
 
+const noOp = () => {
+  // do nothing.
+}
+
 const Context = createContext<MessageContextType>({
-  handleUpdate: () => { },
+  handleUpdate: noOp,
   message: {
     human: true,
     content: { type: 'string', props: {} },
@@ -18,9 +22,13 @@ const Context = createContext<MessageContextType>({
   }
 })
 
-export const useMessageContext = () => useContext(Context)
+export const useMessageContext = (): MessageContextType => useContext(Context)
 
-const MessageContext: FC<MessageContextType & {children: ReactNode}> = ({ message, handleUpdate, children }) => {
+const MessageContext: FC<MessageContextType & { children: ReactNode }> = ({
+  message,
+  handleUpdate,
+  children
+}) => {
   return (
     <Context.Provider value={{ message, handleUpdate }}>
       {children}

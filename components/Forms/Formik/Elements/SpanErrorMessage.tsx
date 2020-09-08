@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import { css } from '@emotion/core';
+import { FC } from 'react'
+import { css } from '@emotion/core'
 
 const error = css({
   color: '#ea4031',
@@ -7,6 +7,6 @@ const error = css({
   display: 'block'
 })
 
-const SpanErrorMessage: FC = (props) => (<span css={error} {...props}></span>);
+const SpanErrorMessage: FC = (props) => <span css={error} {...props}></span>
 
-export default SpanErrorMessage;
+export default SpanErrorMessage

@@ -24,7 +24,9 @@ const style = {
 }
 
 const OperatorIcon: FC = () => {
-  const { message: { human, iconDisplay } } = useMessageContext()
+  const {
+    message: { human, iconDisplay }
+  } = useMessageContext()
   const display = iconDisplay === undefined ? true : iconDisplay
 
   if (human) return <></>

@@ -1,9 +1,9 @@
-import { FC, ReactNode, InputHTMLAttributes, SelectHTMLAttributes } from 'react';
-import { css, SerializedStyles } from '@emotion/core';
+import { FC, SelectHTMLAttributes } from 'react'
+import { css, SerializedStyles } from '@emotion/core'
 import { FieldMetaProps, useField, FieldInputProps } from 'formik'
-import { okColor, errorColor, baseBorderColor } from '../../shared/baseStyle';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { okColor, errorColor, baseBorderColor } from '../../shared/baseStyle'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 
 const style = {
   base: css`
@@ -29,7 +29,7 @@ const style = {
     padding-bottom: 4px;
   `,
   noValue: css`
-    color: rgb(0,0,0,0.5);
+    color: rgb(0, 0, 0, 0.5);
   `,
   isOk: css`
     border: solid 2px ${okColor};
@@ -41,25 +41,33 @@ const style = {
     border: solid 2px ${errorColor};
   `,
   okIcon: css`
-  float: right;
-  position: relative;
-  right: 5px;
-  top: -31px;
-  height: 0px;
-  color: ${okColor};
-`
+    float: right;
+    position: relative;
+    right: 5px;
+    top: -31px;
+    height: 0px;
+    color: ${okColor};
+  `
 }
 
-const styles = ({ value, error, touched, initialValue }: FieldMetaProps<any>): SerializedStyles | SerializedStyles[] => {
-  if (!error) return [style.base, style.isOk];
-  if (!touched && error && initialValue.length === 0) return [style.base, style.noTouched, ...(!value ? [style.noValue] : [])];
-  if (error) return [style.base, style.withError, ...(!value ? [style.noValue] : [])];
+const styles = ({
+  value,
+  error,
+  touched,
+  initialValue
+}: FieldMetaProps<any>): SerializedStyles | SerializedStyles[] => {
+  if (!error) return [style.base, style.isOk]
+  if (!touched && error && initialValue.length === 0)
+    return [style.base, style.noTouched, ...(!value ? [style.noValue] : [])]
+  if (error)
+    return [style.base, style.withError, ...(!value ? [style.noValue] : [])]
   return style.base
-};
+}
 
 export type SelectWithIconProps = {
   title?: string | Element
-} & FieldInputProps<any> & SelectHTMLAttributes<HTMLSelectElement>
+} & FieldInputProps<any> &
+  SelectHTMLAttributes<HTMLSelectElement>
 
 const SelectWithIcon: FC<SelectWithIconProps> = ({ title, ...props }) => {
   const [, meta] = useField(props)
@@ -68,13 +76,13 @@ const SelectWithIcon: FC<SelectWithIconProps> = ({ title, ...props }) => {
     <>
       {title && <div css={style.title}>{title}</div>}
       <select {...props} css={styles(meta)} />
-      {!error &&
+      {!error && (
         <div css={style.okIcon}>
           <FontAwesomeIcon icon={faCheckCircle} />
         </div>
-      }
+      )}
     </>
-  );
-};
+  )
+}
 
-export default SelectWithIcon;
+export default SelectWithIcon

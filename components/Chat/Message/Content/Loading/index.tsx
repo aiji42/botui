@@ -1,5 +1,6 @@
-import { css } from '@emotion/core';
+import { css } from '@emotion/core'
 import ReactLoading from 'react-loading'
+import { FC } from 'react'
 
 const style = css`
   height: 20px !important;
@@ -7,6 +8,8 @@ const style = css`
   top: -15px;
 `
 
-const Loading = () => <ReactLoading type="bubbles" height={50} width={50} css={style} />
+const Loading: FC = () => (
+  <ReactLoading type="bubbles" height={50} width={50} css={style} />
+)
 
 export default Loading
