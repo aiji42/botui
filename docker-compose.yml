@@ -10,6 +10,7 @@ services:
     environment:
       - AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY
+      - AWS_DEFAULT_REGION
     ports:
       - 3000:3000
     working_dir: /app

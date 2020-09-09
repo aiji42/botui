@@ -1,6 +1,6 @@
 projects:
   BotuiAPI:
-    schemaPath: src/graphql/schema.json
+    schemaPath: api/graphql/schema.json
     includes:
       - api/graphql/**/*.ts
     excludes:
@@ -9,7 +9,7 @@ projects:
       amplify:
         codeGenTarget: typescript
         generatedFileName: api/index.ts
-        docsFilePath: src/graphql
+        docsFilePath: api/graphql
         region: ap-northeast-1
         apiId: fteryxxs7rfljejtjer5g7qowi
         maxDepth: 2
