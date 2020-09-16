@@ -19,6 +19,7 @@ import {
 } from 'react-admin'
 import JsonEditor from '../JsonEditor'
 import JsonViewer from '../JsonViewer'
+import ProposalEditor from './ProposalEditor'
 
 export const SessionList: FC = (props) => {
   return (
@@ -60,7 +61,7 @@ export const SessionCreate: FC = (props) => {
           <BooleanInput source="active" initialValue={false} />
         </FormTab>
         <FormTab label="proposals">
-          <JsonEditor source="proposals" />
+          <ProposalEditor />
         </FormTab>
       </TabbedForm>
     </Create>
