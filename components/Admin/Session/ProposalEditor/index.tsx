@@ -30,12 +30,9 @@ const ProposalEditor: FC = (props) => {
         <FormDataConsumer>
           {({ scopedFormData, getSource }: any) =>
             scopedFormData.content?.type === 'string' ? (
-              <StringTypeEditor
-                source={getSource('props.children')}
-                label="メッセージ本文"
-              />
+              <StringTypeEditor sourcePrefix={getSource('')} />
             ) : (
-              <FormTypeEditor />
+              <FormTypeEditor sourcePrefix={getSource('')} />
             )
           }
         </FormDataConsumer>
@@ -46,12 +43,45 @@ const ProposalEditor: FC = (props) => {
   )
 }
 
-const StringTypeEditor: FC<{ source: string; label: string }> = (props) => {
-  return <TextInput {...props} />
+const StringTypeEditor: FC<{ sourcePrefix: string }> = ({
+  sourcePrefix,
+  ...props
+}) => {
+  return (
+    <TextInput
+      {...props}
+      source={`${sourcePrefix}props.children`}
+      label="メッセージ本文"
+    />
+  )
 }
 
-const FormTypeEditor: FC = (props) => {
-  return <></>
+const FormTypeEditor: FC<{ sourcePrefix: string }> = ({
+  sourcePrefix,
+  ...props
+}) => {
+  return (
+    <>
+      <SelectInput
+        {...props}
+        source={`${sourcePrefix}props.type`}
+        label="フォームタイプ"
+        choices={[
+          { id: 'FormAddress', name: '住所' },
+          { id: 'FormBirthDay', name: '生年月日' },
+          { id: 'FormConfirm', name: '確認' },
+          { id: 'FormCreditCard', name: 'クレジットカード' },
+          { id: 'FormCustomInput', name: 'カスタムインプット' },
+          { id: 'FormCustomSelect', name: 'カスタムセレクト' },
+          { id: 'FormCustomRadioGroup', name: 'カスタムラジオボタン' },
+          { id: 'FormCustomTextarea', name: 'カスタムテキストエリア' },
+          { id: 'FormEmail', name: 'メールアドレス' },
+          { id: 'FormName', name: '氏名' },
+          { id: 'FormTel', name: '電話番号' }
+        ]}
+      />
+    </>
+  )
 }
 
 export default ProposalEditor
