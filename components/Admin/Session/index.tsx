@@ -51,10 +51,14 @@ export const SessionShow: FC = (props) => {
 }
 
 const validateName = [required()]
+const transform = (data: any) => ({
+  ...data,
+  proposals: JSON.stringify(data.proposals)
+})
 
 export const SessionCreate: FC = (props) => {
   return (
-    <Create {...props}>
+    <Create {...props} transform={transform}>
       <TabbedForm>
         <FormTab label="main">
           <TextInput source="title" validate={validateName} />
@@ -70,7 +74,7 @@ export const SessionCreate: FC = (props) => {
 
 export const SeesionEdit: FC = (props) => {
   return (
-    <Edit {...props}>
+    <Edit {...props} transform={transform}>
       <TabbedForm>
         <FormTab label="main">
           <TextInput source="accountId" validate={validateName} disabled />
@@ -78,7 +82,7 @@ export const SeesionEdit: FC = (props) => {
           <BooleanInput source="active" />
         </FormTab>
         <FormTab label="proposals">
-          <JsonEditor source="proposals" />
+          <ProposalEditor />
         </FormTab>
       </TabbedForm>
     </Edit>

@@ -67,6 +67,7 @@ const FormTypeEditor: FC<{ sourcePrefix: string }> = ({
         source={`${sourcePrefix}props.type`}
         label="フォームタイプ"
         choices={[
+          { id: 'FormName', name: '氏名' },
           { id: 'FormAddress', name: '住所' },
           { id: 'FormBirthDay', name: '生年月日' },
           { id: 'FormConfirm', name: '確認' },
@@ -76,7 +77,6 @@ const FormTypeEditor: FC<{ sourcePrefix: string }> = ({
           { id: 'FormCustomRadioGroup', name: 'カスタムラジオボタン' },
           { id: 'FormCustomTextarea', name: 'カスタムテキストエリア' },
           { id: 'FormEmail', name: 'メールアドレス' },
-          { id: 'FormName', name: '氏名' },
           { id: 'FormTel', name: '電話番号' }
         ]}
       />
