@@ -9,7 +9,7 @@ import {
   FormDataConsumer
 } from 'react-admin'
 
-const ProposalEditor: FC = (props) => {
+const ProposalEditor: FC = () => {
   return (
     <ArrayInput source="proposals">
       <SimpleFormIterator>
@@ -30,9 +30,9 @@ const ProposalEditor: FC = (props) => {
         <FormDataConsumer>
           {({ scopedFormData, getSource }: any) =>
             scopedFormData.content?.type === 'string' ? (
-              <StringTypeEditor sourcePrefix={getSource('')} />
+              <StringTypeEditor sourcePrefix={getSource('content')} />
             ) : (
-              <FormTypeEditor sourcePrefix={getSource('')} />
+              <FormTypeEditor sourcePrefix={getSource('content')} />
             )
           }
         </FormDataConsumer>
@@ -50,7 +50,7 @@ const StringTypeEditor: FC<{ sourcePrefix: string }> = ({
   return (
     <TextInput
       {...props}
-      source={`${sourcePrefix}props.children`}
+      source={`${sourcePrefix}.props.children`}
       label="メッセージ本文"
     />
   )
@@ -64,7 +64,7 @@ const FormTypeEditor: FC<{ sourcePrefix: string }> = ({
     <>
       <SelectInput
         {...props}
-        source={`${sourcePrefix}props.type`}
+        source={`${sourcePrefix}.props.type`}
         label="フォームタイプ"
         choices={[
           { id: 'FormName', name: '氏名' },

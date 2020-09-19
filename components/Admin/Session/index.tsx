@@ -2,7 +2,8 @@ import { FC } from 'react'
 import {
   Create,
   Datagrid,
-  Edit,
+  EditView,
+  useEditController,
   EditButton,
   List,
   required,
@@ -17,7 +18,6 @@ import {
   TabbedForm,
   FormTab
 } from 'react-admin'
-import JsonEditor from '../JsonEditor'
 import JsonViewer from '../JsonViewer'
 import ProposalEditor from './ProposalEditor'
 
@@ -70,6 +70,12 @@ export const SessionCreate: FC = (props) => {
       </TabbedForm>
     </Create>
   )
+}
+
+const Edit: FC<any> = (props) => {
+  const { record, ...editController } = useEditController(props)
+  const newRecord = { ...record, proposals: JSON.parse(record.proposals) }
+  return <EditView {...props} {...editController} record={newRecord} />
 }
 
 export const SeesionEdit: FC = (props) => {
