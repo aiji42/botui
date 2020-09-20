@@ -31,9 +31,10 @@ const style = {
   })
 }
 
-const Message: FC = () => {
+const Message: FC<{ preview?: boolean }> = ({ preview = false }) => {
   const name = useMemo(() => nextId(), [])
   useEffect(() => {
+    if (preview) return
     setTimeout(
       () => Scroll.scroller.scrollTo(name, { smooth: true, duration: 700 }),
       500
