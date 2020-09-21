@@ -38,7 +38,10 @@ const ProposalEditor: FC = () => {
             scopedFormData.content?.type === 'string' ? (
               <StringTypeEditor sourcePrefix={getSource('content')} />
             ) : (
-              <FormTypeEditor sourcePrefix={getSource('content')} />
+              <FormTypeEditor
+                sourcePrefix={getSource('content')}
+                scopedFormData={scopedFormData}
+              />
             )
           }
         </FormDataConsumer>
@@ -68,8 +71,9 @@ const StringTypeEditor: FC<{ sourcePrefix: string }> = ({
   )
 }
 
-const FormTypeEditor: FC<{ sourcePrefix: string }> = ({
+const FormTypeEditor: FC<{ sourcePrefix: string; scopedFormData: any }> = ({
   sourcePrefix,
+  scopedFormData,
   ...props
 }) => {
   return (
@@ -92,6 +96,26 @@ const FormTypeEditor: FC<{ sourcePrefix: string }> = ({
           { id: 'FormTel', name: '電話番号' }
         ]}
       />
+      {scopedFormData.content?.props?.type === 'FormName' && (
+        <>
+          <BooleanInput
+            source={`${sourcePrefix}.props.status.kana`}
+            initialValue={true}
+            label="ふりがな"
+          />
+          {scopedFormData.content?.props?.status?.kana && (
+            <SelectInput
+              source={`${sourcePrefix}.props.status.kanaType`}
+              label="ふりがなのタイプ"
+              initialValue="katakana"
+              choices={[
+                { id: 'katakana', name: 'カタカナ' },
+                { id: 'hiragana', name: 'ひらがな' }
+              ]}
+            />
+          )}
+        </>
+      )}
     </>
   )
 }

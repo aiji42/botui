@@ -10,12 +10,32 @@ const toKatakana = (value: string): string =>
     )
     .replace(/[^ァ-ン]/g, '')
 
-const InputNameKana: FC<InputWithIconProps> = ({ innerRef, ...props }) => {
+const toHiragana = (value: string): string =>
+  value
+    .normalize('NFKC')
+    .replace(/[\u30a1-\u30f6]/g, (match) =>
+      String.fromCharCode(match.charCodeAt(0) - 0x60)
+    )
+    .replace(/[^ぁ-ん]/g, '')
+
+interface InputNameKanaProps extends InputWithIconProps {
+  kanaType?: 'katakana' | 'hiragana'
+}
+
+const InputNameKana: FC<InputNameKanaProps> = ({
+  innerRef,
+  kanaType,
+  ...props
+}) => {
   const [field, , { setValue }] = useField(props)
   const handleBuler = useCallback(
     (e: FocusEvent<HTMLInputElement>) => {
       field.onBlur(e)
-      setValue(toKatakana(e.target.value))
+      setValue(
+        kanaType === 'katakana'
+          ? toKatakana(e.target.value)
+          : toHiragana(e.target.value)
+      )
     },
     [field.onBlur, setValue]
   )

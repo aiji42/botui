@@ -23,15 +23,15 @@ const style = {
 }
 
 const Form: FC<FormikProps<FormNameValues>> = (props) => {
-  const { handleSubmit } = props
+  const { handleSubmit, status } = props
   const {
     kana: familyNameKana,
     setKanaSource: setFamilyNameKanaSource
-  } = useKana({ kanaType: 'katakana' })
+  } = useKana({ kanaType: status.kanaType })
   const {
     kana: firstNameKana,
     setKanaSource: setFirstNameKanaSource
-  } = useKana({ kanaType: 'katakana' })
+  } = useKana({ kanaType: status.kanaType })
   const [, , familyNameKanaHelper] = useField('familyNameKana')
   const [, , firstNameKanaHelper] = useField('firstNameKana')
   const FamilyNameMounted = useRef(false)
@@ -42,6 +42,7 @@ const Form: FC<FormikProps<FormNameValues>> = (props) => {
       FamilyNameMounted.current = true
       return
     }
+    if (!status.kana) return
     familyNameKanaHelper.setValue(familyNameKana)
     !!familyNameKana && familyNameKanaHelper.setTouched(true)
   }, [familyNameKana])
@@ -51,6 +52,7 @@ const Form: FC<FormikProps<FormNameValues>> = (props) => {
       FirstNameMounted.current = true
       return
     }
+    if (!status.kana) return
     firstNameKanaHelper.setValue(firstNameKana)
     !!firstNameKana && firstNameKanaHelper.setTouched(true)
   }, [firstNameKana])
@@ -82,24 +84,34 @@ const Form: FC<FormikProps<FormNameValues>> = (props) => {
         />
         <ErrorMessage name="firstName" component={SpanErrorMessage} />
       </div>
-      <div css={[style.formBlockDetailHalf, style.left]}>
-        <Field
-          as={InputNameKana}
-          name="familyNameKana"
-          placeholder="ヤマダ"
-          title="セイ"
-        />
-        <ErrorMessage name="familyNameKana" component={SpanErrorMessage} />
-      </div>
-      <div css={style.formBlockDetailHalf}>
-        <Field
-          as={InputNameKana}
-          name="firstNameKana"
-          placeholder="タロウ"
-          title="メイ"
-        />
-        <ErrorMessage name="firstNameKana" component={SpanErrorMessage} />
-      </div>
+      {status.kana && (
+        <>
+          <div css={[style.formBlockDetailHalf, style.left]}>
+            <Field
+              as={InputNameKana}
+              name="familyNameKana"
+              kanaType={status.kanaType}
+              placeholder={() =>
+                status.kanaType === 'katakana' ? 'ヤマダ' : 'やまだ'
+              }
+              title={() => (status.kanaType === 'katakana' ? 'セイ' : 'せい')}
+            />
+            <ErrorMessage name="familyNameKana" component={SpanErrorMessage} />
+          </div>
+          <div css={style.formBlockDetailHalf}>
+            <Field
+              as={InputNameKana}
+              name="firstNameKana"
+              kanaType={status.kanaType}
+              placeholder={() =>
+                status.kanaType === 'katakana' ? 'タロウ' : 'たろう'
+              }
+              title={() => (status.kanaType === 'katakana' ? 'メイ' : 'めい')}
+            />
+            <ErrorMessage name="firstNameKana" component={SpanErrorMessage} />
+          </div>
+        </>
+      )}
       <Field as={ButtonSubmit} name="submit" />
     </form>
   )
@@ -113,26 +125,47 @@ const FormName = withFormik<FormNameType, FormNameValues>({
     firstNameKana: '',
     ...values
   }),
-  validationSchema: yup.object().shape({
-    familyName: yup
-      .string()
-      .required('入力してください')
-      .max(50, '入力内容が長すぎます'),
-    familyNameKana: yup
-      .string()
-      .required('入力してください')
-      .max(50, '入力内容が長すぎます')
-      .matches(/^[ァ-ヶ]+$/, '全角カナで入力してください'),
-    firstName: yup
-      .string()
-      .required('入力してください')
-      .max(50, '入力内容が長すぎます'),
-    firstNameKana: yup
-      .string()
-      .required('入力してください')
-      .max(50, '入力内容が長すぎます')
-      .matches(/^[ァ-ヶ]+$/, '全角カナで入力してください')
-  }),
+  validationSchema: ({ status }: FormNameType) => {
+    const defaultValidate = {
+      familyName: yup
+        .string()
+        .required('入力してください')
+        .max(50, '入力内容が長すぎます'),
+      firstName: yup
+        .string()
+        .required('入力してください')
+        .max(50, '入力内容が長すぎます')
+    }
+    const regex = status.kanaType === 'katakana' ? /^[ァ-ン]+$/ : /^[ぁ-ん]+$/
+    const kanaValidate = {
+      familyNameKana: yup
+        .string()
+        .required('入力してください')
+        .max(50, '入力内容が長すぎます')
+        .matches(
+          regex,
+          `全角${
+            status.kanaType === 'katakana' ? 'カナ' : 'かな'
+          }で入力してください`
+        ),
+      firstNameKana: yup
+        .string()
+        .required('入力してください')
+        .max(50, '入力内容が長すぎます')
+        .matches(
+          regex,
+          `全角${
+            status.kanaType === 'katakana' ? 'カナ' : 'かな'
+          }で入力してください`
+        )
+    }
+    const validateShape = !status.kana
+      ? defaultValidate
+      : { ...defaultValidate, ...kanaValidate }
+
+    return yup.object().shape(validateShape)
+  },
+  mapPropsToStatus: ({ status }) => status,
   validateOnMount: true,
   handleSubmit: customHandleSubmit
 })(Form)
