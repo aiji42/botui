@@ -91,10 +91,8 @@ const Form: FC<FormikProps<FormNameValues>> = (props) => {
               as={InputNameKana}
               name="familyNameKana"
               kanaType={status.kanaType}
-              placeholder={() =>
-                status.kanaType === 'katakana' ? 'ヤマダ' : 'やまだ'
-              }
-              title={() => (status.kanaType === 'katakana' ? 'セイ' : 'せい')}
+              placeholder={status.kanaType === 'katakana' ? 'ヤマダ' : 'やまだ'}
+              title={status.kanaType === 'katakana' ? 'セイ' : 'せい'}
             />
             <ErrorMessage name="familyNameKana" component={SpanErrorMessage} />
           </div>
@@ -103,10 +101,8 @@ const Form: FC<FormikProps<FormNameValues>> = (props) => {
               as={InputNameKana}
               name="firstNameKana"
               kanaType={status.kanaType}
-              placeholder={() =>
-                status.kanaType === 'katakana' ? 'タロウ' : 'たろう'
-              }
-              title={() => (status.kanaType === 'katakana' ? 'メイ' : 'めい')}
+              placeholder={status.kanaType === 'katakana' ? 'タロウ' : 'たろう'}
+              title={status.kanaType === 'katakana' ? 'メイ' : 'めい'}
             />
             <ErrorMessage name="firstNameKana" component={SpanErrorMessage} />
           </div>

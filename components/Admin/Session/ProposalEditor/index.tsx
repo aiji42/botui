@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useState, memo } from 'react'
 import {
   ArrayInput,
   SimpleFormIterator,
@@ -11,11 +11,34 @@ import {
 import MessageContext from '../../../../hooks/use-message-context'
 import Message from '../../../Chat/Message'
 import { Message as MessageType } from '@botui/types'
-import { withStyles, Theme } from '@material-ui/core/styles'
+import {
+  withStyles,
+  Theme,
+  createStyles,
+  makeStyles
+} from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Tooltip from '@material-ui/core/Tooltip'
+import Modal from '@material-ui/core/Modal'
 
 const ProposalEditor: FC = () => {
+  const PreviewMemo = memo<{ message: MessageType }>(({ message }) => (
+    <Preview message={message} />
+  ))
+  const EditorMemo = memo<{ scopedFormData: any; sourcePrefix: string }>(
+    ({ scopedFormData, sourcePrefix }) => {
+      if (!scopedFormData) return <></>
+      return scopedFormData.content?.type === 'string' ? (
+        <StringTypeEditor sourcePrefix={sourcePrefix} />
+      ) : (
+        <FormTypeEditor
+          sourcePrefix={sourcePrefix}
+          scopedFormData={scopedFormData}
+        />
+      )
+    }
+  )
+
   return (
     <ArrayInput source="proposals">
       <SimpleFormIterator>
@@ -34,23 +57,19 @@ const ProposalEditor: FC = () => {
           label="ローディング時間(ms)"
         />
         <FormDataConsumer>
-          {({ scopedFormData, getSource }: any) =>
-            scopedFormData.content?.type === 'string' ? (
-              <StringTypeEditor sourcePrefix={getSource('content')} />
-            ) : (
-              <FormTypeEditor
-                sourcePrefix={getSource('content')}
-                scopedFormData={scopedFormData}
-              />
-            )
-          }
+          {({ scopedFormData, getSource }: any) => (
+            <EditorMemo
+              sourcePrefix={getSource('content')}
+              scopedFormData={scopedFormData}
+            />
+          )}
         </FormDataConsumer>
         <TextInput source="before" label="before function" />
         <TextInput source="after" label="after function" />
         <FormDataConsumer>
           {({ scopedFormData, getSource }: any) => {
             getSource('')
-            return <Preview message={scopedFormData} />
+            return <PreviewMemo message={scopedFormData} />
           }}
         </FormDataConsumer>
       </SimpleFormIterator>
@@ -97,60 +116,77 @@ const FormTypeEditor: FC<{ sourcePrefix: string; scopedFormData: any }> = ({
         ]}
       />
       {scopedFormData.content?.props?.type === 'FormName' && (
-        <>
-          <BooleanInput
-            source={`${sourcePrefix}.props.status.kana`}
-            initialValue={true}
-            label="ふりがな"
-          />
-          {scopedFormData.content?.props?.status?.kana && (
-            <SelectInput
-              source={`${sourcePrefix}.props.status.kanaType`}
-              label="ふりがなのタイプ"
-              initialValue="katakana"
-              choices={[
-                { id: 'katakana', name: 'カタカナ' },
-                { id: 'hiragana', name: 'ひらがな' }
-              ]}
-            />
-          )}
-        </>
+        <FormNameState sourcePrefix={`${sourcePrefix}.props.status`} />
       )}
     </>
   )
 }
 
-const HtmlTooltip = withStyles((theme: Theme) => ({
-  tooltip: {
-    backgroundColor: '#f5f5f9',
-    color: 'rgba(0, 0, 0, 0.87)',
-    width: 720,
-    fontSize: theme.typography.pxToRem(14),
-    border: '1px solid #dadde9'
-  }
-}))(Tooltip)
+const FormNameState: FC<{ sourcePrefix: string }> = ({ sourcePrefix }) => {
+  return (
+    <>
+      <BooleanInput
+        source={`${sourcePrefix}.kana`}
+        initialValue={true}
+        label="ふりがな"
+      />
+      <SelectInput
+        source={`${sourcePrefix}.kanaType`}
+        label="ふりがなのタイプ"
+        initialValue="katakana"
+        choices={[
+          { id: 'katakana', name: 'カタカナ' },
+          { id: 'hiragana', name: 'ひらがな' }
+        ]}
+      />
+    </>
+  )
+}
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    paper: {
+      position: 'absolute',
+      width: 400,
+      backgroundColor: theme.palette.background.paper,
+      border: '2px solid #000',
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3)
+    }
+  })
+)
 
 const Preview: FC<{ message: MessageType }> = ({ message }) => {
+  const classes = useStyles()
   const [open, setOpen] = useState(false)
-  const handleClickPreview = () => setOpen(!open)
+  const handleClickPreview = () => setOpen(true)
+  const handleClose = () => setOpen(false)
   const noOp = () => {
     // do nothing.
   }
 
   return (
-    <HtmlTooltip
-      open={open}
-      title={
-        <MessageContext message={message} handleUpdate={noOp}>
-          <Message preview />
-        </MessageContext>
-      }
-      disableFocusListener
-      disableHoverListener
-      disableTouchListener
-    >
+    <>
       <Button onClick={handleClickPreview}>Preview</Button>
-    </HtmlTooltip>
+      <Modal open={open} onClose={handleClose}>
+        {!open ? (
+          <></>
+        ) : (
+          <div
+            style={{
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)'
+            }}
+            className={classes.paper}
+          >
+            <MessageContext message={message} handleUpdate={noOp}>
+              <Message preview />
+            </MessageContext>
+          </div>
+        )}
+      </Modal>
+    </>
   )
 }
 

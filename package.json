@@ -27,6 +27,7 @@
     "aws-amplify": "^3.1.1",
     "card-validator": "^8.0.0",
     "formik": "2.1.5",
+    "jp-prefecture": "^0.2.1",
     "libphonenumber-js": "^1.7.56",
     "next": "^9.5.3",
     "react": "^16.13.1",

@@ -5842,6 +5842,11 @@ jest-worker@24.9.0:
     merge-stream "^2.0.0"
     supports-color "^6.1.0"
 
+jp-prefecture@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/jp-prefecture/-/jp-prefecture-0.2.1.tgz#dbea3a7d3d9b6a56c8fdc6b5637600425381b144"
+  integrity sha1-2+o6fT2balbI/ca1Y3YAQlOBsUQ=
+
 js-cookie@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.2.1.tgz#69e106dc5d5806894562902aa5baec3744e9b2b8"
