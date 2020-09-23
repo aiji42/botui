@@ -10,6 +10,7 @@ import {
   FormBirthDayValues,
   FormBirthDay as FormBirthDayType
 } from '@botui/types'
+import fillRange from 'fill-range'
 
 const style = {
   formBlockDetailHalfField: css`
@@ -24,13 +25,22 @@ const style = {
 }
 
 const Form: FC<FormikProps<FormBirthDayValues>> = (props) => {
-  const { handleSubmit } = props
-  const years = useMemo(() => {
-    const y = [...Array(100)].map((_, k) => new Date().getFullYear() - k)
+  const { handleSubmit, status } = props
+  const years = useMemo<Array<number | string>>(() => {
+    const thisYear = new Date().getFullYear()
+    const y = fillRange(thisYear, thisYear - 100)
     return [...y.slice(0, 35), '', ...y.slice(35)].reverse()
   }, [])
-  const monthes = useMemo(() => [...Array(12)].map((_, k) => k + 1), [])
-  const days = useMemo(() => [...Array(31)].map((_, k) => k + 1), [])
+  const monthes = useMemo<Array<number | string>>(() => {
+    const pad = (value: number) =>
+      status.paddingZero ? String(value).padStart(2, '0') : value
+    return fillRange(1, 12, pad)
+  }, [])
+  const days = useMemo<Array<number | string>>(() => {
+    const pad = (value: number) =>
+      status.paddingZero ? String(value).padStart(2, '0') : value
+    return fillRange(1, 31, pad)
+  }, [])
 
   return (
     <form onSubmit={handleSubmit}>
@@ -48,7 +58,7 @@ const Form: FC<FormikProps<FormBirthDayValues>> = (props) => {
           <option value=""></option>
           {monthes.map((month) => (
             <option key={month} value={month}>
-              {month}月
+              {Number(month)}月
             </option>
           ))}
         </Field>
@@ -59,7 +69,7 @@ const Form: FC<FormikProps<FormBirthDayValues>> = (props) => {
           <option value=""></option>
           {days.map((day) => (
             <option key={day} value={day}>
-              {day}日
+              {Number(day)}日
             </option>
           ))}
         </Field>
@@ -93,7 +103,7 @@ const FormBirthDay = withFormik<FormBirthDayType, FormBirthDayValues>({
       !!birthdayYear &&
       !!birthdayMonth &&
       !!birthdayDay &&
-      String(date.getMonth() + 1) !== birthdayMonth
+      date.getMonth() + 1 !== Number(birthdayMonth)
     ) {
       return {
         birthdayYear: '存在しない日付です',
@@ -104,6 +114,7 @@ const FormBirthDay = withFormik<FormBirthDayType, FormBirthDayValues>({
     return {}
   },
   validateOnMount: true,
+  mapPropsToStatus: ({ status }) => status,
   handleSubmit: customHandleSubmit
 })(Form)
 

@@ -11,14 +11,8 @@ import {
 import MessageContext from '../../../../hooks/use-message-context'
 import Message from '../../../Chat/Message'
 import { Message as MessageType } from '@botui/types'
-import {
-  withStyles,
-  Theme,
-  createStyles,
-  makeStyles
-} from '@material-ui/core/styles'
+import { Theme, createStyles, makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
-import Tooltip from '@material-ui/core/Tooltip'
 import Modal from '@material-ui/core/Modal'
 
 const ProposalEditor: FC = () => {
@@ -118,6 +112,9 @@ const FormTypeEditor: FC<{ sourcePrefix: string; scopedFormData: any }> = ({
       {scopedFormData.content?.props?.type === 'FormName' && (
         <FormNameState sourcePrefix={`${sourcePrefix}.props.status`} />
       )}
+      {scopedFormData.content?.props?.type === 'FormBirthDay' && (
+        <FormBirthDayState sourcePrefix={`${sourcePrefix}.props.status`} />
+      )}
     </>
   )
 }
@@ -140,6 +137,16 @@ const FormNameState: FC<{ sourcePrefix: string }> = ({ sourcePrefix }) => {
         ]}
       />
     </>
+  )
+}
+
+const FormBirthDayState: FC<{ sourcePrefix: string }> = ({ sourcePrefix }) => {
+  return (
+    <BooleanInput
+      source={`${sourcePrefix}.paddingZero`}
+      initialValue={false}
+      label="数値のゼロ詰め"
+    />
   )
 }
 

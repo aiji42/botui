@@ -26,6 +26,7 @@
     "ace-builds": "^1.4.12",
     "aws-amplify": "^3.1.1",
     "card-validator": "^8.0.0",
+    "fill-range": "^7.0.1",
     "formik": "2.1.5",
     "jp-prefecture": "^0.2.1",
     "libphonenumber-js": "^1.7.56",
