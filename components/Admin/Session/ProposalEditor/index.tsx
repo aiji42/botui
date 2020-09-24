@@ -115,6 +115,12 @@ const FormTypeEditor: FC<{ sourcePrefix: string; scopedFormData: any }> = ({
       {scopedFormData.content?.props?.type === 'FormBirthDay' && (
         <FormBirthDayState sourcePrefix={`${sourcePrefix}.props.status`} />
       )}
+      {scopedFormData.content?.props?.type === 'FormCustomRadioGroup' && (
+        <FormCustomRadioGroupOption sourcePrefix={`${sourcePrefix}.props`} />
+      )}
+      {scopedFormData.content?.props?.type === 'FormCustomSelect' && (
+        <FormCustomSelectOption sourcePrefix={`${sourcePrefix}.props`} />
+      )}
     </>
   )
 }
@@ -147,6 +153,41 @@ const FormBirthDayState: FC<{ sourcePrefix: string }> = ({ sourcePrefix }) => {
       initialValue={false}
       label="数値のゼロ詰め"
     />
+  )
+}
+
+const FormCustomRadioGroupOption: FC<{ sourcePrefix: string }> = ({
+  sourcePrefix
+}) => {
+  return (
+    <>
+      <TextInput source={`${sourcePrefix}.name`} label="値名" />
+      <ArrayInput source={`${sourcePrefix}.inputs`} label="選択肢">
+        <SimpleFormIterator>
+          <TextInput source="title" label="ラベル" />
+          <TextInput source="value" label="値" />
+        </SimpleFormIterator>
+      </ArrayInput>
+    </>
+  )
+}
+
+const FormCustomSelectOption: FC<{ sourcePrefix: string }> = ({
+  sourcePrefix
+}) => {
+  return (
+    <ArrayInput source={`${sourcePrefix}.selects`} label="セレクトボックス">
+      <SimpleFormIterator>
+        <TextInput source="name" label="値名" />
+        <TextInput source="title" label="タイトル" />
+        <ArrayInput source="options" label="選択肢">
+          <SimpleFormIterator>
+            <TextInput source="label" label="ラベル" />
+            <TextInput source="value" label="値" />
+          </SimpleFormIterator>
+        </ArrayInput>
+      </SimpleFormIterator>
+    </ArrayInput>
   )
 }
 
