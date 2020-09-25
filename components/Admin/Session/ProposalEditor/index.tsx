@@ -121,6 +121,9 @@ const FormTypeEditor: FC<{ sourcePrefix: string; scopedFormData: any }> = ({
       {scopedFormData.content?.props?.type === 'FormCustomSelect' && (
         <FormCustomSelectOption sourcePrefix={`${sourcePrefix}.props`} />
       )}
+      {scopedFormData.content?.props?.type === 'FormCustomInput' && (
+        <FormCustomInputOption sourcePrefix={`${sourcePrefix}.props`} />
+      )}
     </>
   )
 }
@@ -161,11 +164,11 @@ const FormCustomRadioGroupOption: FC<{ sourcePrefix: string }> = ({
 }) => {
   return (
     <>
-      <TextInput source={`${sourcePrefix}.name`} label="値名" />
-      <ArrayInput source={`${sourcePrefix}.inputs`} label="選択肢">
+      <TextInput source={`${sourcePrefix}.name`} label="name" />
+      <ArrayInput source={`${sourcePrefix}.inputs`} label="radio buttons">
         <SimpleFormIterator>
-          <TextInput source="title" label="ラベル" />
-          <TextInput source="value" label="値" />
+          <TextInput source="title" label="title" />
+          <TextInput source="value" label="value" />
         </SimpleFormIterator>
       </ArrayInput>
     </>
@@ -176,16 +179,43 @@ const FormCustomSelectOption: FC<{ sourcePrefix: string }> = ({
   sourcePrefix
 }) => {
   return (
-    <ArrayInput source={`${sourcePrefix}.selects`} label="セレクトボックス">
+    <ArrayInput source={`${sourcePrefix}.selects`} label="selectbox">
       <SimpleFormIterator>
-        <TextInput source="name" label="値名" />
-        <TextInput source="title" label="タイトル" />
-        <ArrayInput source="options" label="選択肢">
+        <TextInput source="name" label="name" />
+        <TextInput source="title" label="title" />
+        <ArrayInput source="options" label="options">
           <SimpleFormIterator>
-            <TextInput source="label" label="ラベル" />
-            <TextInput source="value" label="値" />
+            <TextInput source="label" label="label" />
+            <TextInput source="value" label="value" />
           </SimpleFormIterator>
         </ArrayInput>
+      </SimpleFormIterator>
+    </ArrayInput>
+  )
+}
+
+const FormCustomInputOption: FC<{ sourcePrefix: string }> = ({
+  sourcePrefix
+}) => {
+  return (
+    <ArrayInput source={`${sourcePrefix}.inputs`} label="input">
+      <SimpleFormIterator>
+        <TextInput source="name" label="name" />
+        <SelectInput
+          source="type"
+          choices={[
+            { id: 'text', name: 'text' },
+            { id: 'number', name: 'number' },
+            { id: 'tel', name: 'tel' },
+            { id: 'email', name: 'email' },
+            { id: 'password', name: 'password' }
+          ]}
+          label="type"
+        />
+        <TextInput source="title" label="title" />
+        <TextInput source="placeholder" label="placeholder" />
+        <BooleanInput source="required" label="required" />
+        <TextInput source="validation" multiline label="validation" />
       </SimpleFormIterator>
     </ArrayInput>
   )

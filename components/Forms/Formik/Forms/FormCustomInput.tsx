@@ -33,12 +33,27 @@ const FormCustomInput = withFormik<FormCustomInputType, FormCustomInputValues>({
     ...inputs.reduce((res, { name }) => ({ ...res, [name]: '' }), {}),
     ...values
   }),
+  validate: (values, props) => {
+    const errors: { [x: string]: string } = {}
+    props.inputs.forEach((input) => {
+      if (!input.validation) return
+      /* eslint no-new-func: "off" */
+      const validateFunction = new Function('value', input.validation)
+      const res = validateFunction(values[input.name])
+      if (typeof res === 'string' && res.length) errors[input.name] = res
+    })
+    return errors
+  },
   validationSchema: ({ inputs }: FormCustomInputType) =>
-    yup
-      .object()
-      .shape(
-        inputs.reduce((res, input) => ({ ...res, ...customYup(input) }), {})
-      ),
+    yup.object().shape(
+      inputs.reduce((res, input) => {
+        if (!input.required) return res
+        return {
+          ...res,
+          [input.name]: yup.mixed().required('入力してください')
+        }
+      }, {})
+    ),
   validateOnMount: true,
   handleSubmit: customHandleSubmit
 })(Form)
