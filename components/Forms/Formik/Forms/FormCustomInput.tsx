@@ -4,7 +4,7 @@ import * as yup from 'yup'
 import SpanErrorMessage from '../Elements/SpanErrorMessage'
 import ButtonSubmit from '../Elements/ButtonSubmit'
 import InputWithIcon from '../Elements/InputWithIcon'
-import { customHandleSubmit, customYup } from './modules'
+import { customHandleSubmit } from './modules'
 import {
   FormCustomInputValues,
   FormCustomInput as FormCustomInputType
