@@ -4,7 +4,7 @@ import * as yup from 'yup'
 import SpanErrorMessage from '../Elements/SpanErrorMessage'
 import ButtonSubmit from '../Elements/ButtonSubmit'
 import TextareaWithIcon from '../Elements/TextareaWithIcon'
-import { customYup, customHandleSubmit } from './modules'
+import { customHandleSubmit } from './modules'
 import {
   FormCustomTextareaValues,
   FormCustomTextarea as FormCustomTextareaType
@@ -34,9 +34,25 @@ const FormCustomTextarea = withFormik<
   FormCustomTextareaType,
   FormCustomTextareaValues
 >({
-  mapPropsToValues: ({ name }: FormCustomTextareaType) => ({ [name]: '' }),
-  validationSchema: (props: FormCustomTextareaType) =>
-    yup.object().shape<Record<string, unknown>>(customYup(props)),
+  mapPropsToValues: ({ name, values }) => ({ [name]: '', ...values }),
+  validate: (values, { name, validation }: FormCustomTextareaType) => {
+    const errors: Record<string, string> = {}
+    if (validation) {
+      /* eslint no-new-func: "off" */
+      const validateFunction = new Function('value', validation)
+      const res = validateFunction(values[name])
+      if (typeof res === 'string' && res.length) errors[name] = res
+    }
+    return errors
+  },
+  validationSchema: ({ required, name }: FormCustomTextareaType) =>
+    yup.object().shape(
+      required
+        ? {
+            [name]: yup.string().required('入力してください')
+          }
+        : {}
+    ),
   validateOnMount: true,
   handleSubmit: customHandleSubmit
 })(Form)

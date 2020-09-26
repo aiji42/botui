@@ -6,7 +6,8 @@ import {
   BooleanInput,
   NumberInput,
   TextInput,
-  FormDataConsumer
+  FormDataConsumer,
+  Labeled
 } from 'react-admin'
 import MessageContext from '../../../../hooks/use-message-context'
 import Message from '../../../Chat/Message'
@@ -124,6 +125,9 @@ const FormTypeEditor: FC<{ sourcePrefix: string; scopedFormData: any }> = ({
       {scopedFormData.content?.props?.type === 'FormCustomInput' && (
         <FormCustomInputOption sourcePrefix={`${sourcePrefix}.props`} />
       )}
+      {scopedFormData.content?.props?.type === 'FormCustomTextarea' && (
+        <FormCustomTextareaOption sourcePrefix={`${sourcePrefix}.props`} />
+      )}
     </>
   )
 }
@@ -218,6 +222,26 @@ const FormCustomInputOption: FC<{ sourcePrefix: string }> = ({
         <TextInput source="validation" multiline label="validation" />
       </SimpleFormIterator>
     </ArrayInput>
+  )
+}
+
+const FormCustomTextareaOption: FC<{ sourcePrefix: string }> = ({
+  sourcePrefix
+}) => {
+  return (
+    <Labeled label="textarea">
+      <>
+        <TextInput source={`${sourcePrefix}.name`} label="name" />
+        <TextInput source={`${sourcePrefix}.title`} label="title" />
+        <TextInput source={`${sourcePrefix}.placeholder`} label="placeholder" />
+        <BooleanInput source={`${sourcePrefix}.required`} label="required" />
+        <TextInput
+          source={`${sourcePrefix}.validation`}
+          multiline
+          label="validation"
+        />
+      </>
+    </Labeled>
   )
 }
 
