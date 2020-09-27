@@ -4,22 +4,24 @@ import {
   Datagrid,
   EditView,
   useEditController,
+  useShowController,
   EditButton,
   List,
   required,
-  Show,
   ShowButton,
   TextField,
   TextInput,
   BooleanField,
   BooleanInput,
   TabbedShowLayout,
+  ShowView,
   Tab,
   TabbedForm,
   FormTab
 } from 'react-admin'
 import JsonViewer from '../JsonViewer'
 import ProposalEditor from './ProposalEditor'
+import Dashboard from './Dashboard'
 
 export const SessionList: FC = (props) => {
   return (
@@ -34,10 +36,16 @@ export const SessionList: FC = (props) => {
   )
 }
 
+const Show = (props: any) => {
+  const { record, ...showController } = useShowController(props)
+  const newRecord = { ...record, proposals: JSON.parse(record.proposals) }
+  return <ShowView {...props} {...showController} record={newRecord} />
+}
+
 export const SessionShow: FC = (props) => {
   return (
     <Show {...props}>
-      <TabbedShowLayout>
+      {/* <TabbedShowLayout>
         <Tab label="main">
           <TextField source="title" />
           <BooleanField source="active" />
@@ -45,7 +53,8 @@ export const SessionShow: FC = (props) => {
         <Tab label="proposals" path="proposals">
           <JsonViewer source="proposals" />
         </Tab>
-      </TabbedShowLayout>
+      </TabbedShowLayout> */}
+      <Dashboard />
     </Show>
   )
 }
@@ -59,7 +68,7 @@ const transform = (data: any) => ({
 export const SessionCreate: FC = (props) => {
   return (
     <Create {...props} transform={transform}>
-      <TabbedForm>
+      {/* <TabbedForm>
         <FormTab label="main">
           <TextInput source="title" validate={validateName} />
           <BooleanInput source="active" initialValue={false} />
@@ -67,7 +76,8 @@ export const SessionCreate: FC = (props) => {
         <FormTab label="proposals">
           <ProposalEditor />
         </FormTab>
-      </TabbedForm>
+      </TabbedForm> */}
+      <Dashboard />
     </Create>
   )
 }
@@ -81,7 +91,7 @@ const Edit: FC<any> = (props) => {
 export const SeesionEdit: FC = (props) => {
   return (
     <Edit {...props} transform={transform}>
-      <TabbedForm>
+      {/* <TabbedForm>
         <FormTab label="main">
           <TextInput source="accountId" validate={validateName} disabled />
           <TextInput source="title" validate={validateName} />
@@ -90,7 +100,8 @@ export const SeesionEdit: FC = (props) => {
         <FormTab label="proposals">
           <ProposalEditor />
         </FormTab>
-      </TabbedForm>
+      </TabbedForm> */}
+      <Dashboard />
     </Edit>
   )
 }
