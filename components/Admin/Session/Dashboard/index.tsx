@@ -92,7 +92,7 @@ const Dashboard: FC<{ record: { proposals: Array<Message> } }> = (props) => {
                         size="small"
                         color="primary"
                         onClick={() => {
-                          setEditingData(proposal)
+                          setEditingData({ ...proposal, proposalIndex: index })
                           setEditing(`proposals.${index}`)
                         }}
                       >
@@ -117,6 +117,7 @@ const Dashboard: FC<{ record: { proposals: Array<Message> } }> = (props) => {
             )}
             {/proposals/.test(editing) && (
               <SimpleForm {...props} record={editingData}>
+                <NumberInput source="proposalIndex" disabled />
                 <BooleanInput source="human" label="ユーザ側" />
                 <SelectInput
                   source="content.type"

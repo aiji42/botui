@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useCallback } from 'react'
 import {
   Create,
   Datagrid,
@@ -60,12 +60,13 @@ export const SessionShow: FC = (props) => {
 }
 
 const validateName = [required()]
-const transform = (data: any) => ({
-  ...data,
-  proposals: JSON.stringify(data.proposals)
-})
 
 export const SessionCreate: FC = (props) => {
+  const transform = (data: any) => ({
+    ...data,
+    proposals: JSON.stringify(data.proposals)
+  })
+
   return (
     <Create {...props} transform={transform}>
       {/* <TabbedForm>
@@ -89,6 +90,31 @@ const Edit: FC<any> = (props) => {
 }
 
 export const SeesionEdit: FC = (props) => {
+  const { record } = useEditController(props)
+  const transform = useCallback(
+    (data: any) => {
+      if (data.proposalIndex !== undefined) {
+        const { proposalIndex, ...restData } = data
+        const newProposals = JSON.parse(record.proposals).reduce(
+          (res: any[], proposal: any, index: number) =>
+            index === proposalIndex ? [...res, restData] : [...res, proposal],
+          []
+        )
+
+        return {
+          ...record,
+          proposals: JSON.stringify(newProposals)
+        }
+      }
+
+      return {
+        ...data,
+        proposals: JSON.stringify(data.proposals)
+      }
+    },
+    [record]
+  )
+
   return (
     <Edit {...props} transform={transform}>
       {/* <TabbedForm>
