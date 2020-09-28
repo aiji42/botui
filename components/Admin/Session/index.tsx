@@ -100,6 +100,8 @@ export const SeesionEdit: FC = (props) => {
             index === proposalIndex ? [...res, restData] : [...res, proposal],
           []
         )
+        if (JSON.parse(record.proposals).length === proposalIndex)
+          newProposals.push(restData)
 
         return {
           ...record,

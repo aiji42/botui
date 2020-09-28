@@ -6,8 +6,22 @@ import {
   CardContent,
   CardActions,
   Button,
-  Typography
+  Typography,
+  List,
+  ListSubheader,
+  ListItem,
+  ListItemText,
+  ListItemSecondaryAction,
+  IconButton,
+  ListItemAvatar,
+  Avatar,
+  Fab
 } from '@material-ui/core'
+import {
+  Textsms as TextsmsIcon,
+  RateReview as RateReviewIcon,
+  Add as AddIcon
+} from '@material-ui/icons'
 import {
   TextField,
   BooleanField,
@@ -57,57 +71,54 @@ const Dashboard: FC<{ record: { proposals: Array<Message> } }> = (props) => {
             </Card>
           </Grid>
           <Grid item xs={12}>
-            <Grid
-              container
-              spacing={1}
-              justify="center"
-              style={{ maxHeight: 800, overflow: 'scroll' }}
+            <List
+              style={{
+                position: 'relative',
+                overflow: 'auto',
+                maxHeight: 600,
+                backgroundColor: 'white',
+                padding: 0
+              }}
             >
+              <ListSubheader>タイムライン</ListSubheader>
               {props.record.proposals.map((proposal, index) => (
-                <Grid key={index} item xs={12}>
-                  <Card variant="outlined">
-                    <CardContent>
-                      <Grid container spacing={1}>
-                        <Grid item xs={4}>
-                          <Typography color="textSecondary">サイド</Typography>
-                          <Typography>
-                            {proposal.human ? 'ユーザ' : 'オペレーター'}
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={8}>
-                          <Typography color="textSecondary">内容</Typography>
-                          <Typography>
-                            {proposal.content.type === 'string'
-                              ? proposal.content.props.children
-                              : proposal.content.props.type}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </CardContent>
-                    <CardActions>
-                      <Button size="small" color="primary">
-                        Preview
-                      </Button>
-                      <Button
-                        size="small"
-                        color="primary"
-                        onClick={() => {
-                          setEditingData({ ...proposal, proposalIndex: index })
-                          setEditing(`proposals.${index}`)
-                        }}
-                      >
-                        Edit
-                      </Button>
-                    </CardActions>
-                  </Card>
-                </Grid>
+                <ListItem
+                  button
+                  onClick={() => {
+                    setEditingData({ ...proposal, proposalIndex: index })
+                    setEditing(`proposals.${index}`)
+                  }}
+                >
+                  <ListItemAvatar>
+                    <Avatar>
+                      {proposal.human ? <RateReviewIcon /> : <TextsmsIcon />}
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    style={{ textAlign: proposal.human ? 'right' : 'left' }}
+                    primary={proposal.human ? 'ユーザ' : 'オペレーター'}
+                    secondary={
+                      proposal.content.type === 'string'
+                        ? proposal.content.props.children
+                        : proposal.content.props.type
+                    }
+                  />
+                </ListItem>
               ))}
-              <Grid key={index} item xs={12}>
-                <Card variant="outlined">
-                  <CardContent></CardContent>
-                </Card>
-              </Grid>
-            </Grid>
+              <Fab
+                color="primary"
+                style={{ position: 'sticky', bottom: 5, left: '100%' }}
+              >
+                <AddIcon
+                  onClick={() => {
+                    setEditingData({
+                      proposalIndex: props.record.proposals.length
+                    })
+                    setEditing(`proposals.${props.record.proposals.length}`)
+                  }}
+                />
+              </Fab>
+            </List>
           </Grid>
         </Grid>
       </Grid>
