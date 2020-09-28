@@ -102,6 +102,11 @@ const Dashboard: FC<{ record: { proposals: Array<Message> } }> = (props) => {
                   </Card>
                 </Grid>
               ))}
+              <Grid key={index} item xs={12}>
+                <Card variant="outlined">
+                  <CardContent></CardContent>
+                </Card>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
