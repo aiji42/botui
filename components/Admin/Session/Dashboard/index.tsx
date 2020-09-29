@@ -89,11 +89,17 @@ const Dashboard: FC<{ record: { proposals: Array<Message> } }> = (props) => {
                     setEditing(`proposals.${index}`)
                   }}
                 >
-                  <ListItemAvatar>
-                    <Avatar>
-                      {proposal.human ? <RateReviewIcon /> : <TextsmsIcon />}
-                    </Avatar>
-                  </ListItemAvatar>
+                  {!proposal.human && (
+                    <ListItemAvatar>
+                      <Avatar>
+                        {proposal.content.type === 'string' ? (
+                          <TextsmsIcon />
+                        ) : (
+                          <RateReviewIcon />
+                        )}
+                      </Avatar>
+                    </ListItemAvatar>
+                  )}
                   <ListItemText
                     style={{ textAlign: proposal.human ? 'right' : 'left' }}
                     primary={proposal.human ? 'ユーザ' : 'オペレーター'}
@@ -103,6 +109,17 @@ const Dashboard: FC<{ record: { proposals: Array<Message> } }> = (props) => {
                         : proposal.content.props.type
                     }
                   />
+                  {proposal.human && (
+                    <ListItemAvatar>
+                      <Avatar style={{ margin: '0 0 0 auto' }}>
+                        {proposal.content.type === 'string' ? (
+                          <TextsmsIcon />
+                        ) : (
+                          <RateReviewIcon />
+                        )}
+                      </Avatar>
+                    </ListItemAvatar>
+                  )}
                 </ListItem>
               ))}
               <Fab
