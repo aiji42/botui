@@ -128,6 +128,7 @@ export const SeesionEdit: FC = (props) => {
   return (
     <Edit
       {...props}
+      undoable={false}
       onSuccess={() => {
         notify('ra.notification.updated', 'info', { smart_count: 1 }, false)
         refresh()
