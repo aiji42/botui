@@ -17,7 +17,9 @@ import {
   ShowView,
   Tab,
   TabbedForm,
-  FormTab
+  FormTab,
+  useNotify,
+  useRefresh
 } from 'react-admin'
 import JsonViewer from '../JsonViewer'
 import ProposalEditor from './ProposalEditor'
@@ -84,23 +86,21 @@ export const SessionCreate: FC = (props) => {
 }
 
 const Edit: FC<any> = (props) => {
-  const { record, ...editController } = useEditController(props)
-  const newRecord = { ...record, proposals: JSON.parse(record.proposals) }
-  return <EditView {...props} {...editController} record={newRecord} />
-}
-
-export const SeesionEdit: FC = (props) => {
-  const { record } = useEditController(props)
+  const { record: originalRecord, ...editController } = useEditController(props)
+  const record = {
+    ...originalRecord,
+    proposals: JSON.parse(originalRecord.proposals)
+  }
   const transform = useCallback(
     (data: any) => {
       if (data.proposalIndex !== undefined) {
         const { proposalIndex, ...restData } = data
-        const newProposals = JSON.parse(record.proposals).reduce(
+        const newProposals = record.proposals.reduce(
           (res: any[], proposal: any, index: number) =>
             index === proposalIndex ? [...res, restData] : [...res, proposal],
           []
         )
-        if (JSON.parse(record.proposals).length === proposalIndex)
+        if (record.proposals.length === proposalIndex)
           newProposals.push(restData)
 
         return {
@@ -116,9 +116,23 @@ export const SeesionEdit: FC = (props) => {
     },
     [record]
   )
+  editController.setTransform(transform)
+
+  return <EditView {...props} {...editController} record={record} />
+}
+
+export const SeesionEdit: FC = (props) => {
+  const notify = useNotify()
+  const refresh = useRefresh()
 
   return (
-    <Edit {...props} transform={transform}>
+    <Edit
+      {...props}
+      onSuccess={() => {
+        notify('ra.notification.updated', 'info', { smart_count: 1 }, false)
+        refresh()
+      }}
+    >
       {/* <TabbedForm>
         <FormTab label="main">
           <TextInput source="accountId" validate={validateName} disabled />

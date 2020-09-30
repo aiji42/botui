@@ -40,6 +40,10 @@ import { Message } from '@botui/types'
 const Dashboard: FC<{ record: { proposals: Array<Message> } }> = (props) => {
   const [editing, setEditing] = useState('main')
   const [editingData, setEditingData] = useState({})
+  const save = (data, redirectTo, _a) => {
+    setEditingData(data)
+    props.save(data, redirectTo, _a)
+  }
 
   return (
     <Grid container spacing={2} style={{ padding: 5 }}>
@@ -83,6 +87,7 @@ const Dashboard: FC<{ record: { proposals: Array<Message> } }> = (props) => {
               <ListSubheader>タイムライン</ListSubheader>
               {props.record.proposals.map((proposal, index) => (
                 <ListItem
+                  key={index}
                   button
                   onClick={() => {
                     setEditingData({ ...proposal, proposalIndex: index })
@@ -143,13 +148,13 @@ const Dashboard: FC<{ record: { proposals: Array<Message> } }> = (props) => {
         <Paper style={{ minHeight: 500 }}>
           <>
             {editing === 'main' && (
-              <SimpleForm {...props}>
+              <SimpleForm {...props} save={save}>
                 <TextInput source="title" />
                 <BooleanInput source="active" />
               </SimpleForm>
             )}
             {/proposals/.test(editing) && (
-              <SimpleForm {...props} record={editingData}>
+              <SimpleForm {...props} save={save} record={editingData}>
                 <NumberInput source="proposalIndex" disabled />
                 <BooleanInput source="human" label="ユーザ側" />
                 <SelectInput
