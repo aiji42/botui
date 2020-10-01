@@ -6,13 +6,10 @@ import {
   CardContent,
   CardActions,
   Button,
-  Typography,
   List,
   ListSubheader,
   ListItem,
   ListItemText,
-  ListItemSecondaryAction,
-  IconButton,
   ListItemAvatar,
   Avatar,
   Fab

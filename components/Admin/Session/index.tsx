@@ -10,19 +10,10 @@ import {
   required,
   ShowButton,
   TextField,
-  TextInput,
   BooleanField,
-  BooleanInput,
-  TabbedShowLayout,
-  ShowView,
-  Tab,
-  TabbedForm,
-  FormTab,
   useNotify,
   useRefresh
 } from 'react-admin'
-import JsonViewer from '../JsonViewer'
-import ProposalEditor from './ProposalEditor'
 import Dashboard from './Dashboard'
 
 export const SessionList: FC = (props) => {
@@ -71,15 +62,6 @@ export const SessionCreate: FC = (props) => {
 
   return (
     <Create {...props} transform={transform}>
-      {/* <TabbedForm>
-        <FormTab label="main">
-          <TextInput source="title" validate={validateName} />
-          <BooleanInput source="active" initialValue={false} />
-        </FormTab>
-        <FormTab label="proposals">
-          <ProposalEditor />
-        </FormTab>
-      </TabbedForm> */}
       <Dashboard />
     </Create>
   )
@@ -134,16 +116,6 @@ export const SeesionEdit: FC = (props) => {
         refresh()
       }}
     >
-      {/* <TabbedForm>
-        <FormTab label="main">
-          <TextInput source="accountId" validate={validateName} disabled />
-          <TextInput source="title" validate={validateName} />
-          <BooleanInput source="active" />
-        </FormTab>
-        <FormTab label="proposals">
-          <ProposalEditor />
-        </FormTab>
-      </TabbedForm> */}
       <Dashboard />
     </Edit>
   )
