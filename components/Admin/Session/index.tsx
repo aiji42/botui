@@ -4,17 +4,25 @@ import {
   Datagrid,
   EditView,
   useEditController,
-  useShowController,
   EditButton,
   List,
-  required,
   ShowButton,
   TextField,
   BooleanField,
   useNotify,
-  useRefresh
+  useRefresh,
+  EditProps
 } from 'react-admin'
+import {
+  EditingProposalData,
+  EditingSessionData,
+  Proposals,
+  Session
+} from '../../../@types/session'
 import Dashboard from './Dashboard'
+
+const isEditingProposalData = (arg: any): arg is EditingProposalData =>
+  arg.proposalIndex !== undefined
 
 export const SessionList: FC = (props) => {
   return (
@@ -29,31 +37,6 @@ export const SessionList: FC = (props) => {
   )
 }
 
-const Show = (props: any) => {
-  const { record, ...showController } = useShowController(props)
-  const newRecord = { ...record, proposals: JSON.parse(record.proposals) }
-  return <ShowView {...props} {...showController} record={newRecord} />
-}
-
-export const SessionShow: FC = (props) => {
-  return (
-    <Show {...props}>
-      {/* <TabbedShowLayout>
-        <Tab label="main">
-          <TextField source="title" />
-          <BooleanField source="active" />
-        </Tab>
-        <Tab label="proposals" path="proposals">
-          <JsonViewer source="proposals" />
-        </Tab>
-      </TabbedShowLayout> */}
-      <Dashboard />
-    </Show>
-  )
-}
-
-const validateName = [required()]
-
 export const SessionCreate: FC = (props) => {
   const transform = (data: any) => ({
     ...data,
@@ -67,18 +50,22 @@ export const SessionCreate: FC = (props) => {
   )
 }
 
-const Edit: FC<any> = (props) => {
-  const { record: originalRecord, ...editController } = useEditController(props)
+const Edit: FC<EditProps> = (props) => {
+  const { record: originalRecord, ...editController } = useEditController<
+    Session<string>
+  >(props)
   const record = {
     ...originalRecord,
-    proposals: JSON.parse(originalRecord.proposals)
-  }
+    proposals: originalRecord?.proposals
+      ? JSON.parse(originalRecord.proposals)
+      : []
+  } as Session
   const transform = useCallback(
-    (data: any) => {
-      if (data.proposalIndex !== undefined) {
+    (data: EditingProposalData | EditingSessionData) => {
+      if (isEditingProposalData(data)) {
         const { proposalIndex, ...restData } = data
-        const newProposals = record.proposals.reduce(
-          (res: any[], proposal: any, index: number) =>
+        const newProposals = record.proposals.reduce<Proposals>(
+          (res, proposal, index) =>
             index === proposalIndex ? [...res, restData] : [...res, proposal],
           []
         )

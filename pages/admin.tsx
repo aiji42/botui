@@ -7,12 +7,12 @@ import * as mutations from '../api/graphql/mutations'
 import * as queries from '../api/graphql/queries'
 import {
   SessionList,
-  SessionShow,
   SeesionEdit,
   SessionCreate
 } from '../components/Admin/Session'
 import japaneseMessages from '@bicstone/ra-language-japanese'
 import polyglotI18nProvider from 'ra-i18n-polyglot'
+import dynamic from 'next/dynamic'
 
 const i18nProvider = polyglotI18nProvider(() => japaneseMessages)
 
@@ -32,7 +32,6 @@ const App: FC = () => {
           name="sessions"
           options={{ label: 'セッション' }}
           list={SessionList}
-          show={SessionShow}
           edit={SeesionEdit}
           create={SessionCreate}
         />
@@ -41,4 +40,7 @@ const App: FC = () => {
   )
 }
 
-export default withAuthenticator(App, { usernameAlias: 'email' })
+const AppWithAuthenticator = withAuthenticator(App, { usernameAlias: 'email' })
+export default dynamic(() => Promise.resolve(AppWithAuthenticator), {
+  ssr: false
+})
