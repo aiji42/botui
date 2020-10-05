@@ -1,17 +1,15 @@
 import { FC, useCallback } from 'react'
 import {
-  Create,
   Datagrid,
   EditView,
   useEditController,
-  EditButton,
   List,
-  ShowButton,
   TextField,
   BooleanField,
   useNotify,
   useRefresh,
-  EditProps
+  EditProps,
+  CreateProps
 } from 'react-admin'
 import {
   EditingProposalData,
@@ -20,6 +18,7 @@ import {
   Session
 } from '../../../@types/session'
 import Dashboard from './Dashboard'
+import CreateWizard from './CreateWizard'
 
 const isEditingProposalData = (arg: any): arg is EditingProposalData =>
   arg.proposalIndex !== undefined
@@ -27,27 +26,16 @@ const isEditingProposalData = (arg: any): arg is EditingProposalData =>
 export const SessionList: FC = (props) => {
   return (
     <List {...props}>
-      <Datagrid>
+      <Datagrid rowClick="edit">
         <TextField source="title" sortable={false} />
         <BooleanField source="active" />
-        <ShowButton />
-        <EditButton />
       </Datagrid>
     </List>
   )
 }
 
-export const SessionCreate: FC = (props) => {
-  const transform = (data: any) => ({
-    ...data,
-    proposals: JSON.stringify(data.proposals)
-  })
-
-  return (
-    <Create {...props} transform={transform}>
-      <Dashboard />
-    </Create>
-  )
+export const SessionCreate: FC<CreateProps> = (props) => {
+  return <CreateWizard {...props} />
 }
 
 const Edit: FC<EditProps> = (props) => {

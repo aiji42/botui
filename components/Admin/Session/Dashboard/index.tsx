@@ -1,30 +1,21 @@
 import { FC, useCallback, useState } from 'react'
-import {
-  Grid,
-  Paper,
-  Card,
-  CardContent,
-  CardActions,
-  Button,
-  Fab,
-  makeStyles
-} from '@material-ui/core'
+import { Grid, Paper, Fab, makeStyles } from '@material-ui/core'
 import { Add as AddIcon } from '@material-ui/icons'
-import {
-  TextField,
-  BooleanField,
-  SimpleShowLayout,
-  SimpleFormProps,
-  Record
-} from 'react-admin'
+import { SimpleFormProps, Record } from 'react-admin'
 import {
   EditingSessionData,
-  EditingProposalData
+  EditingProposalData,
+  Session
 } from '../../../../@types/session'
 import ProposalsTimeLine from './ProposalsTimeLine'
+import SessionCard from './SessionCard'
 import { EditProposalForm, EditSessionForm } from './Form'
 
 type DashboardProps = Omit<SimpleFormProps, 'children'>
+
+const noop = (): void => {
+  // do nothing.
+}
 
 const isEditingProposalData = (arg: any): arg is EditingProposalData =>
   arg.proposalIndex !== undefined
@@ -33,10 +24,18 @@ const isEditingSessionData = (arg: any): arg is EditingSessionData =>
   arg.proposalIndex === undefined
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: theme.spacing(1)
+  },
   proposalList: {
     maxHeight: 600,
     overflow: 'auto',
     padding: theme.spacing(0)
+  },
+  addProposalButton: {
+    position: 'sticky',
+    bottom: 5,
+    left: '100%'
   }
 }))
 
@@ -57,30 +56,15 @@ const Dashboard: FC<DashboardProps> = (props) => {
   if (props.record === undefined) return <></>
 
   return (
-    <Grid container spacing={2} style={{ padding: 5 }}>
+    <Grid container spacing={2} className={classes.root}>
       <Grid item xs={4}>
-        <Grid container spacing={2}>
+        <Grid container spacing={1}>
           <Grid item xs={12}>
-            <Card variant="outlined">
-              <CardContent>
-                <SimpleShowLayout {...props}>
-                  <TextField source="title" />
-                  <BooleanField source="active" />
-                </SimpleShowLayout>
-              </CardContent>
-              <CardActions>
-                <Button size="small" color="primary">
-                  Preview
-                </Button>
-                <Button
-                  size="small"
-                  color="primary"
-                  onClick={() => setEditingData(props.record)}
-                >
-                  Edit
-                </Button>
-              </CardActions>
-            </Card>
+            <SessionCard
+              {...(props.record as Session)}
+              onClickEdit={() => setEditingData(props.record)}
+              onClickPreview={noop}
+            />
           </Grid>
           <Grid item xs={12} className={classes.proposalList}>
             <ProposalsTimeLine
@@ -93,10 +77,7 @@ const Dashboard: FC<DashboardProps> = (props) => {
                   })
               }}
             >
-              <Fab
-                color="primary"
-                style={{ position: 'sticky', bottom: 5, left: '100%' }}
-              >
+              <Fab color="primary" className={classes.addProposalButton}>
                 <AddIcon
                   onClick={() => {
                     props.record &&
