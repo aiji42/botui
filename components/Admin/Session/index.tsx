@@ -9,7 +9,8 @@ import {
   useNotify,
   useRefresh,
   EditProps,
-  CreateProps
+  CreateProps,
+  useCreateController
 } from 'react-admin'
 import {
   EditingProposalData,
@@ -35,7 +36,15 @@ export const SessionList: FC = (props) => {
 }
 
 export const SessionCreate: FC<CreateProps> = (props) => {
-  return <CreateWizard {...props} />
+  const createController = useCreateController(props)
+  createController.setTransform((data) => {
+    return {
+      ...data,
+      proposals: '[]',
+      active: false
+    }
+  })
+  return <CreateWizard {...createController} />
 }
 
 const Edit: FC<EditProps> = (props) => {

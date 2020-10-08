@@ -7,7 +7,9 @@ import {
   CreateProps,
   useCreateController,
   FormWithRedirect,
-  SimpleFormProps
+  SimpleFormProps,
+  Toolbar,
+  SaveButton
 } from 'react-admin'
 
 import {
@@ -22,6 +24,7 @@ import {
   Typography,
   IconButton
 } from '@material-ui/core'
+import { Field } from 'react-final-form'
 
 import { RadioButtonUnchecked, CheckCircle } from '@material-ui/icons'
 
@@ -30,6 +33,35 @@ const proposals = [
   { id: 'inquiry', name: 'お問い合わせフォーム' },
   { id: 'manual', name: 'マニュアル' }
 ]
+
+const toolbarProps = (formProps: any) => {
+  const {
+    basePath,
+    handleSubmitWithRedirect,
+    handleSubmit,
+    invalid,
+    pristine,
+    record,
+    redirect,
+    resource,
+    saving,
+    submitOnEnter,
+    undoable
+  } = formProps
+  return {
+    basePath,
+    handleSubmitWithRedirect,
+    handleSubmit,
+    invalid,
+    pristine,
+    record,
+    redirect,
+    resource,
+    saving,
+    submitOnEnter,
+    undoable
+  }
+}
 
 const CreateWizard: FC<SimpleFormProps> = (props) => {
   const [templateType, setTemplateType] = useState<
@@ -63,6 +95,7 @@ const CreateWizard: FC<SimpleFormProps> = (props) => {
                   <CardMedia
                     component="img"
                     src="/mobile-online-shopping.jpg"
+                    height={250}
                   />
                   <CardContent>
                     <Typography paragraph variant="body1">
@@ -93,6 +126,7 @@ const CreateWizard: FC<SimpleFormProps> = (props) => {
                   <CardMedia
                     component="img"
                     src="/mobile-testing-concept.jpg"
+                    height={250}
                   />
                   <CardContent>
                     <Typography paragraph variant="body1">
@@ -123,6 +157,7 @@ const CreateWizard: FC<SimpleFormProps> = (props) => {
                   <CardMedia
                     component="img"
                     src="/business-people-launches-rocket.jpg"
+                    height={250}
                   />
                   <CardContent>
                     <Typography paragraph variant="body1">
@@ -131,6 +166,11 @@ const CreateWizard: FC<SimpleFormProps> = (props) => {
                   </CardContent>
                 </CardActionArea>
               </Card>
+            </Grid>
+            <Grid item xs={12}>
+              <Toolbar {...toolbarProps(formProps)}>
+                <SaveButton label="Save" submitOnEnter={false} />
+              </Toolbar>
             </Grid>
           </Grid>
         </form>
