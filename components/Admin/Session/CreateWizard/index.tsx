@@ -1,38 +1,27 @@
 import { FC, useState } from 'react'
 import {
-  SimpleForm,
   TextInput,
-  RadioButtonGroupInput,
-  Create,
-  CreateProps,
-  useCreateController,
   FormWithRedirect,
   SimpleFormProps,
   Toolbar,
-  SaveButton
+  SaveButton,
+  required
 } from 'react-admin'
+import {Field, useForm} from 'react-final-form'
 
 import {
   Card,
   Paper,
   CardContent,
   CardMedia,
-  CardActions,
   CardActionArea,
   CardHeader,
   Grid,
   Typography,
   IconButton
 } from '@material-ui/core'
-import { Field } from 'react-final-form'
 
 import { RadioButtonUnchecked, CheckCircle } from '@material-ui/icons'
-
-const proposals = [
-  { id: 'ec', name: 'ECサイト' },
-  { id: 'inquiry', name: 'お問い合わせフォーム' },
-  { id: 'manual', name: 'マニュアル' }
-]
 
 const toolbarProps = (formProps: any) => {
   const {
@@ -63,18 +52,29 @@ const toolbarProps = (formProps: any) => {
   }
 }
 
+type TemplateTypes = 'ec' | 'inquiry' | 'manual'
+
+const templateValidator = (value?: TemplateTypes) => {
+  if (['ec', 'inquiry', 'manual'].includes(value)) return null
+  return '必須'
+}
+
 const CreateWizard: FC<SimpleFormProps> = (props) => {
-  const [templateType, setTemplateType] = useState<
-    null | 'ec' | 'inquiry' | 'manual'
-  >(null)
+  const [templateType, setTemplateType] = useState<null | TemplateTypes>(null)
   return (
     <FormWithRedirect
       {...props}
-      render={(formProps) => (
+      render={(formProps: any) => (
         <form>
           <Grid container component={Paper} spacing={4}>
             <Grid item xs={5}>
-              <TextInput source="title" fullWidth />
+              <TextInput source="title" fullWidth validate={[required()]} />
+              <Field
+                name="template"
+                component="input"
+                type="hidden"
+                validate={templateValidator}
+              />
             </Grid>
             <Grid item xs={7} />
             <Grid item xs={4}>
