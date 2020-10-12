@@ -1,5 +1,6 @@
 import { FC, useCallback, useState } from 'react'
-import { Grid, Paper, Fab, makeStyles } from '@material-ui/core'
+import dynamic from 'next/dynamic'
+import { Grid, Paper, Fab, makeStyles, Modal } from '@material-ui/core'
 import { Add as AddIcon } from '@material-ui/icons'
 import { SimpleFormProps, Record } from 'react-admin'
 import {
@@ -13,9 +14,7 @@ import { EditProposalForm, EditSessionForm } from './Form'
 
 type DashboardProps = Omit<SimpleFormProps, 'children'>
 
-const noop = (): void => {
-  // do nothing.
-}
+const Preview = dynamic(() => import('../../../Chat/Preview'), { ssr: false })
 
 const isEditingProposalData = (arg: any): arg is EditingProposalData =>
   arg.proposalIndex !== undefined
@@ -36,15 +35,27 @@ const useStyles = makeStyles((theme) => ({
     position: 'sticky',
     bottom: 5,
     left: '100%'
+  },
+  preview: {
+    backgroundColor: theme.palette.background.paper,
+    width: 400,
+    height: 700,
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)'
   }
 }))
 
 const Dashboard: FC<DashboardProps> = (props) => {
   const classes = useStyles()
-
+  const [previewOpen, setPreviewOpen] = useState<boolean>(false)
   const [editingData, setEditingData] = useState<Partial<Record> | undefined>(
     props.record
   )
+  const handlePreviewClose = useCallback(() => setPreviewOpen(false), [
+    setPreviewOpen
+  ])
   const save: SimpleFormProps['save'] = useCallback(
     (data, redirectTo, _a) => {
       setEditingData(data)
@@ -63,8 +74,13 @@ const Dashboard: FC<DashboardProps> = (props) => {
             <SessionCard
               {...(props.record as Session)}
               onClickEdit={() => setEditingData(props.record)}
-              onClickPreview={noop}
+              onClickPreview={() => setPreviewOpen(true)}
             />
+            <Modal open={previewOpen} onClose={handlePreviewClose}>
+              <div className={classes.preview}>
+                <Preview proposals={props.record.proposals} />
+              </div>
+            </Modal>
           </Grid>
           <Grid item xs={12} className={classes.proposalList}>
             <ProposalsTimeLine
