@@ -8,7 +8,8 @@ import {
   FormDataConsumer,
   ArrayInput,
   SimpleFormIterator,
-  SimpleFormProps
+  SimpleFormProps,
+  required
 } from 'react-admin'
 
 const formTypeChoices = [
@@ -39,6 +40,7 @@ const EditProposalForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
       <SelectInput
         source="content.type"
         label="メッセージタイプ"
+        validate={[required()]}
         choices={[
           { id: 'string', name: 'テキスト' },
           { id: 'form', name: 'フォーム' }
@@ -54,7 +56,11 @@ const EditProposalForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
       <FormDataConsumer>
         {({ formData }) =>
           formData.content?.type === 'string' && (
-            <TextInput source="content.props.children" label="メッセージ本文" />
+            <TextInput
+              source="content.props.children"
+              label="メッセージ本文"
+              validate={[required()]}
+            />
           )
         }
       </FormDataConsumer>
@@ -65,6 +71,7 @@ const EditProposalForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
               source="content.props.type"
               label="form type"
               choices={formTypeChoices}
+              validate={[required()]}
             />
           )
         }
@@ -144,6 +151,7 @@ const FormBirthDayState: FC = (props) => {
       source="content.props.status.paddingZero"
       initialValue={false}
       label="zero padding"
+      validate={[required()]}
     />
   )
 }
@@ -151,15 +159,21 @@ const FormBirthDayState: FC = (props) => {
 const FormCustomRadioGroupOption: FC = (props) => {
   return (
     <>
-      <TextInput {...props} source="content.props.name" label="name" />
+      <TextInput
+        {...props}
+        source="content.props.name"
+        label="name"
+        validate={[required()]}
+      />
       <ArrayInput
         {...props}
         source="content.props.inputs"
         label="radio buttons"
+        validate={[required()]}
       >
         <SimpleFormIterator>
-          <TextInput source="title" label="title" />
-          <TextInput source="value" label="value" />
+          <TextInput source="title" label="title" validate={[required()]} />
+          <TextInput source="value" label="value" validate={[required()]} />
         </SimpleFormIterator>
       </ArrayInput>
     </>
@@ -168,14 +182,19 @@ const FormCustomRadioGroupOption: FC = (props) => {
 
 const FormCustomSelectOption: FC = (props) => {
   return (
-    <ArrayInput {...props} source="content.props.selects" label="selectbox">
+    <ArrayInput
+      {...props}
+      source="content.props.selects"
+      label="selectbox"
+      validate={[required()]}
+    >
       <SimpleFormIterator>
-        <TextInput source="name" label="name" />
+        <TextInput source="name" label="name" validate={[required()]} />
         <TextInput source="title" label="title" />
-        <ArrayInput source="options" label="options">
+        <ArrayInput source="options" label="options" validate={[required()]}>
           <SimpleFormIterator>
             <TextInput source="label" label="label" />
-            <TextInput source="value" label="value" />
+            <TextInput source="value" label="value" validate={[required()]} />
           </SimpleFormIterator>
         </ArrayInput>
       </SimpleFormIterator>
@@ -185,11 +204,17 @@ const FormCustomSelectOption: FC = (props) => {
 
 const FormCustomInputOption: FC = (props) => {
   return (
-    <ArrayInput {...props} source="content.props.inputs" label="input">
+    <ArrayInput
+      {...props}
+      source="content.props.inputs"
+      label="input"
+      validate={[required()]}
+    >
       <SimpleFormIterator>
-        <TextInput source="name" label="name" />
+        <TextInput source="name" label="name" validate={[required()]} />
         <SelectInput
           source="type"
+          validate={[required()]}
           choices={[
             { id: 'text', name: 'text' },
             { id: 'number', name: 'number' },
@@ -211,7 +236,12 @@ const FormCustomInputOption: FC = (props) => {
 const FormCustomTextareaOption: FC = (props) => {
   return (
     <>
-      <TextInput {...props} source="content.props.name" label="name" />
+      <TextInput
+        {...props}
+        source="content.props.name"
+        label="name"
+        validate={[required()]}
+      />
       <TextInput {...props} source="content.props.title" label="title" />
       <TextInput
         {...props}
