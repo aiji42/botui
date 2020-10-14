@@ -34,7 +34,7 @@ const formTypeChoices = [
 
 const EditProposalForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
   return (
-    <SimpleForm {...props}>
+    <SimpleForm {...props} destroyOnUnregister>
       <NumberInput source="proposalIndex" disabled />
       <BooleanInput source="human" label="ユーザ側" />
       <SelectInput
@@ -132,6 +132,7 @@ const FormNameState: FC = (props) => {
         label="ふりがな"
       />
       <SelectInput
+        {...props}
         source="content.props.status.kanaType"
         label="ふりがな補正"
         initialValue="katakana"
