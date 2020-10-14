@@ -26,7 +26,7 @@ const isEditingProposalData = (arg: any): arg is EditingProposalData =>
 
 export const SessionList: FC = (props) => {
   return (
-    <List {...props}>
+    <List {...props} bulkActionButtons={false}>
       <Datagrid rowClick="edit">
         <TextField source="title" sortable={false} />
         <BooleanField source="active" />
