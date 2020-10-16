@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { ChangeEvent, FC, useCallback } from 'react'
 import {
   TextInput,
   BooleanInput,
@@ -9,8 +9,11 @@ import {
   ArrayInput,
   SimpleFormIterator,
   SimpleFormProps,
-  required
+  required,
+  Labeled
 } from 'react-admin'
+import { Slider } from '@material-ui/core'
+import { useForm, useField } from 'react-final-form'
 
 const formTypeChoices = [
   { id: 'FormName', name: '氏名' },
@@ -32,6 +35,55 @@ const formTypeChoices = [
   { id: 'FormTel', name: '電話番号' }
 ]
 
+const marks = [
+  {
+    value: 0,
+    label: '0s'
+  },
+  {
+    value: 1000,
+    label: '1s'
+  },
+  {
+    value: 2000,
+    label: '2s'
+  },
+  {
+    value: 3000,
+    label: '3s'
+  }
+]
+
+const NumberSlider: FC = () => {
+  const { change } = useForm()
+  const {
+    input: { value }
+  } = useField<number>('content.delay')
+  const handleChange = useCallback(
+    (_, val: number | number[]) => {
+      change('content.delay', val)
+    },
+    [change]
+  )
+
+  return (
+    <Labeled label="ローディング時間" fullWidth>
+      <span>
+        <Slider
+          valueLabelDisplay="auto"
+          valueLabelFormat={(val) => <>{val / 1000}s</>}
+          step={100}
+          marks={marks}
+          min={0}
+          max={3000}
+          value={value}
+          onChange={handleChange}
+        />
+      </span>
+    </Labeled>
+  )
+}
+
 const EditProposalForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
   return (
     <SimpleForm {...props} destroyOnUnregister>
@@ -45,14 +97,11 @@ const EditProposalForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
           { id: 'string', name: 'テキスト' },
           { id: 'form', name: 'フォーム' }
         ]}
+        fullWidth
       />
-      <NumberInput
-        source="content.delay"
-        initialValue={500}
-        label="ローディング時間(ms)"
-      />
-      <TextInput source="before" label="before function" />
-      <TextInput source="after" label="after function" />
+      <NumberSlider />
+      <TextInput source="before" label="before function" fullWidth />
+      <TextInput source="after" label="after function" fullWidth />
       <FormDataConsumer>
         {({ formData }) =>
           formData.content?.type === 'string' && (
@@ -60,6 +109,7 @@ const EditProposalForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
               source="content.props.children"
               label="メッセージ本文"
               validate={[required()]}
+              fullWidth
             />
           )
         }
