@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useCallback } from 'react'
+import { FC, useCallback } from 'react'
 import {
   TextInput,
   BooleanInput,
@@ -100,8 +100,8 @@ const EditProposalForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
         fullWidth
       />
       <NumberSlider />
-      <TextInput source="before" label="before function" fullWidth />
-      <TextInput source="after" label="after function" fullWidth />
+      <TextInput source="before" label="before function" fullWidth multiline />
+      <TextInput source="after" label="after function" fullWidth multiline />
       <FormDataConsumer>
         {({ formData }) =>
           formData.content?.type === 'string' && (
@@ -110,6 +110,8 @@ const EditProposalForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
               label="メッセージ本文"
               validate={[required()]}
               fullWidth
+              multiline
+              rows={3}
             />
           )
         }
@@ -118,6 +120,7 @@ const EditProposalForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
         {({ formData }) =>
           formData.content?.type === 'form' && (
             <SelectInput
+              fullWidth
               source="content.props.type"
               label="form type"
               choices={formTypeChoices}
