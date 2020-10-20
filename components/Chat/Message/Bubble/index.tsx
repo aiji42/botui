@@ -1,6 +1,7 @@
 import { FC, useMemo } from 'react'
 import { css } from '@emotion/core'
 import { useMessageContext } from '../../../../hooks/use-message-context'
+import { useThemeContext } from '../../../../hooks/use-theme-context'
 
 const style = {
   base: css({
@@ -32,12 +33,13 @@ const Bubble: FC = (props) => {
       content: { type }
     }
   } = useMessageContext()
+  const { agent, user } = useThemeContext()
   const styles = useMemo(() => {
-    const s = [style.base]
-    if (human) s.push(style.human)
+    const s = [style.base, css(agent)]
+    if (human) s.push(style.human, css(user))
     if (type === 'form') s.push(style.form)
     return s
-  }, [human, type])
+  }, [human, type, agent, user])
 
   return <div css={styles} {...props} />
 }

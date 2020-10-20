@@ -3,12 +3,19 @@ import Message from './Message'
 import { useCorsState } from 'use-cors-state'
 import { Message as MessageType } from '@botui/types'
 import MessageContext from '../../hooks/use-message-context'
+import { Theme } from '../../@types/session'
+import ThemeContext from '../../hooks/use-theme-context'
 
 const Chat: FC = () => {
   const [messages, setMessages] = useCorsState<Array<MessageType>>(
     'chat-messages',
     { window: window.parent },
     []
+  )
+  const [theme] = useCorsState<Theme>(
+    'chat-theme',
+    { window: window.parent },
+    {}
   )
 
   const updater = useCallback(
@@ -23,13 +30,13 @@ const Chat: FC = () => {
   )
 
   return (
-    <>
+    <ThemeContext theme={theme}>
       {messages.map((message, i) => (
         <MessageContext message={message} handleUpdate={updater(i)} key={i}>
           <Message />
         </MessageContext>
       ))}
-    </>
+    </ThemeContext>
   )
 }
 

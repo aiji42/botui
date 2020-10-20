@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import { useCorsState } from 'use-cors-state'
 import { Message as Proposal } from '@botui/types'
+import { Theme } from '../../../../@types/session'
 
 export type Proposals = Array<Proposal>
 
@@ -12,15 +13,17 @@ const values = (messages: Proposals): { [x: string]: any } =>
       : res
   }, {})
 
-const Communicator: FC<{ targetWindow: Window; initProposals: Proposals }> = ({
-  targetWindow,
-  initProposals
-}) => {
+const Communicator: FC<{
+  targetWindow: Window
+  initProposals: Proposals
+  theme: Theme
+}> = ({ targetWindow, initProposals, theme }) => {
   const [messages, setMessages] = useCorsState<Proposals>(
     'chat-messages',
     { window: targetWindow },
     []
   )
+  useCorsState<Theme>('chat-theme', { window: targetWindow }, theme)
   const [proposals, setProposals] = useState<Proposals>(initProposals)
 
   useEffect(() => {

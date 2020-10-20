@@ -1,4 +1,4 @@
-import { FC, createContext, useContext, ReactNode } from 'react'
+import { FC, createContext, useContext } from 'react'
 import { Message } from '@botui/types'
 
 interface MessageContextType {
@@ -24,7 +24,7 @@ const Context = createContext<MessageContextType>({
 
 export const useMessageContext = (): MessageContextType => useContext(Context)
 
-const MessageContext: FC<MessageContextType & { children: ReactNode }> = ({
+const MessageContext: FC<MessageContextType> = ({
   message,
   handleUpdate,
   children

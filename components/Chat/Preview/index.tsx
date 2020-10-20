@@ -1,8 +1,9 @@
 import { FC, useState } from 'react'
 import Communicator from './Communicator'
 import { Message as Proposal } from '@botui/types'
+import { Theme } from '../../../@types/session'
 
-const Preview: FC<{ proposals: Array<Proposal> }> = (props) => {
+const Preview: FC<{ proposals: Array<Proposal>; theme: Theme }> = (props) => {
   const [iframeElement, setIframeElement] = useState<HTMLIFrameElement | null>(
     null
   )
@@ -24,6 +25,7 @@ const Preview: FC<{ proposals: Array<Proposal> }> = (props) => {
         <Communicator
           targetWindow={iframeElement.contentWindow}
           initProposals={initProposals}
+          theme={props.theme}
         />
       )}
     </>

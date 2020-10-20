@@ -78,7 +78,10 @@ const Dashboard: FC<DashboardProps> = (props) => {
             />
             <Modal open={previewOpen} onClose={handlePreviewClose}>
               <div className={classes.preview}>
-                <Preview proposals={props.record.proposals} />
+                <Preview
+                  proposals={props.record.proposals}
+                  theme={props.record.theme}
+                />
               </div>
             </Modal>
           </Grid>
