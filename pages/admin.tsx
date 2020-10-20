@@ -7,7 +7,7 @@ import * as mutations from '../api/graphql/mutations'
 import * as queries from '../api/graphql/queries'
 import {
   SessionList,
-  SeesionEdit,
+  SessionEdit,
   SessionCreate
 } from '../components/Admin/Session'
 import japaneseMessages from '@bicstone/ra-language-japanese'
@@ -32,7 +32,7 @@ const App: FC = () => {
           name="sessions"
           options={{ label: 'セッション' }}
           list={SessionList}
-          edit={SeesionEdit}
+          edit={SessionEdit}
           create={SessionCreate}
         />
       </Admin>

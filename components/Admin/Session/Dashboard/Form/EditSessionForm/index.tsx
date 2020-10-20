@@ -67,43 +67,43 @@ const EditSessionForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
         テーマカラー
       </Typography>
       <ColorInput
-        source="theme.headerColor"
+        source="theme.header.backgroundColor"
         validate={[required(), colorValidator]}
         label="ヘッダー"
         defaultValue="#8BDD70"
       />
       <ColorInput
-        source="theme.agentBallonColor"
+        source="theme.agent.backgroundColor"
         validate={[required(), colorValidator]}
         label="オペレーターメッセージバルーン"
         defaultValue="#0F84FE"
       />
       <ColorInput
-        source="theme.agentMessageColor"
+        source="theme.agent.color"
         validate={[required(), colorValidator]}
         label="オペレーターメッセージ"
         defaultValue="#FFFFFF"
       />
       <ColorInput
-        source="theme.userBallonColor"
+        source="theme.user.backgroundColor"
         validate={[required(), colorValidator]}
         label="ユーザメッセージバルーン"
         defaultValue="#EEEEEE"
       />
       <ColorInput
-        source="theme.userMessageColor"
+        source="theme.user.color"
         validate={[required(), colorValidator]}
         label="ユーザーメッセージ"
         defaultValue="#000000"
       />
       <ColorInput
-        source="theme.footerColor"
+        source="theme.footer.backgroundColor"
         validate={[required(), colorValidator]}
         label="フッター"
         defaultValue="#EFE9E9"
       />
       <ColorInput
-        source="theme.progressBarColor"
+        source="theme.progress.backgroundColor"
         validate={[required(), colorValidator]}
         label="プログレスバー"
         defaultValue="#0F84FE"

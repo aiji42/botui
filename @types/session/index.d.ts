@@ -4,11 +4,32 @@ export type Proposal = Message
 
 export type Proposals = Array<Proposal>
 
-export interface Session<T = Proposals> {
+export interface Theme {
+  header?: {
+    backgroundColor: string
+  }
+  footer?: {
+    backgroundColor: string
+  }
+  agent?: {
+    backgroundColor: string
+    color: string
+  }
+  user?: {
+    backgroundColor: string
+    color: string
+  }
+  progressBar?: {
+    backgroundColor: string
+  }
+}
+
+export interface Session<T = Proposals, U = Theme> {
   id: string
   accountId: string
   title: string
   active: boolean
+  theme: U
   proposals: T
 }
 

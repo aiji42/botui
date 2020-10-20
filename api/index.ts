@@ -4,6 +4,7 @@
 
 export type CreateSessionInput = {
   title: string,
+  theme: string,
   proposals: string,
   active: boolean,
 };
@@ -12,6 +13,7 @@ export type UpdateSessionInput = {
   id: string,
   accountId?: string | null,
   title?: string | null,
+  theme?: string | null,
   proposals?: string | null,
   active?: boolean | null,
 };
@@ -62,6 +64,7 @@ export type CreateSessionMutation = {
     id: string,
     accountId: string,
     title: string,
+    theme: string,
     proposals: string,
     active: boolean,
   } | null,
@@ -77,6 +80,7 @@ export type UpdateSessionMutation = {
     id: string,
     accountId: string,
     title: string,
+    theme: string,
     proposals: string,
     active: boolean,
   } | null,
@@ -92,6 +96,7 @@ export type DeleteSessionMutation = {
     id: string,
     accountId: string,
     title: string,
+    theme: string,
     proposals: string,
     active: boolean,
   } | null,
@@ -107,6 +112,7 @@ export type GetSessionQuery = {
     id: string,
     accountId: string,
     title: string,
+    theme: string,
     proposals: string,
     active: boolean,
   } | null,
@@ -126,6 +132,7 @@ export type ListSessionsQuery = {
       id: string,
       accountId: string,
       title: string,
+      theme: string,
       proposals: string,
       active: boolean,
     } | null > | null,
@@ -137,6 +144,7 @@ export type OnCreateSessionSubscriptionVariables = {
   id?: string | null,
   accountId?: string | null,
   title?: string | null,
+  theme?: string | null,
   proposals?: string | null,
   active?: boolean | null,
 };
@@ -147,6 +155,7 @@ export type OnCreateSessionSubscription = {
     id: string,
     accountId: string,
     title: string,
+    theme: string,
     proposals: string,
     active: boolean,
   } | null,
@@ -156,6 +165,7 @@ export type OnUpdateSessionSubscriptionVariables = {
   id?: string | null,
   accountId?: string | null,
   title?: string | null,
+  theme?: string | null,
   proposals?: string | null,
   active?: boolean | null,
 };
@@ -166,6 +176,7 @@ export type OnUpdateSessionSubscription = {
     id: string,
     accountId: string,
     title: string,
+    theme: string,
     proposals: string,
     active: boolean,
   } | null,
@@ -175,6 +186,7 @@ export type OnDeleteSessionSubscriptionVariables = {
   id?: string | null,
   accountId?: string | null,
   title?: string | null,
+  theme?: string | null,
   proposals?: string | null,
   active?: boolean | null,
 };
@@ -185,6 +197,7 @@ export type OnDeleteSessionSubscription = {
     id: string,
     accountId: string,
     title: string,
+    theme: string,
     proposals: string,
     active: boolean,
   } | null,

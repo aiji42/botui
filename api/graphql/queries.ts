@@ -8,6 +8,7 @@ export const getSession = /* GraphQL */ `
       id
       accountId
       title
+      theme
       proposals
       active
     }
@@ -24,6 +25,7 @@ export const listSessions = /* GraphQL */ `
         id
         accountId
         title
+        theme
         proposals
         active
       }

@@ -51,10 +51,11 @@ export const SessionCreate: FC<CreateProps> = (props) => {
 
 const Edit: FC<EditProps> = (props) => {
   const { record: originalRecord, ...editController } = useEditController<
-    Session<string>
+    Session<string, string>
   >(props)
   const record = {
     ...originalRecord,
+    theme: originalRecord?.theme ? JSON.parse(originalRecord.theme) : {},
     proposals: originalRecord?.proposals
       ? JSON.parse(originalRecord.proposals)
       : []
@@ -73,12 +74,14 @@ const Edit: FC<EditProps> = (props) => {
 
         return {
           ...record,
+          theme: JSON.stringify(record.theme),
           proposals: JSON.stringify(newProposals)
         }
       }
 
       return {
         ...data,
+        theme: JSON.stringify(data.theme),
         proposals: JSON.stringify(data.proposals)
       }
     },
@@ -89,7 +92,7 @@ const Edit: FC<EditProps> = (props) => {
   return <EditView {...props} {...editController} record={record} />
 }
 
-export const SeesionEdit: FC = (props) => {
+export const SessionEdit: FC = (props) => {
   const notify = useNotify()
   const refresh = useRefresh()
 
