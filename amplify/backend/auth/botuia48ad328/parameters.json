@@ -1,6 +1,6 @@
 {
     "identityPoolName": "botuia48ad328_identitypool_a48ad328",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "botuia48ad328",
     "userPoolName": "botuia48ad328_userpool_a48ad328",
     "autoVerifiedAttributes": [

@@ -7,5 +7,11 @@
       "customAuth": false
     }
   },
-  "api": {}
+  "api": {},
+  "storage": {
+    "botuiimagesstorage": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
+  }
 }
