@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from 'react'
+import { FC, useCallback, useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { Grid, Paper, Fab, makeStyles, Modal } from '@material-ui/core'
 import { Add as AddIcon } from '@material-ui/icons'
@@ -63,6 +63,16 @@ const Dashboard: FC<DashboardProps> = (props) => {
     },
     [props.save, setEditingData]
   )
+  useEffect(() => {
+    setEditingData((prevEditingData) => {
+      if (!props.record || prevEditingData?.proposalIndex === undefined)
+        return props.record
+      return {
+        ...props.record.proposals[prevEditingData.proposalIndex],
+        proposalIndex: prevEditingData?.proposalIndex
+      }
+    })
+  }, [props.record])
 
   if (props.record === undefined) return <></>
 

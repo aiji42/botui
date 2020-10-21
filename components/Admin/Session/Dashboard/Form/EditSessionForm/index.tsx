@@ -7,10 +7,12 @@ import {
   useInput,
   InputProps,
   required,
-  TextFieldProps
+  TextFieldProps,
+  ImageInput,
+  ImageField
 } from 'react-admin'
 import { Color, ColorPicker } from 'material-ui-color'
-import { TextField as TextInputMU, Grid, Typography } from '@material-ui/core'
+import { TextField as TextInputMU, Grid } from '@material-ui/core'
 import { useForm } from 'react-final-form'
 import isColor from 'is-color'
 
@@ -98,6 +100,9 @@ const EditSessionForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
         validate={[required(), colorValidator]}
         label="プログレスバー"
       />
+      <ImageInput source="images.logo" accept="image/*">
+        <ImageField source="src" title="title" />
+      </ImageInput>
     </SimpleForm>
   )
 }
