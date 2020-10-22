@@ -50,18 +50,10 @@ export const SessionCreate: FC<CreateProps> = (props) => {
 }
 
 const Edit: FC<EditProps> = (props) => {
-  const { record: originalRecord, ...editController } = useEditController<
-    Session<string, string>
-  >(props)
-  const record = {
-    ...originalRecord,
-    theme: originalRecord?.theme ? JSON.parse(originalRecord.theme) : {},
-    proposals: originalRecord?.proposals
-      ? JSON.parse(originalRecord.proposals)
-      : []
-  } as Session
+  const { record, ...editController } = useEditController<Session>(props)
   const transform = useCallback(
     (data: EditingProposalData | EditingSessionData) => {
+      if (!record) return data
       if (isEditingProposalData(data)) {
         const { proposalIndex, ...restData } = data
         const newProposals = record.proposals.reduce<Proposals>(
@@ -72,18 +64,10 @@ const Edit: FC<EditProps> = (props) => {
         if (record.proposals.length === proposalIndex)
           newProposals.push(restData)
 
-        return {
-          ...record,
-          theme: JSON.stringify(record.theme),
-          proposals: JSON.stringify(newProposals)
-        }
+        return { ...record, proposals: newProposals }
       }
 
-      return {
-        ...data,
-        theme: JSON.stringify(data.theme),
-        proposals: JSON.stringify(data.proposals)
-      }
+      return data
     },
     [record]
   )
