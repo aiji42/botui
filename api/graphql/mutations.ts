@@ -8,6 +8,7 @@ export const createSession = /* GraphQL */ `
       id
       accountId
       title
+      images
       theme
       proposals
       active
@@ -20,6 +21,7 @@ export const updateSession = /* GraphQL */ `
       id
       accountId
       title
+      images
       theme
       proposals
       active
@@ -32,6 +34,7 @@ export const deleteSession = /* GraphQL */ `
       id
       accountId
       title
+      images
       theme
       proposals
       active
