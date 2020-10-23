@@ -20,6 +20,7 @@ import {
 } from '../../../@types/session'
 import Dashboard from './Dashboard'
 import CreateWizard from './CreateWizard'
+import { Storage } from 'aws-amplify'
 
 const isEditingProposalData = (arg: any): arg is EditingProposalData =>
   arg.proposalIndex !== undefined
@@ -52,7 +53,7 @@ export const SessionCreate: FC<CreateProps> = (props) => {
 const Edit: FC<EditProps> = (props) => {
   const { record, ...editController } = useEditController<Session>(props)
   const transform = useCallback(
-    (data: EditingProposalData | EditingSessionData) => {
+    async (data: EditingProposalData | EditingSessionData) => {
       if (!record) return data
       if (isEditingProposalData(data)) {
         const { proposalIndex, ...restData } = data
@@ -67,7 +68,21 @@ const Edit: FC<EditProps> = (props) => {
         return { ...record, proposals: newProposals }
       }
 
-      return data
+      const { uploadableImages, ...restData } = data
+      if (!uploadableImages) return restData
+
+      const images = restData.images
+      if (uploadableImages.logo) {
+        const logo = uploadableImages.logo.rawFile
+        const { key } = await Storage.put(
+          `logo.${logo.name.split('.').slice(-1)[0]}`,
+          logo,
+          { level: 'protected', contentType: logo.type }
+        )
+        images.logo = key
+      }
+
+      return { ...restData, images }
     },
     [record]
   )

@@ -24,16 +24,18 @@ import { Session } from '../@types/session'
 
 const i18nProvider = polyglotI18nProvider(() => japaneseMessages)
 
-const sessionParse = (data: Session<string, string>): Session => {
+const sessionParse = (data: Session<string, string, string>): Session => {
   const proposals = data.proposals ? JSON.parse(data.proposals) : []
   const theme = data.theme ? JSON.parse(data.theme) : {}
-  return { ...data, proposals, theme }
+  const images = data.images ? JSON.parse(data.images) : {}
+  return { ...data, proposals, theme, images }
 }
 
-const sessionFormat = (data: Session): Session<string, string> => {
+const sessionFormat = (data: Session): Session<string, string, string> => {
   const proposals = data.proposals ? JSON.stringify(data.proposals) : '[]'
   const theme = data.theme ? JSON.stringify(data.theme) : '{}'
-  return { ...data, proposals, theme }
+  const images = data.images ? JSON.stringify(data.images) : '{}'
+  return { ...data, proposals, theme, images }
 }
 
 const defaultDataProvider = buildDataProvider({ queries, mutations })
@@ -45,7 +47,7 @@ const dataProvider = {
     return {
       ...result,
       data: result.data.map((item) =>
-        sessionParse(item as Session<string, string>)
+        sessionParse(item as Session<string, string, string>)
       )
     }
   },
@@ -54,19 +56,20 @@ const dataProvider = {
     if (resource !== 'sessions') return result
     return {
       ...result,
-      data: sessionParse(result.data as Session<string, string>)
+      data: sessionParse(result.data as Session<string, string, string>)
     }
   },
   update: async (resource: string, params: UpdateParams) => {
-    const newParams =
-      resource === 'sessions'
-        ? { ...params, data: sessionFormat(params.data as Session) }
-        : params
-    const result = await defaultDataProvider.update(resource, newParams)
-    if (resource !== 'sessions') return result
+    if (resource !== 'sessions')
+      return defaultDataProvider.update(resource, params)
+
+    const result = await defaultDataProvider.update(resource, {
+      ...params,
+      data: sessionFormat(params.data as Session)
+    })
     return {
       ...result,
-      data: sessionParse(result.data as Session<string, string>)
+      data: sessionParse(result.data as Session<string, string, string>)
     }
   }
 } as DataProvider

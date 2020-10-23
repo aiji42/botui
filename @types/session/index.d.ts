@@ -24,16 +24,27 @@ export interface Theme {
   }
 }
 
-export interface Session<T = Proposals, U = Theme> {
+export interface Images {
+  logo?: string
+  agent?: string
+}
+
+export interface Session<T = Proposals, U = Theme, V = Images> {
   id: string
   accountId: string
   title: string
   active: boolean
   theme: U
   proposals: T
+  images: V
 }
 
-export type EditingSessionData = Session
+export interface EditingSessionData extends Session {
+  uploadableImages?: {
+    logo?: { rawFile: File }
+    agent?: { rawFile: File }
+  }
+}
 
 export interface EditingProposalData extends Message {
   id: string

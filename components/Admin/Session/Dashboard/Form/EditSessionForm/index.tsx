@@ -100,7 +100,11 @@ const EditSessionForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
         validate={[required(), colorValidator]}
         label="プログレスバー"
       />
-      <ImageInput source="images.logo" accept="image/*">
+      <ImageInput
+        source="uploadableImages.logo"
+        accept="image/*"
+        maxSize={500000}
+      >
         <ImageField source="src" title="title" />
       </ImageInput>
     </SimpleForm>
