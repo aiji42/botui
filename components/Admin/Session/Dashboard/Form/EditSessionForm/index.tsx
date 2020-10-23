@@ -9,12 +9,15 @@ import {
   required,
   TextFieldProps,
   ImageInput,
-  ImageField
+  ImageField,
+  FormDataConsumer
 } from 'react-admin'
 import { Color, ColorPicker } from 'material-ui-color'
 import { TextField as TextInputMU, Grid } from '@material-ui/core'
 import { useForm } from 'react-final-form'
 import isColor from 'is-color'
+import { AmplifyS3Image } from '@aws-amplify/ui-react'
+import { AccessLevel } from '@aws-amplify/ui-components'
 
 const colorValidator = (color: string) => {
   return isColor(color) ? null : '入力内容が間違っています'
@@ -107,6 +110,14 @@ const EditSessionForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
       >
         <ImageField source="src" title="title" />
       </ImageInput>
+      <FormDataConsumer>
+        {({ formData }) => (
+          <AmplifyS3Image
+            imgKey={formData.images.logo}
+            level={AccessLevel.Protected}
+          />
+        )}
+      </FormDataConsumer>
     </SimpleForm>
   )
 }
