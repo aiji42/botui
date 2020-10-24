@@ -39,11 +39,14 @@ export const SessionList: FC = (props) => {
 export const SessionCreate: FC<CreateProps> = (props) => {
   const createController = useCreateController(props)
   createController.setTransform((data) => {
+    // TODO: Create用のdataProvider変更
     const proposals =
       data.template === 'inquiry' ? '[]' : data.template === 'ec' ? '[]' : '[]'
     return {
       title: data.title,
       proposals,
+      images: '{}',
+      theme: '{}',
       active: false
     }
   })
@@ -80,6 +83,16 @@ const Edit: FC<EditProps> = (props) => {
           { level: 'protected', contentType: logo.type }
         )
         images.logo = key
+      }
+
+      if (uploadableImages.agent) {
+        const agent = uploadableImages.agent.rawFile
+        const { key } = await Storage.put(
+          `agent.${agent.name.split('.').slice(-1)[0]}`,
+          agent,
+          { level: 'protected', contentType: agent.type }
+        )
+        images.agent = key
       }
 
       return { ...restData, images }

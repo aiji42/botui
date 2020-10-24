@@ -107,13 +107,30 @@ const EditSessionForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
         source="uploadableImages.logo"
         accept="image/*"
         maxSize={500000}
+        label="ヘッダーロゴ"
       >
-        <ImageField source="src" title="title" />
+        <ImageField source="src" title="logo" />
       </ImageInput>
       <FormDataConsumer>
         {({ formData }) => (
           <AmplifyS3Image
             imgKey={formData.images.logo}
+            level={AccessLevel.Protected}
+          />
+        )}
+      </FormDataConsumer>
+      <ImageInput
+        source="uploadableImages.agent"
+        accept="image/*"
+        maxSize={500000}
+        label="エージェントアイコン"
+      >
+        <ImageField source="src" title="agent" />
+      </ImageInput>
+      <FormDataConsumer>
+        {({ formData }) => (
+          <AmplifyS3Image
+            imgKey={formData.images.agent}
             level={AccessLevel.Protected}
           />
         )}
