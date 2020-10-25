@@ -25,7 +25,8 @@ const style = {
     top: 0,
     right: 0,
     bottom: 0,
-    left: 0
+    left: 0,
+    objectFit: 'cover'
   }),
   imageBase: css({
     backgroundColor: '#0f84fe',
@@ -40,14 +41,17 @@ const OperatorIcon: FC = () => {
   const {
     message: { human, iconDisplay }
   } = useMessageContext()
-  const { agent } = useThemeContext()
+  const {
+    theme: { agent },
+    images: { agent: agentIcon }
+  } = useThemeContext()
   const display = iconDisplay === undefined ? true : iconDisplay
   if (human) return <></>
   return (
     <div css={display ? style.display : style.hidden}>
       {display && (
         <div css={[style.imageBase, css(agent)]}>
-          <img css={style.image} src="/operator.jpg" />
+          <img css={style.image} src={agentIcon || '/operator.jpg'} />
         </div>
       )}
     </div>

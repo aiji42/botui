@@ -1,12 +1,19 @@
 import { FC, createContext, useContext } from 'react'
-import { Theme } from '../../@types/session'
+import { Images, Theme } from '../../@types/session'
 
-const Context = createContext<Theme>({})
+interface ThemeAndImage {
+  theme: Theme
+  images: Images
+}
 
-export const useThemeContext = (): Theme => useContext(Context)
+const Context = createContext<ThemeAndImage>({ theme: {}, images: {} })
 
-const ThemeContext: FC<{ theme: Theme }> = ({ theme, children }) => {
-  return <Context.Provider value={theme}>{children}</Context.Provider>
+export const useThemeContext = (): ThemeAndImage => useContext(Context)
+
+const ThemeContext: FC<ThemeAndImage> = ({ theme, images, children }) => {
+  return (
+    <Context.Provider value={{ theme, images }}>{children}</Context.Provider>
+  )
 }
 
 export default ThemeContext

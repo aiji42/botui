@@ -7,7 +7,6 @@ const Chat = dynamic(() => import('../components/Chat'), { ssr: false })
 
 const style = css`
   body {
-    padding: 0px 15px 100px 15px;
     margin: 0;
   }
 `

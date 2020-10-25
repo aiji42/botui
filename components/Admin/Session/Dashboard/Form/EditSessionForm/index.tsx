@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react'
+import { FC, useCallback, useEffect, useState } from 'react'
 import {
   TextInput,
   BooleanInput,
@@ -8,16 +8,20 @@ import {
   InputProps,
   required,
   TextFieldProps,
-  ImageInput,
-  ImageField,
-  FormDataConsumer
+  Labeled
 } from 'react-admin'
 import { Color, ColorPicker } from 'material-ui-color'
-import { TextField as TextInputMU, Grid } from '@material-ui/core'
-import { useForm } from 'react-final-form'
+import {
+  TextField as TextInputMU,
+  Grid,
+  makeStyles,
+  Fab
+} from '@material-ui/core'
+import { Edit as EditIcon } from '@material-ui/icons'
 import isColor from 'is-color'
-import { AmplifyS3Image } from '@aws-amplify/ui-react'
-import { AccessLevel } from '@aws-amplify/ui-components'
+import { useForm, useField } from 'react-final-form'
+import { Storage } from 'aws-amplify'
+import { DropzoneDialog } from 'material-ui-dropzone'
 
 const colorValidator = (color: string) => {
   return isColor(color) ? null : '入力内容が間違っています'
@@ -63,6 +67,96 @@ const ColorInput: FC<InputProps<TextFieldProps>> = (props) => {
   )
 }
 
+const useStyles = makeStyles((theme) => ({
+  imageContainer: {
+    position: 'relative',
+    '&:hover $image': {
+      opacity: 0.3
+    },
+    '&:hover $removeButton': {
+      opacity: 1
+    }
+  },
+  image: {
+    height: 100,
+    width: 'initial',
+    maxWidth: '100%',
+    opacity: 1
+  },
+  removeButton: {
+    transition: '.5s ease',
+    position: 'absolute',
+    opacity: 0,
+    top: theme.spacing(-1),
+    right: theme.spacing(-1),
+    '&:focus': {
+      opacity: 1
+    }
+  }
+}))
+
+const ImageInput: FC<InputProps<TextFieldProps>> = (props) => {
+  const classes = useStyles()
+  const { source, label } = props
+  const {
+    input: { value }
+  } = useField(source)
+  const { change } = useForm()
+  const [src, setSrc] = useState('')
+  const [open, setOpen] = useState(false)
+  const handleClose = useCallback(() => setOpen(false), [])
+  const handleOpen = useCallback(() => setOpen(true), [])
+  const handleSave = useCallback(
+    ([file]: File[]) => {
+      Storage.put(file.name, file, { level: 'protected' }).then((res) => {
+        change(source, (res as { key: string }).key)
+        handleClose()
+      })
+    },
+    [change, handleClose]
+  )
+
+  useEffect(() => {
+    Storage.get(value, { level: 'protected' }).then(
+      (val) => typeof val === 'string' && setSrc(val)
+    )
+  }, [value])
+
+  return (
+    <Labeled label={label} fullWidth>
+      <>
+        <Grid item xs={5} className={classes.imageContainer}>
+          <img src={src} className={classes.image} />
+          <Fab
+            onClick={handleOpen}
+            className={classes.removeButton}
+            size="medium"
+          >
+            <EditIcon />
+          </Fab>
+          <DropzoneDialog
+            acceptedFiles={['image/*']}
+            cancelButtonText="cancel"
+            submitButtonText="submit"
+            maxFileSize={500000}
+            open={open}
+            onClose={handleClose}
+            onSave={handleSave}
+            filesLimit={1}
+            previewGridProps={{
+              container: { justify: 'center' },
+              item: { xs: 8 }
+            }}
+            showAlerts={['error']}
+            dialogTitle={label}
+            previewText=""
+          />
+        </Grid>
+      </>
+    </Labeled>
+  )
+}
+
 const EditSessionForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
   return (
     <SimpleForm {...props}>
@@ -103,38 +197,8 @@ const EditSessionForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
         validate={[required(), colorValidator]}
         label="プログレスバー"
       />
-      <ImageInput
-        source="uploadableImages.logo"
-        accept="image/*"
-        maxSize={500000}
-        label="ヘッダーロゴ"
-      >
-        <ImageField source="src" title="logo" />
-      </ImageInput>
-      <FormDataConsumer>
-        {({ formData }) => (
-          <AmplifyS3Image
-            imgKey={formData.images.logo}
-            level={AccessLevel.Protected}
-          />
-        )}
-      </FormDataConsumer>
-      <ImageInput
-        source="uploadableImages.agent"
-        accept="image/*"
-        maxSize={500000}
-        label="エージェントアイコン"
-      >
-        <ImageField source="src" title="agent" />
-      </ImageInput>
-      <FormDataConsumer>
-        {({ formData }) => (
-          <AmplifyS3Image
-            imgKey={formData.images.agent}
-            level={AccessLevel.Protected}
-          />
-        )}
-      </FormDataConsumer>
+      <ImageInput source="images.logo" label="ヘッダーロゴ" />
+      <ImageInput source="images.agent" label="エージェントアイコン" />
     </SimpleForm>
   )
 }

@@ -33,6 +33,7 @@
     "jp-prefecture": "^0.2.1",
     "libphonenumber-js": "^1.8.4",
     "material-ui-color": "^0.4.6",
+    "material-ui-dropzone": "^3.5.0",
     "next": "^9.5.5",
     "react": "^16.13.1",
     "react-ace": "^9.1.4",

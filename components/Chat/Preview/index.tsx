@@ -1,15 +1,37 @@
-import { FC, useState } from 'react'
+import { FC, useState, useEffect } from 'react'
 import Communicator from './Communicator'
 import { Message as Proposal } from '@botui/types'
-import { Theme } from '../../../@types/session'
+import { Images, Theme } from '../../../@types/session'
+import { Storage } from 'aws-amplify'
 
-const Preview: FC<{ proposals: Array<Proposal>; theme: Theme }> = (props) => {
+const Preview: FC<{
+  proposals: Array<Proposal>
+  theme: Theme
+  images: Images
+  accountId: string
+}> = (props) => {
   const [iframeElement, setIframeElement] = useState<HTMLIFrameElement | null>(
     null
   )
   const [initProposals, setInitProposals] = useState<Array<Proposal>>(
     props.proposals
   )
+  const [images, setImages] = useState<Images | undefined>()
+
+  useEffect(() => {
+    if (!props.accountId) return
+    Promise.all(
+      Object.entries(props.images).map(async ([key, val]) => {
+        const res = await Storage.get(val, {
+          level: 'protected',
+          identityId: props.accountId
+        })
+        return [key, typeof res === 'string' ? res : '']
+      })
+    ).then((res) => {
+      setImages(Object.fromEntries(res))
+    })
+  }, [props.images, props.accountId])
 
   return (
     <>
@@ -21,11 +43,12 @@ const Preview: FC<{ proposals: Array<Proposal>; theme: Theme }> = (props) => {
         width="100%"
         frameBorder="no"
       />
-      {!!iframeElement?.contentWindow && initProposals.length && (
+      {!!iframeElement?.contentWindow && initProposals.length && images && (
         <Communicator
           targetWindow={iframeElement.contentWindow}
           initProposals={initProposals}
           theme={props.theme}
+          images={images}
         />
       )}
     </>

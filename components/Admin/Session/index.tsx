@@ -70,31 +70,7 @@ const Edit: FC<EditProps> = (props) => {
         return { ...record, proposals: newProposals }
       }
 
-      const { uploadableImages, ...restData } = data
-      if (!uploadableImages) return restData
-
-      const images = restData.images
-      if (uploadableImages.logo) {
-        const logo = uploadableImages.logo.rawFile
-        const { key } = await Storage.put(
-          `logo.${logo.name.split('.').slice(-1)[0]}`,
-          logo,
-          { level: 'protected', contentType: logo.type }
-        )
-        images.logo = key
-      }
-
-      if (uploadableImages.agent) {
-        const agent = uploadableImages.agent.rawFile
-        const { key } = await Storage.put(
-          `agent.${agent.name.split('.').slice(-1)[0]}`,
-          agent,
-          { level: 'protected', contentType: agent.type }
-        )
-        images.agent = key
-      }
-
-      return { ...restData, images }
+      return data
     },
     [record]
   )

@@ -5,6 +5,7 @@
 export const onCreateSession = /* GraphQL */ `
   subscription OnCreateSession(
     $id: ID
+    $identity: String
     $accountId: String
     $title: String
     $images: AWSJSON
@@ -14,6 +15,7 @@ export const onCreateSession = /* GraphQL */ `
   ) {
     onCreateSession(
       id: $id
+      identity: $identity
       accountId: $accountId
       title: $title
       images: $images
@@ -22,6 +24,7 @@ export const onCreateSession = /* GraphQL */ `
       active: $active
     ) {
       id
+      identity
       accountId
       title
       images
@@ -34,6 +37,7 @@ export const onCreateSession = /* GraphQL */ `
 export const onUpdateSession = /* GraphQL */ `
   subscription OnUpdateSession(
     $id: ID
+    $identity: String
     $accountId: String
     $title: String
     $images: AWSJSON
@@ -43,6 +47,7 @@ export const onUpdateSession = /* GraphQL */ `
   ) {
     onUpdateSession(
       id: $id
+      identity: $identity
       accountId: $accountId
       title: $title
       images: $images
@@ -51,6 +56,7 @@ export const onUpdateSession = /* GraphQL */ `
       active: $active
     ) {
       id
+      identity
       accountId
       title
       images
@@ -63,6 +69,7 @@ export const onUpdateSession = /* GraphQL */ `
 export const onDeleteSession = /* GraphQL */ `
   subscription OnDeleteSession(
     $id: ID
+    $identity: String
     $accountId: String
     $title: String
     $images: AWSJSON
@@ -72,6 +79,7 @@ export const onDeleteSession = /* GraphQL */ `
   ) {
     onDeleteSession(
       id: $id
+      identity: $identity
       accountId: $accountId
       title: $title
       images: $images
@@ -80,6 +88,7 @@ export const onDeleteSession = /* GraphQL */ `
       active: $active
     ) {
       id
+      identity
       accountId
       title
       images

@@ -91,6 +91,8 @@ const Dashboard: FC<DashboardProps> = (props) => {
                 <Preview
                   proposals={props.record.proposals}
                   theme={props.record.theme}
+                  images={props.record.images}
+                  accountId={props.record.identity}
                 />
               </div>
             </Modal>

@@ -22,6 +22,8 @@ import japaneseMessages from '@bicstone/ra-language-japanese'
 import polyglotI18nProvider from 'ra-i18n-polyglot'
 import dynamic from 'next/dynamic'
 import { Session } from '../@types/session'
+import '@aws-amplify/ui/dist/style.css'
+import { Auth } from 'aws-amplify'
 
 const i18nProvider = polyglotI18nProvider(() => japaneseMessages)
 
@@ -85,9 +87,10 @@ const dataProvider = {
     if (resource !== 'sessions')
       return await defaultDataProvider.create(resource, params)
 
+    const { id } = await Auth.currentUserInfo()
     const result = await defaultDataProvider.create<
       Session<string, string, string>
-    >(resource, params)
+    >(resource, { data: { ...params.data, identity: id } })
     return {
       ...result,
       data: sessionParse(result.data)

@@ -39,12 +39,7 @@ export interface Session<T = Proposals, U = Theme, V = Images> {
   images: V
 }
 
-export interface EditingSessionData extends Session {
-  uploadableImages?: {
-    logo?: { rawFile: File }
-    agent?: { rawFile: File }
-  }
-}
+export type EditingSessionData = Session
 
 export interface EditingProposalData extends Message {
   id: string

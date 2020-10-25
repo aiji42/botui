@@ -6,6 +6,7 @@ export const getSession = /* GraphQL */ `
   query GetSession($id: ID!) {
     getSession(id: $id) {
       id
+      identity
       accountId
       title
       images
@@ -24,6 +25,7 @@ export const listSessions = /* GraphQL */ `
     listSessions(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        identity
         accountId
         title
         images

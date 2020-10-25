@@ -33,7 +33,9 @@ const Bubble: FC = (props) => {
       content: { type }
     }
   } = useMessageContext()
-  const { agent, user } = useThemeContext()
+  const {
+    theme: { agent, user }
+  } = useThemeContext()
   const styles = useMemo(() => {
     const s = [style.base, css(agent)]
     if (human) s.push(style.human, css(user))

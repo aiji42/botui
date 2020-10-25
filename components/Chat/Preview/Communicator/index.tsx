@@ -1,9 +1,16 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useCallback, useEffect, useState } from 'react'
 import { useCorsState } from 'use-cors-state'
 import { Message as Proposal } from '@botui/types'
-import { Theme } from '../../../../@types/session'
+import { Images, Theme } from '../../../../@types/session'
+import { Storage } from 'aws-amplify'
 
 export type Proposals = Array<Proposal>
+
+interface ChatConfig {
+  messages: Proposals
+  theme: Theme
+  images: Images
+}
 
 const values = (messages: Proposals): { [x: string]: any } =>
   messages.reduce((res, message) => {
@@ -17,37 +24,43 @@ const Communicator: FC<{
   targetWindow: Window
   initProposals: Proposals
   theme: Theme
-}> = ({ targetWindow, initProposals, theme }) => {
-  const [messages, setMessages] = useCorsState<Proposals>(
-    'chat-messages',
+  images: Images
+}> = ({ targetWindow, initProposals, theme, images }) => {
+  const [config, setConfig] = useCorsState<ChatConfig>(
+    'chat-config',
     { window: targetWindow },
-    []
+    { messages: [], theme, images }
   )
-  useCorsState<Theme>('chat-theme', { window: targetWindow }, theme)
   const [proposals, setProposals] = useState<Proposals>(initProposals)
+  const setMessages = useCallback(
+    (messages: Proposals) => {
+      setConfig({ messages, theme, images })
+    },
+    [setConfig]
+  )
 
   useEffect(() => {
-    const updatedIndex = messages.findIndex(({ updated }) => updated)
+    const updatedIndex = config.messages.findIndex(({ updated }) => updated)
     if (updatedIndex > 0) {
       setMessages([
-        ...messages.slice(0, updatedIndex),
-        { ...messages[updatedIndex], updated: false }
+        ...config.messages.slice(0, updatedIndex),
+        { ...config.messages[updatedIndex], updated: false }
       ])
       return
     }
     setProposals([
-      ...messages,
+      ...config.messages,
       ...proposals
-        .slice(messages.length)
+        .slice(config.messages.length)
         .reduce<Proposals>(
           (res, original) => [...res, { ...original, completed: false }],
           []
         )
     ])
-  }, [messages])
+  }, [config.messages])
 
   useEffect(() => {
-    if (messages.some(({ completed }) => !completed)) return
+    if (config.messages.some(({ completed }) => !completed)) return
 
     const unCompletedIndex = proposals.findIndex(({ completed }) => !completed)
     const tailMessage = proposals[unCompletedIndex - 1]
@@ -61,12 +74,12 @@ const Communicator: FC<{
     const nextMessage = { ...proposals[unCompletedIndex], completed: false }
     if (nextMessage.before) {
       /* eslint no-new-func: "off" */
-      const beforeFuction = new Function(
+      const beforeFunction = new Function(
         'values',
         'message',
         nextMessage.before
       )
-      beforeFuction(values(proposals), nextMessage)
+      beforeFunction(values(proposals), nextMessage)
     }
 
     setMessages([...proposals.slice(0, unCompletedIndex), nextMessage])

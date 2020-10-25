@@ -6,6 +6,7 @@ export const createSession = /* GraphQL */ `
   mutation CreateSession($input: CreateSessionInput!) {
     createSession(input: $input) {
       id
+      identity
       accountId
       title
       images
@@ -19,6 +20,7 @@ export const updateSession = /* GraphQL */ `
   mutation UpdateSession($input: UpdateSessionInput!) {
     updateSession(input: $input) {
       id
+      identity
       accountId
       title
       images
@@ -32,6 +34,7 @@ export const deleteSession = /* GraphQL */ `
   mutation DeleteSession($input: DeleteSessionInput!) {
     deleteSession(input: $input) {
       id
+      identity
       accountId
       title
       images

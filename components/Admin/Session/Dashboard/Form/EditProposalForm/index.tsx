@@ -76,7 +76,7 @@ const NumberSlider: FC = () => {
           marks={marks}
           min={0}
           max={3000}
-          value={value}
+          value={value || 0}
           onChange={handleChange}
         />
       </span>
