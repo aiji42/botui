@@ -39,7 +39,6 @@ export const SessionList: FC = (props) => {
 export const SessionCreate: FC<CreateProps> = (props) => {
   const createController = useCreateController(props)
   createController.setTransform((data) => {
-    // TODO: Create用のdataProvider変更
     const proposals =
       data.template === 'inquiry' ? '[]' : data.template === 'ec' ? '[]' : '[]'
     return {

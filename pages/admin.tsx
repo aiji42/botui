@@ -8,7 +8,8 @@ import {
   GetOneParams,
   GetListParams,
   UpdateParams,
-  DataProvider
+  DataProvider,
+  CreateParams
 } from 'react-admin'
 import * as mutations from '../api/graphql/mutations'
 import * as queries from '../api/graphql/queries'
@@ -42,34 +43,54 @@ const defaultDataProvider = buildDataProvider({ queries, mutations })
 const dataProvider = {
   ...defaultDataProvider,
   getList: async (resource: string, params: GetListParams) => {
-    const result = await defaultDataProvider.getList(resource, params)
-    if (resource !== 'sessions') return result
+    if (resource !== 'sessions')
+      return await defaultDataProvider.getList(resource, params)
+
+    const result = await defaultDataProvider.getList<
+      Session<string, string, string>
+    >(resource, params)
     return {
       ...result,
-      data: result.data.map((item) =>
-        sessionParse(item as Session<string, string, string>)
-      )
+      data: result.data.map(sessionParse)
     }
   },
   getOne: async (resource: string, params: GetOneParams) => {
-    const result = await defaultDataProvider.getOne(resource, params)
-    if (resource !== 'sessions') return result
+    if (resource !== 'sessions')
+      return await defaultDataProvider.getOne(resource, params)
+
+    const result = await defaultDataProvider.getOne<
+      Session<string, string, string>
+    >(resource, params)
     return {
       ...result,
-      data: sessionParse(result.data as Session<string, string, string>)
+      data: sessionParse(result.data)
     }
   },
   update: async (resource: string, params: UpdateParams) => {
     if (resource !== 'sessions')
       return defaultDataProvider.update(resource, params)
 
-    const result = await defaultDataProvider.update(resource, {
+    const result = await defaultDataProvider.update<
+      Session<string, string, string>
+    >(resource, {
       ...params,
-      data: sessionFormat(params.data as Session)
+      data: sessionFormat(params.data)
     })
     return {
       ...result,
-      data: sessionParse(result.data as Session<string, string, string>)
+      data: sessionParse(result.data)
+    }
+  },
+  create: async (resource: string, params: CreateParams) => {
+    if (resource !== 'sessions')
+      return await defaultDataProvider.create(resource, params)
+
+    const result = await defaultDataProvider.create<
+      Session<string, string, string>
+    >(resource, params)
+    return {
+      ...result,
+      data: sessionParse(result.data)
     }
   }
 } as DataProvider
