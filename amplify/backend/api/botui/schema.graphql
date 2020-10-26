@@ -1,0 +1,16 @@
+type Session
+  @model
+  @auth(
+    rules: [
+      {allow: owner, ownerField: "owner", operations: [create, update, delete, read]}
+    ]
+  )
+{
+  id: ID!
+  owner: String
+  title: String!
+  active: Boolean!
+  theme: AWSJSON!
+  proposals: AWSJSON!
+  images: AWSJSON!
+}

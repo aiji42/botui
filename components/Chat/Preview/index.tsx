@@ -8,7 +8,7 @@ const Preview: FC<{
   proposals: Array<Proposal>
   theme: Theme
   images: Images
-  accountId: string
+  identityId: string
 }> = (props) => {
   const [iframeElement, setIframeElement] = useState<HTMLIFrameElement | null>(
     null
@@ -19,19 +19,19 @@ const Preview: FC<{
   const [images, setImages] = useState<Images | undefined>()
 
   useEffect(() => {
-    if (!props.accountId) return
+    if (!props.identityId) return
     Promise.all(
       Object.entries(props.images).map(async ([key, val]) => {
         const res = await Storage.get(val, {
           level: 'protected',
-          identityId: props.accountId
+          identityId: props.identityId
         })
         return [key, typeof res === 'string' ? res : '']
       })
     ).then((res) => {
       setImages(Object.fromEntries(res))
     })
-  }, [props.images, props.accountId])
+  }, [props.images, props.identityId])
 
   return (
     <>
@@ -43,7 +43,7 @@ const Preview: FC<{
         width="100%"
         frameBorder="no"
       />
-      {!!iframeElement?.contentWindow && initProposals.length && images && (
+      {!!iframeElement?.contentWindow && initProposals.length && (
         <Communicator
           targetWindow={iframeElement.contentWindow}
           initProposals={initProposals}

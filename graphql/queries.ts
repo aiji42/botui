@@ -6,30 +6,34 @@ export const getSession = /* GraphQL */ `
   query GetSession($id: ID!) {
     getSession(id: $id) {
       id
-      identity
+      owner
       title
-      images
+      active
       theme
       proposals
-      active
+      images
+      createdAt
+      updatedAt
     }
   }
 `;
 export const listSessions = /* GraphQL */ `
   query ListSessions(
-    $filter: TableSessionFilterInput
+    $filter: ModelSessionFilterInput
     $limit: Int
     $nextToken: String
   ) {
     listSessions(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        identity
+        owner
         title
-        images
+        active
         theme
         proposals
-        active
+        images
+        createdAt
+        updatedAt
       }
       nextToken
     }

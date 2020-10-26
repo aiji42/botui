@@ -32,6 +32,7 @@ export interface Images {
 export interface Session<T = Proposals, U = Theme, V = Images> {
   id: string
   title: string
+  owner: string
   active: boolean
   theme: U
   proposals: T

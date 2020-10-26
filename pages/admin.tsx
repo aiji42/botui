@@ -11,8 +11,8 @@ import {
   DataProvider,
   CreateParams
 } from 'react-admin'
-import * as mutations from '../api/graphql/mutations'
-import * as queries from '../api/graphql/queries'
+import * as mutations from '../src/graphql/mutations'
+import * as queries from '../src/graphql/queries'
 import {
   SessionList,
   SessionEdit,
@@ -22,7 +22,6 @@ import japaneseMessages from '@bicstone/ra-language-japanese'
 import polyglotI18nProvider from 'ra-i18n-polyglot'
 import dynamic from 'next/dynamic'
 import { Session } from '../@types/session'
-import { Auth } from 'aws-amplify'
 
 const i18nProvider = polyglotI18nProvider(() => japaneseMessages)
 
@@ -47,7 +46,6 @@ const dataProvider = {
     if (resource !== 'sessions')
       return await defaultDataProvider.getList(resource, params)
 
-    const { id } = await Auth.currentUserInfo()
     const result = await defaultDataProvider.getList<
       Session<string, string, string>
     >(resource, params)
@@ -87,10 +85,9 @@ const dataProvider = {
     if (resource !== 'sessions')
       return await defaultDataProvider.create(resource, params)
 
-    const { id } = await Auth.currentUserInfo()
     const result = await defaultDataProvider.create<
       Session<string, string, string>
-    >(resource, { ...params, data: { ...params.data, identity: id } })
+    >(resource, { ...params, data: { ...params.data } })
     return {
       ...result,
       data: sessionParse(result.data)

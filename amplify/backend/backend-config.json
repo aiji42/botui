@@ -7,7 +7,23 @@
       "customAuth": false
     }
   },
-  "api": {},
+  "api": {
+    "botui": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+              "userPoolId": "authbotuia48ad328"
+            }
+          },
+          "additionalAuthenticationProviders": []
+        }
+      }
+    }
+  },
   "storage": {
     "botuiimagesstorage": {
       "service": "S3",
