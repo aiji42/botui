@@ -20,7 +20,7 @@ import {
 import { Edit as EditIcon } from '@material-ui/icons'
 import isColor from 'is-color'
 import { useForm, useField } from 'react-final-form'
-import { Storage } from 'aws-amplify'
+import { Storage, Auth } from 'aws-amplify'
 import { DropzoneDialog } from 'material-ui-dropzone'
 
 const colorValidator = (color: string) => {
@@ -107,17 +107,21 @@ const ImageInput: FC<InputProps<TextFieldProps>> = (props) => {
   const handleClose = useCallback(() => setOpen(false), [])
   const handleOpen = useCallback(() => setOpen(true), [])
   const handleSave = useCallback(
-    ([file]: File[]) => {
-      Storage.put(file.name, file, { level: 'protected' }).then((res) => {
-        change(source, (res as { key: string }).key)
-        handleClose()
+    async ([file]: File[]) => {
+      const currentCredentials = await Auth.currentCredentials()
+      const identityId = currentCredentials.identityId
+      // TODO: sessionId を path に含ませる
+      const res = await Storage.put(`${identityId}/${file.name}`, file, {
+        level: 'public'
       })
+      change(source, (res as { key: string }).key)
+      handleClose()
     },
     [change, handleClose]
   )
 
   useEffect(() => {
-    Storage.get(value, { level: 'protected' }).then(
+    Storage.get(value, { level: 'public' }).then(
       (val) => typeof val === 'string' && setSrc(val)
     )
   }, [value])

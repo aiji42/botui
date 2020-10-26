@@ -92,7 +92,6 @@ const Dashboard: FC<DashboardProps> = (props) => {
                   proposals={props.record.proposals}
                   theme={props.record.theme}
                   images={props.record.images}
-                  identityId={props.record.identity}
                 />
               </div>
             </Modal>
