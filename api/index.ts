@@ -14,7 +14,6 @@ export type CreateSessionInput = {
 export type UpdateSessionInput = {
   id: string,
   identity?: string | null,
-  accountId?: string | null,
   title?: string | null,
   images?: string | null,
   theme?: string | null,
@@ -29,7 +28,6 @@ export type DeleteSessionInput = {
 export type TableSessionFilterInput = {
   id?: TableIDFilterInput | null,
   identity?: TableStringFilterInput | null,
-  accountId?: TableStringFilterInput | null,
   title?: TableStringFilterInput | null,
 };
 
@@ -68,7 +66,6 @@ export type CreateSessionMutation = {
     __typename: "Session",
     id: string,
     identity: string,
-    accountId: string,
     title: string,
     images: string,
     theme: string,
@@ -86,7 +83,6 @@ export type UpdateSessionMutation = {
     __typename: "Session",
     id: string,
     identity: string,
-    accountId: string,
     title: string,
     images: string,
     theme: string,
@@ -104,7 +100,6 @@ export type DeleteSessionMutation = {
     __typename: "Session",
     id: string,
     identity: string,
-    accountId: string,
     title: string,
     images: string,
     theme: string,
@@ -122,7 +117,6 @@ export type GetSessionQuery = {
     __typename: "Session",
     id: string,
     identity: string,
-    accountId: string,
     title: string,
     images: string,
     theme: string,
@@ -144,7 +138,6 @@ export type ListSessionsQuery = {
       __typename: "Session",
       id: string,
       identity: string,
-      accountId: string,
       title: string,
       images: string,
       theme: string,
@@ -158,7 +151,6 @@ export type ListSessionsQuery = {
 export type OnCreateSessionSubscriptionVariables = {
   id?: string | null,
   identity?: string | null,
-  accountId?: string | null,
   title?: string | null,
   images?: string | null,
   theme?: string | null,
@@ -171,7 +163,6 @@ export type OnCreateSessionSubscription = {
     __typename: "Session",
     id: string,
     identity: string,
-    accountId: string,
     title: string,
     images: string,
     theme: string,
@@ -183,7 +174,6 @@ export type OnCreateSessionSubscription = {
 export type OnUpdateSessionSubscriptionVariables = {
   id?: string | null,
   identity?: string | null,
-  accountId?: string | null,
   title?: string | null,
   images?: string | null,
   theme?: string | null,
@@ -196,7 +186,6 @@ export type OnUpdateSessionSubscription = {
     __typename: "Session",
     id: string,
     identity: string,
-    accountId: string,
     title: string,
     images: string,
     theme: string,
@@ -208,7 +197,6 @@ export type OnUpdateSessionSubscription = {
 export type OnDeleteSessionSubscriptionVariables = {
   id?: string | null,
   identity?: string | null,
-  accountId?: string | null,
   title?: string | null,
   images?: string | null,
   theme?: string | null,
@@ -221,7 +209,6 @@ export type OnDeleteSessionSubscription = {
     __typename: "Session",
     id: string,
     identity: string,
-    accountId: string,
     title: string,
     images: string,
     theme: string,

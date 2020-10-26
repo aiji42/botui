@@ -31,7 +31,6 @@ export interface Images {
 
 export interface Session<T = Proposals, U = Theme, V = Images> {
   id: string
-  accountId: string
   title: string
   active: boolean
   theme: U

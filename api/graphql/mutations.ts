@@ -7,7 +7,6 @@ export const createSession = /* GraphQL */ `
     createSession(input: $input) {
       id
       identity
-      accountId
       title
       images
       theme
@@ -21,7 +20,6 @@ export const updateSession = /* GraphQL */ `
     updateSession(input: $input) {
       id
       identity
-      accountId
       title
       images
       theme
@@ -35,7 +33,6 @@ export const deleteSession = /* GraphQL */ `
     deleteSession(input: $input) {
       id
       identity
-      accountId
       title
       images
       theme

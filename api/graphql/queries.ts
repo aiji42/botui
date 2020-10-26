@@ -7,7 +7,6 @@ export const getSession = /* GraphQL */ `
     getSession(id: $id) {
       id
       identity
-      accountId
       title
       images
       theme
@@ -26,7 +25,6 @@ export const listSessions = /* GraphQL */ `
       items {
         id
         identity
-        accountId
         title
         images
         theme
