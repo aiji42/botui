@@ -1,7 +1,7 @@
 {
-    "bucketName": "botui-images-storage",
-    "authPolicyName": "s3_amplify_2a079084",
-    "unauthPolicyName": "s3_amplify_2a079084",
+    "bucketName": "botui",
+    "authPolicyName": "s3_amplify_a160547b",
+    "unauthPolicyName": "s3_amplify_a160547b",
     "authRoleName": {
         "Ref": "AuthRoleName"
     },
@@ -19,15 +19,15 @@
         "s3:DeleteObject"
     ],
     "s3PermissionsAuthenticatedPublic": "s3:PutObject,s3:GetObject,s3:DeleteObject",
-    "s3PublicPolicy": "Public_policy_48d7cfeb",
+    "s3PublicPolicy": "Public_policy_d9fe515a",
     "s3PermissionsAuthenticatedUploads": "s3:PutObject",
-    "s3UploadsPolicy": "Uploads_policy_48d7cfeb",
+    "s3UploadsPolicy": "Uploads_policy_d9fe515a",
     "s3PermissionsAuthenticatedProtected": "s3:PutObject,s3:GetObject,s3:DeleteObject",
-    "s3ProtectedPolicy": "Protected_policy_80a28bdf",
+    "s3ProtectedPolicy": "Protected_policy_b160f9ca",
     "s3PermissionsAuthenticatedPrivate": "s3:PutObject,s3:GetObject,s3:DeleteObject",
-    "s3PrivatePolicy": "Private_policy_80a28bdf",
+    "s3PrivatePolicy": "Private_policy_b160f9ca",
     "AuthenticatedAllowList": "ALLOW",
-    "s3ReadPolicy": "read_policy_48d7cfeb",
+    "s3ReadPolicy": "read_policy_d9fe515a",
     "s3PermissionsGuestPublic": "s3:GetObject",
     "s3PermissionsGuestUploads": "DISALLOW",
     "GuestAllowList": "ALLOW",

@@ -1,0 +1,68 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Parameters": {
+        "authbotuiUserPoolId": {
+            "Type": "String",
+            "Default": "authbotuiUserPoolId"
+        },
+        
+        "authbotuiAppClientID": {
+            "Type": "String",
+            "Default": "authbotuiAppClientID"
+        },
+        "authbotuiAppClientIDWeb": {
+            "Type": "String",
+            "Default": "authbotuiAppClientIDWeb"
+        },
+        "AuthRoleArn": {
+            "Type": "String"
+        },
+        "UnauthRoleArn": {
+            "Type": "String"
+        },
+        "env": {
+            "Type": "String"
+        }
+    },
+    "Conditions": {
+        "ShouldNotCreateEnvResources": {
+            "Fn::Equals": [
+                {
+                    "Ref": "env"
+                },
+                "NONE"
+            ]
+        }
+    },
+    "Resources": {
+    
+        "customerGroup": {
+          "Type" : "AWS::Cognito::UserPoolGroup",
+          "Properties" : {
+              "GroupName" : "customer",
+              "Precedence" : 1,
+              
+              "UserPoolId" : {
+                "Ref": "authbotuiUserPoolId"
+              } 
+            }
+        },
+        
+    
+        "adminGroup": {
+          "Type" : "AWS::Cognito::UserPoolGroup",
+          "Properties" : {
+              "GroupName" : "admin",
+              "Precedence" : 2,
+              
+              "UserPoolId" : {
+                "Ref": "authbotuiUserPoolId"
+              } 
+            }
+        },
+        
+    
+    
+    },
+    
+}
