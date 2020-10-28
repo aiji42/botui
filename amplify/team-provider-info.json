@@ -22,5 +22,29 @@
         "botui": {}
       }
     }
+  },
+  "devnew": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-botui-devnew-151607-authRole",
+      "UnauthRoleArn": "arn:aws:iam::998366166562:role/amplify-botui-devnew-151607-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::998366166562:role/amplify-botui-devnew-151607-authRole",
+      "Region": "ap-northeast-1",
+      "DeploymentBucketName": "amplify-botui-devnew-151607-deployment",
+      "UnauthRoleName": "amplify-botui-devnew-151607-unauthRole",
+      "StackName": "amplify-botui-devnew-151607",
+      "StackId": "arn:aws:cloudformation:ap-northeast-1:998366166562:stack/amplify-botui-devnew-151607/80d83630-1930-11eb-bca8-0a6ec06a2d7e",
+      "AmplifyAppId": "d3lpewvxayq57b"
+    },
+    "categories": {
+      "auth": {
+        "userPoolGroups": {},
+        "botui": {}
+      },
+      "function": {
+        "botuiPostConfirmation": {
+          "GROUP": "customer"
+        }
+      }
+    }
   }
 }

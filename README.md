@@ -43,7 +43,7 @@ $ amplify add auth
  Please provide a name for your user pool: botui_userpool
  How do you want users to be able to sign in? Email
  Do you want to add User Pool Groups? Yes
- Provide a name for your user pool group: customer
+ Provide a name for your user pool group: customera
  Do you want to add another User Pool Group? Yes
  Provide a name for your user pool group: admin
  Do you want to add another User Pool Group? No
@@ -83,9 +83,12 @@ $ amplify add storage
  Please select from one of the below mentioned services: Content (Images, audio, video, etc.)
  Please provide a friendly name for your resource that will be used to label this category in the project: contents
  Please provide bucket name: botui
- Restrict access by? Auth/Guest Users
+ Restrict access by? Both
  Who should have access?: Auth and guest users
  What kind of access do you want for Authenticated users? create/update, read, delete
  What kind of access do you want for Guest users? read
+ Select groups: customer, admin
+ What kind of access do you want for customer users? create/update, read, delete
+ What kind of access do you want for admin users? create/update, read, delete
  Do you want to add a Lambda Trigger for your S3 Bucket? No
 ```
