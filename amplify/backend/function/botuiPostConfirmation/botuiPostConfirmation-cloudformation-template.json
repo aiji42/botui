@@ -101,8 +101,8 @@
         "Runtime": "nodejs10.x",
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "amplify-botui-devnew-151607-deployment",
-          "S3Key": "amplify-builds/botuiPostConfirmation-73325878363542425448-build.zip"
+          "S3Bucket": "amplify-botui-dev-143300-deployment",
+          "S3Key": "amplify-builds/botuiPostConfirmation-7a74776c44486f433148-build.zip"
         },
         "Layers": []
       }
