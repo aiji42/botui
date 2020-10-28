@@ -103,7 +103,8 @@
         "Code": {
           "S3Bucket": "amplify-botui-dev-143300-deployment",
           "S3Key": "amplify-builds/botuiPostConfirmation-7a74776c44486f433148-build.zip"
-        }
+        },
+        "Layers": []
       }
     },
     "LambdaExecutionRole": {

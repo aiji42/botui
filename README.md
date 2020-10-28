@@ -34,7 +34,11 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ```
 $ amplify add auth
  Do you want to use the default authentication and security configuration? Manual configuration
- Select the authentication/authorization services that you want to use: User Sign-Up & Sign-In only (Best used with a cloud API only)
+ Select the authentication/authorization services that you want to use: User Sign-Up, Sign-In, connected with AWS IAM controls (Enables per-user Storage features for images or other content, Analytics, and more)
+ Please enter a name for your identity pool. botui_identitypool
+ Allow unauthenticated logins? (Provides scoped down permissions that you can control via AWS IAM) No
+ Do you want to enable 3rd party authentication providers in your identity pool? Yes
+ Select the third party identity providers you want to configure for your identity pool:
  Please provide a friendly name for your resource that will be used to label this category in the project: botui
  Please provide a name for your user pool: botui_userpool
  How do you want users to be able to sign in? Email

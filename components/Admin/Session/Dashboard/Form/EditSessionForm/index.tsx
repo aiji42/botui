@@ -8,7 +8,8 @@ import {
   InputProps,
   required,
   TextFieldProps,
-  Labeled
+  Labeled,
+  Identifier
 } from 'react-admin'
 import { Color, ColorPicker } from 'material-ui-color'
 import {
@@ -20,7 +21,7 @@ import {
 import { Edit as EditIcon } from '@material-ui/icons'
 import isColor from 'is-color'
 import { useForm, useField } from 'react-final-form'
-import { Storage, Auth } from 'aws-amplify'
+import { Storage } from 'aws-amplify'
 import { DropzoneDialog } from 'material-ui-dropzone'
 
 const colorValidator = (color: string) => {
@@ -101,6 +102,9 @@ const ImageInput: FC<InputProps<TextFieldProps>> = (props) => {
   const {
     input: { value }
   } = useField(source)
+  const {
+    input: { value: sessionId }
+  } = useField<Identifier>('id')
   const { change } = useForm()
   const [src, setSrc] = useState('')
   const [open, setOpen] = useState(false)
@@ -108,16 +112,13 @@ const ImageInput: FC<InputProps<TextFieldProps>> = (props) => {
   const handleOpen = useCallback(() => setOpen(true), [])
   const handleSave = useCallback(
     async ([file]: File[]) => {
-      const currentCredentials = await Auth.currentCredentials()
-      const identityId = currentCredentials.identityId
-      // TODO: sessionId を path に含ませる
-      const res = await Storage.put(`${identityId}/${file.name}`, file, {
+      const res = await Storage.put(`${sessionId}/${file.name}`, file, {
         level: 'public'
       })
       change(source, (res as { key: string }).key)
       handleClose()
     },
-    [change, handleClose]
+    [change, handleClose, sessionId]
   )
 
   useEffect(() => {

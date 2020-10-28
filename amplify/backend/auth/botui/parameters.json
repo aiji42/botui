@@ -1,4 +1,6 @@
 {
+    "identityPoolName": "botui_identitypool",
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "botui554d1d8b",
     "userPoolName": "botui_userpool",
     "autoVerifiedAttributes": [
@@ -11,7 +13,7 @@
     "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
     "emailVerificationSubject": "確認コードをお知らせします",
-    "emailVerificationMessage": "こんにちは。<br>検証を完了するには次の確認コードを使用してください。<br><br>確認コード<br>{####}",
+    "emailVerificationMessage": "こんにちは。<br>検証を完了するには次の確認コードを使用してください。<br><br>確認コード<br>{####}<br>",
     "defaultPasswordPolicy": true,
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
@@ -30,7 +32,7 @@
     "userpoolClientSetAttributes": false,
     "sharedId": "554d1d8b",
     "resourceName": "botui",
-    "authSelections": "userPoolOnly",
+    "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
             "AuthRole",
@@ -72,5 +74,7 @@
                 "Name"
             ]
         }
-    ]
+    ],
+    "thirdPartyAuth": true,
+    "authProviders": []
 }

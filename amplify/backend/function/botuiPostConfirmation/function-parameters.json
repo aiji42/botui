@@ -14,5 +14,6 @@
   "skipEdit": true,
   "GROUP": "customer",
   "enableCors": false,
-  "triggerEventPath": "PostConfirmation.event.json"
+  "triggerEventPath": "PostConfirmation.event.json",
+  "lambdaLayers": []
 }

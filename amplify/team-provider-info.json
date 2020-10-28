@@ -14,10 +14,11 @@
     "categories": {
       "function": {
         "botuiPostConfirmation": {
-          "GROUP": ""
+          "GROUP": "customer"
         }
       },
       "auth": {
+        "userPoolGroups": {},
         "botui": {}
       }
     }
