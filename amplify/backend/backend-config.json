@@ -1,12 +1,5 @@
 {
-  "function": {
-    "botuiPostConfirmation": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": []
-    }
-  },
+  "function": {},
   "auth": {
     "userPoolGroups": {
       "service": "Cognito-UserPool-Groups",
@@ -27,17 +20,7 @@
     "botui": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "botuiPostConfirmation",
-          "triggerProvider": "Cognito",
-          "attributes": [
-            "Arn",
-            "Name"
-          ]
-        }
-      ],
+      "dependsOn": [],
       "customAuth": false
     }
   },
@@ -68,13 +51,6 @@
           "resourceName": "botui",
           "attributes": [
             "UserPoolId"
-          ]
-        },
-        {
-          "category": "auth",
-          "resourceName": "userPoolGroups",
-          "attributes": [
-            "customerGroupRole"
           ]
         },
         {

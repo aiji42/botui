@@ -12,11 +12,6 @@
       "AmplifyAppId": "d3lpewvxayq57b"
     },
     "categories": {
-      "function": {
-        "botuiPostConfirmation": {
-          "GROUP": "customer"
-        }
-      },
       "auth": {
         "userPoolGroups": {},
         "botui": {}

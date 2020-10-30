@@ -1,6 +1,6 @@
 {
     "identityPoolName": "botui_identitypool",
-    "allowUnauthenticatedIdentities": true,
+    "allowUnauthenticatedIdentities": false,
     "resourceNameTruncated": "botui554d1d8b",
     "userPoolName": "botui_userpool",
     "autoVerifiedAttributes": [
@@ -51,30 +51,17 @@
     ],
     "userPoolGroups": true,
     "adminQueries": false,
-    "triggers": "{\n  \"PostConfirmation\": [\n    \"add-to-group\"\n  ]\n}",
+    "triggers": "{}",
     "hostedUI": false,
     "userPoolGroupList": [
-        "customer",
         "admin"
     ],
     "serviceName": "Cognito",
     "parentStack": {
         "Ref": "AWS::StackId"
     },
-    "permissions": [
-        "{\n  \"policyName\": \"AddToGroupCognito\",\n  \"trigger\": \"PostConfirmation\",\n  \"effect\": \"Allow\",\n  \"actions\": [\n    \"cognito-idp:AdminAddUserToGroup\",\n    \"cognito-idp:GetGroup\",\n    \"cognito-idp:CreateGroup\"\n  ],\n  \"resource\": {\n    \"paramType\": \"!GetAtt\",\n    \"keys\": [\n      \"UserPool\",\n      \"Arn\"\n    ]\n  }\n}"
-    ],
-    "dependsOn": [
-        {
-            "category": "function",
-            "resourceName": "botuiPostConfirmation",
-            "triggerProvider": "Cognito",
-            "attributes": [
-                "Arn",
-                "Name"
-            ]
-        }
-    ],
+    "permissions": [],
+    "dependsOn": [],
     "thirdPartyAuth": true,
     "authProviders": []
 }
