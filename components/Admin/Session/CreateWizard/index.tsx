@@ -86,7 +86,7 @@ const themeColors = [
     image: '/theme-color-1.png',
     style: {
       header: { backgroundColor: '#00B900' },
-      footer: { backgroundColor: '#00B900' },
+      footer: { backgroundColor: '#98EA98' },
       agent: { backgroundColor: '#00B900', color: '#FFFFFF' },
       user: { backgroundColor: '#E5E5E5', color: '#898989' },
       progressBar: { backgroundColor: '#00B900' }

@@ -6,7 +6,7 @@ const String: FC = () => {
   const { message, handleUpdate } = useMessageContext()
   const props = message.content.props as StringType
   useEffect(() => {
-    handleUpdate({ ...message, completed: true })
+    handleUpdate && handleUpdate({ ...message, completed: true })
   }, [])
 
   return <span {...props} />

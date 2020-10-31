@@ -1,9 +1,6 @@
 import { FC, useCallback, useEffect, useState } from 'react'
 import { useCorsState } from 'use-cors-state'
-import { Message as Proposal } from '@botui/types'
-import { ChatConfig } from '../../../../@types/session'
-
-export type Proposals = Array<Proposal>
+import { ChatConfig, Proposals } from '../../../../@types/session'
 
 const values = (messages: Proposals): { [x: string]: any } =>
   messages.reduce((res, message) => {
@@ -18,20 +15,25 @@ const Communicator: FC<{
   initProposals: Proposals
   chatConfig: ChatConfig
 }> = ({ targetWindow, initProposals, chatConfig }) => {
-  const [config, setConfig] = useCorsState<ChatConfig>(
+  const [config, setConfig] = useCorsState<ChatConfig | undefined>(
     'chat-config',
     { window: targetWindow },
-    { ...chatConfig, messages: [] }
+    undefined
   )
   const [proposals, setProposals] = useState<Proposals>(initProposals)
   const setMessages = useCallback(
     (messages: Proposals) => {
-      setConfig((prev) => ({ ...prev, messages }))
+      setConfig({ ...chatConfig, messages })
     },
     [setConfig]
   )
 
   useEffect(() => {
+    if (!config?.messages) {
+      setConfig({ ...chatConfig, messages: [] })
+      return
+    }
+
     const updatedIndex = config.messages.findIndex(({ updated }) => updated)
     if (updatedIndex > 0) {
       setMessages([
@@ -49,10 +51,10 @@ const Communicator: FC<{
           []
         )
     ])
-  }, [config.messages])
+  }, [config?.messages])
 
   useEffect(() => {
-    if (config.messages.some(({ completed }) => !completed)) return
+    if (config?.messages?.some(({ completed }) => !completed)) return
 
     const unCompletedIndex = proposals.findIndex(({ completed }) => !completed)
     const tailMessage = proposals[unCompletedIndex - 1]

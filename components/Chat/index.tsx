@@ -1,9 +1,8 @@
 import { FC, useCallback } from 'react'
 import Message from './Message'
 import { useCorsState } from 'use-cors-state'
-import { Message as MessageType } from '@botui/types'
 import MessageContext from '../../hooks/use-message-context'
-import { ChatConfig } from '../../@types/session'
+import { ChatConfig, Proposal } from '../../@types/session'
 import ChatConfigContext from '../../hooks/use-chat-config-context'
 import Header from './Header'
 import Footer from './Footer'
@@ -27,31 +26,26 @@ const style = {
 }
 
 const Chat: FC = () => {
-  const [config, setConfig] = useCorsState<ChatConfig>(
+  const [config, setConfig] = useCorsState<ChatConfig | undefined>(
     'chat-config',
     { window: window.parent },
-    {
-      id: '',
-      owner: '',
-      active: false,
-      title: '',
-      messages: [],
-      theme: {},
-      images: {}
-    }
+    undefined
   )
 
   const updater = useCallback(
-    (index: number) => (updatedMessage: MessageType) => {
-      setConfig((prevConf) => ({
-        ...prevConf,
+    (index: number) => (updatedMessage: Proposal) => {
+      if (!config) return
+      setConfig({
+        ...config,
         messages: Object.entries(config.messages).map(([i, message]) =>
           Number(i) === index ? updatedMessage : message
         )
-      }))
+      })
     },
-    [config.messages]
+    [config]
   )
+
+  if (!config) return <></>
 
   return (
     <ChatConfigContext {...config}>

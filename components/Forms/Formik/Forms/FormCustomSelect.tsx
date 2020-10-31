@@ -17,7 +17,7 @@ const Form: FC<FormikProps<FormCustomSelectValues> & FormCustomSelectType> = (
 
   return (
     <form onSubmit={handleSubmit}>
-      {selects.map(({ options, validation: _, ...select }, index) => (
+      {selects.map(({ options, ...select }, index) => (
         <Fragment key={index}>
           <Field as={SelectWithIcon} {...select}>
             <>

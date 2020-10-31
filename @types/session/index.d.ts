@@ -1,6 +1,9 @@
 import { Message } from '@botui/types'
 
-export type Proposal = Message
+export interface Proposal extends Message {
+  before: string
+  after: string
+}
 
 export type Proposals = Array<Proposal>
 
@@ -45,12 +48,12 @@ export interface Session<T = Proposals, U = Theme, V = Images> {
 }
 
 export interface ChatConfig extends Omit<Session, 'proposals'> {
-  messages: Array<Message>
+  messages: Array<Proposal>
 }
 
 export type EditingSessionData = Session
 
-export interface EditingProposalData extends Message {
+export interface EditingProposalData extends Proposal {
   id: string
   proposalIndex: number
 }

@@ -1,16 +1,15 @@
 import { FC, useState } from 'react'
 import Communicator from './Communicator'
-import { Message as Proposal } from '@botui/types'
-import { ChatConfig } from '../../../@types/session'
+import { ChatConfig, Proposals } from '../../../@types/session'
 
 const Preview: FC<{
-  proposals: Array<Proposal>
+  proposals: Proposals
   chatConfig: ChatConfig
 }> = (props) => {
   const [iframeElement, setIframeElement] = useState<HTMLIFrameElement | null>(
     null
   )
-  const [initProposals] = useState<Array<Proposal>>(props.proposals)
+  const [initProposals] = useState<Proposals>(props.proposals)
 
   return (
     <>

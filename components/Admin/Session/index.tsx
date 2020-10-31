@@ -20,7 +20,6 @@ import {
 } from '../../../@types/session'
 import Dashboard from './Dashboard'
 import CreateWizard from './CreateWizard'
-import { Storage } from 'aws-amplify'
 
 const isEditingProposalData = (arg: any): arg is EditingProposalData =>
   arg.proposalIndex !== undefined

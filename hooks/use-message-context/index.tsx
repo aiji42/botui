@@ -1,9 +1,9 @@
 import { FC, createContext, useContext } from 'react'
-import { Message } from '@botui/types'
+import { Proposal } from '../../@types/session'
 
 interface MessageContextType {
-  handleUpdate?: (arg: Message) => void
-  message: Message
+  handleUpdate?: (arg: Proposal) => void
+  message: Proposal
 }
 
 const noOp = () => {

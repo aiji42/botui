@@ -9,6 +9,7 @@ const Form: FC = () => {
   const handleComplete = useCallback(
     (props: FormType) => {
       const newContent = { ...message.content, props }
+      if (!handleUpdate) return
       if (message.completed)
         handleUpdate({ ...message, content: newContent, updated: true })
       else handleUpdate({ ...message, content: newContent, completed: true })

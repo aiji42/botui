@@ -1,14 +1,13 @@
 import { FC } from 'react'
-import { Session } from '../../../../../../@types/session'
+import { Proposals, Session } from '../../../../../../@types/session'
 import { css } from '@emotion/core'
 import MessageContext from '../../../../../../hooks/use-message-context'
 import ChatConfigContext from '../../../../../../hooks/use-chat-config-context'
 import Header from '../../../../../Chat/Header'
 import Footer from '../../../../../Chat/Footer'
 import Message from '../../../../../Chat/Message'
-import { Message as MessageType } from '@botui/types'
 
-const sampleMessages: Array<MessageType> = [
+const sampleMessages: Proposals = [
   {
     human: false,
     content: {

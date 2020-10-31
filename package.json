@@ -12,7 +12,7 @@
   "dependencies": {
     "@aws-amplify/ui-react": "^0.2.26",
     "@bicstone/ra-language-japanese": "^3.8.0",
-    "@botui/types": "^0.2.1",
+    "@botui/types": "^0.3.0",
     "@emotion/babel-preset-css-prop": "^10.0.27",
     "@emotion/core": "^10.0.34",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
@@ -64,7 +64,7 @@
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-standard": "^4.0.2",
     "husky": "^4.3.0",
-    "lint-staged": "^10.5.0",
+    "lint-staged": "^10.5.1",
     "prettier": "^2.1.2"
   },
   "husky": {
