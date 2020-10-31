@@ -6,9 +6,9 @@
     "framework": "react",
     "config": {
       "SourceDir": "src",
-      "DistributionDir": "build",
-      "BuildCommand": "yarn next build",
-      "StartCommand": "yarn next start"
+      "DistributionDir": "out",
+      "BuildCommand": "yarn build",
+      "StartCommand": "yarn start"
     }
   },
   "providers": [
