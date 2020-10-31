@@ -39,13 +39,9 @@ export const SessionList: FC = (props) => {
 export const SessionCreate: FC<CreateProps> = (props) => {
   const { record, ...createController } = useCreateController(props)
   createController.setTransform((data) => {
-    const proposals =
-      data.template === 'inquiry' ? '[]' : data.template === 'ec' ? '[]' : '[]'
     return {
-      title: data.title,
-      proposals,
+      ...data,
       images: '{}',
-      theme: data.theme,
       active: false
     }
   })

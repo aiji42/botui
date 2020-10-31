@@ -9,7 +9,6 @@ import {
   FormWithRedirectProps
 } from 'react-admin'
 import { Field, useForm, useField } from 'react-final-form'
-
 import {
   Card,
   Paper,
@@ -23,6 +22,7 @@ import {
   Tooltip,
   Toolbar
 } from '@material-ui/core'
+import { ec } from './proposalTemplates'
 
 const CreateWizard: FC<Omit<FormWithRedirectProps, 'render'>> = (props) => {
   const render = useCallback((formProps) => <Form {...formProps} />, [])
@@ -60,21 +60,22 @@ const RadioImageCard: FC<{ source: string; value: string; image?: string }> = ({
   )
 }
 
-const templateChoices = [
+const proposalsChoices = [
   {
-    id: 'ec',
+    id: ec,
     title:
       '名前や住所等の個人情報及び、支払い・配送情報等を獲得するためのテンプレートです。通販サイトでの導入に最適です。',
     name: 'ECサイト用'
   },
   {
-    id: 'inquiry',
+    id:
+      '[{"content": {"delay": 500,"type": "string","props": {"children": "いらっしゃいませ！"}}}]',
     title:
       '名前や住所等の個人情報及び、アンケート式の選択フォームや自由入力のテキストエリアを備えたテンプレートです。お問い合わせフォームやお申込みフォームなどに最適です。',
     name: 'お問い合わせフォーム用'
   },
   {
-    id: 'manual',
+    id: '[]',
     title: 'テンプレートを使用せず、いちから自由に作成できます。',
     name: 'マニュアル'
   }
@@ -146,13 +147,13 @@ const Form: FC<
         <Grid item xs={7} />
         <Grid item xs={12}>
           <RadioButtonGroupInput
-            source="template"
+            source="proposals"
             label="テンプレート"
             row
             fullWidth
             validate={[required()]}
             optionText={<TemplateChoiceLabel />}
-            choices={templateChoices}
+            choices={proposalsChoices}
           />
         </Grid>
         <Grid item xs={12}>
