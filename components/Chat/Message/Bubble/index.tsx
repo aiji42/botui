@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react'
 import { css } from '@emotion/core'
 import { useMessageContext } from '../../../../hooks/use-message-context'
-import { useThemeContext } from '../../../../hooks/use-theme-context'
+import { useChatConfigContext } from '../../../../hooks/use-chat-config-context'
 
 const style = {
   base: css({
@@ -35,7 +35,7 @@ const Bubble: FC = (props) => {
   } = useMessageContext()
   const {
     theme: { agent, user }
-  } = useThemeContext()
+  } = useChatConfigContext()
   const styles = useMemo(() => {
     const s = [style.base, css(agent)]
     if (human) s.push(style.human, css(user))

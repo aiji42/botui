@@ -2,7 +2,7 @@ import { FC, createContext, useContext } from 'react'
 import { Message } from '@botui/types'
 
 interface MessageContextType {
-  handleUpdate: (arg: Message) => void
+  handleUpdate?: (arg: Message) => void
   message: Message
 }
 
@@ -26,7 +26,7 @@ export const useMessageContext = (): MessageContextType => useContext(Context)
 
 const MessageContext: FC<MessageContextType> = ({
   message,
-  handleUpdate,
+  handleUpdate = noOp,
   children
 }) => {
   return (

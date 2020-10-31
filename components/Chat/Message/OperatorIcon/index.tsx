@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { css } from '@emotion/core'
 import { useMessageContext } from '../../../../hooks/use-message-context'
-import { useThemeContext } from '../../../../hooks/use-theme-context'
+import { useChatConfigContext } from '../../../../hooks/use-chat-config-context'
 
 const style = {
   display: css({
@@ -44,14 +44,14 @@ const OperatorIcon: FC = () => {
   const {
     theme: { agent },
     images: { agent: agentIcon }
-  } = useThemeContext()
+  } = useChatConfigContext()
   const display = iconDisplay === undefined ? true : iconDisplay
   if (human) return <></>
   return (
     <div css={display ? style.display : style.hidden}>
       {display && (
         <div css={[style.imageBase, css(agent)]}>
-          <img css={style.image} src={agentIcon || '/operator.jpg'} />
+          <img css={style.image} src={agentIcon || '/operator_female1.jpg'} />
         </div>
       )}
     </div>

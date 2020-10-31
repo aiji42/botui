@@ -3,30 +3,42 @@ import Message from './Message'
 import { useCorsState } from 'use-cors-state'
 import { Message as MessageType } from '@botui/types'
 import MessageContext from '../../hooks/use-message-context'
-import { Theme, Images } from '../../@types/session'
-import ThemeContext from '../../hooks/use-theme-context'
+import { ChatConfig } from '../../@types/session'
+import ChatConfigContext from '../../hooks/use-chat-config-context'
 import Header from './Header'
 import Footer from './Footer'
 import { css } from '@emotion/core'
 
 const style = {
-  base: css({
-    padding: '60px 15px 100px 15px',
+  header: css({
+    position: 'sticky',
+    top: 0,
+    zIndex: 100
+  }),
+  body: css({
+    padding: '5px 15px 100px 15px',
     overflow: 'scroll'
+  }),
+  footer: css({
+    position: 'fixed',
+    bottom: 0,
+    width: '100%'
   })
-}
-
-interface ChatConfig {
-  messages: Array<MessageType>
-  theme: Theme
-  images: Images
 }
 
 const Chat: FC = () => {
   const [config, setConfig] = useCorsState<ChatConfig>(
     'chat-config',
     { window: window.parent },
-    { messages: [], theme: {}, images: {} }
+    {
+      id: '',
+      owner: '',
+      active: false,
+      title: '',
+      messages: [],
+      theme: {},
+      images: {}
+    }
   )
 
   const updater = useCallback(
@@ -42,17 +54,21 @@ const Chat: FC = () => {
   )
 
   return (
-    <ThemeContext theme={config.theme} images={config.images}>
-      <Header />
-      <div css={style.base}>
+    <ChatConfigContext {...config}>
+      <div css={style.header}>
+        <Header />
+      </div>
+      <div css={style.body}>
         {config.messages.map((message, i) => (
           <MessageContext message={message} handleUpdate={updater(i)} key={i}>
             <Message />
           </MessageContext>
         ))}
       </div>
-      <Footer />
-    </ThemeContext>
+      <div css={style.footer}>
+        <Footer />
+      </div>
+    </ChatConfigContext>
   )
 }
 

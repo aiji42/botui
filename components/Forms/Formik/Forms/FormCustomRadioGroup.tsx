@@ -5,6 +5,7 @@ import SpanErrorMessage from '../Elements/SpanErrorMessage'
 import RadioInput from '../Elements/RadioInput'
 import { css } from '@emotion/core'
 import { customHandleSubmit } from './modules'
+import ButtonSubmit from '../Elements/ButtonSubmit'
 import {
   FormCustomRadioGroup as FormCustomRadioGroupType,
   FormCustomRadioGroupValues
@@ -29,6 +30,7 @@ const Form: FC<
         </div>
       ))}
       <ErrorMessage name={name} component={SpanErrorMessage} />
+      <Field as={ButtonSubmit} name="submit" />
     </form>
   )
 }

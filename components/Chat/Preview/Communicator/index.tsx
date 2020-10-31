@@ -1,16 +1,10 @@
 import { FC, useCallback, useEffect, useState } from 'react'
 import { useCorsState } from 'use-cors-state'
 import { Message as Proposal } from '@botui/types'
-import { Images, Theme } from '../../../../@types/session'
+import { ChatConfig, Images, Theme } from '../../../../@types/session'
 import { Storage } from 'aws-amplify'
 
 export type Proposals = Array<Proposal>
-
-interface ChatConfig {
-  messages: Proposals
-  theme: Theme
-  images: Images
-}
 
 const values = (messages: Proposals): { [x: string]: any } =>
   messages.reduce((res, message) => {
@@ -23,18 +17,17 @@ const values = (messages: Proposals): { [x: string]: any } =>
 const Communicator: FC<{
   targetWindow: Window
   initProposals: Proposals
-  theme: Theme
-  images: Images
-}> = ({ targetWindow, initProposals, theme, images }) => {
+  chatConfig: ChatConfig
+}> = ({ targetWindow, initProposals, chatConfig }) => {
   const [config, setConfig] = useCorsState<ChatConfig>(
     'chat-config',
     { window: targetWindow },
-    { messages: [], theme, images }
+    { ...chatConfig, messages: [] }
   )
   const [proposals, setProposals] = useState<Proposals>(initProposals)
   const setMessages = useCallback(
     (messages: Proposals) => {
-      setConfig({ messages, theme, images })
+      setConfig((prev) => ({ ...prev, messages }))
     },
     [setConfig]
   )

@@ -2,27 +2,33 @@ import { FC, useCallback, useEffect, useState } from 'react'
 import {
   TextInput,
   BooleanInput,
-  SimpleForm,
   SimpleFormProps,
   useInput,
   InputProps,
   required,
   TextFieldProps,
   Labeled,
-  Identifier
+  Identifier,
+  RadioButtonGroupInput,
+  FormDataConsumer,
+  FormWithRedirect,
+  SaveButton
 } from 'react-admin'
 import { Color, ColorPicker } from 'material-ui-color'
 import {
   TextField as TextInputMU,
   Grid,
   makeStyles,
-  Fab
+  Toolbar,
+  Box,
+  Button
 } from '@material-ui/core'
-import { Edit as EditIcon } from '@material-ui/icons'
+import { Add as AddIcon } from '@material-ui/icons'
 import isColor from 'is-color'
 import { useForm, useField } from 'react-final-form'
 import { Storage } from 'aws-amplify'
 import { DropzoneDialog } from 'material-ui-dropzone'
+import SimplePreview from './SimplePreview'
 
 const colorValidator = (color: string) => {
   return isColor(color) ? null : '入力内容が間違っています'
@@ -69,30 +75,10 @@ const ColorInput: FC<InputProps<TextFieldProps>> = (props) => {
 }
 
 const useStyles = makeStyles((theme) => ({
-  imageContainer: {
-    position: 'relative',
-    '&:hover $image': {
-      opacity: 0.3
-    },
-    '&:hover $removeButton': {
-      opacity: 1
-    }
-  },
   image: {
     height: 100,
     width: 'initial',
-    maxWidth: '100%',
-    opacity: 1
-  },
-  removeButton: {
-    transition: '.5s ease',
-    position: 'absolute',
-    opacity: 0,
-    top: theme.spacing(-1),
-    right: theme.spacing(-1),
-    '&:focus': {
-      opacity: 1
-    }
+    maxWidth: '100%'
   }
 }))
 
@@ -122,6 +108,7 @@ const ImageInput: FC<InputProps<TextFieldProps>> = (props) => {
   )
 
   useEffect(() => {
+    if (!value) return
     Storage.get(value, { level: 'public' }).then(
       (val) => typeof val === 'string' && setSrc(val)
     )
@@ -130,15 +117,18 @@ const ImageInput: FC<InputProps<TextFieldProps>> = (props) => {
   return (
     <Labeled label={label} fullWidth>
       <>
-        <Grid item xs={5} className={classes.imageContainer}>
-          <img src={src} className={classes.image} />
-          <Fab
-            onClick={handleOpen}
-            className={classes.removeButton}
-            size="medium"
-          >
-            <EditIcon />
-          </Fab>
+        <Grid item xs={5}>
+          {src && <img src={src} className={classes.image} />}
+          <Button onClick={handleOpen}>
+            {src ? (
+              '変更'
+            ) : (
+              <>
+                <AddIcon />
+                追加
+              </>
+            )}
+          </Button>
           <DropzoneDialog
             acceptedFiles={['image/*']}
             cancelButtonText="cancel"
@@ -164,47 +154,105 @@ const ImageInput: FC<InputProps<TextFieldProps>> = (props) => {
 
 const EditSessionForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
   return (
-    <SimpleForm {...props}>
-      <TextInput source="title" />
-      <BooleanInput source="active" />
-      <ColorInput
-        source="theme.header.backgroundColor"
-        validate={[required(), colorValidator]}
-        label="ヘッダー"
-      />
-      <ColorInput
-        source="theme.agent.backgroundColor"
-        validate={[required(), colorValidator]}
-        label="オペレーターメッセージバルーン"
-      />
-      <ColorInput
-        source="theme.agent.color"
-        validate={[required(), colorValidator]}
-        label="オペレーターメッセージ"
-      />
-      <ColorInput
-        source="theme.user.backgroundColor"
-        validate={[required(), colorValidator]}
-        label="ユーザメッセージバルーン"
-      />
-      <ColorInput
-        source="theme.user.color"
-        validate={[required(), colorValidator]}
-        label="ユーザーメッセージ"
-      />
-      <ColorInput
-        source="theme.footer.backgroundColor"
-        validate={[required(), colorValidator]}
-        label="フッター"
-      />
-      <ColorInput
-        source="theme.progress.backgroundColor"
-        validate={[required(), colorValidator]}
-        label="プログレスバー"
-      />
-      <ImageInput source="images.logo" label="ヘッダーロゴ" />
-      <ImageInput source="images.agent" label="エージェントアイコン" />
-    </SimpleForm>
+    <FormWithRedirect
+      {...props}
+      render={(formProps: any) => (
+        <form>
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <Box p={2}>
+                <TextInput source="title" resource="sessions" />
+                <BooleanInput source="active" resource="sessions" />
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box p={2}>
+                <ColorInput
+                  source="theme.header.backgroundColor"
+                  resource="sessions"
+                  validate={[required(), colorValidator]}
+                  label="ヘッダー"
+                />
+                <ColorInput
+                  source="theme.agent.backgroundColor"
+                  resource="sessions"
+                  validate={[required(), colorValidator]}
+                  label="オペレーターメッセージバルーン"
+                />
+                <ColorInput
+                  source="theme.agent.color"
+                  resource="sessions"
+                  validate={[required(), colorValidator]}
+                  label="オペレーターメッセージ"
+                />
+                <ColorInput
+                  source="theme.user.backgroundColor"
+                  resource="sessions"
+                  validate={[required(), colorValidator]}
+                  label="ユーザメッセージバルーン"
+                />
+                <ColorInput
+                  source="theme.user.color"
+                  resource="sessions"
+                  validate={[required(), colorValidator]}
+                  label="ユーザーメッセージ"
+                />
+                <ColorInput
+                  source="theme.footer.backgroundColor"
+                  resource="sessions"
+                  validate={[required(), colorValidator]}
+                  label="フッター"
+                />
+                <ColorInput
+                  source="theme.progressBar.backgroundColor"
+                  resource="sessions"
+                  validate={[required(), colorValidator]}
+                  label="プログレスバー"
+                />
+                <ImageInput
+                  source="images.logo.key"
+                  resource="sessions"
+                  label="ヘッダーロゴ"
+                />
+                <RadioButtonGroupInput
+                  source="images.agent"
+                  resource="sessions"
+                  initialValue="/operator_female1.jpg"
+                  label="オペレーターアイコン"
+                  row
+                  fullWidth
+                  choices={[
+                    { id: '/operator_female1.jpg', name: '女性1' },
+                    { id: '/operator_female2.jpg', name: '女性2' },
+                    { id: '/operator_female3.jpg', name: '女性3' },
+                    { id: '/operator_male1.jpg', name: '男性1' },
+                    { id: '/operator_bot1.jpg', name: 'ボット' }
+                  ]}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <FormDataConsumer>
+                {({ formData }) => (
+                  <Labeled label="プレビュー">
+                    <SimplePreview {...formData} />
+                  </Labeled>
+                )}
+              </FormDataConsumer>
+            </Grid>
+          </Grid>
+          <Toolbar>
+            <Box display="flex" justifyContent="space-between" width="100%">
+              <SaveButton
+                saving={formProps.saving}
+                invalid={formProps.invalid}
+                handleSubmitWithRedirect={formProps.handleSubmitWithRedirect}
+              />
+            </Box>
+          </Toolbar>
+        </form>
+      )}
+    />
   )
 }
 
