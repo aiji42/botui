@@ -1,8 +1,7 @@
 import { FC, useCallback, useEffect, useState } from 'react'
 import { useCorsState } from 'use-cors-state'
 import { Message as Proposal } from '@botui/types'
-import { ChatConfig, Images, Theme } from '../../../../@types/session'
-import { Storage } from 'aws-amplify'
+import { ChatConfig } from '../../../../@types/session'
 
 export type Proposals = Array<Proposal>
 
