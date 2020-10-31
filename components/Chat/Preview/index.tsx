@@ -15,7 +15,7 @@ const Preview: FC<{
     <>
       <iframe
         ref={setIframeElement}
-        src="http://localhost:8080/"
+        src="/"
         height="100%"
         width="100%"
         frameBorder="no"
