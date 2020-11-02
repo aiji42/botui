@@ -188,14 +188,16 @@ const Form: FC<
           </Grid>
         </Grid>
       </Box>
-      <Toolbar>
-        <Box display="flex" justifyContent="space-between" width="100%">
-          <SaveButton
-            saving={props.saving}
-            handleSubmitWithRedirect={props.handleSubmitWithRedirect}
-          />
-        </Box>
-      </Toolbar>
+      <Grid item xs={12}>
+        <Toolbar>
+          <Box display="flex" justifyContent="space-between" width="100%">
+            <SaveButton
+              saving={props.saving}
+              handleSubmitWithRedirect={props.handleSubmitWithRedirect}
+            />
+          </Box>
+        </Toolbar>
+      </Grid>
     </Grid>
   )
 }

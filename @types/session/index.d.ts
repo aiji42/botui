@@ -49,6 +49,7 @@ export interface Session<T = Proposals, U = Theme, V = Images> {
 
 export interface ChatConfig extends Omit<Session, 'proposals'> {
   messages: Array<Proposal>
+  messagesCount: number
 }
 
 export type EditingSessionData = Session

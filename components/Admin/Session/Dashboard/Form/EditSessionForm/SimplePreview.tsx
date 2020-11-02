@@ -62,7 +62,11 @@ const SimplePreview: FC<Session> = (props) => {
   const { proposals, ...chatConfig } = props
   return (
     <div css={style.base}>
-      <ChatConfigContext {...chatConfig} messages={sampleMessages}>
+      <ChatConfigContext
+        {...chatConfig}
+        messagesCount={5}
+        messages={sampleMessages}
+      >
         <div>
           <Header />
         </div>

@@ -30,14 +30,12 @@ const style = {
 const Footer: FC = () => {
   const {
     theme: { footer, progressBar },
-    messages
+    messages,
+    messagesCount
   } = useChatConfigContext()
   const progress = useMemo(() => {
-    if (!messages.length) return '0%'
-    const num =
-      (messages.filter((message) => message.completed).length /
-        messages.length) *
-      100
+    if (!messages.length || messagesCount < 1) return '0%'
+    const num = (messages.length / messagesCount) * 100
     return `${num}%`
   }, [messages])
 

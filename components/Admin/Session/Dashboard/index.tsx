@@ -90,7 +90,11 @@ const Dashboard: FC<DashboardProps> = (props) => {
               <div className={classes.preview}>
                 <Preview
                   proposals={props.record.proposals}
-                  chatConfig={{ ...(props.record as Session), messages: [] }}
+                  chatConfig={{
+                    ...(props.record as Session),
+                    messages: [],
+                    messagesCount: props.record.proposals.length
+                  }}
                 />
               </div>
             </Modal>
