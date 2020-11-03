@@ -76,6 +76,29 @@ const Communicator: FC<{
       beforeFunction(values(proposals), nextMessage)
     }
 
+    if (
+      nextMessage.content.type === 'string' &&
+      typeof nextMessage.content.props.children === 'string'
+    ) {
+      setMessages([
+        ...proposals.slice(0, unCompletedIndex),
+        {
+          ...nextMessage,
+          content: {
+            ...nextMessage.content,
+            props: {
+              ...nextMessage.content.props,
+              children: nextMessage.content.props.children.replace(
+                /\{\{(.+?)\}\}/g,
+                (_, key) => values(proposals)[key]
+              )
+            }
+          }
+        }
+      ])
+      return
+    }
+
     setMessages([...proposals.slice(0, unCompletedIndex), nextMessage])
   }, [proposals])
 

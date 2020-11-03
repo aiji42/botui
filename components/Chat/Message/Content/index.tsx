@@ -12,11 +12,15 @@ const Content: FC = () => {
   } = useMessageContext()
   const [loading, setLoading] = useState<boolean>(true)
   useEffect(() => {
+    let mounted = true
     if (!delay) {
       setLoading(false)
       return
     }
-    setTimeout(() => setLoading(false), delay)
+    setTimeout(() => mounted && setLoading(false), delay)
+    return () => {
+      mounted = false
+    }
   }, [])
 
   if (loading) return <Loading />
