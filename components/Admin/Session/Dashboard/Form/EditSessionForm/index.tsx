@@ -12,7 +12,8 @@ import {
   RadioButtonGroupInput,
   FormDataConsumer,
   FormWithRedirect,
-  SaveButton
+  SaveButton,
+  DeleteButton
 } from 'react-admin'
 import { Color, ColorPicker } from 'material-ui-color'
 import {
@@ -245,8 +246,14 @@ const EditSessionForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
             <Box display="flex" justifyContent="space-between" width="100%">
               <SaveButton
                 saving={formProps.saving}
+                disabled={formProps.pristine}
                 invalid={formProps.invalid}
                 handleSubmitWithRedirect={formProps.handleSubmitWithRedirect}
+              />
+              <DeleteButton
+                record={formProps.record}
+                resource="sessions"
+                undoable={false}
               />
             </Box>
           </Toolbar>

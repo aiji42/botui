@@ -10,7 +10,10 @@ import {
   SimpleFormIterator,
   SimpleFormProps,
   required,
-  Labeled
+  Labeled,
+  Toolbar,
+  ToolbarProps,
+  SaveButton
 } from 'react-admin'
 import { Slider } from '@material-ui/core'
 import { useForm, useField } from 'react-final-form'
@@ -84,9 +87,23 @@ const NumberSlider: FC = () => {
   )
 }
 
+const EditProposalToolbar: FC<ToolbarProps> = (props) => (
+  <Toolbar>
+    <SaveButton
+      disabled={props.pristine}
+      invalid={props.invalid}
+      handleSubmitWithRedirect={props.handleSubmitWithRedirect}
+    />
+  </Toolbar>
+)
+
 const EditProposalForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
   return (
-    <SimpleForm {...props} destroyOnUnregister>
+    <SimpleForm
+      {...props}
+      destroyOnUnregister
+      toolbar={<EditProposalToolbar />}
+    >
       <NumberInput source="proposalIndex" disabled />
       <BooleanInput source="human" label="ユーザ側" />
       <SelectInput

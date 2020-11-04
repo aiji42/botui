@@ -40,14 +40,12 @@ export const ec = JSON.stringify([
     }
   },
   {
-    /* eslint no-template-curly-in-string: off */
-    before:
-      'console.log(values, message);\nmessage.content.props.children = `${values.familyName}${values.firstName} 様ですね。${message.content.props.children}`;',
     content: {
       delay: 500,
       type: 'string',
       props: {
-        children: 'ありがとうございます。続きまして、ご住所をお願いいたします。'
+        children:
+          '{{familyName}}{{firstName}}様ですね。ありがとうございます。続きまして、ご住所をお願いいたします。'
       }
     }
   },

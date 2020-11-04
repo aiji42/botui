@@ -5,7 +5,6 @@ import {
   SaveButton,
   required,
   RadioButtonGroupInput,
-  HandleSubmitWithRedirect,
   FormWithRedirectProps
 } from 'react-admin'
 import { Field, useForm, useField } from 'react-final-form'
@@ -134,9 +133,7 @@ const TemplateChoiceLabel: FC<{ record?: { title: string; name: string } }> = ({
   )
 }
 
-const Form: FC<
-  FormWithRedirectProps & { handleSubmitWithRedirect: HandleSubmitWithRedirect }
-> = (props) => {
+const Form: FC<any> = (props) => {
   const themeInput = useField('theme')
   return (
     <Grid container component={Paper} spacing={1}>
@@ -193,6 +190,8 @@ const Form: FC<
           <Box display="flex" justifyContent="space-between" width="100%">
             <SaveButton
               saving={props.saving}
+              disabled={props.pristine}
+              invalid={props.invalid}
               handleSubmitWithRedirect={props.handleSubmitWithRedirect}
             />
           </Box>
