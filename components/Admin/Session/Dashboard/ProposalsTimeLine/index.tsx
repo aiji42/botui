@@ -20,13 +20,16 @@ import {
   TimelineDot,
   SpeedDial,
   SpeedDialAction,
-  SpeedDialProps
+  SpeedDialProps,
+  SpeedDialIcon
 } from '@material-ui/lab'
 import {
   Textsms as TextsmsIcon,
   RateReview as RateReviewIcon,
   Edit as EditIcon,
-  Delete as DeleteIcon
+  Delete as DeleteIcon,
+  VerticalAlignTop,
+  VerticalAlignBottom
 } from '@material-ui/icons'
 import { Proposal, Proposals } from '../../../../../@types/session'
 
@@ -52,6 +55,18 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
     width: theme.spacing(3),
     height: theme.spacing(3)
+  },
+  speedDial: {
+    marginBottom: theme.spacing(1),
+    marginTop: theme.spacing(1)
+  },
+  speedDialActionsRight: {
+    position: 'relative',
+    left: theme.spacing(11.5)
+  },
+  speedDialActionLeft: {
+    position: 'relative',
+    right: theme.spacing(11.5)
   }
 }))
 
@@ -108,7 +123,7 @@ const ProposalsTimeLine: FC<ProposalsTimeLineProps> = (props) => {
   )
 }
 
-const TimelineDotInner: FC<{ direction: SpeedDialProps['direction'] }> = (
+const TimelineDotInner: FC<Proposal & { direction: 'left' | 'right' }> = (
   props
 ) => {
   const [open, setOpen] = useState(false)
@@ -118,27 +133,47 @@ const TimelineDotInner: FC<{ direction: SpeedDialProps['direction'] }> = (
   const handleOpen = useCallback(() => {
     setOpen(true)
   }, [setOpen])
+  const classes = useStyles()
 
   return (
     <SpeedDial
       ariaLabel="SpeedDial"
-      icon={<TextsmsIcon />}
+      icon={
+        <SpeedDialIcon
+          icon={
+            props.content.type === 'string' ? (
+              <TextsmsIcon />
+            ) : (
+              <RateReviewIcon />
+            )
+          }
+          openIcon={<EditIcon />}
+        />
+      }
       onClose={handleClose}
       onOpen={handleOpen}
       open={open}
       direction={props.direction}
+      className={classes.speedDial}
+      classes={{
+        directionRight: classes.speedDialActionsRight,
+        directionLeft: classes.speedDialActionLeft
+      }}
     >
-      <SpeedDialAction
-        icon={<EditIcon />}
-        tooltipTitle="edit"
-        onClick={handleClose}
-        style={{ position: 'absolute' }}
-      />
       <SpeedDialAction
         icon={<DeleteIcon />}
         tooltipTitle="delete"
         onClick={handleClose}
-        style={{ position: 'absolute' }}
+      />
+      <SpeedDialAction
+        icon={<VerticalAlignTop />}
+        tooltipTitle="insert previous"
+        onClick={handleClose}
+      />
+      <SpeedDialAction
+        icon={<VerticalAlignBottom />}
+        tooltipTitle="insert next"
+        onClick={handleClose}
       />
     </SpeedDial>
   )
@@ -158,12 +193,11 @@ const ProposalsTimeLine2: FC<ProposalsTimeLineProps> = ({
           className={classes.timeline}
         >
           <TimelineItem>
-            <TimelineSeparator>
-              <TimelineDot color={proposal.human ? 'primary' : 'secondary'}>
-                <TimelineDotInner
-                  direction={proposal.human ? 'left' : 'right'}
-                />
-              </TimelineDot>
+            <TimelineSeparator style={{ width: 40 }}>
+              <TimelineDotInner
+                {...proposal}
+                direction={proposal.human ? 'left' : 'right'}
+              />
               <TimelineConnector style={{ minHeight: 20 }} />
             </TimelineSeparator>
             <TimelineContent>

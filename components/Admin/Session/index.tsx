@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react'
+import { FC, useCallback, useReducer } from 'react'
 import {
   Datagrid,
   EditView,
@@ -20,6 +20,7 @@ import {
 } from '../../../@types/session'
 import Dashboard from './Dashboard'
 import CreateWizard from './CreateWizard'
+import { EditReducer, editReducer } from './reducer'
 
 const isEditingProposalData = (arg: any): arg is EditingProposalData =>
   arg.proposalIndex !== undefined
@@ -49,6 +50,7 @@ export const SessionCreate: FC<CreateProps> = (props) => {
 
 const Edit: FC<EditProps> = (props) => {
   const { record, ...editController } = useEditController<Session>(props)
+  // const [state, dispatch] = useReducer<EditReducer, Session | undefined>(editReducer, record, () => {})
   const transform = useCallback(
     async (data: EditingProposalData | EditingSessionData) => {
       if (!record) return data
