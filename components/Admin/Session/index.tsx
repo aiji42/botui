@@ -1,4 +1,4 @@
-import { FC, useCallback, useReducer } from 'react'
+import { FC } from 'react'
 import {
   Datagrid,
   EditView,
@@ -12,18 +12,10 @@ import {
   CreateProps,
   useCreateController
 } from 'react-admin'
-import {
-  EditingProposalData,
-  EditingSessionData,
-  Proposals,
-  Session
-} from '../../../@types/session'
+import { Session } from '../../../@types/session'
 import Dashboard from './Dashboard'
 import CreateWizard from './CreateWizard'
-import { EditReducer, editReducer } from './reducer'
-
-const isEditingProposalData = (arg: any): arg is EditingProposalData =>
-  arg.proposalIndex !== undefined
+import { sessionDataTransform, UpdateSessionData } from './modules'
 
 export const SessionList: FC = (props) => {
   return (
@@ -50,28 +42,9 @@ export const SessionCreate: FC<CreateProps> = (props) => {
 
 const Edit: FC<EditProps> = (props) => {
   const { record, ...editController } = useEditController<Session>(props)
-  // const [state, dispatch] = useReducer<EditReducer, Session | undefined>(editReducer, record, () => {})
-  const transform = useCallback(
-    async (data: EditingProposalData | EditingSessionData) => {
-      if (!record) return data
-      if (isEditingProposalData(data)) {
-        const { proposalIndex, ...restData } = data
-        const newProposals = record.proposals.reduce<Proposals>(
-          (res, proposal, index) =>
-            index === proposalIndex ? [...res, restData] : [...res, proposal],
-          []
-        )
-        if (record.proposals.length === proposalIndex)
-          newProposals.push(restData)
-
-        return { ...record, proposals: newProposals }
-      }
-
-      return data
-    },
-    [record]
+  editController.setTransform((data: UpdateSessionData) =>
+    sessionDataTransform(record, data)
   )
-  editController.setTransform(transform)
 
   return <EditView {...props} {...editController} record={record} />
 }
