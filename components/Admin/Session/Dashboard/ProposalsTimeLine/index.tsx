@@ -33,6 +33,88 @@ import {
 } from '@material-ui/icons'
 import { Proposal, Proposals } from '../../../../../@types/session'
 
+const useSpeedDialStyles = makeStyles((theme) => ({
+  root: {
+    marginBottom: theme.spacing(1),
+    marginTop: theme.spacing(1)
+  },
+  directionRight: {
+    position: 'relative',
+    left: theme.spacing(11.5)
+  },
+  directionLeft: {
+    position: 'relative',
+    right: theme.spacing(11.5)
+  }
+}))
+
+interface TimeLineDotInnerProps extends Proposal {
+  direction: 'left' | 'right'
+  handleEdit: () => void
+  handleDelete: () => void
+  handleInsertBefore: () => void
+  handleInsertAfter: () => void
+}
+
+const TimelineDotInner: FC<TimeLineDotInnerProps> = (props) => {
+  const [open, setOpen] = useState(false)
+  const handleClose = useCallback(() => {
+    setOpen(false)
+  }, [setOpen])
+  const handleOpen = useCallback(() => {
+    setOpen(true)
+  }, [setOpen])
+  const classes = useSpeedDialStyles()
+
+  return (
+    <SpeedDial
+      ariaLabel="SpeedDial"
+      icon={
+        <SpeedDialIcon
+          icon={
+            props.content.type === 'string' ? (
+              <TextsmsIcon />
+            ) : (
+              <RateReviewIcon />
+            )
+          }
+          openIcon={<EditIcon />}
+        />
+      }
+      onClose={handleClose}
+      onOpen={handleOpen}
+      open={open}
+      direction={props.direction}
+      classes={classes}
+      onClick={props.handleEdit}
+    >
+      <SpeedDialAction
+        icon={<DeleteIcon />}
+        tooltipTitle="delete"
+        onClick={props.handleDelete}
+      />
+      <SpeedDialAction
+        icon={<VerticalAlignTop />}
+        tooltipTitle="insert previous"
+        onClick={props.handleInsertBefore}
+      />
+      <SpeedDialAction
+        icon={<VerticalAlignBottom />}
+        tooltipTitle="insert next"
+        onClick={props.handleInsertAfter}
+      />
+    </SpeedDial>
+  )
+}
+
+interface ProposalsTimeLineProps {
+  proposals: Proposals
+  handleEdit: (index: number) => void
+  handleDelete: (index: number) => void
+  handleInsertBefore: (index: number) => void
+  handleInsertAfter: (index: number) => void
+}
+
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.default,
@@ -55,135 +137,30 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
     width: theme.spacing(3),
     height: theme.spacing(3)
-  },
-  speedDial: {
-    marginBottom: theme.spacing(1),
-    marginTop: theme.spacing(1)
-  },
-  speedDialActionsRight: {
-    position: 'relative',
-    left: theme.spacing(11.5)
-  },
-  speedDialActionLeft: {
-    position: 'relative',
-    right: theme.spacing(11.5)
   }
 }))
 
-interface ProposalsTimeLineProps {
-  proposals: Proposals
-  handleClick: (index: number) => () => void
-}
-
-const ProposalsTimeLine: FC<ProposalsTimeLineProps> = (props) => {
-  const { proposals, handleClick, children, ...restProps } = props
-
-  const icon = useCallback((proposal: Proposal) => {
-    return proposal.content.type === 'string' ? (
-      <TextsmsIcon />
-    ) : (
-      <RateReviewIcon />
-    )
-  }, [])
-
-  const secondaryText = useCallback((proposal: Proposal) => {
-    return proposal.content.type === 'string'
-      ? proposal.content.props.children
-      : proposal.content.props.type
-  }, [])
-
-  const classes = useStyles()
-
-  return (
-    <List className={classes.root} {...restProps}>
-      {proposals.map((proposal, index) => (
-        <ListItem key={index} button onClick={handleClick(index)}>
-          {!proposal.human && (
-            <ListItemAvatar>
-              <Avatar children={icon(proposal)} />
-            </ListItemAvatar>
-          )}
-          <ListItemText
-            style={{ textAlign: proposal.human ? 'right' : 'left' }}
-            primary={proposal.human ? 'ユーザ' : 'オペレーター'}
-            secondary={secondaryText(proposal)}
-          />
-          {proposal.human && (
-            <ListItemAvatar>
-              <Avatar
-                children={icon(proposal)}
-                className={classes.rightAvatar}
-              />
-            </ListItemAvatar>
-          )}
-        </ListItem>
-      ))}
-      {children}
-    </List>
-  )
-}
-
-const TimelineDotInner: FC<Proposal & { direction: 'left' | 'right' }> = (
-  props
-) => {
-  const [open, setOpen] = useState(false)
-  const handleClose = useCallback(() => {
-    setOpen(false)
-  }, [setOpen])
-  const handleOpen = useCallback(() => {
-    setOpen(true)
-  }, [setOpen])
-  const classes = useStyles()
-
-  return (
-    <SpeedDial
-      ariaLabel="SpeedDial"
-      icon={
-        <SpeedDialIcon
-          icon={
-            props.content.type === 'string' ? (
-              <TextsmsIcon />
-            ) : (
-              <RateReviewIcon />
-            )
-          }
-          openIcon={<EditIcon />}
-        />
-      }
-      onClose={handleClose}
-      onOpen={handleOpen}
-      open={open}
-      direction={props.direction}
-      className={classes.speedDial}
-      classes={{
-        directionRight: classes.speedDialActionsRight,
-        directionLeft: classes.speedDialActionLeft
-      }}
-    >
-      <SpeedDialAction
-        icon={<DeleteIcon />}
-        tooltipTitle="delete"
-        onClick={handleClose}
-      />
-      <SpeedDialAction
-        icon={<VerticalAlignTop />}
-        tooltipTitle="insert previous"
-        onClick={handleClose}
-      />
-      <SpeedDialAction
-        icon={<VerticalAlignBottom />}
-        tooltipTitle="insert next"
-        onClick={handleClose}
-      />
-    </SpeedDial>
-  )
-}
-
-const ProposalsTimeLine2: FC<ProposalsTimeLineProps> = ({
+const ProposalsTimeLine: FC<ProposalsTimeLineProps> = ({
   proposals,
-  handleClick
+  ...handlers
 }) => {
   const classes = useStyles()
+  const makeHandleEdit = useCallback(
+    (index: number) => () => handlers.handleEdit(index),
+    [handlers.handleEdit]
+  )
+  const makeHandleDelete = useCallback(
+    (index: number) => () => handlers.handleDelete(index),
+    [handlers.handleDelete]
+  )
+  const makeHandleInsertBefore = useCallback(
+    (index: number) => () => handlers.handleInsertBefore(index),
+    [handlers.handleInsertBefore]
+  )
+  const makeHandleInsertAfter = useCallback(
+    (index: number) => () => handlers.handleInsertAfter(index),
+    [handlers.handleInsertAfter]
+  )
   return (
     <>
       {proposals.map((proposal, index) => (
@@ -196,6 +173,10 @@ const ProposalsTimeLine2: FC<ProposalsTimeLineProps> = ({
             <TimelineSeparator style={{ width: 40 }}>
               <TimelineDotInner
                 {...proposal}
+                handleEdit={makeHandleEdit(index)}
+                handleDelete={makeHandleDelete(index)}
+                handleInsertBefore={makeHandleInsertBefore(index)}
+                handleInsertAfter={makeHandleInsertAfter(index)}
                 direction={proposal.human ? 'left' : 'right'}
               />
               <TimelineConnector style={{ minHeight: 20 }} />
@@ -216,4 +197,4 @@ const ProposalsTimeLine2: FC<ProposalsTimeLineProps> = ({
   )
 }
 
-export default ProposalsTimeLine2
+export default ProposalsTimeLine

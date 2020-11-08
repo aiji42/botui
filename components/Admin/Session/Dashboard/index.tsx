@@ -2,7 +2,7 @@ import { FC, useCallback, useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { Grid, Paper, Fab, makeStyles, Modal } from '@material-ui/core'
 import { Add as AddIcon } from '@material-ui/icons'
-import { SimpleFormProps, Record } from 'react-admin'
+import { SimpleFormProps, Record, RedirectionSideEffect } from 'react-admin'
 import {
   EditingSessionData,
   EditingProposalData,
@@ -11,6 +11,7 @@ import {
 import ProposalsTimeLine from './ProposalsTimeLine'
 import SessionCard from './SessionCard'
 import { EditProposalForm, EditSessionForm } from './Form'
+import { UpdateSessionData, InsertProposalData } from '../modules'
 
 type DashboardProps = Omit<SimpleFormProps, 'children'>
 
@@ -50,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 const Dashboard: FC<DashboardProps> = (props) => {
   const classes = useStyles()
   const [previewOpen, setPreviewOpen] = useState<boolean>(false)
-  const [editingData, setEditingData] = useState<Partial<Record> | undefined>(
+  const [editingData, setEditingData] = useState<UpdateSessionData | undefined>(
     props.record
   )
   const handlePreviewClose = useCallback(() => setPreviewOpen(false), [
@@ -73,6 +74,47 @@ const Dashboard: FC<DashboardProps> = (props) => {
       }
     })
   }, [props.record])
+  const handleDelete = useCallback(
+    (index: number) => {
+      save(
+        {
+          type: 'proposalDelete',
+          targetIndex: index
+        },
+        {} as RedirectionSideEffect
+      )
+    },
+    [save]
+  )
+  const handleEdit = useCallback(
+    (index: number) => {
+      props.record &&
+        setEditingData({
+          ...props.record.proposals[index],
+          targetIndex: index,
+          type: 'proposalEdit'
+        })
+    },
+    [setEditingData, props.record]
+  )
+  const handleInsertBefore = useCallback(
+    (index: number) => {
+      setEditingData({
+        insertIndex: index,
+        type: 'insertProposalBefore'
+      } as InsertProposalData)
+    },
+    [setEditingData]
+  )
+  const handleInsertAfter = useCallback(
+    (index: number) => {
+      setEditingData({
+        insertIndex: index,
+        type: 'insertProposalAfter'
+      } as InsertProposalData)
+    },
+    [setEditingData]
+  )
 
   if (props.record === undefined) return <></>
 
@@ -102,26 +144,11 @@ const Dashboard: FC<DashboardProps> = (props) => {
           <Grid item xs={12} className={classes.proposalList}>
             <ProposalsTimeLine
               proposals={props.record.proposals}
-              handleClick={(index) => () => {
-                props.record &&
-                  setEditingData({
-                    ...props.record.proposals[index],
-                    proposalIndex: index
-                  })
-              }}
-            >
-              <Fab color="primary" className={classes.addProposalButton}>
-                <AddIcon
-                  onClick={() => {
-                    props.record &&
-                      setEditingData({
-                        id: '',
-                        proposalIndex: props.record.proposals.length
-                      })
-                  }}
-                />
-              </Fab>
-            </ProposalsTimeLine>
+              handleEdit={handleEdit}
+              handleDelete={handleDelete}
+              handleInsertBefore={handleInsertBefore}
+              handleInsertAfter={handleInsertAfter}
+            />
           </Grid>
         </Grid>
       </Grid>
