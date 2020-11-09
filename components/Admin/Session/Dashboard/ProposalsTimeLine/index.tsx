@@ -1,26 +1,14 @@
 import { FC, useCallback, useState } from 'react'
-import {
-  List,
-  ListItem,
-  ListItemText,
-  ListItemAvatar,
-  Avatar,
-  Typography,
-  Paper,
-  Button,
-  makeStyles
-} from '@material-ui/core'
+import { Typography, Paper, makeStyles } from '@material-ui/core'
 import {
   Timeline,
   TimelineItem,
+  TimelineDot,
   TimelineSeparator,
   TimelineConnector,
   TimelineContent,
-  TimelineOppositeContent,
-  TimelineDot,
   SpeedDial,
   SpeedDialAction,
-  SpeedDialProps,
   SpeedDialIcon
 } from '@material-ui/lab'
 import {
@@ -38,6 +26,12 @@ const useSpeedDialStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
     marginTop: theme.spacing(1)
   },
+  fab: {
+    backgroundColor: theme.palette.secondary.main
+  },
+  'fab:hover': {
+    backgroundColor: theme.palette.secondary.main
+  },
   directionRight: {
     position: 'relative',
     left: theme.spacing(11.5)
@@ -48,8 +42,18 @@ const useSpeedDialStyles = makeStyles((theme) => ({
   }
 }))
 
+const useSpeedDialIcon = makeStyles((theme) => ({
+  root: {
+    backgroundColor: theme.palette.secondary.main
+  },
+  icon: {
+    backgroundColor: theme.palette.secondary.main
+  }
+}))
+
 interface TimeLineDotInnerProps extends Proposal {
   direction: 'left' | 'right'
+  selected?: boolean
   handleEdit: () => void
   handleDelete: () => void
   handleInsertBefore: () => void
@@ -65,6 +69,7 @@ const TimelineDotInner: FC<TimeLineDotInnerProps> = (props) => {
     setOpen(true)
   }, [setOpen])
   const classes = useSpeedDialStyles()
+  const iconClasses = useSpeedDialIcon()
 
   return (
     <SpeedDial
@@ -78,7 +83,9 @@ const TimelineDotInner: FC<TimeLineDotInnerProps> = (props) => {
               <RateReviewIcon />
             )
           }
+          onClick={props.handleEdit}
           openIcon={<EditIcon />}
+          classes={iconClasses}
         />
       }
       onClose={handleClose}
@@ -86,7 +93,6 @@ const TimelineDotInner: FC<TimeLineDotInnerProps> = (props) => {
       open={open}
       direction={props.direction}
       classes={classes}
-      onClick={props.handleEdit}
     >
       <SpeedDialAction
         icon={<DeleteIcon />}
@@ -109,6 +115,10 @@ const TimelineDotInner: FC<TimeLineDotInnerProps> = (props) => {
 
 interface ProposalsTimeLineProps {
   proposals: Proposals
+  editing: boolean
+  editingIndex?: number
+  inserting: boolean
+  insertingIndex?: number
   handleEdit: (index: number) => void
   handleDelete: (index: number) => void
   handleInsertBefore: (index: number) => void
@@ -116,13 +126,6 @@ interface ProposalsTimeLineProps {
 }
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing(0)
-  },
-  rightAvatar: {
-    margin: '0 0 0 auto'
-  },
   timeline: {
     marginTop: 0,
     marginBottom: 0,
@@ -132,16 +135,15 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(1),
     backgroundColor: theme.palette.background.default
-  },
-  avatar: {
-    cursor: 'pointer',
-    width: theme.spacing(3),
-    height: theme.spacing(3)
   }
 }))
 
 const ProposalsTimeLine: FC<ProposalsTimeLineProps> = ({
   proposals,
+  editing,
+  editingIndex,
+  inserting,
+  insertingIndex,
   ...handlers
 }) => {
   const classes = useStyles()
@@ -169,6 +171,15 @@ const ProposalsTimeLine: FC<ProposalsTimeLineProps> = ({
           align={proposal.human ? 'left' : 'right'}
           className={classes.timeline}
         >
+          {inserting && insertingIndex === index && (
+            <TimelineItem>
+              <TimelineSeparator>
+                <TimelineDot />
+                <TimelineConnector style={{ minHeight: 20 }} />
+              </TimelineSeparator>
+              <TimelineContent />
+            </TimelineItem>
+          )}
           <TimelineItem>
             <TimelineSeparator style={{ width: 40 }}>
               <TimelineDotInner
@@ -178,6 +189,7 @@ const ProposalsTimeLine: FC<ProposalsTimeLineProps> = ({
                 handleInsertBefore={makeHandleInsertBefore(index)}
                 handleInsertAfter={makeHandleInsertAfter(index)}
                 direction={proposal.human ? 'left' : 'right'}
+                selected={editing && editingIndex === index}
               />
               <TimelineConnector style={{ minHeight: 20 }} />
             </TimelineSeparator>

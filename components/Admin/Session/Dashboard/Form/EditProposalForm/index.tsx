@@ -3,7 +3,6 @@ import {
   TextInput,
   BooleanInput,
   SimpleForm,
-  NumberInput,
   SelectInput,
   FormDataConsumer,
   ArrayInput,
@@ -104,7 +103,6 @@ const EditProposalForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
       destroyOnUnregister
       toolbar={<EditProposalToolbar />}
     >
-      <NumberInput source="proposalIndex" disabled />
       <BooleanInput source="human" label="ユーザ側" />
       <SelectInput
         source="content.type"

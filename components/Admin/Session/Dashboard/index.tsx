@@ -1,27 +1,20 @@
 import { FC, useCallback, useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
-import { Grid, Paper, Fab, makeStyles, Modal } from '@material-ui/core'
-import { Add as AddIcon } from '@material-ui/icons'
-import { SimpleFormProps, Record, RedirectionSideEffect } from 'react-admin'
-import {
-  EditingSessionData,
-  EditingProposalData,
-  Session
-} from '../../../../@types/session'
+import { Grid, Paper, makeStyles, Modal } from '@material-ui/core'
+import { SimpleFormProps } from 'react-admin'
+import { Session } from '../../../../@types/session'
 import ProposalsTimeLine from './ProposalsTimeLine'
 import SessionCard from './SessionCard'
 import { EditProposalForm, EditSessionForm } from './Form'
-import { UpdateSessionData, InsertProposalData } from '../modules'
+import {
+  UpdateSessionData,
+  InsertProposalData,
+  EditSessionData
+} from '../modules'
 
 type DashboardProps = Omit<SimpleFormProps, 'children'>
 
 const Preview = dynamic(() => import('../../../Chat/Preview'), { ssr: false })
-
-const isEditingProposalData = (arg: any): arg is EditingProposalData =>
-  arg.proposalIndex !== undefined
-
-const isEditingSessionData = (arg: any): arg is EditingSessionData =>
-  arg.proposalIndex === undefined
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,9 +44,10 @@ const useStyles = makeStyles((theme) => ({
 const Dashboard: FC<DashboardProps> = (props) => {
   const classes = useStyles()
   const [previewOpen, setPreviewOpen] = useState<boolean>(false)
-  const [editingData, setEditingData] = useState<UpdateSessionData | undefined>(
-    props.record
-  )
+  const [editingData, setEditingData] = useState<UpdateSessionData>({
+    ...props.record,
+    type: 'editSession'
+  } as EditSessionData)
   const handlePreviewClose = useCallback(() => setPreviewOpen(false), [
     setPreviewOpen
   ])
@@ -66,22 +60,50 @@ const Dashboard: FC<DashboardProps> = (props) => {
   )
   useEffect(() => {
     setEditingData((prevEditingData) => {
-      if (!props.record || prevEditingData?.proposalIndex === undefined)
-        return props.record
-      return {
-        ...props.record.proposals[prevEditingData.proposalIndex],
-        proposalIndex: prevEditingData?.proposalIndex
-      }
+      if (prevEditingData.type === 'editSession')
+        return {
+          ...props.record,
+          type: 'editSession'
+        }
+      if (prevEditingData.type === 'deleteProposal')
+        return {
+          ...props.record,
+          type: 'editSession'
+        }
+      if (prevEditingData.type === 'editProposal')
+        return {
+          ...props.record?.proposals[prevEditingData.targetIndex],
+          targetIndex: prevEditingData.targetIndex,
+          type: 'editProposal'
+        }
+      if (prevEditingData.type === 'insertProposalBefore')
+        return {
+          ...props.record?.proposals[prevEditingData.insertIndex],
+          targetIndex: prevEditingData.insertIndex,
+          type: 'editProposal'
+        }
+      if (prevEditingData.type === 'insertProposalAfter')
+        return {
+          ...props.record?.proposals[prevEditingData.insertIndex + 1],
+          targetIndex: prevEditingData.insertIndex + 1,
+          type: 'editProposal'
+        }
     })
+  }, [props.record])
+  const handleSessionEdit = useCallback(() => {
+    setEditingData({
+      ...props.record,
+      type: 'editSession'
+    } as EditSessionData)
   }, [props.record])
   const handleDelete = useCallback(
     (index: number) => {
       save(
         {
-          type: 'proposalDelete',
+          type: 'deleteProposal',
           targetIndex: index
         },
-        {} as RedirectionSideEffect
+        false
       )
     },
     [save]
@@ -92,7 +114,7 @@ const Dashboard: FC<DashboardProps> = (props) => {
         setEditingData({
           ...props.record.proposals[index],
           targetIndex: index,
-          type: 'proposalEdit'
+          type: 'editProposal'
         })
     },
     [setEditingData, props.record]
@@ -125,7 +147,7 @@ const Dashboard: FC<DashboardProps> = (props) => {
           <Grid item xs={12}>
             <SessionCard
               {...(props.record as Session)}
-              onClickEdit={() => setEditingData(props.record)}
+              onClickEdit={handleSessionEdit}
               onClickPreview={() => setPreviewOpen(true)}
             />
             <Modal open={previewOpen} onClose={handlePreviewClose}>
@@ -143,6 +165,23 @@ const Dashboard: FC<DashboardProps> = (props) => {
           </Grid>
           <Grid item xs={12} className={classes.proposalList}>
             <ProposalsTimeLine
+              editing={editingData.type === 'editProposal'}
+              editingIndex={
+                editingData.type === 'editProposal'
+                  ? editingData.targetIndex
+                  : undefined
+              }
+              inserting={
+                editingData.type === 'insertProposalBefore' ||
+                editingData.type === 'insertProposalAfter'
+              }
+              insertingIndex={
+                editingData.type === 'insertProposalBefore'
+                  ? editingData.insertIndex
+                  : editingData.type === 'insertProposalAfter'
+                  ? editingData.insertIndex + 1
+                  : undefined
+              }
               proposals={props.record.proposals}
               handleEdit={handleEdit}
               handleDelete={handleDelete}
@@ -155,11 +194,15 @@ const Dashboard: FC<DashboardProps> = (props) => {
       <Grid item xs={8}>
         <Paper style={{ minHeight: 500 }}>
           <>
-            {editingData && isEditingSessionData(editingData) && (
+            {editingData && editingData.type === 'editSession' && (
               <EditSessionForm {...props} save={save} record={editingData} />
             )}
-            {editingData && isEditingProposalData(editingData) && (
-              <EditProposalForm {...props} save={save} record={editingData} />
+            {editingData && editingData.type !== 'editSession' && (
+              <EditProposalForm
+                {...props}
+                save={save}
+                record={{ id: '', ...editingData }}
+              />
             )}
           </>
         </Paper>

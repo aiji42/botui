@@ -51,10 +51,3 @@ export interface ChatConfig extends Omit<Session, 'proposals'> {
   messages: Array<Proposal>
   messagesCount: number
 }
-
-export type EditingSessionData = Session
-
-export interface EditingProposalData extends Proposal {
-  id: string
-  proposalIndex: number
-}
