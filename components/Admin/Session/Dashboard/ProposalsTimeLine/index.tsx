@@ -17,7 +17,8 @@ import {
   Edit as EditIcon,
   Delete as DeleteIcon,
   VerticalAlignTop,
-  VerticalAlignBottom
+  VerticalAlignBottom,
+  Add as AddIcon
 } from '@material-ui/icons'
 import { Proposal, Proposals } from '../../../../../@types/session'
 
@@ -27,10 +28,10 @@ const useSpeedDialStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1)
   },
   fab: {
-    backgroundColor: theme.palette.secondary.main
-  },
-  'fab:hover': {
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
+    '&:hover': {
+      backgroundColor: theme.palette.secondary.main
+    }
   },
   directionRight: {
     position: 'relative',
@@ -39,15 +40,6 @@ const useSpeedDialStyles = makeStyles((theme) => ({
   directionLeft: {
     position: 'relative',
     right: theme.spacing(11.5)
-  }
-}))
-
-const useSpeedDialIcon = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.secondary.main
-  },
-  icon: {
-    backgroundColor: theme.palette.secondary.main
   }
 }))
 
@@ -69,7 +61,6 @@ const TimelineDotInner: FC<TimeLineDotInnerProps> = (props) => {
     setOpen(true)
   }, [setOpen])
   const classes = useSpeedDialStyles()
-  const iconClasses = useSpeedDialIcon()
 
   return (
     <SpeedDial
@@ -85,7 +76,6 @@ const TimelineDotInner: FC<TimeLineDotInnerProps> = (props) => {
           }
           onClick={props.handleEdit}
           openIcon={<EditIcon />}
-          classes={iconClasses}
         />
       }
       onClose={handleClose}
@@ -174,7 +164,7 @@ const ProposalsTimeLine: FC<ProposalsTimeLineProps> = ({
           {inserting && insertingIndex === index && (
             <TimelineItem>
               <TimelineSeparator>
-                <TimelineDot />
+                <TimelineDot color="primary" />
                 <TimelineConnector style={{ minHeight: 20 }} />
               </TimelineSeparator>
               <TimelineContent />
@@ -205,6 +195,16 @@ const ProposalsTimeLine: FC<ProposalsTimeLineProps> = ({
           </TimelineItem>
         </Timeline>
       ))}
+      <Timeline className={classes.timeline}>
+        <TimelineItem>
+          <TimelineSeparator>
+            <TimelineDot color="primary">
+              <AddIcon fontSize="large" />
+            </TimelineDot>
+          </TimelineSeparator>
+          <TimelineContent />
+        </TimelineItem>
+      </Timeline>
     </>
   )
 }
