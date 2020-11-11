@@ -1,5 +1,12 @@
 import { FC, useCallback, useState } from 'react'
-import { Typography, Paper, makeStyles, Zoom } from '@material-ui/core'
+import {
+  Typography,
+  Paper,
+  makeStyles,
+  Zoom,
+  Button,
+  Fab
+} from '@material-ui/core'
 import {
   Timeline,
   TimelineItem,
@@ -21,6 +28,7 @@ import {
   Add as AddIcon
 } from '@material-ui/icons'
 import { Proposal, Proposals } from '../../../../../@types/session'
+import { faBaby } from '@fortawesome/free-solid-svg-icons'
 
 const useSpeedDialStyles = makeStyles((theme) => ({
   root: {
@@ -112,14 +120,9 @@ const TimelineDotLast: FC<TimeLineDotLastProps> = (props) => {
   const classes = useSpeedDialStyles()
 
   return (
-    <SpeedDial
-      ariaLabel="SpeedDial"
-      icon={
-        <SpeedDialIcon icon={<AddIcon />} onClick={props.handleInsertBefore} />
-      }
-      open={false}
-      classes={classes}
-    />
+    <Fab onClick={props.handleInsertBefore} color="secondary" classes={classes}>
+      <AddIcon />
+    </Fab>
   )
 }
 
@@ -147,6 +150,9 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(1),
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    maxWidth: theme.spacing(15),
     backgroundColor: theme.palette.background.default
   }
 }))
@@ -237,7 +243,6 @@ const ProposalsTimeLine: FC<ProposalsTimeLineProps> = ({
             <TimelineDotLast
               handleInsertBefore={makeHandleInsertBefore(proposals.length)}
             />
-            <TimelineConnector style={{ minHeight: 20 }} />
           </TimelineSeparator>
           <TimelineContent />
         </TimelineItem>
