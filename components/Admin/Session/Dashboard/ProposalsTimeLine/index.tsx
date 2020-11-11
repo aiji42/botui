@@ -1,5 +1,5 @@
 import { FC, useCallback, useState } from 'react'
-import { Typography, Paper, makeStyles } from '@material-ui/core'
+import { Typography, Paper, makeStyles, Zoom } from '@material-ui/core'
 import {
   Timeline,
   TimelineItem,
@@ -103,6 +103,26 @@ const TimelineDotInner: FC<TimeLineDotInnerProps> = (props) => {
   )
 }
 
+interface TimeLineDotLastProps {
+  selected?: boolean
+  handleInsertBefore: () => void
+}
+
+const TimelineDotLast: FC<TimeLineDotLastProps> = (props) => {
+  const classes = useSpeedDialStyles()
+
+  return (
+    <SpeedDial
+      ariaLabel="SpeedDial"
+      icon={
+        <SpeedDialIcon icon={<AddIcon />} onClick={props.handleInsertBefore} />
+      }
+      open={false}
+      classes={classes}
+    />
+  )
+}
+
 interface ProposalsTimeLineProps {
   proposals: Proposals
   editing: boolean
@@ -121,6 +141,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 0,
     paddingTop: 0,
     paddingBottom: 0
+  },
+  timelineSeparator: {
+    width: theme.spacing(4)
   },
   paper: {
     padding: theme.spacing(1),
@@ -162,16 +185,18 @@ const ProposalsTimeLine: FC<ProposalsTimeLineProps> = ({
           className={classes.timeline}
         >
           {inserting && insertingIndex === index && (
-            <TimelineItem>
-              <TimelineSeparator>
-                <TimelineDot color="primary" />
-                <TimelineConnector style={{ minHeight: 20 }} />
-              </TimelineSeparator>
-              <TimelineContent />
-            </TimelineItem>
+            <Zoom in>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot color="primary" />
+                  <TimelineConnector style={{ minHeight: 20 }} />
+                </TimelineSeparator>
+                <TimelineContent />
+              </TimelineItem>
+            </Zoom>
           )}
           <TimelineItem>
-            <TimelineSeparator style={{ width: 40 }}>
+            <TimelineSeparator className={classes.timelineSeparator}>
               <TimelineDotInner
                 {...proposal}
                 handleEdit={makeHandleEdit(index)}
@@ -196,11 +221,23 @@ const ProposalsTimeLine: FC<ProposalsTimeLineProps> = ({
         </Timeline>
       ))}
       <Timeline className={classes.timeline}>
+        {inserting && insertingIndex === proposals.length && (
+          <Zoom in>
+            <TimelineItem>
+              <TimelineSeparator>
+                <TimelineDot color="primary" />
+                <TimelineConnector style={{ minHeight: 20 }} />
+              </TimelineSeparator>
+              <TimelineContent />
+            </TimelineItem>
+          </Zoom>
+        )}
         <TimelineItem>
           <TimelineSeparator>
-            <TimelineDot color="primary">
-              <AddIcon fontSize="large" />
-            </TimelineDot>
+            <TimelineDotLast
+              handleInsertBefore={makeHandleInsertBefore(proposals.length)}
+            />
+            <TimelineConnector style={{ minHeight: 20 }} />
           </TimelineSeparator>
           <TimelineContent />
         </TimelineItem>
