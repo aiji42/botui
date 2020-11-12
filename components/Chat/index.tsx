@@ -6,7 +6,7 @@ import { ChatConfig, Proposal } from '../../@types/session'
 import ChatConfigContext from '../../hooks/use-chat-config-context'
 import Header from './Header'
 import Footer from './Footer'
-import { css } from '@emotion/core'
+import { css } from '@emotion/react'
 
 const style = {
   header: css({

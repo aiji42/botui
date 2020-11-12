@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { css } from '@emotion/core'
+import { css } from '@emotion/react'
 
 const error = css({
   color: '#ea4031',

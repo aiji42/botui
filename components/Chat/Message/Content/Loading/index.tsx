@@ -1,4 +1,4 @@
-import { css } from '@emotion/core'
+import { css } from '@emotion/react'
 import ReactLoading from 'react-loading'
 import { FC } from 'react'
 

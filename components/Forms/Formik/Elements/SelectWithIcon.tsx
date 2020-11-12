@@ -1,5 +1,5 @@
 import { FC, SelectHTMLAttributes } from 'react'
-import { css, SerializedStyles } from '@emotion/core'
+import { css, SerializedStyles } from '@emotion/react'
 import { FieldMetaProps, useField, FieldInputProps } from 'formik'
 import { okColor, errorColor, baseBorderColor } from '../../shared/baseStyle'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

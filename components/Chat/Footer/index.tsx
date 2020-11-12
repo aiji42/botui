@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 import { useChatConfigContext } from '../../../hooks/use-chat-config-context'
-import { css } from '@emotion/core'
+import { css } from '@emotion/react'
 
 const style = {
   footer: css({

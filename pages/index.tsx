@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
 import { FC } from 'react'
-import { Global, css } from '@emotion/core'
+import { Global, css } from '@emotion/react'
 
 const Chat = dynamic(() => import('../components/Chat'), { ssr: false })
 

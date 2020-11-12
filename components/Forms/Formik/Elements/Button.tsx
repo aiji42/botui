@@ -1,5 +1,5 @@
 import { FC, ButtonHTMLAttributes } from 'react'
-import { css } from '@emotion/core'
+import { css } from '@emotion/react'
 
 const style = css`
   display: block;

@@ -7,7 +7,7 @@ import {
   ReactNode
 } from 'react'
 import { useField, FieldMetaProps, FieldInputProps } from 'formik'
-import { css, SerializedStyles } from '@emotion/core'
+import { css, SerializedStyles } from '@emotion/react'
 import { okColor, errorColor, baseBorderColor } from '../../shared/baseStyle'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Proposals, Session } from '../../../../../../@types/session'
-import { css } from '@emotion/core'
+import { css } from '@emotion/react'
 import MessageContext from '../../../../../../hooks/use-message-context'
 import ChatConfigContext from '../../../../../../hooks/use-chat-config-context'
 import Header from '../../../../../Chat/Header'

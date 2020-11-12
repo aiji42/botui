@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { AppProps } from 'next/app'
-import { css, Global } from '@emotion/core'
+import { css, Global } from '@emotion/react'
 import Amplify from 'aws-amplify'
 import awsconfig from '../src/aws-exports'
 import vocabularies from '../i18n/amplify/vocabularies'

@@ -1,6 +1,6 @@
 import { FC, CSSProperties } from 'react'
 import { useChatConfigContext } from '../../../hooks/use-chat-config-context'
-import { css } from '@emotion/core'
+import { css } from '@emotion/react'
 import { AmplifyS3Image } from '@aws-amplify/ui-react'
 
 const style = {

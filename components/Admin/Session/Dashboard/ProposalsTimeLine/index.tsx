@@ -1,12 +1,5 @@
 import { FC, useCallback, useState } from 'react'
-import {
-  Typography,
-  Paper,
-  makeStyles,
-  Zoom,
-  Button,
-  Fab
-} from '@material-ui/core'
+import { Typography, Paper, makeStyles, Zoom, Fab } from '@material-ui/core'
 import {
   Timeline,
   TimelineItem,
@@ -28,7 +21,6 @@ import {
   Add as AddIcon
 } from '@material-ui/icons'
 import { Proposal, Proposals } from '../../../../../@types/session'
-import { faBaby } from '@fortawesome/free-solid-svg-icons'
 
 const useSpeedDialStyles = makeStyles((theme) => ({
   root: {
@@ -148,12 +140,16 @@ const useStyles = makeStyles((theme) => ({
   timelineSeparator: {
     width: theme.spacing(4)
   },
+  timelineConnector: {
+    minHeight: theme.spacing(10)
+  },
   paper: {
     padding: theme.spacing(1),
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     maxWidth: theme.spacing(15),
-    backgroundColor: theme.palette.background.default
+    backgroundColor: theme.palette.background.default,
+    wordWrap: 'break-word'
   }
 }))
 
@@ -195,7 +191,7 @@ const ProposalsTimeLine: FC<ProposalsTimeLineProps> = ({
               <TimelineItem>
                 <TimelineSeparator>
                   <TimelineDot color="primary" />
-                  <TimelineConnector style={{ minHeight: 20 }} />
+                  <TimelineConnector className={classes.timelineConnector} />
                 </TimelineSeparator>
                 <TimelineContent />
               </TimelineItem>
@@ -212,11 +208,11 @@ const ProposalsTimeLine: FC<ProposalsTimeLineProps> = ({
                 direction={proposal.human ? 'left' : 'right'}
                 selected={editing && editingIndex === index}
               />
-              <TimelineConnector style={{ minHeight: 20 }} />
+              <TimelineConnector className={classes.timelineConnector} />
             </TimelineSeparator>
             <TimelineContent>
               <Paper elevation={3} className={classes.paper}>
-                <Typography align="left" style={{ wordWrap: 'break-word' }}>
+                <Typography align="left">
                   {proposal.content.type === 'string'
                     ? proposal.content.props.children
                     : proposal.content.props.type}
@@ -232,7 +228,7 @@ const ProposalsTimeLine: FC<ProposalsTimeLineProps> = ({
             <TimelineItem>
               <TimelineSeparator>
                 <TimelineDot color="primary" />
-                <TimelineConnector style={{ minHeight: 20 }} />
+                <TimelineConnector className={classes.timelineConnector} />
               </TimelineSeparator>
               <TimelineContent />
             </TimelineItem>

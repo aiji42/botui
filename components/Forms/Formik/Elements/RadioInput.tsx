@@ -1,5 +1,5 @@
 import { FC, ReactNode, InputHTMLAttributes, useMemo } from 'react'
-import { css } from '@emotion/core'
+import { css } from '@emotion/react'
 import { useField, FieldInputProps } from 'formik'
 import { okColor, baseBorderColor } from '../../shared/baseStyle'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

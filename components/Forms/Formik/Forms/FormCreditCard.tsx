@@ -8,7 +8,7 @@ import SelectWithIcon from '../Elements/SelectWithIcon'
 import InputWithIcon from '../Elements/InputWithIcon'
 import SpanErrorMessage from '../Elements/SpanErrorMessage'
 import ButtonSubmit from '../Elements/ButtonSubmit'
-import { css } from '@emotion/core'
+import { css } from '@emotion/react'
 import { customHandleSubmit } from './modules'
 import {
   FormCreditCardValues,

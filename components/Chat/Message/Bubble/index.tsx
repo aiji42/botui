@@ -1,5 +1,5 @@
 import { FC, useMemo } from 'react'
-import { css } from '@emotion/core'
+import { css } from '@emotion/react'
 import { useMessageContext } from '../../../../hooks/use-message-context'
 import { useChatConfigContext } from '../../../../hooks/use-chat-config-context'
 

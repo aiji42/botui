@@ -2,7 +2,7 @@ import { FC, useEffect, useMemo } from 'react'
 import OperatorIcon from './OperatorIcon'
 import Bubble from './Bubble'
 import Content from './Content'
-import { css, keyframes } from '@emotion/core'
+import { css, keyframes } from '@emotion/react'
 import Scroll from 'react-scroll'
 import nextId from 'react-id-generator'
 
