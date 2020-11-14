@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, ReactElement, ReactNode } from 'react'
 import {
   Datagrid,
   EditView,
@@ -40,7 +40,7 @@ export const SessionCreate: FC<CreateProps> = (props) => {
   return <CreateWizard {...createController} />
 }
 
-const Edit: FC<EditProps> = (props) => {
+const Edit: FC<EditProps & { children: ReactElement }> = (props) => {
   const { record, ...editController } = useEditController<Session>(props)
   editController.setTransform((data: UpdateSessionData) =>
     sessionDataTransform(record, data)

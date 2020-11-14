@@ -108,8 +108,15 @@ interface TimeLineDotLastProps {
   handleInsertBefore: () => void
 }
 
+const useFabStyles = makeStyles((theme) => ({
+  root: {
+    marginBottom: theme.spacing(1),
+    marginTop: theme.spacing(1)
+  }
+}))
+
 const TimelineDotLast: FC<TimeLineDotLastProps> = (props) => {
-  const classes = useSpeedDialStyles()
+  const classes = useFabStyles()
 
   return (
     <Fab onClick={props.handleInsertBefore} color="secondary" classes={classes}>

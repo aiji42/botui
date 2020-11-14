@@ -8,7 +8,8 @@ const initialValue: ChatConfig = {
   active: false,
   theme: {},
   images: {},
-  messages: []
+  messages: [],
+  messagesCount: 0
 }
 
 const Context = createContext<ChatConfig>(initialValue)
