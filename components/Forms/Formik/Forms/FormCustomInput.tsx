@@ -17,7 +17,7 @@ const Form: FC<FormikProps<FormCustomInputValues> & FormCustomInputType> = (
 
   return (
     <form onSubmit={handleSubmit}>
-      {inputs.map(({ validation: _, ...attributes }, index) => (
+      {inputs.map(({ validation, ...attributes }, index) => (
         <Fragment key={index}>
           <Field as={InputWithIcon} {...attributes} autoFocus={index === 0} />
           <ErrorMessage name={attributes.name} component={SpanErrorMessage} />

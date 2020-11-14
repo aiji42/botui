@@ -75,7 +75,7 @@ const ColorInput: FC<InputProps<TextFieldProps>> = (props) => {
   )
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   image: {
     height: 100,
     width: 'initial',
