@@ -16,6 +16,7 @@
     "@emotion/babel-preset-css-prop": "^11.0.0",
     "@emotion/react": "^11.0.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-regular-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.12",
     "@material-ui/lab": "^4.0.0-alpha.56",

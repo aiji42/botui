@@ -1,14 +1,14 @@
-import { FC } from 'react'
-import { withFormik, Field, ErrorMessage, FormikProps } from 'formik'
+import { FC, useEffect } from 'react'
+import { withFormik, Field, ErrorMessage, FormikProps, useField } from 'formik'
 import * as yup from 'yup'
 import SpanErrorMessage from '../Elements/SpanErrorMessage'
-import RadioInput from '../Elements/RadioInput'
+import Checkbox from '../Elements/Checkbox'
 import { css } from '@emotion/react'
 import { customHandleSubmit } from './modules'
 import ButtonSubmit from '../Elements/ButtonSubmit'
 import {
-  FormCustomRadioGroup as FormCustomRadioGroupType,
-  FormCustomRadioGroupValues
+  FormCustomCheckbox as FormCustomCheckboxType,
+  FormCustomCheckboxValues
 } from '@botui/types'
 
 const style = {
@@ -18,7 +18,7 @@ const style = {
 }
 
 const Form: FC<
-  FormikProps<FormCustomRadioGroupValues> & FormCustomRadioGroupType
+  FormikProps<FormCustomCheckboxValues> & FormCustomCheckboxType
 > = (props) => {
   const { name, inputs, handleSubmit } = props
 
@@ -26,7 +26,7 @@ const Form: FC<
     <form onSubmit={handleSubmit}>
       {inputs.map(({ title, ...attributes }, index) => (
         <div key={index} css={index > 0 ? style.margin : ''}>
-          <Field title={title} {...attributes} name={name} as={RadioInput} />
+          <Field title={title} {...attributes} name={name} as={Checkbox} />
         </div>
       ))}
       <ErrorMessage name={name} component={SpanErrorMessage} />
@@ -35,12 +35,12 @@ const Form: FC<
   )
 }
 
-const FormCustomRadioGroup = withFormik<
-  FormCustomRadioGroupType,
-  FormCustomRadioGroupValues
+const FormCustomCheckbox = withFormik<
+  FormCustomCheckboxType,
+  FormCustomCheckboxValues
 >({
   mapPropsToValues: ({ name }) => ({ [name]: '' }),
-  validationSchema: ({ name }: FormCustomRadioGroupType) =>
+  validationSchema: ({ name }: FormCustomCheckboxType) =>
     yup.object().shape({
       [name]: yup.string().required('選択してください')
     }),
@@ -48,4 +48,4 @@ const FormCustomRadioGroup = withFormik<
   handleSubmit: customHandleSubmit
 })(Form)
 
-export default FormCustomRadioGroup
+export default FormCustomCheckbox

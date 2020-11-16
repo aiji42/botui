@@ -30,6 +30,10 @@ const formTypeChoices = [
     name: 'カスタムラジオボタン'
   },
   {
+    id: 'FormCustomCheckbox',
+    name: 'カスタムチェックボックス'
+  },
+  {
     id: 'FormCustomTextarea',
     name: 'カスタムテキストエリア'
   },
@@ -165,6 +169,13 @@ const EditProposalForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
       </FormDataConsumer>
       <FormDataConsumer>
         {({ formData }) =>
+          formData.content?.props?.type === 'FormCustomCheckbox' && (
+            <FormCustomCheckboxOption />
+          )
+        }
+      </FormDataConsumer>
+      <FormDataConsumer>
+        {({ formData }) =>
           formData.content?.props?.type === 'FormCustomSelect' && (
             <FormCustomSelectOption />
           )
@@ -238,6 +249,30 @@ const FormCustomRadioGroupOption: FC = (props) => {
         {...props}
         source="content.props.inputs"
         label="radio buttons"
+        validate={[required()]}
+      >
+        <SimpleFormIterator>
+          <TextInput source="title" label="title" validate={[required()]} />
+          <TextInput source="value" label="value" validate={[required()]} />
+        </SimpleFormIterator>
+      </ArrayInput>
+    </>
+  )
+}
+
+const FormCustomCheckboxOption: FC = (props) => {
+  return (
+    <>
+      <TextInput
+        {...props}
+        source="content.props.name"
+        label="name"
+        validate={[required()]}
+      />
+      <ArrayInput
+        {...props}
+        source="content.props.inputs"
+        label="checkboxes"
         validate={[required()]}
       >
         <SimpleFormIterator>

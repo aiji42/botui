@@ -37,6 +37,8 @@ const Form: FC = () => {
     return <Forms.FormCustomInput {...props} onSubmited={handleComplete} />
   if (props.type === 'FormCustomTextarea')
     return <Forms.FormCustomTextarea {...props} onSubmited={handleComplete} />
+  if (props.type === 'FormCustomCheckbox')
+    return <Forms.FormCustomCheckbox {...props} onSubmited={handleComplete} />
   if (props.type === 'FormConfirm')
     return <Forms.FormConfirm {...props} onSubmited={handleComplete} />
   return <></>
