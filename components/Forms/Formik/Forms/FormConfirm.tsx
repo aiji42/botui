@@ -38,7 +38,11 @@ const Form: FC<FormikProps<FormConfirmValues>> = (props) => {
 }
 
 const FormConfirm = withFormik<FormConfirmType, FormConfirmValues>({
-  mapPropsToValues: ({ values }) => ({ ...values, confirmed: true }),
+  mapPropsToValues: ({ values }) => ({
+    confirmed: true,
+    confirmHTML: '',
+    ...values
+  }),
   handleSubmit: customHandleSubmit
 })(Form)
 
