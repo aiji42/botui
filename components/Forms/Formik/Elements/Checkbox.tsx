@@ -1,4 +1,11 @@
-import { FC, ReactNode, InputHTMLAttributes, useMemo } from 'react'
+import {
+  FC,
+  ReactNode,
+  InputHTMLAttributes,
+  useMemo,
+  useCallback,
+  ChangeEvent
+} from 'react'
 import { css } from '@emotion/react'
 import { useField, FieldInputProps } from 'formik'
 import { okColor, baseBorderColor } from '../../shared/baseStyle'
@@ -54,10 +61,17 @@ type Props = {
   InputHTMLAttributes<HTMLInputElement>
 
 const Checkbox: FC<Props> = ({ value, title, ...props }) => {
-  const [, { value: formValue }] = useField<Array<string | number | boolean>>(
-    props
-  )
+  const [, { value: formValue }, helper] = useField<
+    Array<string | number | boolean>
+  >(props)
   const checked = useMemo(() => formValue.includes(value), [formValue, value])
+  const handleChange = useCallback(
+    (e: ChangeEvent) => {
+      props.onChange(e)
+      helper.setTouched(true)
+    },
+    [props.onChange, helper.setTouched]
+  )
 
   return (
     <label
@@ -79,6 +93,7 @@ const Checkbox: FC<Props> = ({ value, title, ...props }) => {
         type="checkbox"
         css={style.input}
         checked={checked}
+        onChange={handleChange}
       />
     </label>
   )
