@@ -40,10 +40,14 @@ const FormCustomCheckbox = withFormik<
   FormCustomCheckboxValues
 >({
   mapPropsToValues: ({ name }) => ({ [name]: '' }),
-  validationSchema: ({ name }: FormCustomCheckboxType) =>
-    yup.object().shape({
-      [name]: yup.string().required('選択してください')
-    }),
+  validationSchema: ({ required, name }: FormCustomCheckboxType) =>
+    yup.object().shape(
+      required
+        ? {
+            [name]: yup.array().required('選択してください')
+          }
+        : {}
+    ),
   validateOnMount: true,
   handleSubmit: customHandleSubmit
 })(Form)

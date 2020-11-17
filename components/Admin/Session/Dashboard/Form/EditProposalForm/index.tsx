@@ -269,6 +269,7 @@ const FormCustomCheckboxOption: FC = (props) => {
         label="name"
         validate={[required()]}
       />
+      <BooleanInput source="content.props.required" label="required" />
       <ArrayInput
         {...props}
         source="content.props.inputs"
