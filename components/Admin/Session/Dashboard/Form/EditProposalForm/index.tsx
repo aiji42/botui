@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react'
+import { FC } from 'react'
 import {
   TextInput,
   BooleanInput,
@@ -9,13 +9,12 @@ import {
   SimpleFormIterator,
   SimpleFormProps,
   required,
-  Labeled,
   Toolbar,
   ToolbarProps,
   SaveButton
 } from 'react-admin'
-import { Slider } from '@material-ui/core'
-import { useForm, useField } from 'react-final-form'
+import { ImageInput } from '../../../parts'
+import DelayNumberSlider from './DelayNumberSlider'
 
 const formTypeChoices = [
   { id: 'FormName', name: '氏名' },
@@ -41,55 +40,6 @@ const formTypeChoices = [
   { id: 'FormTel', name: '電話番号' }
 ]
 
-const marks = [
-  {
-    value: 0,
-    label: '0s'
-  },
-  {
-    value: 1000,
-    label: '1s'
-  },
-  {
-    value: 2000,
-    label: '2s'
-  },
-  {
-    value: 3000,
-    label: '3s'
-  }
-]
-
-const NumberSlider: FC = () => {
-  const { change } = useForm()
-  const {
-    input: { value }
-  } = useField<number>('content.delay')
-  const handleChange = useCallback(
-    (_, val: number | number[]) => {
-      change('content.delay', val)
-    },
-    [change]
-  )
-
-  return (
-    <Labeled label="ローディング時間" fullWidth>
-      <span>
-        <Slider
-          valueLabelDisplay="auto"
-          valueLabelFormat={(val) => <>{val / 1000}s</>}
-          step={100}
-          marks={marks}
-          min={0}
-          max={3000}
-          value={value || 0}
-          onChange={handleChange}
-        />
-      </span>
-    </Labeled>
-  )
-}
-
 const EditProposalToolbar: FC<ToolbarProps> = (props) => (
   <Toolbar>
     <SaveButton
@@ -114,11 +64,16 @@ const EditProposalForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
         validate={[required()]}
         choices={[
           { id: 'string', name: 'テキスト' },
+          { id: 'image', name: '画像' },
           { id: 'form', name: 'フォーム' }
         ]}
         fullWidth
       />
-      <NumberSlider />
+      <DelayNumberSlider
+        label="ローディング時間"
+        source="content.delay"
+        fullWidth
+      />
       <TextInput source="before" label="before function" fullWidth multiline />
       <TextInput source="after" label="after function" fullWidth multiline />
       <FormDataConsumer>
@@ -131,6 +86,17 @@ const EditProposalForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
               fullWidth
               multiline
               rows={3}
+            />
+          )
+        }
+      </FormDataConsumer>
+      <FormDataConsumer>
+        {({ formData }) =>
+          formData.content?.type === 'image' && (
+            <ImageInput
+              source="content.props.imgKey"
+              label="画像"
+              sessionId={formData.id}
             />
           )
         }

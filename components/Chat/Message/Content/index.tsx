@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 import String from './String'
+import Image from './Image'
 import Form from './Form'
 import Loading from './Loading'
 import { useMessageContext } from '../../../../hooks/use-message-context'
@@ -25,6 +26,7 @@ const Content: FC = () => {
 
   if (loading) return <Loading />
   if (type === 'form') return <Form />
+  if (type === 'image') return <Image />
   if (type === 'string') return <String />
   return <></>
 }

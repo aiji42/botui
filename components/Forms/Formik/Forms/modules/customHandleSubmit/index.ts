@@ -5,7 +5,7 @@ interface Values {
 }
 
 export interface HandleSubmitProps {
-  onSubmited: (parm: any) => void
+  onSubmitted: (parm: any) => void
 }
 
 export const customHandleSubmit = <T = Values>(
@@ -13,7 +13,7 @@ export const customHandleSubmit = <T = Values>(
   formikBag: FormikBag<HandleSubmitProps, T>
 ): void => {
   const { props, resetForm } = formikBag
-  props.onSubmited({ ...props, values })
+  props.onSubmitted({ ...props, values })
   const touched = Object.keys(values).reduce(
     (res, key) => ({ ...res, [key]: true }),
     {}
