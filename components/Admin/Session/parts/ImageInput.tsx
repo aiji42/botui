@@ -5,6 +5,10 @@ import { Add as AddIcon } from '@material-ui/icons'
 import { useForm, useField } from 'react-final-form'
 import { Storage } from 'aws-amplify'
 import { DropzoneDialog } from 'material-ui-dropzone'
+import { v4 as uuidv4 } from 'uuid'
+
+const randomizedFileName = (originalFileName: string): string =>
+  `${uuidv4()}.${originalFileName.split('.').slice(-1)[0]}`
 
 const useStyles = makeStyles(() => ({
   image: {
@@ -31,9 +35,13 @@ const ImageInput: FC<Props> = (props) => {
   const handleOpen = useCallback(() => setOpen(true), [])
   const handleSave = useCallback(
     async ([file]: File[]) => {
-      const res = await Storage.put(`${props.sessionId}/${file.name}`, file, {
-        level: 'public'
-      })
+      const res = await Storage.put(
+        `${props.sessionId}/${randomizedFileName(file.name)}`,
+        file,
+        {
+          level: 'public'
+        }
+      )
       change(source, (res as { key: string }).key)
       handleClose()
     },

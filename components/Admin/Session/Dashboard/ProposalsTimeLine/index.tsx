@@ -1,131 +1,19 @@
-import { FC, useCallback, useState } from 'react'
-import { Typography, Paper, makeStyles, Zoom, Fab } from '@material-ui/core'
+import { FC, useCallback, CSSProperties } from 'react'
+import { Typography, Paper, makeStyles, Zoom } from '@material-ui/core'
 import {
   Timeline,
   TimelineItem,
   TimelineDot,
   TimelineSeparator,
   TimelineConnector,
-  TimelineContent,
-  SpeedDial,
-  SpeedDialAction,
-  SpeedDialIcon
+  TimelineContent
 } from '@material-ui/lab'
-import {
-  Textsms as TextsmsIcon,
-  RateReview as RateReviewIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  VerticalAlignTop,
-  VerticalAlignBottom,
-  Add as AddIcon
-} from '@material-ui/icons'
-import { Proposal, Proposals } from '../../../../../@types/session'
+import { Proposals } from '../../../../../@types/session'
+import { AmplifyS3Image } from '@aws-amplify/ui-react'
+import TimelineDotWithSpeedDial from './TimelineDotWithSpeedDial'
+import TimelineDotLast from './TimelineDotLast'
 
-const useSpeedDialStyles = makeStyles((theme) => ({
-  root: {
-    marginBottom: theme.spacing(1),
-    marginTop: theme.spacing(1)
-  },
-  fab: {
-    backgroundColor: theme.palette.secondary.main,
-    '&:hover': {
-      backgroundColor: theme.palette.secondary.main
-    }
-  },
-  directionRight: {
-    position: 'relative',
-    left: theme.spacing(11.5)
-  },
-  directionLeft: {
-    position: 'relative',
-    right: theme.spacing(11.5)
-  }
-}))
-
-interface TimeLineDotInnerProps extends Proposal {
-  direction: 'left' | 'right'
-  selected?: boolean
-  handleEdit: () => void
-  handleDelete: () => void
-  handleInsertBefore: () => void
-  handleInsertAfter: () => void
-}
-
-const TimelineDotInner: FC<TimeLineDotInnerProps> = (props) => {
-  const [open, setOpen] = useState(false)
-  const handleClose = useCallback(() => {
-    setOpen(false)
-  }, [setOpen])
-  const handleOpen = useCallback(() => {
-    setOpen(true)
-  }, [setOpen])
-  const classes = useSpeedDialStyles()
-
-  return (
-    <SpeedDial
-      ariaLabel="SpeedDial"
-      icon={
-        <SpeedDialIcon
-          icon={
-            props.content.type === 'string' ? (
-              <TextsmsIcon />
-            ) : (
-              <RateReviewIcon />
-            )
-          }
-          onClick={props.handleEdit}
-          openIcon={<EditIcon />}
-        />
-      }
-      onClose={handleClose}
-      onOpen={handleOpen}
-      open={open}
-      direction={props.direction}
-      classes={classes}
-    >
-      <SpeedDialAction
-        icon={<DeleteIcon />}
-        tooltipTitle="delete"
-        onClick={props.handleDelete}
-      />
-      <SpeedDialAction
-        icon={<VerticalAlignTop />}
-        tooltipTitle="insert previous"
-        onClick={props.handleInsertBefore}
-      />
-      <SpeedDialAction
-        icon={<VerticalAlignBottom />}
-        tooltipTitle="insert next"
-        onClick={props.handleInsertAfter}
-      />
-    </SpeedDial>
-  )
-}
-
-interface TimeLineDotLastProps {
-  selected?: boolean
-  handleInsertBefore: () => void
-}
-
-const useFabStyles = makeStyles((theme) => ({
-  root: {
-    marginBottom: theme.spacing(1),
-    marginTop: theme.spacing(1)
-  }
-}))
-
-const TimelineDotLast: FC<TimeLineDotLastProps> = (props) => {
-  const classes = useFabStyles()
-
-  return (
-    <Fab onClick={props.handleInsertBefore} color="secondary" classes={classes}>
-      <AddIcon />
-    </Fab>
-  )
-}
-
-interface ProposalsTimeLineProps {
+interface Props {
   proposals: Proposals
   editing: boolean
   editingIndex?: number
@@ -160,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const ProposalsTimeLine: FC<ProposalsTimeLineProps> = ({
+const ProposalsTimeLine: FC<Props> = ({
   proposals,
   editing,
   editingIndex,
@@ -206,7 +94,7 @@ const ProposalsTimeLine: FC<ProposalsTimeLineProps> = ({
           )}
           <TimelineItem>
             <TimelineSeparator className={classes.timelineSeparator}>
-              <TimelineDotInner
+              <TimelineDotWithSpeedDial
                 {...proposal}
                 handleEdit={makeHandleEdit(index)}
                 handleDelete={makeHandleDelete(index)}
@@ -220,9 +108,18 @@ const ProposalsTimeLine: FC<ProposalsTimeLineProps> = ({
             <TimelineContent>
               <Paper elevation={3} className={classes.paper}>
                 <Typography align="left">
-                  {proposal.content.type === 'string'
-                    ? proposal.content.props.children
-                    : proposal.content.props.type}
+                  {proposal.content.type === 'string' &&
+                    proposal.content.props.children}
+                  {proposal.content.type === 'form' &&
+                    proposal.content.props.type}
+                  {proposal.content.type === 'image' && (
+                    <AmplifyS3Image
+                      {...proposal.content.props}
+                      style={
+                        ({ '--width': '100%' } as unknown) as CSSProperties
+                      }
+                    />
+                  )}
                 </Typography>
               </Paper>
             </TimelineContent>

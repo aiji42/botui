@@ -10,7 +10,9 @@ import {
   useRefresh,
   EditProps,
   CreateProps,
-  useCreateController
+  useCreateController,
+  useCheckMinimumRequiredProps,
+  EditContextProvider
 } from 'react-admin'
 import { Session } from '../../../@types/session'
 import Dashboard from './Dashboard'
@@ -41,12 +43,16 @@ export const SessionCreate: FC<CreateProps> = (props) => {
 }
 
 const Edit: FC<EditProps & { children: ReactElement }> = (props) => {
+  useCheckMinimumRequiredProps('Edit', ['children'], props)
   const { record, ...editController } = useEditController<Session>(props)
   editController.setTransform((data: UpdateSessionData) =>
     sessionDataTransform(record, data)
   )
-
-  return <EditView {...props} {...editController} record={record} />
+  return (
+    <EditContextProvider value={{ record, ...editController }}>
+      <EditView {...props} {...editController} record={record} />
+    </EditContextProvider>
+  )
 }
 
 export const SessionEdit: FC = (props) => {

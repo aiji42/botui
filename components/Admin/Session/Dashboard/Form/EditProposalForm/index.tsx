@@ -11,8 +11,10 @@ import {
   required,
   Toolbar,
   ToolbarProps,
-  SaveButton
+  SaveButton,
+  useRecordContext
 } from 'react-admin'
+import { Session } from '../../../../../../@types/session'
 import { ImageInput } from '../../../parts'
 import DelayNumberSlider from './DelayNumberSlider'
 
@@ -51,6 +53,7 @@ const EditProposalToolbar: FC<ToolbarProps> = (props) => (
 )
 
 const EditProposalForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
+  const { record } = useRecordContext({ record: {} as Session })
   return (
     <SimpleForm
       {...props}
@@ -96,7 +99,7 @@ const EditProposalForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
             <ImageInput
               source="content.props.imgKey"
               label="画像"
-              sessionId={formData.id}
+              sessionId={record.id}
             />
           )
         }
