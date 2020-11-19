@@ -2384,10 +2384,10 @@
   dependencies:
     ra-language-english "^3.8.0"
 
-"@botui/types@^0.4.0":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@botui/types/-/types-0.4.1.tgz#dce3ec995bb688485250876413052b4beb7a1ba6"
-  integrity sha512-UU9MwakVsE/sAhtJEYq0UiCZi5FNbBUpPjP8NnoD3pgJQZdmUlBPday/3LToHxHuns9MhfjyVTzbuzhP9Ax1UQ==
+"@botui/types@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@botui/types/-/types-0.5.0.tgz#862d00b4044b0948b0437a9d5cd80bd072aad064"
+  integrity sha512-XEZxCoufCtTiVd3LmEeYe+Cm6WhhM+eh+lYaVSs3hWmeVPnepV3lDm6Mfu1/IqQvYj6LRo8hlhkdx2KMSXFzWA==
   dependencies:
     "@types/react" "*"
     "@types/yup" "*"
@@ -2913,6 +2913,11 @@
   dependencies:
     "@types/prop-types" "*"
     csstype "^3.0.2"
+
+"@types/uuid@^8.3.0":
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-8.3.0.tgz#215c231dff736d5ba92410e6d602050cce7e273f"
+  integrity sha512-eQ9qFW/fhfGJF8WKHGEHZEyVWfZxrT+6CLIJGBcZPfxUh/+BnEj+UCGYMlr9qZuX/2AltsvwrGqp0LhEW8D0zQ==
 
 "@types/yargs-parser@*":
   version "15.0.0"
