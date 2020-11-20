@@ -35,7 +35,7 @@ const Communicator: FC<{
     }
 
     const updatedIndex = config.messages.findIndex(({ updated }) => updated)
-    if (updatedIndex > 0) {
+    if (updatedIndex >= 0) {
       setMessages([
         ...config.messages.slice(0, updatedIndex),
         { ...config.messages[updatedIndex], updated: false }
