@@ -54,26 +54,30 @@ export const sessionDataTransform = (
     const { type, insertIndex, ...newProposal } = data
     return {
       ...record,
-      proposals: record.proposals.reduce(
-        (res: Proposals, proposal, index) =>
-          index === insertIndex
-            ? [...res, newProposal, proposal]
-            : [...res, proposal],
-        []
-      )
+      proposals: record.proposals.length
+        ? record.proposals.reduce(
+            (res: Proposals, proposal, index) =>
+              index === insertIndex
+                ? [...res, newProposal, proposal]
+                : [...res, proposal],
+            []
+          )
+        : [newProposal]
     }
   }
   if (data.type === 'insertProposalAfter') {
     const { type, insertIndex, ...newProposal } = data
     return {
       ...record,
-      proposals: record.proposals.reduce(
-        (res: Proposals, proposal, index) =>
-          index === insertIndex
-            ? [...res, proposal, newProposal]
-            : [...res, proposal],
-        []
-      )
+      proposals: record.proposals.length
+        ? record.proposals.reduce(
+            (res: Proposals, proposal, index) =>
+              index === insertIndex
+                ? [...res, proposal, newProposal]
+                : [...res, proposal],
+            []
+          )
+        : [newProposal]
     }
   }
 
