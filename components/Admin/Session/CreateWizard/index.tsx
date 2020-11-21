@@ -21,7 +21,7 @@ import {
   Tooltip,
   Toolbar
 } from '@material-ui/core'
-import { ec } from './proposalTemplates'
+import { ec, inquiry } from './proposalTemplates'
 
 const CreateWizard: FC<Omit<FormWithRedirectProps, 'render'>> = (props) => {
   const render = useCallback((formProps) => <Form {...formProps} />, [])
@@ -67,8 +67,7 @@ const proposalsChoices = [
     name: 'ECサイト用'
   },
   {
-    id:
-      '[{"content": {"delay": 500,"type": "string","props": {"children": "いらっしゃいませ！"}}}]',
+    id: inquiry,
     title:
       '名前や住所等の個人情報及び、アンケート式の選択フォームや自由入力のテキストエリアを備えたテンプレートです。お問い合わせフォームやお申込みフォームなどに最適です。',
     name: 'お問い合わせフォーム用'

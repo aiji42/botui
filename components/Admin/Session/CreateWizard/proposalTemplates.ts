@@ -311,3 +311,129 @@ export const ec = JSON.stringify([
     }
   }
 ])
+
+export const inquiry = JSON.stringify([
+  {
+    content: {
+      delay: 500,
+      type: 'string',
+      props: {
+        children: 'こんにちは。'
+      }
+    }
+  },
+  {
+    content: {
+      delay: 500,
+      type: 'string',
+      props: {
+        children: 'お問い合わせの内容で当てはまるものを選択して下さい。'
+      }
+    }
+  },
+  {
+    human: true,
+    content: {
+      type: 'form',
+      props: {
+        inputs: [
+          {
+            title: '資料がほしい',
+            value: 'document'
+          },
+          {
+            title: '話を聞きいてみたい',
+            value: 'hearing'
+          },
+          {
+            title: 'その他',
+            value: 'other'
+          }
+        ],
+        name: 'inquiry',
+        type: 'FormCustomCheckbox',
+        required: true
+      }
+    }
+  },
+  {
+    content: {
+      delay: 500,
+      type: 'string',
+      props: {
+        children: '続いてお名前を教えて下さい。'
+      }
+    }
+  },
+  {
+    human: true,
+    content: {
+      type: 'form',
+      props: {
+        type: 'FormName',
+        status: {
+          kana: true,
+          kanaType: 'hiragana'
+        }
+      }
+    }
+  },
+  {
+    content: {
+      delay: 500,
+      type: 'string',
+      props: {
+        children: 'ご連絡先をご入力ください。'
+      }
+    }
+  },
+  {
+    human: true,
+    content: {
+      type: 'form',
+      props: {
+        type: 'FormEmail'
+      }
+    }
+  },
+  {
+    human: true,
+    content: {
+      type: 'form',
+      props: {
+        type: 'FormTel'
+      }
+    }
+  },
+  {
+    content: {
+      delay: 500,
+      type: 'string',
+      props: {
+        children:
+          'ありがとうございます。他になにかお伝え事項がございましたら、ご入力をお願いします。'
+      }
+    }
+  },
+  {
+    human: true,
+    content: {
+      type: 'form',
+      props: {
+        name: 'note',
+        type: 'FormCustomTextarea',
+        title: 'お伝え事項'
+      }
+    }
+  },
+  {
+    content: {
+      type: 'string',
+      delay: 500,
+      props: {
+        children:
+          'ありがとうございます。ご入力いただいた内容でお問い合わせを承りました。後ほど弊社担当からご連絡を差し上げます。'
+      }
+    }
+  }
+])

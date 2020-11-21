@@ -12,7 +12,8 @@ import {
   CreateProps,
   useCreateController,
   useCheckMinimumRequiredProps,
-  EditContextProvider
+  EditContextProvider,
+  CreateContextProvider
 } from 'react-admin'
 import { Session } from '../../../@types/session'
 import Dashboard from './Dashboard'
@@ -39,7 +40,11 @@ export const SessionCreate: FC<CreateProps> = (props) => {
       active: false
     }
   })
-  return <CreateWizard {...createController} />
+  return (
+    <CreateContextProvider value={{ record, ...createController }}>
+      <CreateWizard {...createController} warnWhenUnsavedChanges />
+    </CreateContextProvider>
+  )
 }
 
 const Edit: FC<EditProps & { children: ReactElement }> = (props) => {
