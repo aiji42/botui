@@ -1,8 +1,20 @@
 import { FC, useCallback, useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
-import { Grid, Paper, makeStyles, Modal } from '@material-ui/core'
-import { SimpleFormProps } from 'react-admin'
-import { Session } from '../../../../@types/session'
+import { Grid, Paper, makeStyles, Modal, Box } from '@material-ui/core'
+import {
+  SimpleFormProps,
+  FormWithRedirect,
+  TextInput,
+  BooleanInput,
+  FormDataConsumer,
+  RadioButtonGroupInput,
+  Toolbar,
+  SaveButton,
+  DeleteButton,
+  required,
+  Labeled
+} from 'react-admin'
+import { Proposal, Proposals, Session } from '../../../../@types/session'
 import ProposalsTimeLine from './ProposalsTimeLine'
 import SessionCard from './SessionCard'
 import { EditProposalForm, EditSessionForm } from './Form'
@@ -11,6 +23,15 @@ import {
   InsertProposalData,
   EditSessionData
 } from '../modules'
+import EditProposalDialog from './Form/EditProposalDialog'
+import isColor from 'is-color'
+import { ColorInput, ImageInput } from '../parts'
+import SimplePreview from './Form/EditSessionForm/SimplePreview'
+import { useForm } from 'react-final-form'
+
+const colorValidator = (color: string) => {
+  return isColor(color) ? null : '入力内容が間違っています'
+}
 
 type DashboardProps = Omit<SimpleFormProps, 'children'>
 
@@ -41,173 +62,256 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const Dashboard: FC<DashboardProps> = (props) => {
-  const classes = useStyles()
-  const [previewOpen, setPreviewOpen] = useState<boolean>(false)
-  const [editingData, setEditingData] = useState<UpdateSessionData>({
-    ...props.record,
-    type: 'editSession'
-  } as EditSessionData)
-  const handlePreviewClose = useCallback(() => setPreviewOpen(false), [
-    setPreviewOpen
-  ])
-  const save: SimpleFormProps['save'] = useCallback(
-    (data, redirectTo, _a) => {
-      setEditingData(data)
-      if (props.save) props.save(data, redirectTo, _a)
-    },
-    [props.save, setEditingData]
+const initialProposal: Proposal = {
+  human: false,
+  content: {
+    type: 'string',
+    props: {
+      children: ''
+    }
+  },
+  before: '',
+  after: ''
+} as Proposal
+
+const ProposalEdit: FC<{ proposals: Proposals }> = (props) => {
+  const [editingProposal, setEditingProposal] = useState<Proposal>(
+    initialProposal
   )
-  useEffect(() => {
-    setEditingData((prevEditingData) => {
-      if (prevEditingData.type === 'editSession')
-        return {
-          ...props.record,
-          type: 'editSession'
-        }
-      if (prevEditingData.type === 'deleteProposal')
-        return {
-          ...props.record,
-          type: 'editSession'
-        }
-      if (prevEditingData.type === 'editProposal')
-        return {
-          ...props.record?.proposals[prevEditingData.targetIndex],
-          targetIndex: prevEditingData.targetIndex,
-          type: 'editProposal'
-        }
-      if (prevEditingData.type === 'insertProposalBefore')
-        return {
-          ...props.record?.proposals[prevEditingData.insertIndex],
-          targetIndex: prevEditingData.insertIndex,
-          type: 'editProposal'
-        }
-      if (prevEditingData.type === 'insertProposalAfter')
-        return {
-          ...props.record?.proposals[prevEditingData.insertIndex + 1],
-          targetIndex: prevEditingData.insertIndex + 1,
-          type: 'editProposal'
-        }
-    })
-  }, [props.record])
-  const handleSessionEdit = useCallback(() => {
-    setEditingData({
-      ...props.record,
-      type: 'editSession'
-    } as EditSessionData)
-  }, [props.record])
+  const [editingIndex, setEditingIndex] = useState<number>(0)
+  const [editingType, setEditingType] = useState<string>('')
+  const [editProposalDialogOpen, setEditProposalDialogOpen] = useState<boolean>(
+    false
+  )
+  const { change } = useForm()
+  const handleProposalSave = useCallback(
+    (newProposal: Proposal) => {
+      // type と index 同時に変更できないと、正しく動かない
+      if (editingType === 'edit')
+        change(
+          'proposals',
+          props.proposals.map((proposal, index) =>
+            index === editingIndex ? newProposal : proposal
+          )
+        )
+      if (editingType === 'insertBefore')
+        change('proposals', [
+          ...props.proposals.slice(0, editingIndex),
+          newProposal,
+          ...props.proposals.slice(editingIndex)
+        ])
+      if (editingType === 'insertAfter')
+        change('proposals', [
+          ...props.proposals.slice(0, editingIndex + 1),
+          newProposal,
+          ...props.proposals.slice(editingIndex + 1)
+        ])
+      if (editingType === 'delete')
+        change(
+          'proposals',
+          props.proposals.filter((_, index) => index !== editingIndex)
+        )
+      setEditProposalDialogOpen(false)
+    },
+    [editingIndex, editingType, props.proposals, setEditProposalDialogOpen]
+  )
   const handleDelete = useCallback(
     (index: number) => {
-      save(
-        {
-          type: 'deleteProposal',
-          targetIndex: index
-        },
-        false
-      )
+      setEditingIndex(index)
+      setEditingType('delete')
+      handleProposalSave(initialProposal)
     },
-    [save]
+    [setEditingIndex, setEditingType, handleProposalSave]
   )
   const handleEdit = useCallback(
     (index: number) => {
-      props.record &&
-        setEditingData({
-          ...props.record.proposals[index],
-          targetIndex: index,
-          type: 'editProposal'
-        })
+      setEditingIndex(index)
+      setEditingType('edit')
+      setEditingProposal(props.proposals[index])
+      setEditProposalDialogOpen(true)
     },
-    [setEditingData, props.record]
+    [
+      setEditingIndex,
+      setEditingProposal,
+      setEditingProposal,
+      setEditProposalDialogOpen,
+      props.proposals
+    ]
   )
   const handleInsertBefore = useCallback(
     (index: number) => {
-      setEditingData({
-        insertIndex: index,
-        type: 'insertProposalBefore'
-      } as InsertProposalData)
+      setEditingIndex(index)
+      setEditingType('insertBefore')
+      setEditingProposal(initialProposal)
+      setEditProposalDialogOpen(true)
     },
-    [setEditingData]
+    [
+      setEditingIndex,
+      setEditingProposal,
+      setEditingProposal,
+      setEditProposalDialogOpen
+    ]
   )
   const handleInsertAfter = useCallback(
     (index: number) => {
-      setEditingData({
-        insertIndex: index,
-        type: 'insertProposalAfter'
-      } as InsertProposalData)
+      setEditingIndex(index)
+      setEditingType('insertAfter')
+      setEditingProposal(initialProposal)
+      setEditProposalDialogOpen(true)
     },
-    [setEditingData]
+    [
+      setEditingIndex,
+      setEditingProposal,
+      setEditingProposal,
+      setEditProposalDialogOpen
+    ]
   )
 
-  if (props.record === undefined) return <></>
+  return (
+    <>
+      <ProposalsTimeLine
+        editing={false}
+        inserting={false}
+        proposals={props.proposals}
+        handleEdit={handleEdit}
+        handleDelete={handleDelete}
+        handleInsertBefore={handleInsertBefore}
+        handleInsertAfter={handleInsertAfter}
+      />
+      <EditProposalDialog
+        proposal={editingProposal}
+        handleClose={() => setEditProposalDialogOpen(false)}
+        handleSave={handleProposalSave}
+        open={editProposalDialogOpen}
+      />
+    </>
+  )
+}
+
+const Dashboard: FC<DashboardProps> = (props) => {
+  const classes = useStyles()
 
   return (
-    <Grid container spacing={2} className={classes.root}>
-      <Grid item xs={4}>
-        <Grid container spacing={1}>
-          <Grid item xs={12}>
-            <SessionCard
-              {...(props.record as Session)}
-              onClickEdit={handleSessionEdit}
-              onClickPreview={() => setPreviewOpen(true)}
-            />
-            <Modal open={previewOpen} onClose={handlePreviewClose}>
-              <div className={classes.preview}>
-                <Preview
-                  proposals={props.record.proposals}
-                  chatConfig={{
-                    ...(props.record as Session),
-                    messages: [],
-                    messagesCount: props.record.proposals.length
-                  }}
-                />
-              </div>
-            </Modal>
+    <FormWithRedirect
+      {...props}
+      render={(formProps: any) => (
+        <Grid container spacing={2} className={classes.root}>
+          <Grid item xs={4}>
+            <FormDataConsumer>
+              {({ formData }) => (
+                <ProposalEdit proposals={formData.proposals} />
+              )}
+            </FormDataConsumer>
           </Grid>
-          <Grid item xs={12} className={classes.proposalList}>
-            <ProposalsTimeLine
-              editing={editingData.type === 'editProposal'}
-              editingIndex={
-                editingData.type === 'editProposal'
-                  ? editingData.targetIndex
-                  : undefined
-              }
-              inserting={
-                editingData.type === 'insertProposalBefore' ||
-                editingData.type === 'insertProposalAfter'
-              }
-              insertingIndex={
-                editingData.type === 'insertProposalBefore'
-                  ? editingData.insertIndex
-                  : editingData.type === 'insertProposalAfter'
-                  ? editingData.insertIndex + 1
-                  : undefined
-              }
-              proposals={props.record.proposals}
-              handleEdit={handleEdit}
-              handleDelete={handleDelete}
-              handleInsertBefore={handleInsertBefore}
-              handleInsertAfter={handleInsertAfter}
-            />
+          <Grid item xs={8}>
+            <Paper style={{ minHeight: 500 }}>
+              <Grid container spacing={1}>
+                <Grid item xs={12}>
+                  <Box p={2}>
+                    <TextInput source="title" resource="sessions" />
+                    <BooleanInput source="active" resource="sessions" />
+                  </Box>
+                </Grid>
+                <Grid item xs={6}>
+                  <Box p={2}>
+                    <ColorInput
+                      source="theme.header.backgroundColor"
+                      resource="sessions"
+                      validate={[required(), colorValidator]}
+                      label="ヘッダー"
+                    />
+                    <ColorInput
+                      source="theme.agent.backgroundColor"
+                      resource="sessions"
+                      validate={[required(), colorValidator]}
+                      label="オペレーターメッセージバルーン"
+                    />
+                    <ColorInput
+                      source="theme.agent.color"
+                      resource="sessions"
+                      validate={[required(), colorValidator]}
+                      label="オペレーターメッセージ"
+                    />
+                    <ColorInput
+                      source="theme.user.backgroundColor"
+                      resource="sessions"
+                      validate={[required(), colorValidator]}
+                      label="ユーザメッセージバルーン"
+                    />
+                    <ColorInput
+                      source="theme.user.color"
+                      resource="sessions"
+                      validate={[required(), colorValidator]}
+                      label="ユーザーメッセージ"
+                    />
+                    <ColorInput
+                      source="theme.footer.backgroundColor"
+                      resource="sessions"
+                      validate={[required(), colorValidator]}
+                      label="フッター"
+                    />
+                    <ColorInput
+                      source="theme.progressBar.backgroundColor"
+                      resource="sessions"
+                      validate={[required(), colorValidator]}
+                      label="プログレスバー"
+                    />
+
+                    <FormDataConsumer>
+                      {({ formData }) => (
+                        <ImageInput
+                          source="images.logo.key"
+                          resource="sessions"
+                          label="ヘッダーロゴ"
+                          sessionId={formData.id}
+                        />
+                      )}
+                    </FormDataConsumer>
+                    <RadioButtonGroupInput
+                      source="images.agent"
+                      resource="sessions"
+                      initialValue="/operator_female1.jpg"
+                      label="オペレーターアイコン"
+                      row
+                      fullWidth
+                      choices={[
+                        { id: '/operator_female1.jpg', name: '女性1' },
+                        { id: '/operator_female2.jpg', name: '女性2' },
+                        { id: '/operator_female3.jpg', name: '女性3' },
+                        { id: '/operator_male1.jpg', name: '男性1' },
+                        { id: '/operator_bot1.jpg', name: 'ボット' }
+                      ]}
+                    />
+                  </Box>
+                </Grid>
+                <Grid item xs={6}>
+                  <FormDataConsumer>
+                    {({ formData }) => (
+                      <Labeled label="プレビュー">
+                        <SimplePreview {...formData} />
+                      </Labeled>
+                    )}
+                  </FormDataConsumer>
+                </Grid>
+              </Grid>
+              <Box display="flex" justifyContent="space-between" width="100%">
+                <SaveButton
+                  saving={formProps.saving}
+                  disabled={formProps.pristine}
+                  invalid={formProps.invalid}
+                  handleSubmitWithRedirect={formProps.handleSubmitWithRedirect}
+                />
+                <DeleteButton
+                  record={formProps.record}
+                  resource="sessions"
+                  undoable={false}
+                />
+              </Box>
+            </Paper>
           </Grid>
         </Grid>
-      </Grid>
-      <Grid item xs={8}>
-        <Paper style={{ minHeight: 500 }}>
-          <>
-            {editingData && editingData.type === 'editSession' && (
-              <EditSessionForm {...props} save={save} record={editingData} />
-            )}
-            {editingData && editingData.type !== 'editSession' && (
-              <EditProposalForm
-                {...props}
-                save={save}
-                record={{ id: '', ...editingData }}
-              />
-            )}
-          </>
-        </Paper>
-      </Grid>
-    </Grid>
+      )}
+    />
   )
 }
 
