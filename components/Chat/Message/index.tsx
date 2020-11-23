@@ -31,7 +31,11 @@ const style = {
   })
 }
 
-const Message: FC<{ preview?: boolean }> = ({ preview = false }) => {
+interface Props {
+  preview?: boolean
+}
+
+const Message: FC<Props> = ({ preview = false }) => {
   const name = useMemo(() => nextId(), [])
   useEffect(() => {
     if (preview) return

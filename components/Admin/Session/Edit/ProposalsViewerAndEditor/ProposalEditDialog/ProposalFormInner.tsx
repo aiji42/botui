@@ -1,22 +1,16 @@
 import { FC } from 'react'
 import {
-  TextInput,
   BooleanInput,
-  SimpleForm,
   SelectInput,
+  required,
+  TextInput,
   FormDataConsumer,
   ArrayInput,
   SimpleFormIterator,
-  SimpleFormProps,
-  required,
-  Toolbar,
-  ToolbarProps,
-  SaveButton,
   useRecordContext
 } from 'react-admin'
 import { Session } from '../../../../../../@types/session'
-import { ImageInput } from '../../../parts'
-import DelayNumberSlider from './DelayNumberSlider'
+import { ImageInput, DelayNumberSlider } from '../../../parts'
 
 const formTypeChoices = [
   { id: 'FormName', name: '氏名' },
@@ -42,24 +36,12 @@ const formTypeChoices = [
   { id: 'FormTel', name: '電話番号' }
 ]
 
-const EditProposalToolbar: FC<ToolbarProps> = (props) => (
-  <Toolbar>
-    <SaveButton
-      disabled={props.pristine}
-      invalid={props.invalid}
-      handleSubmitWithRedirect={props.handleSubmitWithRedirect}
-    />
-  </Toolbar>
-)
-
-const EditProposalForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
-  const { record } = useRecordContext({ record: {} as Session })
+const ProposalFormInner: FC = () => {
+  const {
+    record: { id: sessionId }
+  } = useRecordContext({ record: {} as Session })
   return (
-    <SimpleForm
-      {...props}
-      destroyOnUnregister
-      toolbar={<EditProposalToolbar />}
-    >
+    <>
       <BooleanInput source="human" label="ユーザ側" />
       <SelectInput
         source="content.type"
@@ -80,95 +62,72 @@ const EditProposalForm: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
       <TextInput source="before" label="before function" fullWidth multiline />
       <TextInput source="after" label="after function" fullWidth multiline />
       <FormDataConsumer>
-        {({ formData }) =>
-          formData.content?.type === 'string' && (
-            <TextInput
-              source="content.props.children"
-              label="メッセージ本文"
-              validate={[required()]}
-              fullWidth
-              multiline
-              rows={3}
-            />
-          )
-        }
+        {({ formData }) => (
+          <>
+            {formData.content?.type === 'string' && (
+              <TextInput
+                source="content.props.children"
+                label="メッセージ本文"
+                validate={[required()]}
+                fullWidth
+                multiline
+                rows={3}
+              />
+            )}
+            {formData.content?.type === 'image' && (
+              <ImageInput
+                source="content.props.imgKey"
+                label="画像"
+                sessionId={sessionId}
+              />
+            )}
+            {formData.content?.type === 'form' && (
+              <SelectInput
+                fullWidth
+                source="content.props.type"
+                label="form type"
+                choices={formTypeChoices}
+                validate={[required()]}
+              />
+            )}
+          </>
+        )}
       </FormDataConsumer>
       <FormDataConsumer>
-        {({ formData }) =>
-          formData.content?.type === 'image' && (
-            <ImageInput
-              source="content.props.imgKey"
-              label="画像"
-              sessionId={record.id}
-            />
+        {({ formData }) => {
+          if (formData.content?.type !== 'form') return <></>
+          return (
+            <>
+              {formData.content?.props?.type === 'FormName' && (
+                <FormNameState />
+              )}
+              {formData.content?.props?.type === 'FormBirthDay' && (
+                <FormBirthDayState />
+              )}
+              {formData.content?.props?.type === 'FormCustomRadioGroup' && (
+                <FormCustomRadioGroupOption />
+              )}
+              {formData.content?.props?.type === 'FormCustomCheckbox' && (
+                <FormCustomCheckboxOption />
+              )}
+              {formData.content?.props?.type === 'FormCustomSelect' && (
+                <FormCustomSelectOption />
+              )}
+              {formData.content?.props?.type === 'FormCustomInput' && (
+                <FormCustomInputOption />
+              )}
+              {formData.content?.props?.type === 'FormCustomTextarea' && (
+                <FormCustomTextareaOption />
+              )}
+            </>
           )
-        }
+        }}
       </FormDataConsumer>
-      <FormDataConsumer>
-        {({ formData }) =>
-          formData.content?.type === 'form' && (
-            <SelectInput
-              fullWidth
-              source="content.props.type"
-              label="form type"
-              choices={formTypeChoices}
-              validate={[required()]}
-            />
-          )
-        }
-      </FormDataConsumer>
-      <FormDataConsumer>
-        {({ formData }) =>
-          formData.content?.props?.type === 'FormName' && <FormNameState />
-        }
-      </FormDataConsumer>
-      <FormDataConsumer>
-        {({ formData }) =>
-          formData.content?.props?.type === 'FormBirthDay' && (
-            <FormBirthDayState />
-          )
-        }
-      </FormDataConsumer>
-      <FormDataConsumer>
-        {({ formData }) =>
-          formData.content?.props?.type === 'FormCustomRadioGroup' && (
-            <FormCustomRadioGroupOption />
-          )
-        }
-      </FormDataConsumer>
-      <FormDataConsumer>
-        {({ formData }) =>
-          formData.content?.props?.type === 'FormCustomCheckbox' && (
-            <FormCustomCheckboxOption />
-          )
-        }
-      </FormDataConsumer>
-      <FormDataConsumer>
-        {({ formData }) =>
-          formData.content?.props?.type === 'FormCustomSelect' && (
-            <FormCustomSelectOption />
-          )
-        }
-      </FormDataConsumer>
-      <FormDataConsumer>
-        {({ formData }) =>
-          formData.content?.props?.type === 'FormCustomInput' && (
-            <FormCustomInputOption />
-          )
-        }
-      </FormDataConsumer>
-      <FormDataConsumer>
-        {({ formData }) =>
-          formData.content?.props?.type === 'FormCustomTextarea' && (
-            <FormCustomTextareaOption />
-          )
-        }
-      </FormDataConsumer>
-    </SimpleForm>
+    </>
   )
 }
 
-export default EditProposalForm
+export default ProposalFormInner
 
 const FormNameState: FC = (props) => {
   return (
@@ -259,7 +218,7 @@ const FormCustomSelectOption: FC = (props) => {
     <ArrayInput
       {...props}
       source="content.props.selects"
-      label="selectbox"
+      label="select box"
       validate={[required()]}
     >
       <SimpleFormIterator>

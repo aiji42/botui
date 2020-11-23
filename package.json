@@ -53,7 +53,7 @@
     "use-cors-state": "^1.1.1",
     "use-postal-jp": "^1.1.4",
     "uuid": "^8.3.1",
-    "yup": "^0.29.3"
+    "yup": "^0.30.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.8.1",
@@ -66,7 +66,7 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.21.5",
-    "eslint-plugin-standard": "^4.1.0",
+    "eslint-plugin-standard": "^5.0.0",
     "husky": "^4.3.0",
     "lint-staged": "^10.5.1",
     "prettier": "^2.1.2"

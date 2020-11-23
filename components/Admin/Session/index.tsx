@@ -1,24 +1,18 @@
-import { FC, ReactElement } from 'react'
+import { FC } from 'react'
 import {
   Datagrid,
-  EditView,
-  useEditController,
   List,
   TextField,
   BooleanField,
   useNotify,
   useRefresh,
-  EditProps,
   CreateProps,
   useCreateController,
-  useCheckMinimumRequiredProps,
-  EditContextProvider,
-  CreateContextProvider
+  CreateContextProvider,
+  Edit
 } from 'react-admin'
-import { Session } from '../../../@types/session'
-import Dashboard from './Dashboard'
+import EditForm from './Edit'
 import CreateWizard from './CreateWizard'
-import { sessionDataTransform, UpdateSessionData } from './modules'
 
 export const SessionList: FC = (props) => {
   return (
@@ -47,19 +41,6 @@ export const SessionCreate: FC<CreateProps> = (props) => {
   )
 }
 
-const Edit: FC<EditProps & { children: ReactElement }> = (props) => {
-  useCheckMinimumRequiredProps('Edit', ['children'], props)
-  const { record, ...editController } = useEditController<Session>(props)
-  editController.setTransform((data: UpdateSessionData) =>
-    sessionDataTransform(record, data)
-  )
-  return (
-    <EditContextProvider value={{ record, ...editController }}>
-      <EditView {...props} {...editController} record={record} />
-    </EditContextProvider>
-  )
-}
-
 export const SessionEdit: FC = (props) => {
   const notify = useNotify()
   const refresh = useRefresh()
@@ -67,13 +48,12 @@ export const SessionEdit: FC = (props) => {
   return (
     <Edit
       {...props}
-      undoable={false}
       onSuccess={() => {
-        notify('ra.notification.updated', 'info', { smart_count: 1 }, false)
+        notify('ra.notification.updated', 'info', { smart_count: 1 }, true)
         refresh()
       }}
     >
-      <Dashboard />
+      <EditForm warnWhenUnsavedChanges />
     </Edit>
   )
 }

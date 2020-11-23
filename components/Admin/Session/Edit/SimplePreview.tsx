@@ -1,11 +1,11 @@
 import { FC } from 'react'
-import { Proposals, Session } from '../../../../../../@types/session'
+import { Proposals, Session } from '../../../../@types/session'
 import { css } from '@emotion/react'
-import MessageContext from '../../../../../../hooks/use-message-context'
-import ChatConfigContext from '../../../../../../hooks/use-chat-config-context'
-import Header from '../../../../../Chat/Header'
-import Footer from '../../../../../Chat/Footer'
-import Message from '../../../../../Chat/Message'
+import MessageContext from '../../../../hooks/use-message-context'
+import ChatConfigContext from '../../../../hooks/use-chat-config-context'
+import Header from '../../../Chat/Header'
+import Footer from '../../../Chat/Footer'
+import Message from '../../../Chat/Message'
 
 const sampleMessages: Proposals = [
   {
@@ -49,7 +49,8 @@ const sampleMessages: Proposals = [
 const style = {
   base: css({
     backgroundColor: 'white',
-    width: 360
+    maxWidth: 360,
+    width: '100%'
   }),
   body: css({
     padding: 5,
@@ -73,7 +74,7 @@ const SimplePreview: FC<Session> = (props) => {
         <div css={style.body}>
           {sampleMessages.map((message, i) => (
             <MessageContext message={message} key={i}>
-              <Message />
+              <Message preview />
             </MessageContext>
           ))}
         </div>
