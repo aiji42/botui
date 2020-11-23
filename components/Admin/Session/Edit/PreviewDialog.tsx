@@ -23,15 +23,22 @@ const useStyleDialogContent = makeStyles(() => ({
   }
 }))
 
+const useStyleButtonIcon = makeStyles(() => ({
+  root: {
+    paddingRight: '0.5em'
+  }
+}))
+
 const PreviewDialog: FC = () => {
   const { values } = useFormState<Session>()
   const [open, setOpen] = useState(false)
   const dialogClasses = useStyleDialog()
   const dialogContentClasses = useStyleDialogContent()
+  const buttonIconClasses = useStyleButtonIcon()
   return (
     <>
-      <Button onClick={() => setOpen(true)}>
-        <Visibility />
+      <Button onClick={() => setOpen(true)} variant="contained">
+        <Visibility classes={buttonIconClasses} fontSize="small" />
         プレビュー
       </Button>
       <Dialog

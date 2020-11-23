@@ -12,6 +12,7 @@ interface Props {
 
 const ProposalEditDialog: FC<Props> = (props) => {
   const [trySubmit, setTrySubmit] = useState<boolean>(false)
+  const [submittable, setSubmittable] = useState<boolean>(false)
   const handleClickSave = useCallback(() => setTrySubmit(true), [setTrySubmit])
 
   return (
@@ -21,12 +22,22 @@ const ProposalEditDialog: FC<Props> = (props) => {
           initialValues={props.proposal}
           onSubmit={props.handleSave}
           trySubmit={trySubmit}
+          handleSubmittable={setSubmittable}
           handleTrySubmit={setTrySubmit}
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={props.handleClose}>cancel</Button>
-        <Button onClick={handleClickSave}>save</Button>
+        <Button onClick={props.handleClose} color="default">
+          cancel
+        </Button>
+        <Button
+          onClick={handleClickSave}
+          disabled={!submittable}
+          variant="contained"
+          color="primary"
+        >
+          save
+        </Button>
       </DialogActions>
     </Dialog>
   )
