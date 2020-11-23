@@ -52,22 +52,20 @@ const Dashboard: FC<DashboardProps> = (props) => {
             <ProposalViewerAndEditor />
           </Grid>
           <Grid item xs={8}>
-            <Paper style={{ minHeight: 500 }}>
-              <SessionFormInner />
-              <Box display="flex" justifyContent="space-between" width="100%">
-                <SaveButton
-                  saving={formProps.saving}
-                  disabled={formProps.pristine}
-                  invalid={formProps.invalid}
-                  handleSubmitWithRedirect={formProps.handleSubmitWithRedirect}
-                />
-                <DeleteButton
-                  record={formProps.record}
-                  resource="sessions"
-                  undoable={false}
-                />
-              </Box>
-            </Paper>
+            <SessionFormInner />
+            <Box display="flex" justifyContent="space-between" width="100%">
+              <SaveButton
+                saving={formProps.saving}
+                disabled={formProps.pristine}
+                invalid={formProps.invalid}
+                handleSubmitWithRedirect={formProps.handleSubmitWithRedirect}
+              />
+              <DeleteButton
+                record={formProps.record}
+                resource="sessions"
+                undoable={false}
+              />
+            </Box>
           </Grid>
         </Grid>
       )}
