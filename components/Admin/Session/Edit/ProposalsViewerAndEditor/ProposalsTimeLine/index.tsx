@@ -18,7 +18,6 @@ interface Props {
   editing: boolean
   editingIndex?: number
   inserting: boolean
-  insertingIndex?: number
   handleEdit: (index: number) => void
   handleDelete: (index: number) => void
   handleInsert: (index: number) => void
@@ -52,7 +51,6 @@ const ProposalsTimeLine: FC<Props> = ({
   editing,
   editingIndex,
   inserting,
-  insertingIndex,
   ...handlers
 }) => {
   const classes = useStyles()
@@ -76,15 +74,9 @@ const ProposalsTimeLine: FC<Props> = ({
           align={proposal.human ? 'left' : 'right'}
           className={classes.timeline}
         >
-          {inserting && insertingIndex === index && (
+          {inserting && editingIndex === index && (
             <Zoom in>
-              <TimelineItem>
-                <TimelineSeparator>
-                  <TimelineDot color="primary" />
-                  <TimelineConnector className={classes.timelineConnector} />
-                </TimelineSeparator>
-                <TimelineContent />
-              </TimelineItem>
+              <InsertingTimeLineItem />
             </Zoom>
           )}
           <TimelineItem>
@@ -122,15 +114,9 @@ const ProposalsTimeLine: FC<Props> = ({
         </Timeline>
       ))}
       <Timeline className={classes.timeline}>
-        {inserting && insertingIndex === proposals.length && (
+        {inserting && editingIndex === proposals.length && (
           <Zoom in>
-            <TimelineItem>
-              <TimelineSeparator>
-                <TimelineDot color="primary" />
-                <TimelineConnector className={classes.timelineConnector} />
-              </TimelineSeparator>
-              <TimelineContent />
-            </TimelineItem>
+            <InsertingTimeLineItem />
           </Zoom>
         )}
         <TimelineItem>
@@ -147,3 +133,25 @@ const ProposalsTimeLine: FC<Props> = ({
 }
 
 export default ProposalsTimeLine
+
+const useInsertingTimeLineItemStyles = makeStyles((theme) => ({
+  timelineConnector: {
+    minHeight: theme.spacing(10)
+  },
+  dot: {
+    backgroundColor: theme.palette.warning.main
+  }
+}))
+
+const InsertingTimeLineItem = () => {
+  const classes = useInsertingTimeLineItemStyles()
+  return (
+    <TimelineItem>
+      <TimelineSeparator>
+        <TimelineDot className={classes.dot} />
+        <TimelineConnector className={classes.timelineConnector} />
+      </TimelineSeparator>
+      <TimelineContent />
+    </TimelineItem>
+  )
+}

@@ -2,7 +2,7 @@ import { FC, useCallback, useState } from 'react'
 import { makeStyles } from '@material-ui/core'
 import { SpeedDial, SpeedDialAction, SpeedDialIcon } from '@material-ui/lab'
 import {
-  Textsms as TextsmsIcon,
+  Textsms as TextSmsIcon,
   RateReview as RateReviewIcon,
   Edit as EditIcon,
   Delete as DeleteIcon,
@@ -33,6 +33,15 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+const useSelectedStyles = makeStyles((theme) => ({
+  fab: {
+    backgroundColor: theme.palette.warning.main,
+    '&:hover': {
+      backgroundColor: theme.palette.warning.main
+    }
+  }
+}))
+
 interface Props extends Proposal {
   direction: 'left' | 'right'
   selected?: boolean
@@ -51,6 +60,7 @@ const TimelineDotWithSpeedDial: FC<Props> = (props) => {
     setOpen(true)
   }, [setOpen])
   const classes = useStyles()
+  const selectedClasses = useSelectedStyles()
 
   return (
     <SpeedDial
@@ -59,7 +69,7 @@ const TimelineDotWithSpeedDial: FC<Props> = (props) => {
         <SpeedDialIcon
           icon={
             props.content.type === 'string' ? (
-              <TextsmsIcon />
+              <TextSmsIcon />
             ) : props.content.type === 'form' ? (
               <RateReviewIcon />
             ) : (
@@ -74,7 +84,7 @@ const TimelineDotWithSpeedDial: FC<Props> = (props) => {
       onOpen={handleOpen}
       open={open}
       direction={props.direction}
-      classes={classes}
+      classes={props.selected ? { ...classes, ...selectedClasses } : classes}
     >
       <SpeedDialAction
         icon={<DeleteIcon />}

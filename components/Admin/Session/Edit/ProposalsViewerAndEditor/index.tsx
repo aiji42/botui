@@ -67,8 +67,13 @@ const ProposalViewerAndEditor: FC = () => {
   return (
     <>
       <ProposalsTimeLine
-        editing={false}
-        inserting={false}
+        editing={
+          editProposalDialogOpen && nextAction.type === ActionType.ACTION_EDIT
+        }
+        inserting={
+          editProposalDialogOpen && nextAction.type === ActionType.ACTION_INSERT
+        }
+        editingIndex={nextAction.index}
         proposals={proposals}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
