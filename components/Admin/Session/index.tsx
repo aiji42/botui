@@ -53,7 +53,7 @@ export const SessionEdit: FC = (props) => {
         refresh()
       }}
     >
-      <EditForm />
+      <EditForm warnWhenUnsavedChanges />
     </Edit>
   )
 }
