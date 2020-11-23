@@ -1,15 +1,9 @@
-import {
-  FC,
-  Reducer,
-  useCallback,
-  useEffect,
-  useReducer,
-  useState
-} from 'react'
-import { Proposal, Proposals, Session } from '../../../../../@types/session'
-import { useForm, useFormState } from 'react-final-form'
+import { FC, useCallback, useEffect, useReducer, useState } from 'react'
+import { Proposal, Session } from '../../../../../@types/session'
+import { useForm, useFormState, Field } from 'react-final-form'
 import ProposalsTimeLine from './ProposalsTimeLine'
 import ProposalEditDialog from './ProposalEditDialog'
+import reducer, { ActionType, EditingProposalAction } from './reducer'
 
 const initialProposal: Proposal = {
   human: false,
@@ -22,40 +16,6 @@ const initialProposal: Proposal = {
   before: '',
   after: ''
 } as Proposal
-
-enum ActionType {
-  ACTION_EDIT = 'EDIT',
-  ACTION_INSERT = 'INSERT',
-  ACTION_DELETE = 'DELETE'
-}
-
-interface EditingProposalAction {
-  type: ActionType
-  index: number
-  newProposal: Proposal
-}
-
-const reducer: Reducer<Proposals, EditingProposalAction> = (
-  proposals,
-  action
-): Proposals => {
-  switch (action.type) {
-    case ActionType.ACTION_EDIT:
-      return proposals.map((proposal, index) =>
-        index === action.index ? action.newProposal : proposal
-      )
-    case ActionType.ACTION_INSERT:
-      return [
-        ...proposals.slice(0, action.index),
-        action.newProposal,
-        ...proposals.slice(action.index)
-      ]
-    case ActionType.ACTION_DELETE:
-      return proposals.filter((_, index) => index !== action.index)
-    default:
-      return proposals
-  }
-}
 
 const ProposalViewerAndEditor: FC = () => {
   const {
@@ -114,6 +74,7 @@ const ProposalViewerAndEditor: FC = () => {
         handleDelete={handleDelete}
         handleInsert={handleInsert}
       />
+      <Field name="proposals">{() => null}</Field>
       <ProposalEditDialog
         proposal={
           nextAction.type === ActionType.ACTION_EDIT
