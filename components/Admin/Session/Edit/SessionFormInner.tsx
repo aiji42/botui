@@ -10,7 +10,7 @@ import {
 } from 'react-admin'
 import { ImageInput, ColorInput } from '../parts'
 import isColor from 'is-color'
-import SimplePreview from '../Dashboard/Form/EditSessionForm/SimplePreview'
+import SimplePreview from './SimplePreview'
 
 const colorValidator = (color: string) => {
   return isColor(color) ? null : '入力内容が間違っています'
@@ -26,7 +26,7 @@ const SessionFormInner: FC = () => {
         </Box>
       </Grid>
       <Grid item xs={6}>
-        <Box p={2}>
+        <Box p={1}>
           <ColorInput
             source="theme.header.backgroundColor"
             resource="sessions"

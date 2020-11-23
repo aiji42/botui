@@ -8,8 +8,7 @@ import {
   ArrayInput,
   SimpleFormIterator
 } from 'react-admin'
-import { ImageInput } from '../../../parts'
-import DelayNumberSlider from '../../../Dashboard/Form/EditProposalForm/DelayNumberSlider'
+import { ImageInput, DelayNumberSlider } from '../../../parts'
 
 const formTypeChoices = [
   { id: 'FormName', name: '氏名' },

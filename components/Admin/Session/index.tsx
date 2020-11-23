@@ -11,7 +11,7 @@ import {
   CreateContextProvider,
   Edit
 } from 'react-admin'
-import Dashboard from './Dashboard'
+import EditForm from './Edit'
 import CreateWizard from './CreateWizard'
 
 export const SessionList: FC = (props) => {
@@ -53,7 +53,7 @@ export const SessionEdit: FC = (props) => {
         refresh()
       }}
     >
-      <Dashboard />
+      <EditForm />
     </Edit>
   )
 }
