@@ -10,7 +10,7 @@ import {
   VerticalAlignBottom,
   InsertPhoto as InsertPhotoIcon
 } from '@material-ui/icons'
-import { Proposal } from '../../../../../@types/session'
+import { Proposal } from '../../../../../../@types/session'
 
 const useStyles = makeStyles((theme) => ({
   root: {

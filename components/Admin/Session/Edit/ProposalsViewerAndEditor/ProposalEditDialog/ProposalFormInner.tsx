@@ -1,7 +1,5 @@
-import { FC, useCallback, useEffect, useState } from 'react'
-import { Dialog, DialogContent, DialogActions, Button } from '@material-ui/core'
+import { FC } from 'react'
 import {
-  useRecordContext,
   BooleanInput,
   SelectInput,
   required,
@@ -10,86 +8,34 @@ import {
   ArrayInput,
   SimpleFormIterator
 } from 'react-admin'
-import {
-  Form,
-  useForm,
-  FormRenderProps,
-  useFormState,
-  FormProps
-} from 'react-final-form'
-import arrayMutators from 'final-form-arrays'
-import { Proposal, Proposals, Session } from '../../../../../@types/session'
-import { ImageInput } from '../../parts'
-import DelayNumberSlider from './EditProposalForm/DelayNumberSlider'
+import { ImageInput } from '../../../parts'
+import DelayNumberSlider from '../../../Dashboard/Form/EditProposalForm/DelayNumberSlider'
 
-interface Props {
-  proposal: Proposal
-  open: boolean
-  handleClose: () => void
-  handleSave: (proposal: Proposal) => void
-}
+const formTypeChoices = [
+  { id: 'FormName', name: '氏名' },
+  { id: 'FormAddress', name: '住所' },
+  { id: 'FormBirthDay', name: '生年月日' },
+  { id: 'FormConfirm', name: '確認' },
+  { id: 'FormCreditCard', name: 'クレジットカード' },
+  { id: 'FormCustomInput', name: 'カスタムインプット' },
+  { id: 'FormCustomSelect', name: 'カスタムセレクト' },
+  {
+    id: 'FormCustomRadioGroup',
+    name: 'カスタムラジオボタン'
+  },
+  {
+    id: 'FormCustomCheckbox',
+    name: 'カスタムチェックボックス'
+  },
+  {
+    id: 'FormCustomTextarea',
+    name: 'カスタムテキストエリア'
+  },
+  { id: 'FormEmail', name: 'メールアドレス' },
+  { id: 'FormTel', name: '電話番号' }
+]
 
-const EditProposalDialog: FC<Props> = (props) => {
-  const [trySubmit, setTrySubmit] = useState<boolean>(false)
-  const handleClickSave = useCallback(() => setTrySubmit(true), [setTrySubmit])
-
-  return (
-    <Dialog open={props.open}>
-      <DialogContent>
-        <FormWrapper
-          initialValues={props.proposal}
-          onSubmit={props.handleSave}
-          trySubmit={trySubmit}
-          handleTrySubmit={setTrySubmit}
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={props.handleClose}>cancel</Button>
-        <Button onClick={handleClickSave}>save</Button>
-      </DialogActions>
-    </Dialog>
-  )
-}
-
-interface FormFunctions {
-  trySubmit: boolean
-  handleTrySubmit: (flag: boolean) => void
-}
-
-const FormWrapper: FC<FormProps<any, Partial<any>> & FormFunctions> = (
-  props
-) => {
-  const { trySubmit, handleTrySubmit, ...rest } = props
-  return (
-    <Form
-      mutators={{ ...arrayMutators }}
-      subscription={{
-        submitting: true,
-        pristine: true,
-        valid: true,
-        invalid: true
-      }}
-      {...rest}
-      render={(formProps) => (
-        <FormInner
-          {...formProps}
-          trySubmit={trySubmit}
-          handleTrySubmit={handleTrySubmit}
-        />
-      )}
-    />
-  )
-}
-
-const FormInner: FC<FormRenderProps<any, Partial<any>> & FormFunctions> = (
-  props
-) => {
-  const { submit } = useForm()
-  useEffect(() => {
-    if (!props.trySubmit) return
-    submit()
-    props.handleTrySubmit(false)
-  }, [props.trySubmit])
+const ProposalFormInner: FC = () => {
   return (
     <>
       <BooleanInput source="human" label="ユーザ側" />
@@ -200,7 +146,7 @@ const FormInner: FC<FormRenderProps<any, Partial<any>> & FormFunctions> = (
   )
 }
 
-export default EditProposalDialog
+export default ProposalFormInner
 
 const FormNameState: FC = (props) => {
   return (
@@ -291,7 +237,7 @@ const FormCustomSelectOption: FC = (props) => {
     <ArrayInput
       {...props}
       source="content.props.selects"
-      label="selectbox"
+      label="select box"
       validate={[required()]}
     >
       <SimpleFormIterator>
@@ -368,27 +314,3 @@ const FormCustomTextareaOption: FC = (props) => {
     </>
   )
 }
-
-const formTypeChoices = [
-  { id: 'FormName', name: '氏名' },
-  { id: 'FormAddress', name: '住所' },
-  { id: 'FormBirthDay', name: '生年月日' },
-  { id: 'FormConfirm', name: '確認' },
-  { id: 'FormCreditCard', name: 'クレジットカード' },
-  { id: 'FormCustomInput', name: 'カスタムインプット' },
-  { id: 'FormCustomSelect', name: 'カスタムセレクト' },
-  {
-    id: 'FormCustomRadioGroup',
-    name: 'カスタムラジオボタン'
-  },
-  {
-    id: 'FormCustomCheckbox',
-    name: 'カスタムチェックボックス'
-  },
-  {
-    id: 'FormCustomTextarea',
-    name: 'カスタムテキストエリア'
-  },
-  { id: 'FormEmail', name: 'メールアドレス' },
-  { id: 'FormTel', name: '電話番号' }
-]

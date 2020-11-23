@@ -8,7 +8,7 @@ import {
   TimelineConnector,
   TimelineContent
 } from '@material-ui/lab'
-import { Proposals } from '../../../../../@types/session'
+import { Proposals } from '../../../../../../@types/session'
 import { AmplifyS3Image } from '@aws-amplify/ui-react'
 import TimelineDotWithSpeedDial from './TimelineDotWithSpeedDial'
 import TimelineDotLast from './TimelineDotLast'
@@ -21,8 +21,7 @@ interface Props {
   insertingIndex?: number
   handleEdit: (index: number) => void
   handleDelete: (index: number) => void
-  handleInsertBefore: (index: number) => void
-  handleInsertAfter: (index: number) => void
+  handleInsert: (index: number) => void
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -65,13 +64,9 @@ const ProposalsTimeLine: FC<Props> = ({
     (index: number) => () => handlers.handleDelete(index),
     [handlers.handleDelete]
   )
-  const makeHandleInsertBefore = useCallback(
-    (index: number) => () => handlers.handleInsertBefore(index),
-    [handlers.handleInsertBefore]
-  )
-  const makeHandleInsertAfter = useCallback(
-    (index: number) => () => handlers.handleInsertAfter(index),
-    [handlers.handleInsertAfter]
+  const makeHandleInsert = useCallback(
+    (index: number) => () => handlers.handleInsert(index),
+    [handlers.handleInsert]
   )
   return (
     <>
@@ -98,8 +93,8 @@ const ProposalsTimeLine: FC<Props> = ({
                 {...proposal}
                 handleEdit={makeHandleEdit(index)}
                 handleDelete={makeHandleDelete(index)}
-                handleInsertBefore={makeHandleInsertBefore(index)}
-                handleInsertAfter={makeHandleInsertAfter(index)}
+                handleInsertBefore={makeHandleInsert(index)}
+                handleInsertAfter={makeHandleInsert(index + 1)}
                 direction={proposal.human ? 'left' : 'right'}
                 selected={editing && editingIndex === index}
               />
@@ -141,7 +136,7 @@ const ProposalsTimeLine: FC<Props> = ({
         <TimelineItem>
           <TimelineSeparator>
             <TimelineDotLast
-              handleInsertBefore={makeHandleInsertBefore(proposals.length)}
+              handleInsertBefore={makeHandleInsert(proposals.length)}
             />
           </TimelineSeparator>
           <TimelineContent />
