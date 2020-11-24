@@ -3,7 +3,8 @@ import { css } from '@emotion/react'
 import { useField, FieldInputProps } from 'formik'
 import { okColor, baseBorderColor } from '../../shared/baseStyle'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faDotCircle, faCircle } from '@fortawesome/free-solid-svg-icons'
+import { faDotCircle } from '@fortawesome/free-solid-svg-icons'
+import { faCircle } from '@fortawesome/free-regular-svg-icons'
 
 const style = {
   base: css`
