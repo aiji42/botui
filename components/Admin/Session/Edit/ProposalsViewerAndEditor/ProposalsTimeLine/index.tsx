@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    maxWidth: theme.spacing(15),
+    maxWidth: `calc(50% - ${theme.spacing(2)})`,
     backgroundColor: theme.palette.background.default,
     wordWrap: 'break-word'
   }
