@@ -3,7 +3,7 @@ import { css, SerializedStyles } from '@emotion/react'
 import { FieldMetaProps, useField, FieldInputProps } from 'formik'
 import { okColor, errorColor, baseBorderColor } from '../../shared/baseStyle'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
+import { faCheckCircle, faAngleDown } from '@fortawesome/free-solid-svg-icons'
 
 const style = {
   base: css`
@@ -47,6 +47,13 @@ const style = {
     top: -31px;
     height: 0px;
     color: ${okColor};
+  `,
+  arrowIcon: css`
+    float: right;
+    position: relative;
+    right: 10px;
+    top: -31px;
+    height: 0px;
   `
 }
 
@@ -76,9 +83,13 @@ const SelectWithIcon: FC<SelectWithIconProps> = ({ title, ...props }) => {
     <>
       {title && <div css={style.title}>{title}</div>}
       <select {...props} css={styles(meta)} />
-      {!error && (
+      {!error ? (
         <div css={style.okIcon}>
           <FontAwesomeIcon icon={faCheckCircle} />
+        </div>
+      ) : (
+        <div css={style.arrowIcon}>
+          <FontAwesomeIcon icon={faAngleDown} />
         </div>
       )}
     </>
