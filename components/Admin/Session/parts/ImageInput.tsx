@@ -1,5 +1,12 @@
 import { FC, useCallback, useEffect, useState } from 'react'
-import { InputProps, TextFieldProps, Labeled, Identifier } from 'react-admin'
+import {
+  InputProps,
+  TextFieldProps,
+  Labeled,
+  Identifier,
+  TextInput,
+  required
+} from 'react-admin'
 import { Grid, makeStyles, Button } from '@material-ui/core'
 import { Add as AddIcon } from '@material-ui/icons'
 import { useForm, useField } from 'react-final-form'
@@ -57,38 +64,35 @@ const ImageInput: FC<Props> = (props) => {
 
   return (
     <Labeled label={label} fullWidth>
-      <>
-        <Grid item xs={5}>
-          {src && <img src={src} className={classes.image} />}
-          <Button onClick={handleOpen}>
-            {src ? (
-              '変更'
-            ) : (
-              <>
-                <AddIcon />
-                追加
-              </>
-            )}
-          </Button>
-          <DropzoneDialog
-            acceptedFiles={['image/*']}
-            cancelButtonText="cancel"
-            submitButtonText="submit"
-            maxFileSize={500000}
-            open={open}
-            onClose={handleClose}
-            onSave={handleSave}
-            filesLimit={1}
-            previewGridProps={{
-              container: { justify: 'center' },
-              item: { xs: 8 }
-            }}
-            showAlerts={['error']}
-            dialogTitle={label}
-            previewText=""
-          />
-        </Grid>
-      </>
+      <Grid item xs={5}>
+        <Button onClick={handleOpen}>
+          {src ? (
+            <img src={src} className={classes.image} />
+          ) : (
+            <>
+              <AddIcon />
+              追加
+            </>
+          )}
+        </Button>
+        <DropzoneDialog
+          acceptedFiles={['image/*']}
+          cancelButtonText="cancel"
+          submitButtonText="submit"
+          maxFileSize={500000}
+          open={open}
+          onClose={handleClose}
+          onSave={handleSave}
+          filesLimit={1}
+          previewGridProps={{
+            container: { justify: 'center' }
+          }}
+          showAlerts={['error']}
+          dialogTitle={label}
+          previewText=""
+          showFileNamesInPreview={false}
+        />
+      </Grid>
     </Labeled>
   )
 }
