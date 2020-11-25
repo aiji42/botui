@@ -79,6 +79,7 @@ const ProposalFormInner: FC = () => {
                 source="content.props.imgKey"
                 label="画像"
                 sessionId={sessionId}
+                required
               />
             )}
             {formData.content?.type === 'form' && (

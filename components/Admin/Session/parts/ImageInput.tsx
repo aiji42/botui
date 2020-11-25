@@ -1,8 +1,8 @@
 import { FC, useCallback, useEffect, useState } from 'react'
 import { InputProps, TextFieldProps, Labeled, Identifier } from 'react-admin'
-import { Grid, makeStyles, Button } from '@material-ui/core'
+import { Grid, makeStyles, Button, Typography } from '@material-ui/core'
 import { Add as AddIcon } from '@material-ui/icons'
-import { useForm, useField } from 'react-final-form'
+import { useForm, useField, Field } from 'react-final-form'
 import { Storage } from 'aws-amplify'
 import { DropzoneDialog } from 'material-ui-dropzone'
 import { v4 as uuidv4 } from 'uuid'
@@ -20,13 +20,15 @@ const useStyles = makeStyles(() => ({
 
 interface Props extends InputProps<TextFieldProps> {
   sessionId: Identifier
+  required?: boolean
 }
 
 const ImageInput: FC<Props> = (props) => {
   const classes = useStyles()
-  const { source, label } = props
+  const { source, label, required = false } = props
   const {
-    input: { value }
+    input: { value },
+    meta: { error, touched }
   } = useField(source)
   const { change } = useForm()
   const [src, setSrc] = useState('')
@@ -47,6 +49,10 @@ const ImageInput: FC<Props> = (props) => {
     },
     [change, handleClose, props.sessionId]
   )
+  const validate = useCallback(
+    (value: string) => (required && !value ? '必須' : ''),
+    [required]
+  )
 
   useEffect(() => {
     if (!value) return
@@ -57,35 +63,48 @@ const ImageInput: FC<Props> = (props) => {
 
   return (
     <Labeled label={label} fullWidth>
-      <Grid item xs={5}>
-        <Button onClick={handleOpen}>
-          {src ? (
-            <img src={src} className={classes.image} />
-          ) : (
-            <>
-              <AddIcon />
-              追加
-            </>
+      <>
+        <Grid item xs={5}>
+          <Button onClick={handleOpen}>
+            {src ? (
+              <img src={src} className={classes.image} />
+            ) : (
+              <>
+                <AddIcon />
+                追加
+              </>
+            )}
+          </Button>
+          <DropzoneDialog
+            acceptedFiles={['image/*']}
+            cancelButtonText="cancel"
+            submitButtonText="submit"
+            maxFileSize={500000}
+            open={open}
+            onClose={handleClose}
+            onSave={handleSave}
+            filesLimit={1}
+            previewGridProps={{
+              container: { justify: 'center' }
+            }}
+            showAlerts={['error']}
+            dialogTitle={label}
+            previewText=""
+            showFileNamesInPreview={false}
+          />
+          <Field
+            validate={validate}
+            name={source}
+            type="hidden"
+            component="input"
+          />
+          {error && touched && (
+            <Typography variant="caption" color="error" component="div">
+              必須
+            </Typography>
           )}
-        </Button>
-        <DropzoneDialog
-          acceptedFiles={['image/*']}
-          cancelButtonText="cancel"
-          submitButtonText="submit"
-          maxFileSize={500000}
-          open={open}
-          onClose={handleClose}
-          onSave={handleSave}
-          filesLimit={1}
-          previewGridProps={{
-            container: { justify: 'center' }
-          }}
-          showAlerts={['error']}
-          dialogTitle={label}
-          previewText=""
-          showFileNamesInPreview={false}
-        />
-      </Grid>
+        </Grid>
+      </>
     </Labeled>
   )
 }
