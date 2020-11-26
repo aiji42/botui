@@ -1,6 +1,12 @@
 import dynamic from 'next/dynamic'
 import { FC, useState } from 'react'
-import { Dialog, DialogContent, Button, makeStyles } from '@material-ui/core'
+import {
+  Dialog,
+  DialogContent,
+  Button,
+  makeStyles,
+  IconButton
+} from '@material-ui/core'
 import { Visibility } from '@material-ui/icons'
 import { useFormState } from 'react-final-form'
 import { Session } from '../../../../@types/session'
@@ -23,24 +29,16 @@ const useStyleDialogContent = makeStyles(() => ({
   }
 }))
 
-const useStyleButtonIcon = makeStyles(() => ({
-  root: {
-    paddingRight: '0.5em'
-  }
-}))
-
 const PreviewDialog: FC = () => {
   const { values } = useFormState<Session>()
   const [open, setOpen] = useState(false)
   const dialogClasses = useStyleDialog()
   const dialogContentClasses = useStyleDialogContent()
-  const buttonIconClasses = useStyleButtonIcon()
   return (
     <>
-      <Button onClick={() => setOpen(true)} variant="contained">
-        <Visibility classes={buttonIconClasses} fontSize="small" />
-        プレビュー
-      </Button>
+      <IconButton onClick={() => setOpen(true)}>
+        <Visibility />
+      </IconButton>
       <Dialog
         open={open}
         onClose={() => setOpen(false)}
