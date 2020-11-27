@@ -9,6 +9,7 @@ import Message from '../../../Chat/Message'
 
 const sampleMessages: Proposals = [
   {
+    id: 1,
     human: false,
     content: {
       type: 'string',
@@ -23,6 +24,7 @@ const sampleMessages: Proposals = [
     after: ''
   },
   {
+    id: 2,
     human: false,
     content: {
       type: 'string',
@@ -34,6 +36,7 @@ const sampleMessages: Proposals = [
     after: ''
   },
   {
+    id: 3,
     human: true,
     content: {
       type: 'string',

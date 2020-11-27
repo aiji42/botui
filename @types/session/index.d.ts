@@ -1,6 +1,7 @@
 import { Message } from '@botui/types'
 
 export interface Proposal extends Message {
+  id: string | number
   before: string
   after: string
 }

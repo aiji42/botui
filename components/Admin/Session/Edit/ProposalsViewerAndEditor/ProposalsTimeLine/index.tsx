@@ -70,7 +70,7 @@ const ProposalsTimeLine: FC<Props> = ({
     <>
       {proposals.map((proposal, index) => (
         <Timeline
-          key={index}
+          key={proposal.id}
           align={proposal.human ? 'left' : 'right'}
           className={classes.timeline}
         >
