@@ -4,18 +4,21 @@ import { useForm, useFormState, Field } from 'react-final-form'
 import ProposalsTimeLine from './ProposalsTimeLine'
 import ProposalEditDialog from './ProposalEditDialog'
 import reducer, { ActionType, EditingProposalAction } from './reducer'
+import { v4 as uuidv4 } from 'uuid'
 
-const initialProposal: Proposal = {
-  human: false,
-  content: {
-    type: 'string',
-    props: {
-      children: ''
-    }
-  },
-  before: '',
-  after: ''
-} as Proposal
+const initialProposal = (): Proposal =>
+  ({
+    id: uuidv4(),
+    human: false,
+    content: {
+      type: 'string',
+      props: {
+        children: ''
+      }
+    },
+    before: '',
+    after: ''
+  } as Proposal)
 
 const ProposalViewerAndEditor: FC = () => {
   const {
@@ -37,7 +40,7 @@ const ProposalViewerAndEditor: FC = () => {
       dispatch({
         type: ActionType.ACTION_DELETE,
         index,
-        newProposal: initialProposal
+        newProposal: initialProposal()
       })
     },
     [dispatch]
@@ -84,7 +87,7 @@ const ProposalViewerAndEditor: FC = () => {
         proposal={
           nextAction.type === ActionType.ACTION_EDIT
             ? proposals[nextAction.index]
-            : initialProposal
+            : initialProposal()
         }
         handleClose={() => setEditProposalDialogOpen(false)}
         handleSave={handleProposalSave}
