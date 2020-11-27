@@ -13,6 +13,7 @@ const noOp = () => {
 const Context = createContext<MessageContextType>({
   handleUpdate: noOp,
   message: {
+    id: '',
     human: true,
     content: { type: 'string', props: {} },
     completed: false,
