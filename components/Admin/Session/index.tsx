@@ -7,12 +7,11 @@ import {
   useNotify,
   useRefresh,
   CreateProps,
-  useCreateController,
-  CreateContextProvider,
-  Edit
+  Edit,
+  Create
 } from 'react-admin'
 import EditForm from './Edit'
-import CreateWizard from './CreateWizard'
+import CreateForm from './Create'
 
 export const SessionList: FC = (props) => {
   return (
@@ -26,18 +25,10 @@ export const SessionList: FC = (props) => {
 }
 
 export const SessionCreate: FC<CreateProps> = (props) => {
-  const { record, ...createController } = useCreateController(props)
-  createController.setTransform((data) => {
-    return {
-      ...data,
-      images: '{}',
-      active: false
-    }
-  })
   return (
-    <CreateContextProvider value={{ record, ...createController }}>
-      <CreateWizard {...createController} warnWhenUnsavedChanges />
-    </CreateContextProvider>
+    <Create {...props}>
+      <CreateForm warnWhenUnsavedChanges />
+    </Create>
   )
 }
 

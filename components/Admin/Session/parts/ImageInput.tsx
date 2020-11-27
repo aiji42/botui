@@ -100,7 +100,7 @@ const ImageInput: FC<Props> = (props) => {
           />
           {error && touched && (
             <Typography variant="caption" color="error" component="div">
-              必須
+              {error}
             </Typography>
           )}
         </Grid>
