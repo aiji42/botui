@@ -12,6 +12,7 @@ import { Proposals } from '../../../../../../@types/session'
 import { AmplifyS3Image } from '@aws-amplify/ui-react'
 import TimelineDotWithSpeedDial from './TimelineDotWithSpeedDial'
 import TimelineDotLast from './TimelineDotLast'
+import nl2br from 'react-nl2br'
 
 interface Props {
   proposals: Proposals
@@ -96,7 +97,9 @@ const ProposalsTimeLine: FC<Props> = ({
               <Paper elevation={3} className={classes.paper}>
                 <Typography align="left">
                   {proposal.content.type === 'string' &&
-                    proposal.content.props.children}
+                  typeof proposal.content.props.children === 'string'
+                    ? nl2br(proposal.content.props.children)
+                    : proposal.content.props.children}
                   {proposal.content.type === 'form' &&
                     proposal.content.props.type}
                   {proposal.content.type === 'image' && (

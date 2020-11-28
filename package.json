@@ -45,6 +45,7 @@
     "react-dom": "^16.13.1",
     "react-id-generator": "^3.0.1",
     "react-loading": "^2.0.3",
+    "react-nl2br": "^1.0.1",
     "react-scroll": "^1.8.1",
     "react-textarea-autosize": "^8.3.0",
     "react-use-kana": "^2.3.0",
