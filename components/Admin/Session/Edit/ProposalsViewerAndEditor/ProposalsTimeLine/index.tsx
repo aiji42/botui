@@ -97,9 +97,9 @@ const ProposalsTimeLine: FC<Props> = ({
               <Paper elevation={3} className={classes.paper}>
                 <Typography align="left">
                   {proposal.content.type === 'string' &&
-                  typeof proposal.content.props.children === 'string'
-                    ? nl2br(proposal.content.props.children)
-                    : proposal.content.props.children}
+                    (typeof proposal.content.props.children === 'string'
+                      ? nl2br(proposal.content.props.children)
+                      : proposal.content.props.children)}
                   {proposal.content.type === 'form' &&
                     proposal.content.props.type}
                   {proposal.content.type === 'image' && (
