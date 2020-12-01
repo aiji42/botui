@@ -1,10 +1,10 @@
 module.exports = {
-  webpack: (config, options) => ({
+  webpack: (config) => ({
     ...config,
     entry: () =>
       config.entry().then((entry) => ({
         ...entry,
-        fooEntry: './hoge'
+        embeddedLibrary: './embeddeds'
       }))
   })
 }
