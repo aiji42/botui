@@ -36,7 +36,11 @@
               "userPoolId": "authbotui"
             }
           },
-          "additionalAuthenticationProviders": []
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ]
         }
       }
     }

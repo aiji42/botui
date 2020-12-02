@@ -1,6 +1,7 @@
 // import ReactDOM from 'react-dom'
 // import Preview from '../components/Chat/Preview'
-import Amplify, { API, graphqlOperation } from 'aws-amplify'
+import Amplify, { API, Auth } from 'aws-amplify'
+import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api'
 import { getSession } from '../src/graphql/queries'
 import awsconfig from '../src/aws-exports'
 
@@ -19,9 +20,11 @@ class ChaChat {
     const target = document.getElementById(this.mountTarget)
     // if (!target) return
 
-    const res = await API.graphql(
-      graphqlOperation(getSession, { id: this.sessionId })
-    )
+    const res = await API.graphql({
+      query: getSession,
+      variables: { id: this.sessionId },
+      authMode: GRAPHQL_AUTH_MODE.AWS_IAM
+    })
     console.log(res)
     // ReactDOM.render(<></>, target)
   }

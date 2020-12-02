@@ -2,7 +2,8 @@ type Session
   @model
   @auth(
     rules: [
-      {allow: owner, ownerField: "owner", operations: [create, update, delete, read]}
+      {allow: owner, ownerField: "owner", operations: [create, update, delete, read]},
+      {allow: public, provider: iam, operations: [read]}
     ]
   )
 {

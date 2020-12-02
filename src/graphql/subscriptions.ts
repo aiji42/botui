@@ -3,7 +3,7 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreateSession = /* GraphQL */ `
-  subscription OnCreateSession($owner: String!) {
+  subscription OnCreateSession($owner: String) {
     onCreateSession(owner: $owner) {
       id
       owner
@@ -18,7 +18,7 @@ export const onCreateSession = /* GraphQL */ `
   }
 `;
 export const onUpdateSession = /* GraphQL */ `
-  subscription OnUpdateSession($owner: String!) {
+  subscription OnUpdateSession($owner: String) {
     onUpdateSession(owner: $owner) {
       id
       owner
@@ -33,7 +33,7 @@ export const onUpdateSession = /* GraphQL */ `
   }
 `;
 export const onDeleteSession = /* GraphQL */ `
-  subscription OnDeleteSession($owner: String!) {
+  subscription OnDeleteSession($owner: String) {
     onDeleteSession(owner: $owner) {
       id
       owner
