@@ -1,6 +1,6 @@
 {
     "identityPoolName": "botui_identitypool",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "botui554d1d8b",
     "userPoolName": "botui_userpool",
     "autoVerifiedAttributes": [

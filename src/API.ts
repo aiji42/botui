@@ -218,7 +218,7 @@ export type ListSessionsQuery = {
 };
 
 export type OnCreateSessionSubscriptionVariables = {
-  owner: string,
+  owner?: string | null,
 };
 
 export type OnCreateSessionSubscription = {
@@ -237,7 +237,7 @@ export type OnCreateSessionSubscription = {
 };
 
 export type OnUpdateSessionSubscriptionVariables = {
-  owner: string,
+  owner?: string | null,
 };
 
 export type OnUpdateSessionSubscription = {
@@ -256,7 +256,7 @@ export type OnUpdateSessionSubscription = {
 };
 
 export type OnDeleteSessionSubscriptionVariables = {
-  owner: string,
+  owner?: string | null,
 };
 
 export type OnDeleteSessionSubscription = {
