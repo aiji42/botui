@@ -1,81 +1,54 @@
 import ReactDOM from 'react-dom'
 import Preview from '../components/Chat/Preview'
-import Amplify, { API } from 'aws-amplify'
-import { GRAPHQL_AUTH_MODE, GraphQLResult } from '@aws-amplify/api'
-import { getSession } from '../src/graphql/queries'
-import awsconfig from '../src/aws-exports'
-import { Session } from '../@types/session'
-import { Fab, Modal, makeStyles } from '@material-ui/core'
-import ChatIcon from '@material-ui/icons/ChatBubble'
-import { FC, useCallback, useEffect, useState } from 'react'
-
-Amplify.configure(awsconfig)
-
-const fetchSession = async (id: string): Promise<Session | null> => {
-  const res = (await API.graphql({
-    query: getSession,
-    variables: { id },
-    authMode: GRAPHQL_AUTH_MODE.AWS_IAM
-  })) as GraphQLResult<{ getSession: Session<string, string, string> }>
-
-  console.log(res.data?.getSession)
-  if (!res.data) return null
-  const {
-    data: { getSession: session }
-  } = res
-  const {
-    proposals: proposalsString,
-    images: imageString,
-    theme: themeString,
-    ...restSession
-  } = session
-  const proposals = JSON.parse(proposalsString) as Session['proposals']
-  const images = JSON.parse(imageString) as Session['images']
-  const theme = JSON.parse(themeString) as Session['theme']
-
-  return {
-    ...restSession,
-    proposals,
-    images,
-    theme
-  }
-}
+import { Fab, Dialog, makeStyles, useMediaQuery } from '@material-ui/core'
+import { ChatBubble as ChatIcon, Clear as ClearIcon } from '@material-ui/icons'
+import { FC, useCallback, useState } from 'react'
+import useFetchSession from '../hooks/use-fetch-session'
 
 const useStyles = makeStyles((theme) => ({
   fab: {
-    position: 'absolute',
+    position: 'fixed',
     bottom: theme.spacing(2),
     right: theme.spacing(2)
   },
   paper: {
     height: 700,
     width: 400,
-    position: 'absolute',
-    bottom: theme.spacing(2),
+    position: 'fixed',
+    bottom: theme.spacing(12),
     right: theme.spacing(2),
     backgroundColor: 'white'
   }
 }))
 
+const SIZE = {
+  Full: 'full',
+  Widget: 'widget',
+  Auto: 'auto'
+}
+
+type Size = typeof SIZE[keyof typeof SIZE]
+
 interface Props {
   sessionId: string
+  initialOpen?: boolean
+  size?: Size
 }
 
 const Chat: FC<Props> = (props) => {
-  const [session, setSession] = useState<Session | null>(null)
-  const [open, setOpen] = useState<boolean>(false)
-  useEffect(() => {
-    fetchSession(props.sessionId).then(setSession)
-  }, [props.sessionId])
-  const handleClose = useCallback(() => setOpen(false), [setOpen])
-  const handleOpen = useCallback(() => setOpen(true), [setOpen])
+  const { initialOpen = false, size = SIZE.Auto } = props
+  const { session } = useFetchSession(props.sessionId)
+  const [open, setOpen] = useState<boolean>(initialOpen)
+  const toggleOpen = useCallback(() => setOpen((prev) => !prev), [setOpen])
+  const narrow = useMediaQuery('(max-width:600px)')
+  const isFull = size === SIZE.Full || (narrow && size === SIZE.Auto)
   const classes = useStyles()
 
   return (
     <>
-      {session && (
-        <Modal open={open} onClose={handleClose} hideBackdrop disableScrollLock>
-          <div className={classes.paper}>
+      {session &&
+        (isFull ? (
+          <Dialog open={open} fullScreen>
             <Preview
               proposals={session.proposals}
               chatConfig={{
@@ -84,14 +57,24 @@ const Chat: FC<Props> = (props) => {
                 messagesCount: session.proposals.length
               }}
             />
-          </div>
-        </Modal>
-      )}
-      {!open && (
-        <Fab onClick={handleOpen} className={classes.fab} color="primary">
-          <ChatIcon />
-        </Fab>
-      )}
+          </Dialog>
+        ) : (
+          open && (
+            <div className={classes.paper}>
+              <Preview
+                proposals={session.proposals}
+                chatConfig={{
+                  ...session,
+                  messages: session.proposals,
+                  messagesCount: session.proposals.length
+                }}
+              />
+            </div>
+          )
+        ))}
+      <Fab onClick={toggleOpen} className={classes.fab} color="primary">
+        {open ? <ClearIcon /> : <ChatIcon />}
+      </Fab>
     </>
   )
 }
@@ -99,17 +82,33 @@ const Chat: FC<Props> = (props) => {
 class ChaChat {
   sessionId: string
   mountTarget: string
+  size: Size
+  initialOpen: boolean
 
-  constructor(sessionId: string, mountTarget: string) {
+  constructor(
+    sessionId: string,
+    mountTarget: string,
+    config: { size?: Size; initialOpen?: boolean } = {}
+  ) {
+    const { size = SIZE.Auto, initialOpen = false } = config
     this.sessionId = sessionId
     this.mountTarget = mountTarget
+    this.size = size
+    this.initialOpen = initialOpen
   }
 
   async start() {
     const target = document.getElementById(this.mountTarget)
     if (!target) return
 
-    ReactDOM.render(<Chat sessionId={this.sessionId} />, target)
+    ReactDOM.render(
+      <Chat
+        sessionId={this.sessionId}
+        initialOpen={this.initialOpen}
+        size={this.size}
+      />,
+      target
+    )
   }
 }
 
