@@ -14,7 +14,8 @@ const Communicator: FC<{
   targetWindow: Window
   initProposals: Proposals
   chatConfig: ChatConfig
-}> = ({ targetWindow, initProposals, chatConfig }) => {
+  onStart?: () => void
+}> = ({ targetWindow, initProposals, chatConfig, onStart }) => {
   const [config, setConfig] = useCorsState<ChatConfig | undefined>(
     'chat-config',
     { window: targetWindow },
@@ -76,6 +77,7 @@ const Communicator: FC<{
       beforeFunction(values(proposals), nextMessage)
     }
 
+    unCompletedIndex && onStart && onStart()
     if (
       nextMessage.content.type === 'string' &&
       typeof nextMessage.content.props.children === 'string'
