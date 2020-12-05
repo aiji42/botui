@@ -5,7 +5,8 @@ import {
   makeStyles,
   Slide,
   Paper,
-  CircularProgress
+  CircularProgress,
+  IconButton
 } from '@material-ui/core'
 import { TransitionProps } from '@material-ui/core/transitions'
 import { ChatBubble as ChatIcon, Clear as ClearIcon } from '@material-ui/icons'
@@ -33,6 +34,12 @@ const useStyles = makeStyles((theme) => ({
     position: 'fixed',
     bottom: theme.spacing(2),
     right: theme.spacing(2)
+  },
+  innerFab: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    color: theme.palette.primary.contrastText
   },
   paper: {
     height: 700,
@@ -92,6 +99,9 @@ const Preview: FC<Props> = (props) => {
               }}
               onStart={() => setLoading(false)}
             />
+            <IconButton onClick={toggleOpen} className={classes.innerFab}>
+              <ClearIcon fontSize="large" />
+            </IconButton>
           </Dialog>
         ) : (
           <Slide direction="up" in={open} mountOnEnter unmountOnExit>
