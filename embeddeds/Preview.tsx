@@ -75,10 +75,11 @@ const Preview: FC<Props> = (props) => {
   const { initialOpen = false, size = SIZE.Auto } = props
   const { session } = useFetchSession(props.sessionId)
   const [open, setOpen] = useState<boolean>(initialOpen)
-  const [loading, setLoading] = useState<boolean>(true)
+  const [loaded, setLoaded] = useState<boolean>(false)
   useEffect(() => {
-    !open && setLoading(true)
+    !open && setLoaded(false)
   }, [open])
+  const handleStart = useCallback(() => setLoaded(true), [setLoaded])
   const toggleOpen = useCallback(() => setOpen((prev) => !prev), [setOpen])
   const narrow = useRef(window.innerWidth < 600)
   const isFull = size === SIZE.Full || (narrow.current && size === SIZE.Auto)
@@ -89,7 +90,7 @@ const Preview: FC<Props> = (props) => {
       {session &&
         (isFull ? (
           <Dialog TransitionComponent={Transition} open={open} fullScreen>
-            {loading && <CircularProgress className={classes.spinner} />}
+            {!loaded && <CircularProgress className={classes.spinner} />}
             <InnerPreview
               proposals={session.proposals}
               chatConfig={{
@@ -97,7 +98,7 @@ const Preview: FC<Props> = (props) => {
                 messages: session.proposals,
                 messagesCount: session.proposals.length
               }}
-              onStart={() => setLoading(false)}
+              onStart={handleStart}
             />
             <IconButton onClick={toggleOpen} className={classes.innerFab}>
               <ClearIcon fontSize="large" />
@@ -106,7 +107,7 @@ const Preview: FC<Props> = (props) => {
         ) : (
           <Slide direction="up" in={open} mountOnEnter unmountOnExit>
             <Paper elevation={2} className={classes.paper}>
-              {loading && <CircularProgress className={classes.spinner} />}
+              {!loaded && <CircularProgress className={classes.spinner} />}
               <InnerPreview
                 proposals={session.proposals}
                 chatConfig={{
@@ -114,7 +115,7 @@ const Preview: FC<Props> = (props) => {
                   messages: session.proposals,
                   messagesCount: session.proposals.length
                 }}
-                onStart={() => setLoading(false)}
+                onStart={handleStart}
               />
             </Paper>
           </Slide>
