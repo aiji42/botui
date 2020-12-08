@@ -18,7 +18,7 @@ const Login: FC = () => {
   }, [checkAuth, history])
   const handleAuthStateChange = useCallback(
     (state: AuthState) => {
-      state === AuthState.SignedIn && history.push('/')
+      state === AuthState.SignedIn && history.push('/sessions')
     },
     [history]
   )
