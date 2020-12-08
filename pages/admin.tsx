@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import { FC } from 'react'
-import { withAuthenticator } from '@aws-amplify/ui-react'
 import { buildAuthProvider } from 'react-admin-amplify'
 import { Resource, Admin } from 'react-admin'
 import {
@@ -8,6 +7,7 @@ import {
   SessionEdit,
   SessionCreate
 } from '../components/Admin/Session'
+import Login from '../components/Admin/Login'
 import japaneseMessages from '@bicstone/ra-language-japanese'
 import polyglotI18nProvider from 'ra-i18n-polyglot'
 import dynamic from 'next/dynamic'
@@ -27,6 +27,7 @@ const App: FC = () => {
         dataProvider={dataProvider}
         authProvider={buildAuthProvider()}
         i18nProvider={i18nProvider}
+        loginPage={Login}
       >
         <Resource
           name="sessions"
@@ -40,7 +41,6 @@ const App: FC = () => {
   )
 }
 
-const AppWithAuthenticator = withAuthenticator(App, { usernameAlias: 'email' })
-export default dynamic(() => Promise.resolve(AppWithAuthenticator), {
+export default dynamic(() => Promise.resolve(App), {
   ssr: false
 })

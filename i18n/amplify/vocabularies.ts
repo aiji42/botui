@@ -134,6 +134,8 @@ export default {
       '試行制限を超過しました。しばらくしてからもう一度お試しください',
     'Username/client id combination not found.': 'ユーザーが存在しません',
     'CUSTOM_AUTH is not enabled for the client.': 'パスワードは必須です', // 本来の意味とは異なるが、パスワード未入力時に発生するのでこの訳としている
+    'Custom auth lambda trigger is not configured for the user pool.':
+      'パスワードを入力してください', // 本来の意味とは異なるが、パスワード未入力時に発生するのでこの訳としている
     'Password does not conform to policy: Password not long enough':
       'パスワードは8文字以上を入力してください (8文字以上の大文字小文字を含む英数字)', // 適宜修正
     'Password does not conform to policy: Password must have uppercase characters':
@@ -145,6 +147,7 @@ export default {
     "1 validation error detected: Value at 'password' failed to satisfy constraint: Member must have length greater than or equal to 6":
       'パスワードは8文字以上、大文字小文字を含む英数字を指定してください', // 適宜修正。本来の意味とは異なるがこれで明示している。
     "2 validation errors detected: Value at 'password' failed to satisfy constraint: Member must have length greater than or equal to 6; Value at 'password' failed to satisfy constraint: Member must satisfy regular expression pattern: ^[S]+.*[S]+$":
-      'パスワードは8文字以上、大文字小文字を含む英数字を指定してください' // 適宜修正。本来の意味とは異なるがこれで明示している。
+      'パスワードは8文字以上、大文字小文字を含む英数字を指定してください', // 適宜修正。本来の意味とは異なるがこれで明示している。
+    'Confirmation code cannot be empty': '確認コードを入力してください'
   }
 }
