@@ -44,6 +44,7 @@
     "react-admin": "^3.10.1",
     "react-admin-amplify": "^1.2.1",
     "react-dom": "^16.13.1",
+    "react-flow-renderer": "^8.2.1",
     "react-id-generator": "^3.0.1",
     "react-loading": "^2.0.3",
     "react-nl2br": "^1.0.1",
