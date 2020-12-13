@@ -1,4 +1,4 @@
-import { FC, CSSProperties } from 'react'
+import { FC, CSSProperties, useState, useCallback } from 'react'
 import ReactFlow, {
   MiniMap,
   Controls,
@@ -7,7 +7,14 @@ import ReactFlow, {
   Node,
   Edge,
   OnLoadFunc,
-  ReactFlowProvider
+  ReactFlowProvider,
+  OnEdgeUpdateFunc,
+  ReactFlowProps,
+  updateEdge,
+  addEdge,
+  removeElements,
+  useStoreActions,
+  useStoreState
 } from 'react-flow-renderer'
 import {
   Grid,
@@ -26,6 +33,7 @@ import { Proposals, Proposal, Session } from '../../../../../@types/session'
 import nl2br from 'react-nl2br'
 import { AmplifyS3Image } from '@aws-amplify/ui-react'
 import { useFormState } from 'react-final-form'
+import { v4 as uuidv4 } from 'uuid'
 
 const Label = (props: Proposal) => {
   return (
@@ -78,12 +86,36 @@ const onLoad: OnLoadFunc = (reactFlowInstance) => {
 
 const ProposalsFlowChart: FC = () => {
   const { values: session } = useFormState<Session>()
+  const [elements, setElements] = useState<Elements>(convert(session.proposals))
+
+  const onEdgeUpdate = useCallback<OnEdgeUpdateFunc>(
+    (oldEdge, newConnection) =>
+      setElements((els) => updateEdge(oldEdge, newConnection, els)),
+    [setElements]
+  )
+  const onConnect = useCallback<Required<ReactFlowProps>['onConnect']>(
+    (params) => setElements((els) => addEdge(params, els)),
+    [setElements]
+  )
+  const onElementsRemove = useCallback<
+    Required<ReactFlowProps>['onElementsRemove']
+  >(
+    (elementsToRemove) =>
+      setElements((els) => removeElements(elementsToRemove, els)),
+    [setElements]
+  )
 
   return (
     <ReactFlowProvider>
       <Grid container>
         <Grid item xs={9} style={{ height: '80vh' }}>
-          <ReactFlow elements={convert(session.proposals)} onLoad={onLoad}>
+          <ReactFlow
+            elements={elements}
+            onLoad={onLoad}
+            onEdgeUpdate={onEdgeUpdate}
+            onConnect={onConnect}
+            onElementsRemove={onElementsRemove}
+          >
             <MiniMap />
             <Controls />
             <Background color="#aaa" gap={16} />
@@ -98,9 +130,27 @@ const ProposalsFlowChart: FC = () => {
 }
 
 const Sidebar: FC = () => {
+  const setElements = useStoreActions((actions) => actions.setElements)
+  const elements = useStoreState((state) => state.elements)
+  const addNode = useCallback(
+    (newNode: Node) => {
+      setElements([...elements, newNode])
+    },
+    [setElements, elements]
+  )
+
   return (
     <List subheader={<ListSubheader>挿入</ListSubheader>}>
-      <ListItem button>
+      <ListItem
+        button
+        onClick={() =>
+          addNode({
+            id: uuidv4(),
+            data: { label: 'ffragregeawefa' },
+            position: { x: 0, y: 0 }
+          })
+        }
+      >
         <ListItemAvatar>
           <TextIcon />
         </ListItemAvatar>
