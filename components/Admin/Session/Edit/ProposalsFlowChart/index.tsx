@@ -1,4 +1,12 @@
-import { FC, CSSProperties, useState, useCallback } from 'react'
+import {
+  FC,
+  CSSProperties,
+  useState,
+  useCallback,
+  Dispatch,
+  SetStateAction,
+  cloneElement
+} from 'react'
 import ReactFlow, {
   MiniMap,
   Controls,
@@ -22,7 +30,13 @@ import {
   ListItem,
   ListItemText,
   ListSubheader,
-  ListItemAvatar
+  ListItemAvatar,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  TextField,
+  DialogActions,
+  Button
 } from '@material-ui/core'
 import {
   TextFields as TextIcon,
@@ -122,35 +136,32 @@ const ProposalsFlowChart: FC = () => {
           </ReactFlow>
         </Grid>
         <Grid item xs={3}>
-          <Sidebar />
+          <Sidebar setElements={setElements} />
         </Grid>
       </Grid>
     </ReactFlowProvider>
   )
 }
 
-const Sidebar: FC = () => {
-  const setElements = useStoreActions((actions) => actions.setElements)
-  const elements = useStoreState((state) => state.elements)
+interface SidebarProps {
+  setElements: Dispatch<SetStateAction<Elements>>
+}
+
+const Sidebar: FC<SidebarProps> = (props) => {
+  const { setElements } = props
   const addNode = useCallback(
     (newNode: Node) => {
-      setElements([...elements, newNode])
+      setElements((prev) => [...prev, newNode])
     },
-    [setElements, elements]
+    [setElements]
   )
+  const [open, setOpen] = useState<boolean>(false)
+  const handleOpen = useCallback(() => setOpen(true), [setOpen])
+  const handleClose = useCallback(() => setOpen(false), [setOpen])
 
   return (
     <List subheader={<ListSubheader>挿入</ListSubheader>}>
-      <ListItem
-        button
-        onClick={() =>
-          addNode({
-            id: uuidv4(),
-            data: { label: 'ffragregeawefa' },
-            position: { x: 0, y: 0 }
-          })
-        }
-      >
+      <ListItem button onClick={handleOpen}>
         <ListItemAvatar>
           <TextIcon />
         </ListItemAvatar>
@@ -168,6 +179,26 @@ const Sidebar: FC = () => {
         </ListItemAvatar>
         <ListItemText primary="入力フォーム" />
       </ListItem>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="文章"
+            type="text"
+            multiline
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleClose} color="primary">
+            Subscribe
+          </Button>
+        </DialogActions>
+      </Dialog>
     </List>
   )
 }
