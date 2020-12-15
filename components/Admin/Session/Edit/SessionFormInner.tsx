@@ -11,6 +11,7 @@ import {
 import { ImageInput, ColorInput } from '../parts'
 import isColor from 'is-color'
 import SimplePreview from './SimplePreview'
+import PreviewDialog from './PreviewDialog'
 
 const colorValidator = (color: string) => {
   return isColor(color) ? null : '入力内容が間違っています'
@@ -19,14 +20,16 @@ const colorValidator = (color: string) => {
 const SessionFormInner: FC = () => {
   return (
     <Grid container spacing={1}>
-      <Grid item xs={12}>
+      <Grid item xs={6}>
         <Box p={2}>
-          <TextInput source="title" resource="sessions" />
+          <TextInput source="title" resource="sessions" fullWidth />
           <BooleanInput source="active" resource="sessions" />
+          <PreviewDialog />
         </Box>
       </Grid>
+      <Grid item xs={6} />
       <Grid item xs={6}>
-        <Box p={1}>
+        <Box p={2}>
           <ColorInput
             source="theme.header.backgroundColor"
             resource="sessions"
