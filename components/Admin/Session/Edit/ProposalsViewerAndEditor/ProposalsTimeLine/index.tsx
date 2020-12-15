@@ -1,18 +1,16 @@
-import { FC, useCallback, CSSProperties } from 'react'
-import { Typography, Paper, makeStyles, Zoom } from '@material-ui/core'
+import { FC, useCallback } from 'react'
+import { makeStyles, Zoom } from '@material-ui/core'
 import {
   Timeline,
   TimelineItem,
-  TimelineDot,
   TimelineSeparator,
   TimelineConnector,
   TimelineContent
 } from '@material-ui/lab'
 import { Proposals } from '../../../../../../@types/session'
-import { AmplifyS3Image } from '@aws-amplify/ui-react'
-import TimelineDotWithSpeedDial from './TimelineDotWithSpeedDial'
+import TimelineDot from './TimelineDot'
 import TimelineDotLast from './TimelineDotLast'
-import nl2br from 'react-nl2br'
+import ProposalPaper from './ProposalPaper'
 
 interface Props {
   proposals: Proposals
@@ -31,19 +29,8 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 0,
     paddingBottom: 0
   },
-  timelineSeparator: {
-    width: theme.spacing(4)
-  },
   timelineConnector: {
     minHeight: theme.spacing(10)
-  },
-  paper: {
-    padding: theme.spacing(1),
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    maxWidth: `calc(50% - ${theme.spacing(2)})`,
-    backgroundColor: theme.palette.background.default,
-    wordWrap: 'break-word'
   }
 }))
 
@@ -77,41 +64,32 @@ const ProposalsTimeLine: FC<Props> = ({
         >
           {inserting && editingIndex === index && (
             <Zoom in>
-              <InsertingTimeLineItem />
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot {...proposal} editing />
+                  <TimelineConnector className={classes.timelineConnector} />
+                </TimelineSeparator>
+                <TimelineContent />
+              </TimelineItem>
             </Zoom>
           )}
           <TimelineItem>
-            <TimelineSeparator className={classes.timelineSeparator}>
-              <TimelineDotWithSpeedDial
+            <TimelineSeparator>
+              <TimelineDot
                 {...proposal}
-                handleEdit={makeHandleEdit(index)}
-                handleDelete={makeHandleDelete(index)}
-                handleInsertBefore={makeHandleInsert(index)}
-                handleInsertAfter={makeHandleInsert(index + 1)}
-                direction={proposal.human ? 'left' : 'right'}
-                selected={editing && editingIndex === index}
+                editing={editing && editingIndex === index}
               />
               <TimelineConnector className={classes.timelineConnector} />
             </TimelineSeparator>
             <TimelineContent>
-              <Paper elevation={3} className={classes.paper}>
-                <Typography align="left">
-                  {proposal.content.type === 'string' &&
-                    (typeof proposal.content.props.children === 'string'
-                      ? nl2br(proposal.content.props.children)
-                      : proposal.content.props.children)}
-                  {proposal.content.type === 'form' &&
-                    proposal.content.props.type}
-                  {proposal.content.type === 'image' && (
-                    <AmplifyS3Image
-                      {...proposal.content.props}
-                      style={
-                        ({ '--width': '100%' } as unknown) as CSSProperties
-                      }
-                    />
-                  )}
-                </Typography>
-              </Paper>
+              <ProposalPaper
+                handleEdit={makeHandleEdit(index)}
+                handleDelete={makeHandleDelete(index)}
+                handleInsertBefore={makeHandleInsert(index)}
+                handleInsertAfter={makeHandleInsert(index + 1)}
+                proposal={proposal}
+                align={proposal.human ? 'left' : 'right'}
+              />
             </TimelineContent>
           </TimelineItem>
         </Timeline>
@@ -119,7 +97,13 @@ const ProposalsTimeLine: FC<Props> = ({
       <Timeline className={classes.timeline}>
         {inserting && editingIndex === proposals.length && (
           <Zoom in>
-            <InsertingTimeLineItem />
+            <TimelineItem>
+              <TimelineSeparator>
+                <TimelineDot editing />
+                <TimelineConnector className={classes.timelineConnector} />
+              </TimelineSeparator>
+              <TimelineContent />
+            </TimelineItem>
           </Zoom>
         )}
         <TimelineItem>
@@ -136,25 +120,3 @@ const ProposalsTimeLine: FC<Props> = ({
 }
 
 export default ProposalsTimeLine
-
-const useInsertingTimeLineItemStyles = makeStyles((theme) => ({
-  timelineConnector: {
-    minHeight: theme.spacing(10)
-  },
-  dot: {
-    backgroundColor: theme.palette.warning.main
-  }
-}))
-
-const InsertingTimeLineItem = () => {
-  const classes = useInsertingTimeLineItemStyles()
-  return (
-    <TimelineItem>
-      <TimelineSeparator>
-        <TimelineDot className={classes.dot} />
-        <TimelineConnector className={classes.timelineConnector} />
-      </TimelineSeparator>
-      <TimelineContent />
-    </TimelineItem>
-  )
-}
