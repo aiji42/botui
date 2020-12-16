@@ -3,7 +3,7 @@ import {
   Typography,
   Paper,
   makeStyles,
-  IconButton,
+  ButtonBase,
   MenuItem,
   Menu,
   ListItemIcon
@@ -81,9 +81,9 @@ const ProposalPaper: FC<Props> = (props) => {
       elevation={1}
       className={align === 'right' ? classes.paperRight : classes.paper}
     >
-      <IconButton className={classes.more} size="small" onClick={handleClick}>
+      <ButtonBase className={classes.more} onClick={handleClick}>
         <MoreIcon />
-      </IconButton>
+      </ButtonBase>
       <Menu
         anchorEl={anchorEl}
         keepMounted
