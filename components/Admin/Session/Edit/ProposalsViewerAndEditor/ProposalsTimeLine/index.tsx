@@ -59,7 +59,9 @@ const ProposalsTimeLine: FC<Props> = ({
       {proposals.map((proposal, index) => (
         <Timeline
           key={proposal.id}
-          align={proposal.human ? 'left' : 'right'}
+          align={
+            proposal.type === 'message' && proposal.human ? 'left' : 'right'
+          }
           className={classes.timeline}
         >
           {inserting && editingIndex === index && (
@@ -82,14 +84,16 @@ const ProposalsTimeLine: FC<Props> = ({
               <TimelineConnector className={classes.timelineConnector} />
             </TimelineSeparator>
             <TimelineContent>
-              <ProposalPaper
-                handleEdit={makeHandleEdit(index)}
-                handleDelete={makeHandleDelete(index)}
-                handleInsertBefore={makeHandleInsert(index)}
-                handleInsertAfter={makeHandleInsert(index + 1)}
-                proposal={proposal}
-                align={proposal.human ? 'left' : 'right'}
-              />
+              {proposal.type === 'message' && (
+                <ProposalPaper
+                  handleEdit={makeHandleEdit(index)}
+                  handleDelete={makeHandleDelete(index)}
+                  handleInsertBefore={makeHandleInsert(index)}
+                  handleInsertAfter={makeHandleInsert(index + 1)}
+                  proposal={proposal}
+                  align={proposal.human ? 'left' : 'right'}
+                />
+              )}
             </TimelineContent>
           </TimelineItem>
         </Timeline>

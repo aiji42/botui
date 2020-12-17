@@ -1,9 +1,9 @@
 import { FC, createContext, useContext } from 'react'
-import { Proposal } from '../../@types/session'
+import { ProposalMessage } from '../../@types/session'
 
 interface MessageContextType {
-  handleUpdate?: (arg: Proposal) => void
-  message: Proposal
+  handleUpdate?: (arg: ProposalMessage) => void
+  message: ProposalMessage
 }
 
 const noOp = () => {
@@ -14,6 +14,7 @@ const Context = createContext<MessageContextType>({
   handleUpdate: noOp,
   message: {
     id: '',
+    type: 'message',
     human: true,
     content: { type: 'string', props: {} },
     completed: false,

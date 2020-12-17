@@ -16,7 +16,7 @@ import {
   VerticalAlignBottom
 } from '@material-ui/icons'
 
-import { Proposal } from '../../../../../../@types/session'
+import { ProposalMessage } from '../../../../../../@types/session'
 import { AmplifyS3Image } from '@aws-amplify/ui-react'
 import nl2br from 'react-nl2br'
 
@@ -48,7 +48,7 @@ interface Props {
   handleDelete: () => void
   handleInsertBefore: () => void
   handleInsertAfter: () => void
-  proposal: Proposal
+  proposal: ProposalMessage
   align: 'left' | 'right'
 }
 

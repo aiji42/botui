@@ -6,19 +6,21 @@ import ProposalEditDialog from './ProposalEditDialog'
 import reducer, { ActionType, EditingProposalAction } from './reducer'
 import { v4 as uuidv4 } from 'uuid'
 
-const initialProposal = (): Proposal =>
-  ({
-    id: uuidv4(),
-    human: false,
-    content: {
-      type: 'string',
-      props: {
-        children: ''
-      }
-    },
-    before: '',
-    after: ''
-  } as Proposal)
+const initialProposal = (): Proposal => ({
+  id: uuidv4(),
+  type: 'message',
+  human: false,
+  content: {
+    type: 'string',
+    props: {
+      children: ''
+    }
+  },
+  before: '',
+  after: '',
+  completed: false,
+  updated: false
+})
 
 const ProposalViewerAndEditor: FC = () => {
   const {

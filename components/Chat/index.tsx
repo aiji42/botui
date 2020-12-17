@@ -2,7 +2,7 @@ import { FC, useCallback } from 'react'
 import Message from './Message'
 import { useCorsState } from 'use-cors-state'
 import MessageContext from '../../hooks/use-message-context'
-import { ChatConfig, Proposal } from '../../@types/session'
+import { ChatConfig, ProposalMessage } from '../../@types/session'
 import ChatConfigContext from '../../hooks/use-chat-config-context'
 import Header from './Header'
 import Footer from './Footer'
@@ -33,7 +33,7 @@ const Chat: FC = () => {
   )
 
   const updater = useCallback(
-    (index: number) => (updatedMessage: Proposal) => {
+    (index: number) => (updatedMessage: ProposalMessage) => {
       if (!config) return
       setConfig({
         ...config,

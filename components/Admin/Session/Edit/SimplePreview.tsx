@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Proposals, Session } from '../../../../@types/session'
+import { ProposalMessage, Session } from '../../../../@types/session'
 import { css } from '@emotion/react'
 import MessageContext from '../../../../hooks/use-message-context'
 import ChatConfigContext from '../../../../hooks/use-chat-config-context'
@@ -7,9 +7,10 @@ import Header from '../../../Chat/Header'
 import Footer from '../../../Chat/Footer'
 import Message from '../../../Chat/Message'
 
-const sampleMessages: Proposals = [
+const sampleMessages: Array<ProposalMessage> = [
   {
     id: 1,
+    type: 'message',
     human: false,
     content: {
       type: 'string',
@@ -25,6 +26,7 @@ const sampleMessages: Proposals = [
   },
   {
     id: 2,
+    type: 'message',
     human: false,
     content: {
       type: 'string',
@@ -37,6 +39,7 @@ const sampleMessages: Proposals = [
   },
   {
     id: 3,
+    type: 'message',
     human: true,
     content: {
       type: 'string',
