@@ -1,5 +1,36 @@
 import { Message } from '@botui/types'
 
+export type SkipperConditionOperator =
+  | 'eq'
+  | 'gt'
+  | 'gteq'
+  | 'lt'
+  | 'lteq'
+  | 'start'
+  | 'end'
+  | 'cont'
+  | 'match'
+  | 'regex'
+  | 'true'
+  | 'false'
+  | 'null'
+
+export interface SkipperCondition {
+  key: string
+  operator: SkipperConditionOperator
+  pattern?: number | string | boolean
+  negative: boolean
+}
+
+type SkipperLogic = 'and' | 'or'
+
+export interface Skipper {
+  id: string | number
+  skipNumber: number
+  conditions: Array<SkipperCondition>
+  logic: SkipperLogic
+}
+
 export interface Proposal extends Message {
   id: string | number
   before: string
