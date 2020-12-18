@@ -1,6 +1,7 @@
-import { FC } from 'react'
+import { FC, useCallback } from 'react'
 import { makeStyles, Fab } from '@material-ui/core'
 import { Add as AddIcon } from '@material-ui/icons'
+import { Proposal } from '../../../../../../@types/session'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -11,14 +12,17 @@ const useStyles = makeStyles((theme) => ({
 
 interface Props {
   selected?: boolean
-  handleInsertBefore: () => void
+  handleInsertBefore: (type: Proposal['type']) => void
 }
 
 const TimelineDotLast: FC<Props> = (props) => {
   const classes = useStyles()
+  const handleClick = useCallback(() => props.handleInsertBefore('message'), [
+    props.handleInsertBefore
+  ])
 
   return (
-    <Fab onClick={props.handleInsertBefore} color="secondary" classes={classes}>
+    <Fab onClick={handleClick} color="secondary" classes={classes}>
       <AddIcon />
     </Fab>
   )

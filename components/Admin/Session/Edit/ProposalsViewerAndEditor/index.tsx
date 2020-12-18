@@ -59,7 +59,7 @@ const ProposalViewerAndEditor: FC = () => {
       dispatch({
         type: ActionType.ACTION_DELETE,
         index,
-        newProposal: initialProposal()
+        newProposal: initialProposal('message')
       })
     },
     [dispatch]

@@ -30,6 +30,7 @@ const TimelineDot: FC<Props> = (props) => {
   const { proposal, editing } = props
   const classes = useStyles()
   const Icon = useMemo(() => {
+    console.log(editing)
     if (editing || !proposal) return EditIcon
     if (proposal.type === 'message') {
       return proposal.content.type === 'string'
