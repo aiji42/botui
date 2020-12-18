@@ -6,9 +6,13 @@ import {
   RateReview as RateReviewIcon,
   InsertPhoto as InsertPhotoIcon,
   Edit as EditIcon,
-  CallSplit as SplitIcon
+  CallSplit as CallSplitIcon
 } from '@material-ui/icons'
 import { Proposal } from '../../../../../../@types/session'
+
+const SplitIcon: FC = (props) => (
+  <CallSplitIcon {...props} style={{ transform: 'rotate(180deg)' }} />
+)
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,7 +34,6 @@ const TimelineDot: FC<Props> = (props) => {
   const { proposal, editing } = props
   const classes = useStyles()
   const Icon = useMemo(() => {
-    console.log(editing)
     if (editing || !proposal) return EditIcon
     if (proposal.type === 'message') {
       return proposal.content.type === 'string'
@@ -40,7 +43,7 @@ const TimelineDot: FC<Props> = (props) => {
         : InsertPhotoIcon
     }
     return SplitIcon
-  }, [props.editing, proposal])
+  }, [editing, proposal])
 
   return (
     <TimelineDotOriginal className={editing ? classes.editing : classes.root}>

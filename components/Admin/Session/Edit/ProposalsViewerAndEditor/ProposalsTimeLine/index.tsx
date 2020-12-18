@@ -79,7 +79,7 @@ const ProposalsTimeLine: FC<Props> = ({
           <TimelineItem>
             <TimelineSeparator>
               <TimelineDot
-                {...proposal}
+                proposal={proposal}
                 editing={editing && editingIndex === index}
               />
               <TimelineConnector className={classes.timelineConnector} />
