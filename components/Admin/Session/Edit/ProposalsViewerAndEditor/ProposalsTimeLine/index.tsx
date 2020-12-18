@@ -7,7 +7,7 @@ import {
   TimelineConnector,
   TimelineContent
 } from '@material-ui/lab'
-import { Proposals } from '../../../../../../@types/session'
+import { Proposals, Proposal } from '../../../../../../@types/session'
 import TimelineDot from './TimelineDot'
 import TimelineDotLast from './TimelineDotLast'
 import ProposalPaper from './ProposalPaper'
@@ -19,7 +19,7 @@ interface Props {
   inserting: boolean
   handleEdit: (index: number) => void
   handleDelete: (index: number) => void
-  handleInsert: (index: number) => void
+  handleInsert: (index: number, type: Proposal['type']) => void
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -51,7 +51,8 @@ const ProposalsTimeLine: FC<Props> = ({
     [handlers.handleDelete]
   )
   const makeHandleInsert = useCallback(
-    (index: number) => () => handlers.handleInsert(index),
+    (index: number) => (type: Proposal['type']) =>
+      handlers.handleInsert(index, type),
     [handlers.handleInsert]
   )
   return (

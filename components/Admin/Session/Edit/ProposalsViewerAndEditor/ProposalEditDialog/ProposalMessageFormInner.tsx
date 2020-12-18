@@ -36,7 +36,7 @@ const formTypeChoices = [
   { id: 'FormTel', name: '電話番号' }
 ]
 
-const ProposalFormInner: FC = () => {
+const ProposalMessageFormInner: FC = () => {
   const {
     record: { id: sessionId }
   } = useRecordContext({ record: {} as Session })
@@ -128,7 +128,7 @@ const ProposalFormInner: FC = () => {
   )
 }
 
-export default ProposalFormInner
+export default ProposalMessageFormInner
 
 const FormNameState: FC = (props) => {
   return (

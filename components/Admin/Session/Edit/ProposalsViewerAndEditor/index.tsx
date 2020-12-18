@@ -6,21 +6,35 @@ import ProposalEditDialog from './ProposalEditDialog'
 import reducer, { ActionType, EditingProposalAction } from './reducer'
 import { v4 as uuidv4 } from 'uuid'
 
-const initialProposal = (): Proposal => ({
-  id: uuidv4(),
-  type: 'message',
-  human: false,
-  content: {
-    type: 'string',
-    props: {
-      children: ''
+const initialProposal = (type: Proposal['type']): Proposal => {
+  if (type === 'message')
+    return {
+      id: uuidv4(),
+      type: 'message',
+      human: false,
+      content: {
+        type: 'string',
+        props: {
+          children: ''
+        }
+      },
+      before: '',
+      after: '',
+      completed: false,
+      updated: false
     }
-  },
-  before: '',
-  after: '',
-  completed: false,
-  updated: false
-})
+  return {
+    id: uuidv4(),
+    type: 'skipper',
+    conditions: [{ key: '', operator: 'eq', pattern: '', negative: false }],
+    skipNumber: 1,
+    logic: 'and',
+    before: '',
+    after: '',
+    completed: false,
+    updated: false
+  }
+}
 
 const ProposalViewerAndEditor: FC = () => {
   const {
@@ -34,6 +48,9 @@ const ProposalViewerAndEditor: FC = () => {
   useEffect(() => {
     change('proposals', newProposals)
   }, [newProposals, change])
+  const [insertingProposalType, setInsertingProposalType] = useState<
+    Proposal['type']
+  >('message')
   const [editProposalDialogOpen, setEditProposalDialogOpen] = useState<boolean>(
     false
   )
@@ -55,8 +72,9 @@ const ProposalViewerAndEditor: FC = () => {
     [setNextAction, setEditProposalDialogOpen]
   )
   const handleInsert = useCallback(
-    (index: number) => {
+    (index: number, proposalType: Proposal['type']) => {
       setNextAction({ type: ActionType.ACTION_INSERT, index })
+      setInsertingProposalType(proposalType)
       setEditProposalDialogOpen(true)
     },
     [setNextAction, setEditProposalDialogOpen]
@@ -89,7 +107,7 @@ const ProposalViewerAndEditor: FC = () => {
         proposal={
           nextAction.type === ActionType.ACTION_EDIT
             ? proposals[nextAction.index]
-            : initialProposal()
+            : initialProposal(insertingProposalType)
         }
         handleClose={() => setEditProposalDialogOpen(false)}
         handleSave={handleProposalSave}

@@ -7,7 +7,9 @@ import {
   FormProps
 } from 'react-final-form'
 import arrayMutators from 'final-form-arrays'
-import ProposalFormInner from './ProposalFormInner'
+import ProposalMessageFormInner from './ProposalMessageFormInner'
+import ProposalSkipperFormInner from './ProposalSkipperFormInner'
+import { Proposal } from '../../../../../../@types/session'
 
 interface FormFunctions {
   trySubmit: boolean
@@ -48,7 +50,7 @@ const FormWrapper: FC<FormRenderProps<any, Partial<any>> & FormFunctions> = (
   props
 ) => {
   const { submit } = useForm()
-  const { pristine } = useFormState()
+  const { pristine, values } = useFormState<Proposal>()
   useEffect(() => {
     if (!props.trySubmit) return
     submit()
@@ -57,5 +59,9 @@ const FormWrapper: FC<FormRenderProps<any, Partial<any>> & FormFunctions> = (
   useEffect(() => {
     props.handleSubmittable(!pristine)
   }, [pristine, props.handleSubmittable])
-  return <ProposalFormInner />
+  return values.type === 'message' ? (
+    <ProposalMessageFormInner />
+  ) : (
+    <ProposalSkipperFormInner />
+  )
 }
