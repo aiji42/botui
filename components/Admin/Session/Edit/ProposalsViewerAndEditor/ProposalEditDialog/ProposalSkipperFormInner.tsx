@@ -4,10 +4,8 @@ import {
   SelectInput,
   required,
   TextInput,
-  FormDataConsumer,
   ArrayInput,
   SimpleFormIterator,
-  useRecordContext,
   NumberInput
 } from 'react-admin'
 
@@ -35,14 +33,28 @@ const logicChoices = [
 const ProposalSkipperFormInner: FC = () => {
   return (
     <>
-      <NumberInput source="skipNumber" />
-      <SelectInput source="logic" choices={logicChoices} />
-      <ArrayInput source="conditions">
+      <NumberInput
+        source="skipNumber"
+        validate={[required()]}
+        label="スキップ数"
+      />
+      <SelectInput
+        source="logic"
+        choices={logicChoices}
+        validate={[required()]}
+        label="各種条件の評価"
+      />
+      <ArrayInput source="conditions" label="条件">
         <SimpleFormIterator>
-          <TextInput source="key" />
-          <SelectInput source="operator" choices={operatorChoices} />
-          <TextInput source="pattern" />
-          <BooleanInput source="negative" />
+          <TextInput source="key" validate={[required()]} label="値名" />
+          <SelectInput
+            source="operator"
+            choices={operatorChoices}
+            validate={[required()]}
+            label="評価"
+          />
+          <TextInput source="pattern" label="評価値・パターン" />
+          <BooleanInput source="negative" label="否定(NOT)" />
         </SimpleFormIterator>
       </ArrayInput>
     </>
