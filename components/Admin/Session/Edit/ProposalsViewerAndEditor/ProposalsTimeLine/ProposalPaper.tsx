@@ -16,7 +16,7 @@ import {
   VerticalAlignBottom
 } from '@material-ui/icons'
 
-import { Proposal } from '../../../../../../@types/session'
+import { ProposalMessage, Proposal } from '../../../../../../@types/session'
 import { AmplifyS3Image } from '@aws-amplify/ui-react'
 import nl2br from 'react-nl2br'
 
@@ -46,9 +46,9 @@ const useStyles = makeStyles((theme) => ({
 interface Props {
   handleEdit: () => void
   handleDelete: () => void
-  handleInsertBefore: () => void
-  handleInsertAfter: () => void
-  proposal: Proposal
+  handleInsertBefore: (type: Proposal['type']) => void
+  handleInsertAfter: (type: Proposal['type']) => void
+  proposal: ProposalMessage
   align: 'left' | 'right'
 }
 
@@ -71,6 +71,13 @@ const ProposalPaper: FC<Props> = (props) => {
   const makeNewHandler = useCallback(
     (handler) => () => {
       handler()
+      handleClose()
+    },
+    [handleClose]
+  )
+  const makeNewHandlerForInsert = useCallback(
+    (handler, type) => () => {
+      handler(type)
       handleClose()
     },
     [handleClose]
@@ -102,17 +109,29 @@ const ProposalPaper: FC<Props> = (props) => {
           </ListItemIcon>
           削除
         </MenuItem>
-        <MenuItem onClick={makeNewHandler(handleInsertBefore)}>
+        <MenuItem
+          onClick={makeNewHandlerForInsert(handleInsertBefore, 'message')}
+        >
           <ListItemIcon>
             <VerticalAlignTop />
           </ListItemIcon>
           上に挿入
         </MenuItem>
-        <MenuItem onClick={makeNewHandler(handleInsertAfter)}>
+        <MenuItem
+          onClick={makeNewHandlerForInsert(handleInsertAfter, 'message')}
+        >
           <ListItemIcon>
             <VerticalAlignBottom />
           </ListItemIcon>
           下に挿入
+        </MenuItem>
+        <MenuItem
+          onClick={makeNewHandlerForInsert(handleInsertAfter, 'skipper')}
+        >
+          <ListItemIcon>
+            <VerticalAlignBottom />
+          </ListItemIcon>
+          下に条件分岐を挿入
         </MenuItem>
       </Menu>
       <Typography align="left">

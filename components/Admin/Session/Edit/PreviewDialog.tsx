@@ -3,13 +3,12 @@ import { FC, useState } from 'react'
 import {
   Dialog,
   DialogContent,
-  Button,
   makeStyles,
   IconButton
 } from '@material-ui/core'
 import { Visibility } from '@material-ui/icons'
 import { useFormState } from 'react-final-form'
-import { Session } from '../../../../@types/session'
+import { Session, ProposalMessages } from '../../../../@types/session'
 
 const Preview = dynamic(() => import('../../../Chat/Preview'), { ssr: false })
 
@@ -49,7 +48,9 @@ const PreviewDialog: FC = () => {
             proposals={values.proposals}
             chatConfig={{
               ...values,
-              messages: values.proposals,
+              messages: values.proposals.filter(
+                ({ type }) => type === 'message'
+              ) as ProposalMessages,
               messagesCount: values.proposals.length
             }}
           />

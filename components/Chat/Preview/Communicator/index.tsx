@@ -1,10 +1,15 @@
 import { FC, useCallback, useEffect, useState } from 'react'
 import { useCorsState } from 'use-cors-state'
-import { ChatConfig, Proposals } from '../../../../@types/session'
+import {
+  ChatConfig,
+  ProposalMessages,
+  Proposals
+} from '../../../../@types/session'
 
 const values = (messages: Proposals): { [x: string]: any } =>
   messages.reduce((res, message) => {
-    if (message.content.type !== 'form') return res
+    if (message.type !== 'message' || message.content.type !== 'form')
+      return res
     return message.content.props.values
       ? { ...res, ...message.content.props.values }
       : res
@@ -23,7 +28,7 @@ const Communicator: FC<{
   )
   const [proposals, setProposals] = useState<Proposals>(initProposals)
   const setMessages = useCallback(
-    (messages: Proposals) => {
+    (messages: ProposalMessages) => {
       setConfig({ ...chatConfig, messages })
     },
     [setConfig]
@@ -78,12 +83,16 @@ const Communicator: FC<{
     }
 
     unCompletedIndex && onStart && onStart()
+    if (nextMessage.type === 'skipper') return // TODO: ここらへんで分岐が必要？
+    const proposalsOnlyMessage = proposals.filter(
+      ({ type }) => type === 'message'
+    ) as ProposalMessages
     if (
       nextMessage.content.type === 'string' &&
       typeof nextMessage.content.props.children === 'string'
     ) {
       setMessages([
-        ...proposals.slice(0, unCompletedIndex),
+        ...proposalsOnlyMessage.slice(0, unCompletedIndex),
         {
           ...nextMessage,
           content: {
@@ -101,7 +110,10 @@ const Communicator: FC<{
       return
     }
 
-    setMessages([...proposals.slice(0, unCompletedIndex), nextMessage])
+    setMessages([
+      ...proposalsOnlyMessage.slice(0, unCompletedIndex),
+      nextMessage
+    ])
   }, [proposals])
 
   return <></>

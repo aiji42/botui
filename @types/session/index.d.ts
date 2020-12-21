@@ -1,10 +1,55 @@
 import { Message } from '@botui/types'
 
-export interface Proposal extends Message {
+export type SkipperConditionOperator =
+  | 'eq'
+  | 'gt'
+  | 'gteq'
+  | 'lt'
+  | 'lteq'
+  | 'start'
+  | 'end'
+  | 'cont'
+  | 'match'
+  | 'regex'
+  | 'true'
+  | 'false'
+  | 'null'
+
+export interface SkipperCondition {
+  key: string
+  operator: SkipperConditionOperator
+  pattern?: number | string | boolean
+  negative: boolean
+}
+
+type SkipperLogic = 'and' | 'or'
+
+export interface Skipper {
+  skipNumber: number
+  conditions: Array<SkipperCondition>
+  logic: SkipperLogic
+  updated: boolean
+  completed: boolean
+}
+
+interface ProposalBase {
   id: string | number
   before: string
   after: string
+  type: string
 }
+
+export interface ProposalSkipper extends Skipper, ProposalBase {
+  type: 'skipper'
+}
+
+export interface ProposalMessage extends Message, ProposalBase {
+  type: 'message'
+}
+
+export type ProposalMessages = Array<ProposalMessage>
+
+export type Proposal = ProposalSkipper | ProposalMessage
 
 export type Proposals = Array<Proposal>
 
@@ -49,6 +94,6 @@ export interface Session<T = Proposals, U = Theme, V = Images> {
 }
 
 export interface ChatConfig extends Omit<Session, 'proposals'> {
-  messages: Array<Proposal>
+  messages: ProposalMessages
   messagesCount: number
 }
