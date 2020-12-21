@@ -3,10 +3,12 @@ import {
   BooleanInput,
   SelectInput,
   required,
+  minValue,
   TextInput,
   ArrayInput,
   SimpleFormIterator,
-  NumberInput
+  NumberInput,
+  FormDataConsumer
 } from 'react-admin'
 
 const operatorChoices = [
@@ -35,7 +37,7 @@ const ProposalSkipperFormInner: FC = () => {
     <>
       <NumberInput
         source="skipNumber"
-        validate={[required()]}
+        validate={[required(), minValue(1)]}
         label="スキップ数"
       />
       <SelectInput
@@ -44,17 +46,51 @@ const ProposalSkipperFormInner: FC = () => {
         validate={[required()]}
         label="各種条件の評価"
       />
-      <ArrayInput source="conditions" label="条件">
+      <ArrayInput source="conditions" label="条件" validate={[required()]}>
         <SimpleFormIterator>
-          <TextInput source="key" validate={[required()]} label="値名" />
-          <SelectInput
-            source="operator"
-            choices={operatorChoices}
-            validate={[required()]}
-            label="評価"
-          />
-          <TextInput source="pattern" label="評価値・パターン" />
-          <BooleanInput source="negative" label="否定(NOT)" />
+          <FormDataConsumer>
+            {({ scopedFormData, getSource }) => (
+              <>
+                <TextInput
+                  source={(getSource && getSource('key')) || ''}
+                  validate={[required()]}
+                  label="値名"
+                  fullWidth
+                />
+                <SelectInput
+                  source={getSource && getSource('operator')}
+                  choices={operatorChoices}
+                  validate={[required()]}
+                  label="評価"
+                  fullWidth
+                />
+                {['eq', 'gt', 'lt', 'gteq', 'lteq'].includes(
+                  scopedFormData?.operator
+                ) && (
+                  <NumberInput
+                    source={(getSource && getSource('pattern')) || ''}
+                    label="評価値・パターン"
+                    validate={[required()]}
+                    fullWidth
+                  />
+                )}
+                {['start', 'end', 'cont', 'match', 'regex'].includes(
+                  scopedFormData?.operator
+                ) && (
+                  <TextInput
+                    source={(getSource && getSource('pattern')) || ''}
+                    label="評価値・パターン"
+                    validate={[required()]}
+                    fullWidth
+                  />
+                )}
+                <BooleanInput
+                  source={(getSource && getSource('negative')) || ''}
+                  label="否定(NOT)"
+                />
+              </>
+            )}
+          </FormDataConsumer>
         </SimpleFormIterator>
       </ArrayInput>
     </>
