@@ -28,24 +28,20 @@ export interface Skipper {
   skipNumber: number
   conditions: Array<SkipperCondition>
   logic: SkipperLogic
-  updated: boolean
-  completed: boolean
 }
 
-interface ProposalBase {
+interface ProposalBase<T extends Record<string, unknown>, U extends string> {
   id: string | number
   before: string
   after: string
-  type: string
+  type: U
+  completed: boolean
+  data: T
 }
 
-export interface ProposalSkipper extends Skipper, ProposalBase {
-  type: 'skipper'
-}
+export type ProposalSkipper = ProposalBase<Skipper, 'skipper'>
 
-export interface ProposalMessage extends Message, ProposalBase {
-  type: 'message'
-}
+export type ProposalMessage = ProposalBase<Skipper, 'message'>
 
 export type ProposalMessages = Array<ProposalMessage>
 
