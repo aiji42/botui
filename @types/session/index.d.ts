@@ -32,16 +32,17 @@ export interface Skipper {
 
 interface ProposalBase<T extends Record<string, unknown>, U extends string> {
   id: string | number
-  before: string
-  after: string
   type: U
   completed: boolean
   data: T
 }
 
-export type ProposalSkipper = ProposalBase<Skipper, 'skipper'>
+export interface ProposalSkipper extends ProposalBase<Skipper, 'skipper'> { }
 
-export type ProposalMessage = ProposalBase<Skipper, 'message'>
+export interface ProposalMessage extends ProposalBase<Message, 'message'> {
+  before: string
+  after: string
+}
 
 export type ProposalMessages = Array<ProposalMessage>
 
