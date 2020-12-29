@@ -1,6 +1,5 @@
-import messages from '@bicstone/ra-language-japanese'
 import { Message } from '@botui/types'
-import { Proposal, ProposalMessage, ProposalMessages, Proposals } from '../../../../@types/session'
+import { ProposalMessage, Proposals } from '../../../../@types/session'
 import { skipperEvaluate } from './modules'
 
 const getValues = (proposals: Proposals): Record<string, any> => {
@@ -15,7 +14,7 @@ const evalFunction = (functionString: string, values: any) => {
   func(values)
 }
 
-const makeMessage = (proposals: Proposals) => {
+const makeMessage = (proposals: Proposals): Array<Message> => {
   const values = getValues(proposals)
   const messages: Array<Message> = []
   let prevMessageProposal: ProposalMessage
@@ -39,10 +38,29 @@ const makeMessage = (proposals: Proposals) => {
       // TODO: 非同期を考慮
       prevMessageProposal?.after && evalFunction(prevMessageProposal.after, values)
       proposal.before && evalFunction(proposal.before, values)
-      // messageの変更
 
-      messages.push(proposal.data)
+      messages.push(messageReplace(proposal.data, values))
       return true
     }
   })
+
+  return messages
+}
+
+const messageReplace = (message: Message, values: Record<string, any>): Message => {
+  if (message.content.type !== 'string') return message
+  if (typeof message.content.props.children !== 'string') return message
+  return {
+    ...message,
+    content: {
+      ...message.content,
+      props: {
+        ...message.content.props,
+        children: message.content.props.children.replace(
+          /\{\{(.+?)\}\}/g,
+          (_, key) => values[key]
+        )
+      }
+    }
+  }
 }
