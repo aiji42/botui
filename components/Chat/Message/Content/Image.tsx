@@ -4,6 +4,7 @@ import { useMessageContext } from '../../../../hooks/use-message-context'
 import { AmplifyS3Image } from '@aws-amplify/ui-react'
 import Loading from './Loading'
 import { css } from '@emotion/react'
+import { ContentImage } from '../../../../@types/session'
 
 const style = {
   hidden: css({
@@ -14,9 +15,9 @@ const style = {
 const imageStyle = ({ '--width': '100%' } as unknown) as CSSProperties
 
 const Image: FC = () => {
-  const { message, handleUpdate } = useMessageContext()
+  const { message, handleUpdate } = useMessageContext<ContentImage>()
   const [loading, setLoading] = useState(true)
-  const props = message.content.props as ImageType
+  const props = message.content.props
   useEffect(() => {
     loading && handleUpdate && handleUpdate({ ...message, completed: true })
   }, [loading])

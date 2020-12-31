@@ -1,5 +1,4 @@
-import { Message } from '@botui/types'
-import { Proposals } from '../../../../@types/session'
+import { Proposals, Message } from '../../../../@types/session'
 
 interface Values extends Record<string, any> { }
 interface Messages extends Array<Message> { }
@@ -11,7 +10,7 @@ const getValues = (messages: Messages): Values => {
   }, {})
 }
 
-const effectToProposals = (messages: Messages, proposals: Proposals): [Proposals, Values] => {
+export const effectToProposals = (messages: Messages, proposals: Proposals): [Proposals, Values] => {
   const values = getValues(messages)
   if (!messages.some(({ completed }) => !completed)) return [proposals, values]
   const messageIds = messages.map(({ id }) => id)

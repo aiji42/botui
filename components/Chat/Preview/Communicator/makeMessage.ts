@@ -1,6 +1,5 @@
-import { Message } from '@botui/types'
-import { ProposalMessage, Proposals } from '../../../../@types/session'
-import { skipperEvaluate } from './modules'
+import { ProposalMessage, Proposals, Message } from '../../../../@types/session'
+import { skipperEvaluate } from './skipperEvaluate'
 
 const getValues = (proposals: Proposals): Record<string, any> => {
   return proposals.reduce<Record<string, any>>((values, proposal) => {
@@ -10,13 +9,18 @@ const getValues = (proposals: Proposals): Record<string, any> => {
 }
 
 const evalFunction = (functionString: string, values: any) => {
+  /* eslint no-new-func: "off" */
   const func = new Function('values', functionString)
   func(values)
 }
 
-const makeMessage = (proposals: Proposals): Array<Message> => {
+export interface MessageWithId extends Message {
+  id: number | string
+}
+
+export const makeMessage = (proposals: Proposals): Array<MessageWithId> => {
   const values = getValues(proposals)
-  const messages: Array<Message> = []
+  const messages: Array<MessageWithId> = []
   let prevMessageProposal: ProposalMessage
   let skipNumber: number
   proposals.some((proposal) => {
@@ -30,7 +34,7 @@ const makeMessage = (proposals: Proposals): Array<Message> => {
       return
     }
     if (proposal.type === 'message' && proposal.completed) {
-      messages.push(proposal.data)
+      messages.push({ ...proposal.data, id: proposal.id })
       prevMessageProposal = proposal
       return
     }
@@ -39,7 +43,7 @@ const makeMessage = (proposals: Proposals): Array<Message> => {
       prevMessageProposal?.after && evalFunction(prevMessageProposal.after, values)
       proposal.before && evalFunction(proposal.before, values)
 
-      messages.push(messageReplace(proposal.data, values))
+      messages.push({ ...messageReplace(proposal.data, values), id: proposal.id })
       return true
     }
   })

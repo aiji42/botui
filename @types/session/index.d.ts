@@ -1,4 +1,40 @@
-import { Message } from '@botui/types'
+import { Form as FormType } from '@botui/types'
+import { HTMLAttributes } from 'react'
+
+export interface ContentForm {
+  type: 'form'
+  props: FormType
+  delay?: number
+}
+
+export interface StringType extends HTMLAttributes<HTMLSpanElement> { }
+
+export interface ImageType {
+  imgKey: string
+}
+
+export interface ContentString {
+  type: 'string'
+  props: StringType
+  delay?: number
+}
+
+export interface ContentImage {
+  type: 'image'
+  props: ImageType
+  delay?: number
+}
+
+export type Content = ContentForm | ContentImage | ContentString
+
+export interface Message<T = Content> {
+  id: string | number
+  human: boolean
+  iconDisplay?: boolean
+  content: T
+  completed: boolean
+  updated: boolean
+}
 
 export type SkipperConditionOperator =
   | 'eq'
@@ -91,6 +127,6 @@ export interface Session<T = Proposals, U = Theme, V = Images> {
 }
 
 export interface ChatConfig extends Omit<Session, 'proposals'> {
-  messages: ProposalMessages
+  messages: Array<Message>
   messagesCount: number
 }

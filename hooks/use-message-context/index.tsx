@@ -1,41 +1,31 @@
 import { FC, createContext, useContext } from 'react'
-import { ProposalMessage } from '../../@types/session'
+import { Content, Message } from '../../@types/session'
 
-interface MessageContextType {
-  handleUpdate?: (arg: ProposalMessage) => void
-  message: ProposalMessage
+interface MessageContextType<T = Content> {
+  handleUpdate?: (arg: Message) => void
+  message: Message<T>
 }
 
 const noOp = () => {
   // do nothing.
 }
 
-const Context = createContext<MessageContextType>({
+const Context = <T extends unknown = Content>() => createContext<MessageContextType<T>>({
   handleUpdate: noOp,
-  message: {
-    id: '',
-    type: 'message',
-    human: true,
-    content: { type: 'string', props: {} },
-    completed: false,
-    updated: false,
-    before: '',
-    after: ''
-  }
+  message: {} as Message<T>
 })
 
-export const useMessageContext = (): MessageContextType => useContext(Context)
+export const useMessageContext = <T extends unknown = Content>() => useContext<MessageContextType<T>>(Context<T>())
 
-const MessageContext: FC<MessageContextType> = ({
+export const MessageContextProvider: FC<MessageContextType> = ({
   message,
   handleUpdate = noOp,
   children
 }) => {
+  const Provider = Context().Provider
   return (
-    <Context.Provider value={{ message, handleUpdate }}>
+    <Provider value={{ message, handleUpdate }}>
       {children}
-    </Context.Provider>
+    </Provider>
   )
 }
-
-export default MessageContext
