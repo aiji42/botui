@@ -37,13 +37,23 @@ const Chat: FC = () => {
       if (!config) return
       setConfig({
         ...config,
-        messages: config.messages.reduce<ChatConfig['messages']>((res, message) => {
-          // updated: true の場合、後続のメッセージは削除する
-          if (updatedMessage.updated && res.find(({ id }) => id === updatedMessage.id)) return res
-          return [
-            ...res, (message.id === updatedMessage.id ? { ...updatedMessage, updated: false } : message)
-          ]
-        }, [])
+        messages: config.messages.reduce<ChatConfig['messages']>(
+          (res, message) => {
+            // updated: true の場合、後続のメッセージは削除する
+            if (
+              updatedMessage.updated &&
+              res.find(({ id }) => id === updatedMessage.id)
+            )
+              return res
+            return [
+              ...res,
+              message.id === updatedMessage.id
+                ? { ...updatedMessage, updated: false }
+                : message
+            ]
+          },
+          []
+        )
       })
     },
     [config, setConfig]
@@ -58,7 +68,11 @@ const Chat: FC = () => {
       </div>
       <div css={style.body}>
         {config.messages.map((message) => (
-          <MessageContextProvider message={message} handleUpdate={updater} key={message.id}>
+          <MessageContextProvider
+            message={message}
+            handleUpdate={updater}
+            key={message.id}
+          >
             <Message />
           </MessageContextProvider>
         ))}

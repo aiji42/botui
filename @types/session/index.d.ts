@@ -7,7 +7,7 @@ export interface ContentForm {
   delay?: number
 }
 
-export interface StringType extends HTMLAttributes<HTMLSpanElement> { }
+export type StringType = HTMLAttributes<HTMLSpanElement>
 
 export interface ImageType {
   imgKey: string
@@ -73,7 +73,7 @@ interface ProposalBase<T extends Record<string, unknown>, U extends string> {
   data: T
 }
 
-export interface ProposalSkipper extends ProposalBase<Skipper, 'skipper'> { }
+export type ProposalSkipper = ProposalBase<Skipper, 'skipper'>
 
 export interface ProposalMessage extends ProposalBase<Message, 'message'> {
   before: string

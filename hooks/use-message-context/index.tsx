@@ -10,12 +10,14 @@ const noOp = () => {
   // do nothing.
 }
 
-const Context = <T extends unknown = Content>() => createContext<MessageContextType<T>>({
-  handleUpdate: noOp,
-  message: {} as Message<T>
-})
+const Context = <T extends unknown = Content>() =>
+  createContext<MessageContextType<T>>({
+    handleUpdate: noOp,
+    message: {} as Message<T>
+  })
 
-export const useMessageContext = <T extends unknown = Content>() => useContext<MessageContextType<T>>(Context<T>())
+export const useMessageContext = <T extends unknown = Content>() =>
+  useContext<MessageContextType<T>>(Context<T>())
 
 export const MessageContextProvider: FC<MessageContextType> = ({
   message,
@@ -23,9 +25,5 @@ export const MessageContextProvider: FC<MessageContextType> = ({
   children
 }) => {
   const Provider = Context().Provider
-  return (
-    <Provider value={{ message, handleUpdate }}>
-      {children}
-    </Provider>
-  )
+  return <Provider value={{ message, handleUpdate }}>{children}</Provider>
 }

@@ -1,10 +1,6 @@
 import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import { useCorsState } from 'use-cors-state'
-import {
-  ChatConfig,
-  Proposals,
-  Message
-} from '../../../../@types/session'
+import { ChatConfig, Proposals, Message } from '../../../../@types/session'
 import { effectToProposals } from './effectToProposals'
 import { makeMessage } from './makeMessage'
 

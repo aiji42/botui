@@ -1,7 +1,7 @@
 import { Proposals, Message } from '../../../../@types/session'
 
-interface Values extends Record<string, any> { }
-interface Messages extends Array<Message> { }
+type Values = Record<string, any>
+type Messages = Array<Message>
 
 const getValues = (messages: Messages): Values => {
   return messages.reduce<Values>((values, message) => {
@@ -10,13 +10,21 @@ const getValues = (messages: Messages): Values => {
   }, {})
 }
 
-export const effectToProposals = (messages: Messages, proposals: Proposals): [Proposals, Values] => {
+export const effectToProposals = (
+  messages: Messages,
+  proposals: Proposals
+): [Proposals, Values] => {
   const values = getValues(messages)
   if (!messages.some(({ completed }) => !completed)) return [proposals, values]
   const messageIds = messages.map(({ id }) => id)
-  const effected = proposals.reduce<Proposals>((res, proposal) => [
-    ...res,
-    messageIds.includes(proposal.id) ? { ...proposal, completed: true } : { ...proposal, completed: false }
-  ], [])
+  const effected = proposals.reduce<Proposals>(
+    (res, proposal) => [
+      ...res,
+      messageIds.includes(proposal.id)
+        ? { ...proposal, completed: true }
+        : { ...proposal, completed: false }
+    ],
+    []
+  )
   return [effected, values]
 }

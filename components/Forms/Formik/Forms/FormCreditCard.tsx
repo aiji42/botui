@@ -149,28 +149,32 @@ const FormBirthDay = withFormik<FormCreditCardType, FormCreditCardValues>({
     creditCardExpiryYear: yup
       .string()
       .required('選択してください')
-      .test('credit-card-date', '正しい有効期限を選択してください', function (
-        val
-      ) {
-        return cardValidator.expirationDate({
-          month: this.parent.creditCardExpiryMonth,
-          year: val
-        }).isValid
-      }),
+      .test(
+        'credit-card-date',
+        '正しい有効期限を選択してください',
+        function (val) {
+          return cardValidator.expirationDate({
+            month: this.parent.creditCardExpiryMonth,
+            year: val
+          }).isValid
+        }
+      ),
     creditCardExpiryMonth: yup.string().required('選択してください'),
     creditCardName: yup.string().required('入力して下さい'),
     creditCardCvc: yup
       .string()
       .required('入力してください')
       .matches(/^\d{3,4}$/, '正しい形式で入力してください')
-      .test('credit-card-cvc', '正しいコードを入力してください', function (
-        val
-      ) {
-        return cardValidator.cvv(
-          val,
-          cardValidator.number(this.parent.creditCardNumber).card?.code.size
-        ).isValid
-      })
+      .test(
+        'credit-card-cvc',
+        '正しいコードを入力してください',
+        function (val) {
+          return cardValidator.cvv(
+            val,
+            cardValidator.number(this.parent.creditCardNumber).card?.code.size
+          ).isValid
+        }
+      )
   }),
   validateOnMount: true,
   handleSubmit: customHandleSubmit
