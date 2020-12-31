@@ -1,5 +1,4 @@
 import { FC, useEffect, CSSProperties, useCallback, useState } from 'react'
-import { ImageType } from '@botui/types'
 import { useMessageContext } from '../../../../hooks/use-message-context'
 import { AmplifyS3Image } from '@aws-amplify/ui-react'
 import Loading from './Loading'

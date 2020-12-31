@@ -4,12 +4,14 @@ import { skipperEvaluate } from './skipperEvaluate'
 const getValues = (proposals: Proposals): Record<string, any> => {
   return proposals.reduce<Record<string, any>>((values, proposal) => {
     if (proposal.type !== 'message') return values
-    return proposal.data.content.type === 'form' ? {...values, ...proposal.data.content.props.values} : values
+    return proposal.data.content.type === 'form'
+      ? { ...values, ...proposal.data.content.props.values }
+      : values
   }, {})
 }
 
 const evalFunction = (functionString: string, values: any) => {
-  /* eslint no-new-func: "off" */
+  // eslint-disable-next-line no-new-func
   const func = new Function('values', functionString)
   func(values)
 }
@@ -23,6 +25,7 @@ export const makeMessage = (proposals: Proposals): Array<MessageWithId> => {
   const messages: Array<MessageWithId> = []
   let prevMessageProposal: ProposalMessage
   let skipNumber: number
+  /* eslint-disable array-callback-return */
   proposals.some((proposal) => {
     if (skipNumber) {
       --skipNumber
@@ -40,18 +43,26 @@ export const makeMessage = (proposals: Proposals): Array<MessageWithId> => {
     }
     if (proposal.type === 'message') {
       // TODO: 非同期を考慮
-      prevMessageProposal?.after && evalFunction(prevMessageProposal.after, values)
+      prevMessageProposal?.after &&
+        evalFunction(prevMessageProposal.after, values)
       proposal.before && evalFunction(proposal.before, values)
 
-      messages.push({ ...messageReplace(proposal.data, values), id: proposal.id })
+      messages.push({
+        ...messageReplace(proposal.data, values),
+        id: proposal.id
+      })
       return true
     }
   })
+  /* eslint-enable array-callback-return */
 
   return messages
 }
 
-const messageReplace = (message: Message, values: Record<string, any>): Message => {
+const messageReplace = (
+  message: Message,
+  values: Record<string, any>
+): Message => {
   if (message.content.type !== 'string') return message
   if (typeof message.content.props.children !== 'string') return message
   return {

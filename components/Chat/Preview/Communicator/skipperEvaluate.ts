@@ -49,12 +49,9 @@ const operate = (
     return !negative ? _match(left, right) : !_match(left, right)
   if (operator === 'regex')
     return !negative ? _regex(left, right) : !_regex(left, right)
-  if (operator === 'true')
-    return !negative ? _true(left, right) : !_true(left, right)
-  if (operator === 'false')
-    return !negative ? _false(left, right) : !_false(left, right)
-  if (operator === 'null')
-    return !negative ? _null(left, right) : !_null(left, right)
+  if (operator === 'true') return !negative ? _true(left) : !_true(left)
+  if (operator === 'false') return !negative ? _false(left) : !_false(left)
+  if (operator === 'null') return !negative ? _null(left) : !_null(left)
   return false
 }
 
@@ -75,6 +72,6 @@ const _cont = (left: ValueType, right: ValueType) =>
 const _match = (left: ValueType, right: ValueType) => left === right
 const _regex = (left: ValueType, right: ValueType) =>
   new RegExp(`${right}`).test(`${left}`)
-const _true = (left: ValueType, right: ValueType) => left === true
-const _false = (left: ValueType, right: ValueType) => left === false
-const _null = (left: ValueType, right: ValueType) => left === null
+const _true = (left: ValueType) => left === true
+const _false = (left: ValueType) => left === false
+const _null = (left: ValueType) => left === null
