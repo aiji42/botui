@@ -36,17 +36,17 @@ const ProposalSkipperFormInner: FC = () => {
   return (
     <>
       <NumberInput
-        source="skipNumber"
+        source="data.skipNumber"
         validate={[required(), minValue(1)]}
         label="スキップ数"
       />
       <SelectInput
-        source="logic"
+        source="data.logic"
         choices={logicChoices}
         validate={[required()]}
         label="各種条件の評価"
       />
-      <ArrayInput source="conditions" label="条件" validate={[required()]}>
+      <ArrayInput source="data.conditions" label="条件" validate={[required()]}>
         <SimpleFormIterator>
           <FormDataConsumer>
             {({ scopedFormData, getSource }) => (

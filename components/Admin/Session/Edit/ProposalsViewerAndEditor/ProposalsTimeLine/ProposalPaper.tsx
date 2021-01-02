@@ -48,13 +48,13 @@ interface Props {
   handleDelete: () => void
   handleInsertBefore: (type: Proposal['type']) => void
   handleInsertAfter: (type: Proposal['type']) => void
-  proposal: ProposalMessage
+  proposalData: ProposalMessage['data']
   align: 'left' | 'right'
 }
 
 const ProposalPaper: FC<Props> = (props) => {
   const {
-    proposal,
+    proposalData,
     handleEdit,
     handleDelete,
     handleInsertBefore,
@@ -135,14 +135,15 @@ const ProposalPaper: FC<Props> = (props) => {
         </MenuItem>
       </Menu>
       <Typography align="left">
-        {proposal.content.type === 'string' &&
-          (typeof proposal.content.props.children === 'string'
-            ? nl2br(proposal.content.props.children)
-            : proposal.content.props.children)}
-        {proposal.content.type === 'form' && proposal.content.props.type}
-        {proposal.content.type === 'image' && (
+        {proposalData.content.type === 'string' &&
+          (typeof proposalData.content.props.children === 'string'
+            ? nl2br(proposalData.content.props.children)
+            : proposalData.content.props.children)}
+        {proposalData.content.type === 'form' &&
+          proposalData.content.props.type}
+        {proposalData.content.type === 'image' && (
           <AmplifyS3Image
-            {...proposal.content.props}
+            {...proposalData.content.props}
             style={({ '--width': '100%' } as unknown) as CSSProperties}
           />
         )}

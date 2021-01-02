@@ -4,36 +4,18 @@ import { useForm, useFormState, Field } from 'react-final-form'
 import ProposalsTimeLine from './ProposalsTimeLine'
 import ProposalEditDialog from './ProposalEditDialog'
 import reducer, { ActionType, EditingProposalAction } from './reducer'
-import { v4 as uuidv4 } from 'uuid'
+import {
+  skipperTemplate,
+  stringMessageTemplate
+} from '../../Create/proposalTemplates'
 
 const initialProposal = (type: Proposal['type']): Proposal => {
-  if (type === 'message')
-    return {
-      id: uuidv4(),
-      type: 'message',
-      human: false,
-      content: {
-        type: 'string',
-        props: {
-          children: ''
-        }
-      },
-      before: '',
-      after: '',
-      completed: false,
-      updated: false
-    }
-  return {
-    id: uuidv4(),
-    type: 'skipper',
+  if (type === 'message') return stringMessageTemplate('')
+  return skipperTemplate({
     conditions: [{ key: '', operator: 'eq', pattern: '', negative: false }],
     skipNumber: 1,
-    logic: 'and',
-    before: '',
-    after: '',
-    completed: false,
-    updated: false
-  }
+    logic: 'and'
+  })
 }
 
 const ProposalViewerAndEditor: FC = () => {
