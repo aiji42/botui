@@ -21,7 +21,6 @@ import {
   useEffect
 } from 'react'
 import useFetchSession from '../hooks/use-fetch-session'
-import { ProposalMessages } from '../@types/session'
 
 const Transition = forwardRef(
   (
@@ -96,9 +95,7 @@ const Preview: FC<Props> = (props) => {
               proposals={session.proposals}
               chatConfig={{
                 ...session,
-                messages: session.proposals.filter(
-                  ({ type }) => type === 'message'
-                ) as ProposalMessages,
+                messages: [],
                 messagesCount: session.proposals.length
               }}
               onStart={handleStart}
@@ -115,9 +112,7 @@ const Preview: FC<Props> = (props) => {
                 proposals={session.proposals}
                 chatConfig={{
                   ...session,
-                  messages: session.proposals.filter(
-                    ({ type }) => type === 'message'
-                  ) as ProposalMessages,
+                  messages: [],
                   messagesCount: session.proposals.length
                 }}
                 onStart={handleStart}

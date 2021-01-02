@@ -242,48 +242,44 @@ const ecProposals: Proposals = [
     status: {}
   }),
   stringMessageTemplate('お届け希望日時を選択してください。'),
-  {
-    ...formMessageTemplate({
-      selects: [
-        {
-          name: 'deliveryDate',
-          options: [
-            {
-              label: 'dummy',
-              value: 'dummy'
-            }
-          ],
-          title: 'お届け日'
-        },
-        {
-          name: 'deliveryTime',
-          options: [
-            {
-              label: '午前中',
-              value: 'am'
-            },
-            {
-              label: '12:00-15:00',
-              value: '12_15'
-            },
-            {
-              label: '15:00-18:00',
-              value: '15_18'
-            },
-            {
-              label: '18:00-21:00',
-              value: '18_21'
-            }
-          ],
-          title: 'お届け時間帯'
-        }
-      ],
-      type: 'FormCustomSelect',
-      status: {}
-    }),
-    before:
-      'console.log(values, message);\nconst dateFormat = {\n  _fmt : {\n    "yyyy": function(date) { return date.getFullYear() + \'\'; },\n    "MM": function(date) { return (\'0\' + (date.getMonth() + 1)).slice(-2); },\n    "dd": function(date) { return (\'0\' + date.getDate()).slice(-2); },\n    "hh": function(date) { return (\'0\' + date.getHours()).slice(-2); },\n    "mm": function(date) { return (\'0\' + date.getMinutes()).slice(-2); },\n    "ss": function(date) { return (\'0\' + date.getSeconds()).slice(-2); }\n  },\n  _priority : ["yyyy", "MM", "dd", "hh", "mm", "ss"],\n  format: function(date, format){\n    return this._priority.reduce((res, fmt) => res.replace(fmt, this._fmt[fmt](date)), format)\n  }\n};\nconst sequentials = new Array(20)\n    .fill(null)\n    .map((_, i) => i + 2);\nmessage.content.props.selects[0].options = sequentials.map(sequence => {\n  const today = new Date();\n  today.setDate(today.getDate() + sequence);\n  const label = dateFormat.format(today, \'MM月dd日\');\n  const value = dateFormat.format(today, \'yyyy-MM-dd\');  \n  return { label, value };\n})'
-  }
+  formMessageTemplate({
+    selects: [
+      {
+        name: 'deliveryDate',
+        options: [
+          {
+            label: 'dummy',
+            value: 'dummy'
+          }
+        ],
+        title: 'お届け日'
+      },
+      {
+        name: 'deliveryTime',
+        options: [
+          {
+            label: '午前中',
+            value: 'am'
+          },
+          {
+            label: '12:00-15:00',
+            value: '12_15'
+          },
+          {
+            label: '15:00-18:00',
+            value: '15_18'
+          },
+          {
+            label: '18:00-21:00',
+            value: '18_21'
+          }
+        ],
+        title: 'お届け時間帯'
+      }
+    ],
+    type: 'FormCustomSelect',
+    status: {}
+  })
 ]
 
 export const ec = JSON.stringify(ecProposals)

@@ -59,18 +59,8 @@ const ProposalMessageFormInner: FC = () => {
         source="data.content.delay"
         fullWidth
       />
-      <TextInput
-        source="data.before"
-        label="before function"
-        fullWidth
-        multiline
-      />
-      <TextInput
-        source="data.after"
-        label="after function"
-        fullWidth
-        multiline
-      />
+      <TextInput source="before" label="before function" fullWidth multiline />
+      <TextInput source="after" label="after function" fullWidth multiline />
       <FormDataConsumer>
         {({ formData }) => (
           <>

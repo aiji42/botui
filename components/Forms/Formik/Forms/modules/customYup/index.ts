@@ -2,10 +2,10 @@ import * as yup from 'yup'
 
 interface ValidationTypeString {
   type: 'string'
-  min?: [number, yup.StringLocale['min']]
-  max?: [number, yup.StringLocale['max']]
-  required?: [yup.TestOptionsMessage]
-  matches?: [RegExp, yup.StringLocale['matches']]
+  min?: [number, string]
+  max?: [number, string]
+  required?: [string]
+  matches?: [RegExp, string]
 }
 const isValidationTypeString = (arg: any): arg is ValidationTypeString =>
   arg?.type === 'string'
@@ -31,9 +31,9 @@ const customYupString = (
 
 interface ValidationTypeNumber {
   type: 'number'
-  min?: [number, yup.NumberLocale['min']]
-  max?: [number, yup.NumberLocale['max']]
-  required?: [yup.TestOptionsMessage]
+  min?: [number, string]
+  max?: [number, string]
+  required?: [string]
 }
 const isValidationTypeNumber = (arg: any): arg is ValidationTypeNumber =>
   arg?.type === 'number'
