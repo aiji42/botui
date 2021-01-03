@@ -9,7 +9,7 @@ import ButtonSubmit from '../Elements/ButtonSubmit'
 import {
   FormCustomRadioGroup as FormCustomRadioGroupType,
   FormCustomRadioGroupValues
-} from '@botui/types'
+} from '../../../../@types/session'
 
 const style = {
   margin: css({

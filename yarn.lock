@@ -2406,14 +2406,6 @@
   dependencies:
     ra-language-english "^3.8.0"
 
-"@botui/types@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@botui/types/-/types-0.5.0.tgz#862d00b4044b0948b0437a9d5cd80bd072aad064"
-  integrity sha512-XEZxCoufCtTiVd3LmEeYe+Cm6WhhM+eh+lYaVSs3hWmeVPnepV3lDm6Mfu1/IqQvYj6LRo8hlhkdx2KMSXFzWA==
-  dependencies:
-    "@types/react" "*"
-    "@types/yup" "*"
-
 "@emotion/babel-plugin-jsx-pragmatic@^0.1.5":
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin-jsx-pragmatic/-/babel-plugin-jsx-pragmatic-0.1.5.tgz#27debfe9c27c4d83574d509787ae553bf8a34d7e"
@@ -3004,11 +2996,6 @@
   integrity sha512-NRqD6T4gktUrDi1o1wLH3EKC1o2caCr7/wR87ODcbVITQF106OM3sFN92ysZ++wqelOd1CTzatnOBRDYYG6wGQ==
   dependencies:
     "@types/yargs-parser" "*"
-
-"@types/yup@*":
-  version "0.29.9"
-  resolved "https://registry.yarnpkg.com/@types/yup/-/yup-0.29.9.tgz#e2015187ae5739fd3b791b3b7ab9094f2aa5a474"
-  integrity sha512-ZtjjlrHuHTYctHDz3c8XgInjj0v+Hahe32N/4cDa2banibf9w6aAgxwx0jZtBjKKzmGIU4NXhofEsBW1BbqrNg==
 
 "@types/yup@^0.29.11":
   version "0.29.11"

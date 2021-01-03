@@ -6,7 +6,7 @@ import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import TextareaAutosize, {
   TextareaAutosizeProps
 } from 'react-textarea-autosize'
-import { FieldMetaProps, useField, FieldAttributes } from 'formik'
+import { FieldMetaProps, useField, FieldInputProps } from 'formik'
 
 const style = {
   base: css`
@@ -62,7 +62,7 @@ const styles = ({
 
 type Props = {
   title?: string | Element
-} & FieldAttributes<any> &
+} & FieldInputProps<string> &
   TextareaAutosizeProps
 
 const TextareaWithIcon: FC<Props> = ({ title, ...props }) => {

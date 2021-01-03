@@ -1,8 +1,7 @@
 import { FC, useCallback } from 'react'
 import * as Forms from '../../../Forms'
-import { Form as FormType } from '@botui/types'
 import { useMessageContext } from '../../../../hooks/use-message-context'
-import { ContentForm } from '../../../../@types/session'
+import { ContentForm, Form as FormType } from '../../../../@types/session'
 
 const Form: FC = () => {
   const { message, handleUpdate } = useMessageContext<ContentForm>()

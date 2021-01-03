@@ -12,7 +12,6 @@
   "dependencies": {
     "@aws-amplify/ui-react": "^0.2.33",
     "@bicstone/ra-language-japanese": "^3.8.0",
-    "@botui/types": "^0.5.0",
     "@emotion/babel-preset-css-prop": "^11.0.0",
     "@emotion/react": "^11.1.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",

@@ -9,7 +9,7 @@ import { customHandleSubmit } from './modules'
 import {
   FormBirthDayValues,
   FormBirthDay as FormBirthDayType
-} from '@botui/types'
+} from '../../../../@types/session'
 import fillRange from 'fill-range'
 
 const style = {

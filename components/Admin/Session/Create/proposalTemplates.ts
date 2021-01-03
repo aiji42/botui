@@ -1,4 +1,9 @@
+import { v4 as uuidv4 } from 'uuid'
 import {
+  ProposalMessage,
+  Proposals,
+  ProposalSkipper,
+  Skipper,
   FormAddress,
   FormBirthDay,
   FormConfirm,
@@ -11,13 +16,6 @@ import {
   FormEmail,
   FormName,
   FormTel
-} from '@botui/types'
-import { v4 as uuidv4 } from 'uuid'
-import {
-  ProposalMessage,
-  Proposals,
-  ProposalSkipper,
-  Skipper
 } from '../../../../@types/session'
 
 export const skipperTemplate = (skipper: Skipper): ProposalSkipper => {

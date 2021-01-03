@@ -8,7 +8,10 @@ import ButtonSubmit from '../Elements/ButtonSubmit'
 import { css } from '@emotion/react'
 import { useKana } from 'react-use-kana'
 import { customHandleSubmit } from './modules'
-import { FormNameValues, FormName as FormNameType } from '@botui/types'
+import {
+  FormNameValues,
+  FormName as FormNameType
+} from '../../../../@types/session'
 
 const style = {
   formBlockDetailHalf: css`
