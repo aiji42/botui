@@ -1,4 +1,5 @@
 import { Proposals, Message } from '../../../../@types/session'
+import deepEqual from 'deep-equal'
 
 type Values = Record<string, any>
 type Messages = Array<Message>
@@ -15,16 +16,25 @@ export const effectToProposals = (
   proposals: Proposals
 ): [Proposals, Values] => {
   const values = getValues(messages)
-  if (!messages.some(({ completed }) => !completed)) return [proposals, values]
-  const messageIds = messages.map(({ id }) => id)
-  const effected = proposals.reduce<Proposals>(
-    (res, proposal) => [
-      ...res,
-      messageIds.includes(proposal.id)
-        ? { ...proposal, completed: true }
-        : { ...proposal, completed: false }
-    ],
-    []
-  )
+  if (messages.some(({ completed }) => !completed)) return [proposals, values]
+  const effected = proposals.reduce<Proposals>((res, proposal) => {
+    const message = messages.find(({ id }) => id === proposal.id)
+    if (message && proposal.type === 'message')
+      return [
+        ...res,
+        { ...proposal, completed: message.completed, data: message }
+      ]
+    else if (proposal.type === 'message')
+      return [
+        ...res,
+        {
+          ...proposal,
+          completed: false,
+          data: { ...proposal.data, completed: false }
+        }
+      ]
+    return [...res, { ...proposal, completed: false }]
+  }, [])
+  if (deepEqual(effected, proposals)) return [proposals, values]
   return [effected, values]
 }

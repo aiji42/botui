@@ -286,7 +286,6 @@ export const ec = JSON.stringify(ecProposals)
 
 const inquiryProposals: Proposals = [
   stringMessageTemplate('こんにちは。'),
-  stringMessageTemplate('クレジットカード情報、お支払回数をご入力ください。'),
   stringMessageTemplate('お問い合わせの内容で当てはまるものを選択して下さい。'),
   formMessageTemplate({
     inputs: [

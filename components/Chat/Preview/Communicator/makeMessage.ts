@@ -25,21 +25,20 @@ export const makeMessage = (proposals: Proposals): Array<MessageWithId> => {
   const messages: Array<MessageWithId> = []
   let prevMessageProposal: ProposalMessage
   let skipNumber: number
-  /* eslint-disable array-callback-return */
   proposals.some((proposal) => {
     if (skipNumber) {
       --skipNumber
-      return
+      return false
     }
     if (proposal.type === 'skipper') {
       const { data: skipper } = proposal
       skipNumber = skipperEvaluate(skipper, values)
-      return
+      return false
     }
     if (proposal.type === 'message' && proposal.completed) {
-      messages.push({ ...proposal.data, id: proposal.id })
+      messages.push(proposal.data)
       prevMessageProposal = proposal
-      return
+      return false
     }
     if (proposal.type === 'message') {
       // TODO: 非同期を考慮
@@ -47,14 +46,11 @@ export const makeMessage = (proposals: Proposals): Array<MessageWithId> => {
         evalFunction(prevMessageProposal.after, values)
       proposal.before && evalFunction(proposal.before, values)
 
-      messages.push({
-        ...messageReplace(proposal.data, values),
-        id: proposal.id
-      })
+      messages.push(messageReplace(proposal.data, values))
       return true
     }
+    return false
   })
-  /* eslint-enable array-callback-return */
 
   return messages
 }
