@@ -9,7 +9,7 @@ import ButtonSubmit from '../Elements/ButtonSubmit'
 import {
   FormCustomCheckbox as FormCustomCheckboxType,
   FormCustomCheckboxValues
-} from '@botui/types'
+} from '../../../../@types/session'
 
 const style = {
   margin: css({

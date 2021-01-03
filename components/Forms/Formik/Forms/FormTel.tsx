@@ -6,7 +6,10 @@ import SpanErrorMessage from '../Elements/SpanErrorMessage'
 import ButtonSubmit from '../Elements/ButtonSubmit'
 import { isValidNumber as isValidPhoneNumber } from 'libphonenumber-js'
 import { customHandleSubmit } from './modules'
-import { FormTelValues, FormTel as FormTelType } from '@botui/types'
+import {
+  FormTelValues,
+  FormTel as FormTelType
+} from '../../../../@types/session'
 
 const Form: FC<FormikProps<FormTelValues>> = (props) => {
   const { handleSubmit } = props

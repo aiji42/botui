@@ -8,7 +8,10 @@ import SpanErrorMessage from '../Elements/SpanErrorMessage'
 import ButtonSubmit from '../Elements/ButtonSubmit'
 import { usePostalJp } from 'use-postal-jp'
 import { customHandleSubmit } from './modules'
-import { FormAddressValues, FormAddress as FormAddressType } from '@botui/types'
+import {
+  FormAddressValues,
+  FormAddress as FormAddressType
+} from '../../../../@types/session'
 import jpPrefecture from 'jp-prefecture'
 
 const prefectures: Array<{

@@ -8,7 +8,7 @@ import { customHandleSubmit } from './modules'
 import {
   FormCustomTextareaValues,
   FormCustomTextarea as FormCustomTextareaType
-} from '@botui/types'
+} from '../../../../@types/session'
 
 const Form: FC<
   FormikProps<FormCustomTextareaValues> & FormCustomTextareaType

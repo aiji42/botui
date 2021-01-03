@@ -8,7 +8,7 @@ import { customHandleSubmit } from './modules'
 import {
   FormCustomInputValues,
   FormCustomInput as FormCustomInputType
-} from '@botui/types'
+} from '../../../../@types/session'
 
 const Form: FC<FormikProps<FormCustomInputValues> & FormCustomInputType> = (
   props

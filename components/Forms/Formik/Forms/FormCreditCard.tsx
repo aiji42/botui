@@ -13,7 +13,7 @@ import { customHandleSubmit } from './modules'
 import {
   FormCreditCardValues,
   FormCreditCard as FormCreditCardType
-} from '@botui/types'
+} from '../../../../@types/session'
 
 const style = {
   narrowField: css`
