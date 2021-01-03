@@ -17,6 +17,7 @@ const Form: FC<FormikProps<FormCustomInputValues> & FormCustomInputType> = (
 
   return (
     <form onSubmit={handleSubmit}>
+      {/* eslint-disable-next-line @typescript-eslint/no-unused-vars */}
       {inputs.map(({ validation, ...attributes }, index) => (
         <Fragment key={index}>
           <Field as={InputWithIcon} {...attributes} autoFocus={index === 0} />

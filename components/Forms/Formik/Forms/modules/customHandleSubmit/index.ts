@@ -1,11 +1,9 @@
 import { FormikBag } from 'formik'
 
-interface Values {
-  [key: string]: any
-}
+type Values = Record<string, unknown>
 
 export interface HandleSubmitProps {
-  onSubmitted: (parm: any) => void
+  onSubmitted: (parm: unknown) => void
 }
 
 export const customHandleSubmit = <T = Values>(

@@ -4,8 +4,8 @@ import {
   SkipperConditionOperator
 } from '../../../../@types/session'
 
-type PatternType = SkipperCondition['pattern']
-type ValueType = PatternType | Array<PatternType>
+export type PatternType = SkipperCondition['pattern']
+export type ValueType = PatternType | Array<PatternType>
 
 export const skipperEvaluate = (
   skipper: Skipper,

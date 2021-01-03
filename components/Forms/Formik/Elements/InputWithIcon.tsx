@@ -56,9 +56,9 @@ const styles = ({
   error,
   touched,
   initialValue
-}: FieldMetaProps<any>): SerializedStyles | SerializedStyles[] => {
+}: FieldMetaProps<string | number>): SerializedStyles | SerializedStyles[] => {
   if (!error) return [style.base, style.isOk]
-  if (!touched && error && initialValue?.length === 0)
+  if (!touched && error && `${initialValue ?? ''}`.length === 0)
     return [style.base, style.noTouched]
   if (error) return [style.base, style.withError]
   return style.base
@@ -68,7 +68,7 @@ export type InputWithIconProps = {
   title: string | ReactNode
   autoFocus?: boolean
   innerRef?: MutableRefObject<HTMLInputElement>
-} & FieldInputProps<any> &
+} & FieldInputProps<string | number> &
   InputHTMLAttributes<HTMLInputElement>
 
 const InputWithIcon: FC<InputWithIconProps> = ({

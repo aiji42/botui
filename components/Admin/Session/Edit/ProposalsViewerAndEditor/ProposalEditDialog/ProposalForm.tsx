@@ -17,9 +17,9 @@ interface FormFunctions {
   handleSubmittable: (flag: boolean) => void
 }
 
-const ProposalForm: FC<FormProps<any, Partial<any>> & FormFunctions> = (
-  props
-) => {
+const ProposalForm: FC<
+  FormProps<Proposal, Partial<Proposal>> & FormFunctions
+> = (props) => {
   const { trySubmit, handleTrySubmit, handleSubmittable, ...rest } = props
   return (
     <Form
@@ -46,9 +46,9 @@ const ProposalForm: FC<FormProps<any, Partial<any>> & FormFunctions> = (
 
 export default ProposalForm
 
-const FormWrapper: FC<FormRenderProps<any, Partial<any>> & FormFunctions> = (
-  props
-) => {
+const FormWrapper: FC<
+  FormRenderProps<Proposal, Partial<Proposal>> & FormFunctions
+> = (props) => {
   const { submit } = useForm()
   const { pristine, values } = useFormState<Proposal>()
   useEffect(() => {

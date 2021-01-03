@@ -1,20 +1,12 @@
 import { FC } from 'react'
 import {
   TextInput,
-  FormWithRedirect,
-  SaveButton,
   required,
   RadioButtonGroupInput,
-  FormWithRedirectProps
+  SimpleForm,
+  SimpleFormProps
 } from 'react-admin'
-import {
-  Paper,
-  Box,
-  Grid,
-  Typography,
-  Tooltip,
-  Toolbar
-} from '@material-ui/core'
+import { Grid, Typography, Tooltip } from '@material-ui/core'
 import { useForm } from 'react-final-form'
 import { ec, inquiry } from './proposalTemplates'
 import ThemeColorSelector from './ThemeColorSelector'
@@ -39,61 +31,46 @@ const proposalsChoices = [
   }
 ]
 
-const Create: FC<Omit<FormWithRedirectProps, 'render'>> = (props) => {
+const Create: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
   return (
-    <FormWithRedirect
-      {...props}
-      render={(formProps) => <FormInner {...formProps} />}
-    />
+    <SimpleForm {...props}>
+      <FormInner />
+    </SimpleForm>
   )
 }
 
-const FormInner: FC<any> = (props) => {
+const FormInner: FC = () => {
   const { change } = useForm()
   change('active', false)
   change('images', '{}')
   return (
-    <Grid container component={Paper} spacing={1}>
-      <Box p={2}>
-        <Grid item xs={5}>
-          <TextInput source="title" fullWidth validate={[required()]} />
-        </Grid>
-        <Grid item xs={7} />
-        <Grid item xs={12}>
-          <RadioButtonGroupInput
-            source="proposals"
-            label="テンプレート"
-            row
-            fullWidth
-            validate={[required()]}
-            optionText={<TemplateChoiceLabel />}
-            choices={proposalsChoices}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Grid container>
-            <Grid item xs={12}>
-              <Typography variant="subtitle2" color="textSecondary">
-                テーマカラー *
-              </Typography>
-            </Grid>
-            <Grid container spacing={2}>
-              <ThemeColorSelector />
-            </Grid>
+    <Grid container spacing={1}>
+      <Grid item xs={5}>
+        <TextInput source="title" fullWidth validate={[required()]} />
+      </Grid>
+      <Grid item xs={7} />
+      <Grid item xs={12}>
+        <RadioButtonGroupInput
+          source="proposals"
+          label="テンプレート"
+          row
+          fullWidth
+          validate={[required()]}
+          optionText={<TemplateChoiceLabel />}
+          choices={proposalsChoices}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <Grid container>
+          <Grid item xs={12}>
+            <Typography variant="subtitle2" color="textSecondary">
+              テーマカラー *
+            </Typography>
+          </Grid>
+          <Grid container spacing={2}>
+            <ThemeColorSelector />
           </Grid>
         </Grid>
-      </Box>
-      <Grid item xs={12}>
-        <Toolbar>
-          <Box display="flex" justifyContent="space-between" width="100%">
-            <SaveButton
-              saving={props.saving}
-              disabled={props.pristine}
-              invalid={props.invalid}
-              handleSubmitWithRedirect={props.handleSubmitWithRedirect}
-            />
-          </Box>
-        </Toolbar>
       </Grid>
     </Grid>
   )

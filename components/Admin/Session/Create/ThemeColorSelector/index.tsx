@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { required } from 'react-admin'
 import { Field, useField } from 'react-final-form'
-import { Grid, Typography, FormHelperText } from '@material-ui/core'
+import { Grid, FormHelperText } from '@material-ui/core'
 import RadioImageCard from './RadioImageCard'
 
 const themeColors = [

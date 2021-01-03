@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { ProposalMessage, Session } from '../../../../@types/session'
+import { Session } from '../../../../@types/session'
 import { css } from '@emotion/react'
 import { MessageContextProvider } from '../../../../hooks/use-message-context'
 import ChatConfigContext from '../../../../hooks/use-chat-config-context'
@@ -36,6 +36,7 @@ const style = {
 }
 
 const SimplePreview: FC<Session> = (props) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { proposals, ...chatConfig } = props
   return (
     <div css={style.base}>

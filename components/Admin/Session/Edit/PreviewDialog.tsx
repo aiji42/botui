@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core'
 import { Visibility } from '@material-ui/icons'
 import { useFormState } from 'react-final-form'
-import { Session, ProposalMessages } from '../../../../@types/session'
+import { Session } from '../../../../@types/session'
 
 const Preview = dynamic(() => import('../../../Chat/Preview'), { ssr: false })
 

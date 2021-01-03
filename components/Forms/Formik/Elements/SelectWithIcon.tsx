@@ -62,9 +62,9 @@ const styles = ({
   error,
   touched,
   initialValue
-}: FieldMetaProps<any>): SerializedStyles | SerializedStyles[] => {
+}: FieldMetaProps<string>): SerializedStyles | SerializedStyles[] => {
   if (!error) return [style.base, style.isOk]
-  if (!touched && error && initialValue.length === 0)
+  if (!touched && error && initialValue?.length === 0)
     return [style.base, style.noTouched, ...(!value ? [style.noValue] : [])]
   if (error)
     return [style.base, style.withError, ...(!value ? [style.noValue] : [])]
@@ -73,7 +73,7 @@ const styles = ({
 
 export type SelectWithIconProps = {
   title?: string | Element
-} & FieldInputProps<any> &
+} & FieldInputProps<string> &
   SelectHTMLAttributes<HTMLSelectElement>
 
 const SelectWithIcon: FC<SelectWithIconProps> = ({ title, ...props }) => {

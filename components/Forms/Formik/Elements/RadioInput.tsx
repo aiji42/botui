@@ -48,8 +48,8 @@ const style = {
 
 type Props = {
   title: string | ReactNode
-  value: any
-} & FieldInputProps<any> &
+  value: string
+} & FieldInputProps<string> &
   InputHTMLAttributes<HTMLInputElement>
 
 const RadioInput: FC<Props> = ({ value, title, ...props }) => {

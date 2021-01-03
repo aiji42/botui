@@ -7,8 +7,6 @@ interface ValidationTypeString {
   required?: [string]
   matches?: [RegExp, string]
 }
-const isValidationTypeString = (arg: any): arg is ValidationTypeString =>
-  arg?.type === 'string'
 
 interface CustomYupString {
   [x: string]: yup.StringSchema
@@ -35,8 +33,6 @@ interface ValidationTypeNumber {
   max?: [number, string]
   required?: [string]
 }
-const isValidationTypeNumber = (arg: any): arg is ValidationTypeNumber =>
-  arg?.type === 'number'
 
 interface CustomYupNumber {
   [x: string]: yup.NumberSchema
@@ -55,6 +51,14 @@ const customYupNumber = (
     [name]: yupper
   }
 }
+
+const isValidationTypeNumber = (
+  arg?: ValidationTypeString | ValidationTypeNumber
+): arg is ValidationTypeNumber => arg?.type === 'number'
+
+const isValidationTypeString = (
+  arg?: ValidationTypeString | ValidationTypeNumber
+): arg is ValidationTypeString => arg?.type === 'string'
 
 export interface CustomYupProps {
   name: string

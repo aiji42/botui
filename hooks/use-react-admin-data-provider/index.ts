@@ -80,6 +80,6 @@ const dataProvider = {
   }
 } as DataProvider
 
-const useDataProvider = () => dataProvider
+const useDataProvider = (): DataProvider => dataProvider
 
 export default useDataProvider

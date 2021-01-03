@@ -36,7 +36,7 @@ class ChaChat {
 
 declare global {
   interface Window {
-    ChaChat: any
+    ChaChat: unknown
   }
 }
 

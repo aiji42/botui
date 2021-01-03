@@ -1,6 +1,5 @@
 import { FC, createContext, useContext } from 'react'
 import { Content, Message } from '../../@types/session'
-import { FunctionField } from 'react-admin'
 
 interface MessageContextType<T = Content> {
   handleUpdate?: (arg: Message) => void
@@ -16,7 +15,9 @@ const Context = createContext<MessageContextType>({
   message: {} as Message
 })
 
-export const useMessageContext = <T extends Content = Content>() => {
+export const useMessageContext = <
+  T extends Content = Content
+>(): MessageContextType<T> => {
   const context = useContext(Context) as MessageContextType<T>
   return context
 }

@@ -24,7 +24,7 @@ import useFetchSession from '../hooks/use-fetch-session'
 
 const Transition = forwardRef(
   (
-    props: TransitionProps & { children?: ReactElement<any, any> },
+    props: TransitionProps & { children?: ReactElement<string, string> },
     ref: Ref<unknown>
   ) => <Slide direction="up" mountOnEnter unmountOnExit ref={ref} {...props} />
 )

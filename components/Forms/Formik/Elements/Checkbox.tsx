@@ -56,14 +56,12 @@ const style = {
 
 type Props = {
   title: string | ReactNode
-  value: any
-} & FieldInputProps<any> &
+  value: string
+} & FieldInputProps<string> &
   InputHTMLAttributes<HTMLInputElement>
 
 const Checkbox: FC<Props> = ({ value, title, ...props }) => {
-  const [, { value: formValue }, helper] = useField<
-    Array<string | number | boolean>
-  >(props)
+  const [, { value: formValue }, helper] = useField<Array<string>>(props)
   const checked = useMemo(() => formValue.includes(value), [formValue, value])
   const handleChange = useCallback(
     (e: ChangeEvent) => {

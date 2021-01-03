@@ -1,8 +1,10 @@
 import { ProposalMessage, Proposals, Message } from '../../../../@types/session'
-import { skipperEvaluate } from './skipperEvaluate'
+import { skipperEvaluate, ValueType } from './skipperEvaluate'
 
-const getValues = (proposals: Proposals): Record<string, any> => {
-  return proposals.reduce<Record<string, any>>((values, proposal) => {
+type Values = Record<string, ValueType | undefined>
+
+const getValues = (proposals: Proposals): Values => {
+  return proposals.reduce<Values>((values, proposal) => {
     if (proposal.type !== 'message') return values
     return proposal.data.content.type === 'form'
       ? { ...values, ...proposal.data.content.props.values }
@@ -10,7 +12,7 @@ const getValues = (proposals: Proposals): Record<string, any> => {
   }, {})
 }
 
-const evalFunction = (functionString: string, values: any) => {
+const evalFunction = (functionString: string, values: Values) => {
   // eslint-disable-next-line no-new-func
   const func = new Function('values', functionString)
   func(values)
@@ -55,10 +57,7 @@ export const makeMessage = (proposals: Proposals): Array<MessageWithId> => {
   return messages
 }
 
-const messageReplace = (
-  message: Message,
-  values: Record<string, any>
-): Message => {
+const messageReplace = (message: Message, values: Values): Message => {
   if (message.content.type !== 'string') return message
   if (typeof message.content.props.children !== 'string') return message
   return {
@@ -69,7 +68,7 @@ const messageReplace = (
         ...message.content.props,
         children: message.content.props.children.replace(
           /\{\{(.+?)\}\}/g,
-          (_, key) => values[key]
+          (_, key) => `${values[key] ?? ''}`
         )
       }
     }

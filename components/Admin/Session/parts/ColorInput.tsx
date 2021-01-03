@@ -1,7 +1,7 @@
 import { FC, useCallback } from 'react'
 import { useInput, InputProps, TextFieldProps } from 'react-admin'
 import { Color, ColorPicker } from 'material-ui-color'
-import { TextField as TextInputMU, Grid, Box } from '@material-ui/core'
+import { TextField as TextInputMU, Box } from '@material-ui/core'
 import { useForm } from 'react-final-form'
 
 const ColorInput: FC<InputProps<TextFieldProps>> = (props) => {

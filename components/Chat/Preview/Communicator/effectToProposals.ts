@@ -1,7 +1,7 @@
 import { Proposals, Message } from '../../../../@types/session'
 import deepEqual from 'deep-equal'
 
-type Values = Record<string, any>
+type Values = Record<string, unknown>
 type Messages = Array<Message>
 
 const getValues = (messages: Messages): Values => {
