@@ -47,6 +47,7 @@ export type SkipperConditionOperator =
   | 'cont'
   | 'match'
   | 'regex'
+  | 'include'
   | 'true'
   | 'false'
   | 'null'

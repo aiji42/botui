@@ -42,7 +42,7 @@ const ProposalMessageFormInner: FC = () => {
   } = useRecordContext({ record: {} as Session })
   return (
     <>
-      <BooleanInput source="human" label="ユーザ側" />
+      <BooleanInput source="data.human" label="ユーザ側" />
       <SelectInput
         source="data.content.type"
         label="メッセージタイプ"
