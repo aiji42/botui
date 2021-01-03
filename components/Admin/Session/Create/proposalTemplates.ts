@@ -142,10 +142,6 @@ const ecProposals: Proposals = [
   }),
   stringMessageTemplate('お得なメールマガジンの登録はいかがでしょうか？'),
   formMessageTemplate({
-    type: 'FormEmail',
-    status: {}
-  }),
-  formMessageTemplate({
     inputs: [
       {
         title: '登録する',
