@@ -48,9 +48,7 @@ const PreviewDialog: FC = () => {
             proposals={values.proposals}
             chatConfig={{
               ...values,
-              messages: values.proposals.filter(
-                ({ type }) => type === 'message'
-              ) as ProposalMessages,
+              messages: [],
               messagesCount: values.proposals.length
             }}
           />

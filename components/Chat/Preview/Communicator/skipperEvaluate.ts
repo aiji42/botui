@@ -4,7 +4,8 @@ import {
   SkipperConditionOperator
 } from '../../../../@types/session'
 
-type ValueType = SkipperCondition['pattern']
+type PatternType = SkipperCondition['pattern']
+type ValueType = PatternType | Array<PatternType>
 
 export const skipperEvaluate = (
   skipper: Skipper,
@@ -29,7 +30,7 @@ export const skipperEvaluate = (
 const operate = (
   left: ValueType,
   operator: SkipperConditionOperator,
-  right: ValueType,
+  right: PatternType,
   negative: boolean
 ): boolean => {
   if (operator === 'eq') return !negative ? _eq(left, right) : !_eq(left, right)
@@ -49,32 +50,35 @@ const operate = (
     return !negative ? _match(left, right) : !_match(left, right)
   if (operator === 'regex')
     return !negative ? _regex(left, right) : !_regex(left, right)
-  if (operator === 'true')
-    return !negative ? _true(left, right) : !_true(left, right)
-  if (operator === 'false')
-    return !negative ? _false(left, right) : !_false(left, right)
-  if (operator === 'null')
-    return !negative ? _null(left, right) : !_null(left, right)
+  if (operator === 'include')
+    return !negative ? _include(left, right) : !_include(left, right)
+  if (operator === 'true') return !negative ? _true(left) : !_true(left)
+  if (operator === 'false') return !negative ? _false(left) : !_false(left)
+  if (operator === 'null') return !negative ? _null(left) : !_null(left)
   return false
 }
 
-const _eq = (left: ValueType, right: ValueType) =>
+const _eq = (left: ValueType, right: PatternType) =>
   Number(left) === Number(right)
-const _lt = (left: ValueType, right: ValueType) => Number(left) < Number(right)
-const _lteq = (left: ValueType, right: ValueType) =>
+const _lt = (left: ValueType, right: PatternType) =>
+  Number(left) < Number(right)
+const _lteq = (left: ValueType, right: PatternType) =>
   Number(left) <= Number(right)
-const _gt = (left: ValueType, right: ValueType) => Number(left) > Number(right)
-const _gteq = (left: ValueType, right: ValueType) =>
+const _gt = (left: ValueType, right: PatternType) =>
+  Number(left) > Number(right)
+const _gteq = (left: ValueType, right: PatternType) =>
   Number(left) >= Number(right)
-const _start = (left: ValueType, right: ValueType) =>
+const _start = (left: ValueType, right: PatternType) =>
   `${left}`.startsWith(`${right}`)
-const _end = (left: ValueType, right: ValueType) =>
+const _end = (left: ValueType, right: PatternType) =>
   `${left}`.endsWith(`${right}`)
-const _cont = (left: ValueType, right: ValueType) =>
+const _cont = (left: ValueType, right: PatternType) =>
   `${left}`.includes(`${right}`)
-const _match = (left: ValueType, right: ValueType) => left === right
-const _regex = (left: ValueType, right: ValueType) =>
+const _match = (left: ValueType, right: PatternType) => left === right
+const _regex = (left: ValueType, right: PatternType) =>
   new RegExp(`${right}`).test(`${left}`)
-const _true = (left: ValueType, right: ValueType) => left === true
-const _false = (left: ValueType, right: ValueType) => left === false
-const _null = (left: ValueType, right: ValueType) => left === null
+const _include = (left: ValueType, right: PatternType) =>
+  Array.isArray(left) && left.includes(right)
+const _true = (left: ValueType) => left === true
+const _false = (left: ValueType) => left === false
+const _null = (left: ValueType) => left === null

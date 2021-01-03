@@ -1,9 +1,10 @@
 import { FC, createContext, useContext } from 'react'
-import { ProposalMessage } from '../../@types/session'
+import { Content, Message } from '../../@types/session'
+import { FunctionField } from 'react-admin'
 
-interface MessageContextType {
-  handleUpdate?: (arg: ProposalMessage) => void
-  message: ProposalMessage
+interface MessageContextType<T = Content> {
+  handleUpdate?: (arg: Message) => void
+  message: Message<T>
 }
 
 const noOp = () => {
@@ -12,21 +13,15 @@ const noOp = () => {
 
 const Context = createContext<MessageContextType>({
   handleUpdate: noOp,
-  message: {
-    id: '',
-    type: 'message',
-    human: true,
-    content: { type: 'string', props: {} },
-    completed: false,
-    updated: false,
-    before: '',
-    after: ''
-  }
+  message: {} as Message
 })
 
-export const useMessageContext = (): MessageContextType => useContext(Context)
+export const useMessageContext = <T extends Content = Content>() => {
+  const context = useContext(Context) as MessageContextType<T>
+  return context
+}
 
-const MessageContext: FC<MessageContextType> = ({
+export const MessageContextProvider: FC<MessageContextType> = ({
   message,
   handleUpdate = noOp,
   children
@@ -37,5 +32,3 @@ const MessageContext: FC<MessageContextType> = ({
     </Context.Provider>
   )
 }
-
-export default MessageContext

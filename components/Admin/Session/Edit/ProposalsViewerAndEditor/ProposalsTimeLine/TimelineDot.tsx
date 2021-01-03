@@ -36,9 +36,9 @@ const TimelineDot: FC<Props> = (props) => {
   const Icon = useMemo(() => {
     if (editing || !proposal) return EditIcon
     if (proposal.type === 'message') {
-      return proposal.content.type === 'string'
+      return proposal.data.content.type === 'string'
         ? TextSmsIcon
-        : proposal.content.type === 'form'
+        : proposal.data.content.type === 'form'
         ? RateReviewIcon
         : InsertPhotoIcon
     }

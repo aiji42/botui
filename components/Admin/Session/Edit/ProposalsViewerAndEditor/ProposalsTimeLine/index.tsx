@@ -81,7 +81,9 @@ const ProposalsTimeLine: FC<Props> = ({
         <Timeline
           key={proposal.id}
           align={
-            proposal.type === 'message' && proposal.human ? 'left' : 'right'
+            proposal.type === 'message' && proposal.data.human
+              ? 'left'
+              : 'right'
           }
           className={classes.timeline}
         >
@@ -105,7 +107,7 @@ const ProposalsTimeLine: FC<Props> = ({
               <TimelineConnector className={classes.timelineConnector} />
               {proposal.type === 'skipper' && (
                 <SplitLineConnector
-                  skipNumber={proposal.skipNumber}
+                  skipNumber={proposal.data.skipNumber}
                   handleEdit={makeHandleEdit(index)}
                   handleDelete={makeHandleDelete(index)}
                 />
@@ -118,8 +120,8 @@ const ProposalsTimeLine: FC<Props> = ({
                   handleDelete={makeHandleDelete(index)}
                   handleInsertBefore={makeHandleInsert(index)}
                   handleInsertAfter={makeHandleInsert(index + 1)}
-                  proposal={proposal}
-                  align={proposal.human ? 'left' : 'right'}
+                  proposalData={proposal.data}
+                  align={proposal.data.human ? 'left' : 'right'}
                 />
               )}
             </TimelineContent>
@@ -167,7 +169,7 @@ const useSplitLineStyles = makeStyles((theme) => ({
 }))
 
 const SplitLineConnector: FC<
-  Pick<ProposalSkipper, 'skipNumber'> & {
+  Pick<ProposalSkipper['data'], 'skipNumber'> & {
     handleEdit: () => void
     handleDelete: () => void
   }

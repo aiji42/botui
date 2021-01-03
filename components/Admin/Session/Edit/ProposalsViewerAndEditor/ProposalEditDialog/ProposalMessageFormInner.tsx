@@ -42,9 +42,9 @@ const ProposalMessageFormInner: FC = () => {
   } = useRecordContext({ record: {} as Session })
   return (
     <>
-      <BooleanInput source="human" label="ユーザ側" />
+      <BooleanInput source="data.human" label="ユーザ側" />
       <SelectInput
-        source="content.type"
+        source="data.content.type"
         label="メッセージタイプ"
         validate={[required()]}
         choices={[
@@ -56,7 +56,7 @@ const ProposalMessageFormInner: FC = () => {
       />
       <DelayNumberSlider
         label="ローディング時間"
-        source="content.delay"
+        source="data.content.delay"
         fullWidth
       />
       <TextInput source="before" label="before function" fullWidth multiline />
@@ -64,9 +64,9 @@ const ProposalMessageFormInner: FC = () => {
       <FormDataConsumer>
         {({ formData }) => (
           <>
-            {formData.content?.type === 'string' && (
+            {formData.data?.content?.type === 'string' && (
               <TextInput
-                source="content.props.children"
+                source="data.content.props.children"
                 label="メッセージ本文"
                 validate={[required()]}
                 fullWidth
@@ -74,18 +74,18 @@ const ProposalMessageFormInner: FC = () => {
                 rows={3}
               />
             )}
-            {formData.content?.type === 'image' && (
+            {formData.data?.content?.type === 'image' && (
               <ImageInput
-                source="content.props.imgKey"
+                source="data.content.props.imgKey"
                 label="画像"
                 sessionId={sessionId}
                 required
               />
             )}
-            {formData.content?.type === 'form' && (
+            {formData.data?.content?.type === 'form' && (
               <SelectInput
                 fullWidth
-                source="content.props.type"
+                source="data.content.props.type"
                 label="form type"
                 choices={formTypeChoices}
                 validate={[required()]}
@@ -96,28 +96,27 @@ const ProposalMessageFormInner: FC = () => {
       </FormDataConsumer>
       <FormDataConsumer>
         {({ formData }) => {
-          if (formData.content?.type !== 'form') return <></>
+          if (formData.data?.content?.type !== 'form') return <></>
           return (
             <>
-              {formData.content?.props?.type === 'FormName' && (
+              {formData.data?.content?.props?.type === 'FormName' && (
                 <FormNameState />
               )}
-              {formData.content?.props?.type === 'FormBirthDay' && (
+              {formData.data?.content?.props?.type === 'FormBirthDay' && (
                 <FormBirthDayState />
               )}
-              {formData.content?.props?.type === 'FormCustomRadioGroup' && (
-                <FormCustomRadioGroupOption />
-              )}
-              {formData.content?.props?.type === 'FormCustomCheckbox' && (
+              {formData.data?.content?.props?.type ===
+                'FormCustomRadioGroup' && <FormCustomRadioGroupOption />}
+              {formData.data?.content?.props?.type === 'FormCustomCheckbox' && (
                 <FormCustomCheckboxOption />
               )}
-              {formData.content?.props?.type === 'FormCustomSelect' && (
+              {formData.data?.content?.props?.type === 'FormCustomSelect' && (
                 <FormCustomSelectOption />
               )}
-              {formData.content?.props?.type === 'FormCustomInput' && (
+              {formData.data?.content?.props?.type === 'FormCustomInput' && (
                 <FormCustomInputOption />
               )}
-              {formData.content?.props?.type === 'FormCustomTextarea' && (
+              {formData.data?.content?.props?.type === 'FormCustomTextarea' && (
                 <FormCustomTextareaOption />
               )}
             </>
@@ -135,13 +134,13 @@ const FormNameState: FC = (props) => {
     <>
       <BooleanInput
         {...props}
-        source="content.props.status.kana"
+        source="data.content.props.status.kana"
         initialValue={true}
         label="ふりがな"
       />
       <SelectInput
         {...props}
-        source="content.props.status.kanaType"
+        source="data.content.props.status.kanaType"
         label="ふりがな補正"
         initialValue="katakana"
         choices={[
@@ -157,7 +156,7 @@ const FormBirthDayState: FC = (props) => {
   return (
     <BooleanInput
       {...props}
-      source="content.props.status.paddingZero"
+      source="data.content.props.status.paddingZero"
       initialValue={false}
       label="zero padding"
       validate={[required()]}
@@ -170,13 +169,13 @@ const FormCustomRadioGroupOption: FC = (props) => {
     <>
       <TextInput
         {...props}
-        source="content.props.name"
+        source="data.content.props.name"
         label="name"
         validate={[required()]}
       />
       <ArrayInput
         {...props}
-        source="content.props.inputs"
+        source="data.content.props.inputs"
         label="radio buttons"
         validate={[required()]}
       >
@@ -194,14 +193,14 @@ const FormCustomCheckboxOption: FC = (props) => {
     <>
       <TextInput
         {...props}
-        source="content.props.name"
+        source="data.content.props.name"
         label="name"
         validate={[required()]}
       />
-      <BooleanInput source="content.props.required" label="required" />
+      <BooleanInput source="data.content.props.required" label="required" />
       <ArrayInput
         {...props}
-        source="content.props.inputs"
+        source="data.content.props.inputs"
         label="checkboxes"
         validate={[required()]}
       >
@@ -218,7 +217,7 @@ const FormCustomSelectOption: FC = (props) => {
   return (
     <ArrayInput
       {...props}
-      source="content.props.selects"
+      source="data.content.props.selects"
       label="select box"
       validate={[required()]}
     >
@@ -240,7 +239,7 @@ const FormCustomInputOption: FC = (props) => {
   return (
     <ArrayInput
       {...props}
-      source="content.props.inputs"
+      source="data.content.props.inputs"
       label="input"
       validate={[required()]}
     >
@@ -272,24 +271,24 @@ const FormCustomTextareaOption: FC = (props) => {
     <>
       <TextInput
         {...props}
-        source="content.props.name"
+        source="data.content.props.name"
         label="name"
         validate={[required()]}
       />
-      <TextInput {...props} source="content.props.title" label="title" />
+      <TextInput {...props} source="data.content.props.title" label="title" />
       <TextInput
         {...props}
-        source="content.props.placeholder"
+        source="data.content.props.placeholder"
         label="placeholder"
       />
       <BooleanInput
         {...props}
-        source="content.props.required"
+        source="data.content.props.required"
         label="required"
       />
       <TextInput
         {...props}
-        source="content.props.validation"
+        source="data.content.props.validation"
         multiline
         label="validation"
       />

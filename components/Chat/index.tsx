@@ -1,8 +1,8 @@
 import { FC, useCallback } from 'react'
 import Message from './Message'
 import { useCorsState } from 'use-cors-state'
-import MessageContext from '../../hooks/use-message-context'
-import { ChatConfig, ProposalMessage } from '../../@types/session'
+import { MessageContextProvider } from '../../hooks/use-message-context'
+import { ChatConfig, Message as MessageType } from '../../@types/session'
 import ChatConfigContext from '../../hooks/use-chat-config-context'
 import Header from './Header'
 import Footer from './Footer'
@@ -33,16 +33,30 @@ const Chat: FC = () => {
   )
 
   const updater = useCallback(
-    (index: number) => (updatedMessage: ProposalMessage) => {
+    (updatedMessage: MessageType) => {
       if (!config) return
       setConfig({
         ...config,
-        messages: Object.entries(config.messages).map(([i, message]) =>
-          Number(i) === index ? updatedMessage : message
+        messages: config.messages.reduce<ChatConfig['messages']>(
+          (res, message) => {
+            // updated: true の場合、後続のメッセージは削除する
+            if (
+              updatedMessage.updated &&
+              res.find(({ id }) => id === updatedMessage.id)
+            )
+              return res
+            return [
+              ...res,
+              message.id === updatedMessage.id
+                ? { ...updatedMessage, updated: false }
+                : message
+            ]
+          },
+          []
         )
       })
     },
-    [config]
+    [config, setConfig]
   )
 
   if (!config) return <></>
@@ -53,10 +67,14 @@ const Chat: FC = () => {
         <Header />
       </div>
       <div css={style.body}>
-        {config.messages.map((message, i) => (
-          <MessageContext message={message} handleUpdate={updater(i)} key={i}>
+        {config.messages.map((message) => (
+          <MessageContextProvider
+            message={message}
+            handleUpdate={updater}
+            key={message.id}
+          >
             <Message />
-          </MessageContext>
+          </MessageContextProvider>
         ))}
       </div>
       <div css={style.footer}>

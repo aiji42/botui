@@ -1,55 +1,25 @@
 import { FC } from 'react'
 import { ProposalMessage, Session } from '../../../../@types/session'
 import { css } from '@emotion/react'
-import MessageContext from '../../../../hooks/use-message-context'
+import { MessageContextProvider } from '../../../../hooks/use-message-context'
 import ChatConfigContext from '../../../../hooks/use-chat-config-context'
 import Header from '../../../Chat/Header'
 import Footer from '../../../Chat/Footer'
 import Message from '../../../Chat/Message'
+import { stringMessageTemplate } from '../Create/proposalTemplates'
 
-const sampleMessages: Array<ProposalMessage> = [
-  {
-    id: 1,
-    type: 'message',
-    human: false,
-    content: {
-      type: 'string',
-      props: {
-        children:
-          'こんにちは！こちらではチャットのデザインをお好みに合わせて変更できます。'
-      }
-    },
-    completed: true,
-    updated: false,
-    before: '',
-    after: ''
-  },
-  {
-    id: 2,
-    type: 'message',
-    human: false,
-    content: {
-      type: 'string',
-      props: { children: '左側のメッセージが「オペレーターメッセージ」です。' }
-    },
-    completed: true,
-    updated: false,
-    before: '',
-    after: ''
-  },
-  {
-    id: 3,
-    type: 'message',
-    human: true,
-    content: {
-      type: 'string',
-      props: { children: 'そして、こちら右側が「ユーザメッセージ」です。' }
-    },
-    completed: false,
-    updated: false,
-    before: '',
-    after: ''
-  }
+const sampleMessages = [
+  stringMessageTemplate(
+    'こんにちは！こちらではチャットのデザインをお好みに合わせて変更できます。',
+    0
+  ).data,
+  stringMessageTemplate('左側のメッセージが「オペレーターメッセージ」です。', 0)
+    .data,
+  stringMessageTemplate(
+    'そして、こちら右側が「ユーザメッセージ」です。',
+    0,
+    true
+  ).data
 ]
 
 const style = {
@@ -78,10 +48,10 @@ const SimplePreview: FC<Session> = (props) => {
           <Header />
         </div>
         <div css={style.body}>
-          {sampleMessages.map((message, i) => (
-            <MessageContext message={message} key={i}>
+          {sampleMessages.map((message) => (
+            <MessageContextProvider message={message} key={message.id}>
               <Message preview />
-            </MessageContext>
+            </MessageContextProvider>
           ))}
         </div>
         <div css={style.footer}>

@@ -1,14 +1,15 @@
 import { FC, useCallback } from 'react'
 import * as Forms from '../../../Forms'
-import { ContentForm, Form as FormType } from '@botui/types'
+import { Form as FormType } from '@botui/types'
 import { useMessageContext } from '../../../../hooks/use-message-context'
+import { ContentForm } from '../../../../@types/session'
 
 const Form: FC = () => {
-  const { message, handleUpdate } = useMessageContext()
-  const props = message.content.props as FormType
+  const { message, handleUpdate } = useMessageContext<ContentForm>()
+  const props = message.content.props
   const handleComplete = useCallback(
     (props: FormType) => {
-      const newContent = { ...message.content, props } as ContentForm
+      const newContent = { ...message.content, props }
       if (!handleUpdate) return
       if (message.completed)
         handleUpdate({ ...message, content: newContent, updated: true })
