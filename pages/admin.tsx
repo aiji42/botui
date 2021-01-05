@@ -7,6 +7,7 @@ import {
   SessionEdit,
   SessionCreate
 } from '../components/Admin/Session'
+import { EntryList } from '../components/Admin/Entry'
 import Login from '../components/Admin/Login'
 import japaneseMessages from '@bicstone/ra-language-japanese'
 import polyglotI18nProvider from 'ra-i18n-polyglot'
@@ -35,6 +36,11 @@ const App: FC = () => {
           list={SessionList}
           edit={SessionEdit}
           create={SessionCreate}
+        />
+        <Resource
+          name="entrys"
+          options={{ label: 'エントリー' }}
+          list={EntryList}
         />
       </Admin>
     </>
