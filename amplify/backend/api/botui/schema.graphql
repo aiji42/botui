@@ -15,3 +15,19 @@ type Session
   proposals: AWSJSON!
   images: AWSJSON!
 }
+
+type Entry
+  @model
+  @auth(
+    rules: [
+      {allow: owner, ownerField: "owner", operations: [create, update, delete, read]},
+      {allow: public, provider: iam, operations: [create]}
+    ]
+  )
+  @key(name: "ownerAndSessionIndex", fields: ["owner", "sessionId"], queryField: "entryByOwnerAndSession")
+{
+  id: ID!
+  owner: String!
+  sessionId: ID!
+  inputs: AWSJSON!
+}
