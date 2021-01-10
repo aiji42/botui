@@ -1,8 +1,9 @@
-import { FC, useCallback, useEffect, useMemo, useState } from 'react'
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useCorsState } from 'use-cors-state'
 import { ChatConfig, Proposals, Message } from '../../../../@types/session'
 import { effectToProposals } from './effectToProposals'
 import { makeMessage } from './makeMessage'
+import deepEqual from 'deep-equal'
 
 const Communicator: FC<{
   targetWindow: Window
@@ -30,8 +31,12 @@ const Communicator: FC<{
     setProposals(effectedProposals)
   }, [messages])
 
+  const prevProposals = useRef<Proposals>()
   useEffect(() => {
-    setMessages(makeMessage(proposals, chatConfig))
+    // unMount で closer が再実行されることを防止する
+    if (!deepEqual(prevProposals.current, proposals))
+      setMessages(makeMessage(proposals, chatConfig))
+    prevProposals.current = proposals
   }, [proposals, chatConfig])
 
   return <></>
