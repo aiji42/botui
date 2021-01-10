@@ -15,8 +15,11 @@ import {
   FormCustomTextarea,
   FormEmail,
   FormName,
-  FormTel
+  FormTel,
+  ProposalCloser,
+  ProposalRelayer
 } from '../../../../@types/session'
+import { Closer, Relayer } from '../../../../@types/session/action'
 
 export const skipperTemplate = (skipper: Skipper): ProposalSkipper => {
   const id = uuidv4()
@@ -25,6 +28,26 @@ export const skipperTemplate = (skipper: Skipper): ProposalSkipper => {
     type: 'skipper',
     completed: false,
     data: skipper
+  }
+}
+
+export const closerTemplate = (closer: Closer): ProposalCloser => {
+  const id = uuidv4()
+  return {
+    id,
+    type: 'closer',
+    completed: false,
+    data: closer
+  }
+}
+
+export const relayerTemplate = (relayer: Relayer): ProposalRelayer => {
+  const id = uuidv4()
+  return {
+    id,
+    type: 'relayer',
+    completed: false,
+    data: relayer
   }
 }
 
@@ -38,8 +61,6 @@ export const stringMessageTemplate = (
     id,
     type: 'message',
     completed: false,
-    before: '',
-    after: '',
     data: {
       id,
       content: {
@@ -85,8 +106,6 @@ export const formMessageTemplate = (form: OmittedForm): ProposalMessage => {
     id,
     type: 'message',
     completed: false,
-    before: '',
-    after: '',
     data: {
       id,
       content: {

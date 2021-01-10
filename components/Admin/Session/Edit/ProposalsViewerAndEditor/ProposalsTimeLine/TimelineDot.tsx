@@ -6,7 +6,11 @@ import {
   RateReview as RateReviewIcon,
   InsertPhoto as InsertPhotoIcon,
   Edit as EditIcon,
-  CallSplit as CallSplitIcon
+  CallSplit as CallSplitIcon,
+  CodeSharp as CodeSharpIcon,
+  HttpSharp as HttpSharpIcon,
+  SaveSharp as SaveSharpIcon,
+  CancelSharp as CancelSharpIcon
 } from '@material-ui/icons'
 import { Proposal } from '../../../../../../@types/session'
 
@@ -41,6 +45,15 @@ const TimelineDot: FC<Props> = (props) => {
         : proposal.data.content.type === 'form'
         ? RateReviewIcon
         : InsertPhotoIcon
+    }
+    if (proposal.type === 'relayer' || proposal.type === 'closer') {
+      return proposal.data.job === 'script'
+        ? CodeSharpIcon
+        : proposal.data.job === 'webhook'
+        ? HttpSharpIcon
+        : proposal.data.job === 'store'
+        ? SaveSharpIcon
+        : CancelSharpIcon
     }
     return SplitIcon
   }, [editing, proposal])

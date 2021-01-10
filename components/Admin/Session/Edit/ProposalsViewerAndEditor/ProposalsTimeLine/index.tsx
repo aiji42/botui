@@ -1,13 +1,5 @@
-import { FC, useCallback, useState } from 'react'
-import {
-  makeStyles,
-  Zoom,
-  useTheme,
-  ButtonBase,
-  Menu,
-  MenuItem,
-  ListItemIcon
-} from '@material-ui/core'
+import { FC, useCallback } from 'react'
+import { makeStyles, Zoom, useTheme } from '@material-ui/core'
 import {
   Timeline,
   TimelineItem,
@@ -15,19 +7,11 @@ import {
   TimelineConnector,
   TimelineContent
 } from '@material-ui/lab'
-import {
-  MoreVert as MoreIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon
-} from '@material-ui/icons'
-import {
-  Proposals,
-  Proposal,
-  ProposalSkipper
-} from '../../../../../../@types/session'
+import { Proposals, Proposal, Skipper } from '../../../../../../@types/session'
 import TimelineDot from './TimelineDot'
 import TimelineDotLast from './TimelineDotLast'
 import ProposalPaper from './ProposalPaper'
+import MenuButton from './MenuButton'
 
 interface Props {
   proposals: Proposals
@@ -51,6 +35,11 @@ const useStyles = makeStyles((theme) => ({
   },
   timelineSeparator: {
     position: 'relative'
+  },
+  menuButton: {
+    position: 'absolute',
+    top: theme.spacing(0.5),
+    right: -theme.spacing(2.5)
   }
 }))
 
@@ -104,22 +93,22 @@ const ProposalsTimeLine: FC<Props> = ({
                 proposal={proposal}
                 editing={editing && editingIndex === index}
               />
-              <TimelineConnector className={classes.timelineConnector} />
-              {proposal.type === 'skipper' && (
-                <SplitLineConnector
-                  skipNumber={proposal.data.skipNumber}
+              <div className={classes.menuButton}>
+                <MenuButton
                   handleEdit={makeHandleEdit(index)}
                   handleDelete={makeHandleDelete(index)}
+                  handleInsertBefore={makeHandleInsert(index)}
+                  handleInsertAfter={makeHandleInsert(index + 1)}
                 />
+              </div>
+              <TimelineConnector className={classes.timelineConnector} />
+              {proposal.type === 'skipper' && (
+                <SplitLineConnector {...proposal.data} />
               )}
             </TimelineSeparator>
             <TimelineContent>
               {proposal.type === 'message' && (
                 <ProposalPaper
-                  handleEdit={makeHandleEdit(index)}
-                  handleDelete={makeHandleDelete(index)}
-                  handleInsertBefore={makeHandleInsert(index)}
-                  handleInsertAfter={makeHandleInsert(index + 1)}
                   proposalData={proposal.data}
                   align={proposal.data.human ? 'left' : 'right'}
                 />
@@ -168,74 +157,10 @@ const useSplitLineStyles = makeStyles((theme) => ({
   }
 }))
 
-const SplitLineConnector: FC<
-  Pick<ProposalSkipper['data'], 'skipNumber'> & {
-    handleEdit: () => void
-    handleDelete: () => void
-  }
-> = (props) => {
-  const { skipNumber, ...rest } = props
+const SplitLineConnector: FC<Skipper> = (props) => {
+  const { skipNumber } = props
   const theme = useTheme()
   const height = theme.spacing((skipNumber + 1) * 19)
   const classes = useSplitLineStyles()
-  return (
-    <div className={classes.root} style={{ height }}>
-      <SplitLineMenu {...rest} />
-    </div>
-  )
-}
-
-const useSplitLineMenuStyles = makeStyles((theme) => ({
-  root: {
-    position: 'absolute',
-    right: -theme.spacing(4)
-  }
-}))
-
-const SplitLineMenu: FC<{
-  handleEdit: () => void
-  handleDelete: () => void
-}> = (props) => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const handleClick = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) =>
-      setAnchorEl(event.currentTarget),
-    [setAnchorEl]
-  )
-  const handleClose = useCallback(() => setAnchorEl(null), [setAnchorEl])
-  const makeNewHandler = useCallback(
-    (handler) => () => {
-      handler()
-      handleClose()
-    },
-    [handleClose]
-  )
-  const classes = useSplitLineMenuStyles()
-
-  return (
-    <>
-      <ButtonBase onClick={handleClick} className={classes.root}>
-        <MoreIcon />
-      </ButtonBase>
-      <Menu
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <MenuItem onClick={makeNewHandler(props.handleEdit)}>
-          <ListItemIcon>
-            <EditIcon />
-          </ListItemIcon>
-          編集
-        </MenuItem>
-        <MenuItem onClick={makeNewHandler(props.handleDelete)}>
-          <ListItemIcon>
-            <DeleteIcon />
-          </ListItemIcon>
-          削除
-        </MenuItem>
-      </Menu>
-    </>
-  )
+  return <div className={classes.root} style={{ height }} />
 }

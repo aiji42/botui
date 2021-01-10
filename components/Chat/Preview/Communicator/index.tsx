@@ -31,8 +31,8 @@ const Communicator: FC<{
   }, [messages])
 
   useEffect(() => {
-    setMessages(makeMessage(proposals))
-  }, [proposals])
+    setMessages(makeMessage(proposals, chatConfig))
+  }, [proposals, chatConfig])
 
   return <></>
 }

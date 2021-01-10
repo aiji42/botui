@@ -10,6 +10,8 @@ import arrayMutators from 'final-form-arrays'
 import ProposalMessageFormInner from './ProposalMessageFormInner'
 import ProposalSkipperFormInner from './ProposalSkipperFormInner'
 import { Proposal } from '../../../../../../@types/session'
+import ProposalCloserFormInner from './ProposalCloserFormInner'
+import ProposalRelayerFormInner from './ProposalRelayerFormInner'
 
 interface FormFunctions {
   trySubmit: boolean
@@ -59,9 +61,10 @@ const FormWrapper: FC<
   useEffect(() => {
     props.handleSubmittable(!pristine)
   }, [pristine, props.handleSubmittable])
-  return values.type === 'message' ? (
-    <ProposalMessageFormInner />
-  ) : (
-    <ProposalSkipperFormInner />
-  )
+
+  if (values.type === 'message') return <ProposalMessageFormInner />
+  else if (values.type === 'relayer') return <ProposalRelayerFormInner />
+  else if (values.type === 'skipper') return <ProposalSkipperFormInner />
+  else if (values.type === 'closer') return <ProposalCloserFormInner />
+  return <></>
 }

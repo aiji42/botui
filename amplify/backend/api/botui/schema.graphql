@@ -14,6 +14,7 @@ type Session
   theme: AWSJSON!
   proposals: AWSJSON!
   images: AWSJSON!
+  email: String
 }
 
 type Entry
