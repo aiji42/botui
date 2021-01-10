@@ -1,5 +1,12 @@
 {
-  "function": {},
+  "function": {
+    "notify": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": []
+    }
+  },
   "auth": {
     "userPoolGroups": {
       "service": "Cognito-UserPool-Groups",
@@ -43,6 +50,20 @@
           ]
         }
       }
+    },
+    "notify": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "notify",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ]
     }
   },
   "storage": {
