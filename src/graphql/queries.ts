@@ -72,6 +72,7 @@ export const getSession = /* GraphQL */ `
       theme
       proposals
       images
+      email
       createdAt
       updatedAt
     }
@@ -92,6 +93,7 @@ export const listSessions = /* GraphQL */ `
         theme
         proposals
         images
+        email
         createdAt
         updatedAt
       }

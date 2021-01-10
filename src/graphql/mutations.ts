@@ -15,6 +15,7 @@ export const createSession = /* GraphQL */ `
       theme
       proposals
       images
+      email
       createdAt
       updatedAt
     }
@@ -33,6 +34,7 @@ export const updateSession = /* GraphQL */ `
       theme
       proposals
       images
+      email
       createdAt
       updatedAt
     }
@@ -51,6 +53,7 @@ export const deleteSession = /* GraphQL */ `
       theme
       proposals
       images
+      email
       createdAt
       updatedAt
     }
