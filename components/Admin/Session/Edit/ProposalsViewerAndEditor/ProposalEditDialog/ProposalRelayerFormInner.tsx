@@ -2,8 +2,8 @@ import { FC } from 'react'
 import { SelectInput, required, TextInput, FormDataConsumer } from 'react-admin'
 
 const jobChoices = [
-  { id: 'script', name: 'カスタムスクリプト' },
-  { id: 'webhook', name: 'Webhook' }
+  { id: 'script', name: 'カスタムスクリプト' }
+  // { id: 'webhook', name: 'Webhook' }
 ]
 
 const ProposalRelayerFormInner: FC = () => {
@@ -13,6 +13,8 @@ const ProposalRelayerFormInner: FC = () => {
         source="data.job"
         choices={jobChoices}
         validate={[required()]}
+        fullWidth
+        label="ジョブ"
       />
       <FormDataConsumer>
         {({ formData }) => (

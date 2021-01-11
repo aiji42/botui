@@ -14,7 +14,8 @@ import {
 const initialProposal = (type: Proposal['type']): Proposal => {
   if (type === 'message') return stringMessageTemplate('')
   if (type === 'relayer') return relayerTemplate({ job: 'script', script: '' })
-  if (type === 'closer') return closerTemplate({ job: 'store', notify: true })
+  if (type === 'closer')
+    return closerTemplate({ job: 'script', script: '', notify: true })
   return skipperTemplate({
     conditions: [{ key: '', operator: 'eq', pattern: '', negative: false }],
     skipNumber: 1,

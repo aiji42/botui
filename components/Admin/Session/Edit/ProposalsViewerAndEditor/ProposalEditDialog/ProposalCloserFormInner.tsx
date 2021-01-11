@@ -10,8 +10,8 @@ import {
 const jobChoices = [
   { id: 'none', name: '何もしない' },
   { id: 'script', name: 'カスタムスクリプト' },
-  { id: 'store', name: 'データベースへの保存' },
-  { id: 'webhook', name: 'Webhook' }
+  { id: 'store', name: 'データベースへの保存' }
+  // { id: 'webhook', name: 'Webhook' }
 ]
 
 const ProposalCloserFormInner: FC = () => {
@@ -21,8 +21,10 @@ const ProposalCloserFormInner: FC = () => {
         source="data.job"
         choices={jobChoices}
         validate={[required()]}
+        fullWidth
+        label="ジョブ"
       />
-      <BooleanInput source="data.notify" />
+      <BooleanInput source="data.notify" label="メールで通知する" />
       <FormDataConsumer>
         {({ formData }) => (
           <>
