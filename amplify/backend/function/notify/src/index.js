@@ -1,5 +1,5 @@
 const sgMail = require('@sendgrid/mail')
-sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+const AWS = require('aws-sdk')
 
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') return {
@@ -7,7 +7,17 @@ exports.handler = async (event) => {
   }
 
   try {
-    await sgMail.send(msg)
+    const SecretId = `chachat/${process.env.ENV}/SENDGRID_API_KEY`
+    const secretsManager = new AWS.SecretsManager()
+    const secret = await secretsManager.getSecretValue({ SecretId }).promise()
+    sgMail.setApiKey(JSON.parse(secret.SecretString)[SecretId])
+
+    const { values, config } = JSON.parse(event.body)
+    const data = {
+      session_title: config.title,
+      details: Object.entries(values).map(([key, value]) => ({ key, value }))
+    }
+    await sgMail.send(msg(config.email, data))
     return {
       statusCode: 200,
       body: 'Succeed'

@@ -97,6 +97,7 @@ const SessionFormInner: FC = () => {
               { id: '/operator_bot1.jpg', name: 'ボット' }
             ]}
           />
+          <TextInput source="email" type="email" fullWidth />
         </Box>
       </Grid>
       <Grid item xs={6}>

@@ -22,8 +22,10 @@ const store = (values: Values, chatConfig: ChatConfig): void => {
 }
 
 const notify = (values: Values, chatConfig: ChatConfig): void => {
-  console.log(values, chatConfig)
-  // TODO
+  chatConfig.email &&
+    API.post('notify', '/notify', {
+      body: { values, config: chatConfig }
+    })
 }
 
 export const closerEvaluate = (
