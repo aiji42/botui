@@ -1,6 +1,7 @@
 import {
   CreateParams,
   GetListParams,
+  GetManyParams,
   GetOneParams,
   UpdateParams
 } from 'react-admin'
@@ -49,6 +50,18 @@ const dataProvider = {
     return {
       ...result,
       data: sessionParse(result.data)
+    }
+  },
+  getMany: async (resource: string, params: GetManyParams) => {
+    if (resource !== 'sessions')
+      return await defaultDataProvider.getMany(resource, params)
+
+    const result = await defaultDataProvider.getMany<
+      Session<string, string, string>
+    >(resource, params)
+    return {
+      ...result,
+      data: result.data.map(sessionParse)
     }
   },
   update: async (resource: string, params: UpdateParams) => {
