@@ -19,11 +19,13 @@ const getValues = (proposals: Proposals): Values => {
   }, {})
 }
 
+let started = false
+
 export interface MessageWithId extends Message {
   id: number | string
 }
 
-export const makeMessage = (
+export const controlMessage = (
   proposals: Proposals,
   chatConfig: ChatConfig
 ): Array<MessageWithId> => {
@@ -47,6 +49,7 @@ export const makeMessage = (
     }
     if (proposal.type === 'closer') {
       !proposal.completed && closerEvaluate(proposal.data, values, chatConfig)
+      if (chatConfig.onClose) chatConfig.onClose()
       return true
     }
     if (proposal.type === 'message') {
@@ -56,6 +59,11 @@ export const makeMessage = (
     }
     return false
   })
+
+  if (!started && messages.length === 1 && chatConfig.onStart) {
+    chatConfig.onStart()
+    started = true
+  }
 
   return messages
 }

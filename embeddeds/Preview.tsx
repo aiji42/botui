@@ -96,9 +96,10 @@ const Preview: FC<Props> = (props) => {
               chatConfig={{
                 ...session,
                 messages: [],
-                messagesCount: session.proposals.length
+                messagesCount: session.proposals.length,
+                onStart: handleStart
+                // TODO: ここに多分 onClose
               }}
-              onStart={handleStart}
             />
             <IconButton onClick={toggleOpen} className={classes.innerFab}>
               <ClearIcon fontSize="large" />
@@ -113,9 +114,10 @@ const Preview: FC<Props> = (props) => {
                 chatConfig={{
                   ...session,
                   messages: [],
-                  messagesCount: session.proposals.length
+                  messagesCount: session.proposals.length,
+                  onStart: handleStart
+                  // TODO: ここに多分 onClose
                 }}
-                onStart={handleStart}
               />
             </Paper>
           </Slide>

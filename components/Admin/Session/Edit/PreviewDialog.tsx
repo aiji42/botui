@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import { FC, useState } from 'react'
+import { FC, useCallback, useState } from 'react'
 import {
   Dialog,
   DialogContent,
@@ -31,6 +31,7 @@ const useStyleDialogContent = makeStyles(() => ({
 const PreviewDialog: FC = () => {
   const { values } = useFormState<Session>()
   const [open, setOpen] = useState(false)
+  const handleClose = useCallback(() => setOpen(false), [setOpen])
   const dialogClasses = useStyleDialog()
   const dialogContentClasses = useStyleDialogContent()
   return (
@@ -38,18 +39,15 @@ const PreviewDialog: FC = () => {
       <IconButton onClick={() => setOpen(true)}>
         <Visibility />
       </IconButton>
-      <Dialog
-        open={open}
-        onClose={() => setOpen(false)}
-        classes={dialogClasses}
-      >
+      <Dialog open={open} onClose={handleClose} classes={dialogClasses}>
         <DialogContent classes={dialogContentClasses}>
           <Preview
             proposals={values.proposals}
             chatConfig={{
               ...values,
               messages: [],
-              messagesCount: values.proposals.length
+              messagesCount: values.proposals.length,
+              onClose: () => setTimeout(handleClose, 3000)
             }}
           />
         </DialogContent>
