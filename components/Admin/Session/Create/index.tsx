@@ -8,7 +8,7 @@ import {
 } from 'react-admin'
 import { Grid, Typography, Tooltip } from '@material-ui/core'
 import { useForm } from 'react-final-form'
-import { ec, inquiry } from './proposalTemplates'
+import { ec, inquiry, custom } from './proposalTemplates'
 import ThemeColorSelector from './ThemeColorSelector'
 
 const proposalsChoices = [
@@ -25,7 +25,7 @@ const proposalsChoices = [
     name: 'お問い合わせフォーム用'
   },
   {
-    id: '[]',
+    id: custom,
     title: 'テンプレートを使用せず、いちから自由に作成できます。',
     name: 'マニュアル'
   }

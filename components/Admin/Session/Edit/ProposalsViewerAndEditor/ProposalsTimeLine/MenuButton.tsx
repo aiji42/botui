@@ -4,8 +4,10 @@ import {
   MoreVert as MoreIcon,
   Edit as EditIcon,
   Delete as DeleteIcon,
-  VerticalAlignTop,
-  VerticalAlignBottom
+  ChatBubble,
+  Flag,
+  SettingsEthernet,
+  CallSplit
 } from '@material-ui/icons'
 
 import { Proposal } from '../../../../../../@types/session'
@@ -15,15 +17,11 @@ interface Props {
   handleDelete: () => void
   handleInsertBefore: (type: Proposal['type']) => void
   handleInsertAfter: (type: Proposal['type']) => void
+  last?: boolean
 }
 
 const MenuButton: FC<Props> = (props) => {
-  const {
-    handleEdit,
-    handleDelete,
-    handleInsertAfter,
-    handleInsertBefore
-  } = props
+  const { handleEdit, handleDelete, handleInsertBefore, last } = props
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const handleClick = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) =>
@@ -63,51 +61,45 @@ const MenuButton: FC<Props> = (props) => {
           </ListItemIcon>
           編集
         </MenuItem>
-        <MenuItem onClick={makeNewHandler(handleDelete)}>
-          <ListItemIcon>
-            <DeleteIcon />
-          </ListItemIcon>
-          削除
-        </MenuItem>
+        {!last && (
+          <MenuItem onClick={makeNewHandler(handleDelete)}>
+            <ListItemIcon>
+              <DeleteIcon />
+            </ListItemIcon>
+            削除
+          </MenuItem>
+        )}
         <MenuItem
           onClick={makeNewHandlerForInsert(handleInsertBefore, 'message')}
         >
           <ListItemIcon>
-            <VerticalAlignTop />
+            <ChatBubble />
           </ListItemIcon>
-          上に挿入
+          メッセージを挿入
         </MenuItem>
         <MenuItem
-          onClick={makeNewHandlerForInsert(handleInsertAfter, 'message')}
+          onClick={makeNewHandlerForInsert(handleInsertBefore, 'skipper')}
         >
           <ListItemIcon>
-            <VerticalAlignBottom />
+            <CallSplit />
           </ListItemIcon>
-          下に挿入
+          分岐を挿入
         </MenuItem>
         <MenuItem
-          onClick={makeNewHandlerForInsert(handleInsertAfter, 'skipper')}
+          onClick={makeNewHandlerForInsert(handleInsertBefore, 'relayer')}
         >
           <ListItemIcon>
-            <VerticalAlignBottom />
+            <SettingsEthernet />
           </ListItemIcon>
-          下に条件分岐を挿入
+          コマンドを挿入
         </MenuItem>
         <MenuItem
-          onClick={makeNewHandlerForInsert(handleInsertAfter, 'relayer')}
+          onClick={makeNewHandlerForInsert(handleInsertBefore, 'closer')}
         >
           <ListItemIcon>
-            <VerticalAlignBottom />
+            <Flag />
           </ListItemIcon>
-          下にコマンドを挿入
-        </MenuItem>
-        <MenuItem
-          onClick={makeNewHandlerForInsert(handleInsertAfter, 'closer')}
-        >
-          <ListItemIcon>
-            <VerticalAlignBottom />
-          </ListItemIcon>
-          下にゴールを挿入
+          ゴールを挿入
         </MenuItem>
       </Menu>
     </>

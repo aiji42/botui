@@ -9,7 +9,6 @@ import {
 } from '@material-ui/lab'
 import { Proposals, Proposal, Skipper } from '../../../../../../@types/session'
 import TimelineDot from './TimelineDot'
-import TimelineDotLast from './TimelineDotLast'
 import ProposalPaper from './ProposalPaper'
 import MenuButton from './MenuButton'
 
@@ -99,9 +98,12 @@ const ProposalsTimeLine: FC<Props> = ({
                   handleDelete={makeHandleDelete(index)}
                   handleInsertBefore={makeHandleInsert(index)}
                   handleInsertAfter={makeHandleInsert(index + 1)}
+                  last={proposals.length === index + 1}
                 />
               </div>
-              <TimelineConnector className={classes.timelineConnector} />
+              {proposals.length !== index + 1 && (
+                <TimelineConnector className={classes.timelineConnector} />
+              )}
               {proposal.type === 'skipper' && (
                 <SplitLineConnector {...proposal.data} />
               )}
@@ -117,27 +119,6 @@ const ProposalsTimeLine: FC<Props> = ({
           </TimelineItem>
         </Timeline>
       ))}
-      <Timeline className={classes.timeline}>
-        {inserting && editingIndex === proposals.length && (
-          <Zoom in>
-            <TimelineItem>
-              <TimelineSeparator>
-                <TimelineDot editing />
-                <TimelineConnector className={classes.timelineConnector} />
-              </TimelineSeparator>
-              <TimelineContent />
-            </TimelineItem>
-          </Zoom>
-        )}
-        <TimelineItem>
-          <TimelineSeparator>
-            <TimelineDotLast
-              handleInsertBefore={makeHandleInsert(proposals.length)}
-            />
-          </TimelineSeparator>
-          <TimelineContent />
-        </TimelineItem>
-      </Timeline>
     </>
   )
 }

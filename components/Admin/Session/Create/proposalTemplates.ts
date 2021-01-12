@@ -291,7 +291,8 @@ const ecProposals: Proposals = [
     ],
     type: 'FormCustomSelect',
     status: {}
-  })
+  }),
+  closerTemplate({ job: 'store', notify: false })
 ]
 
 export const ec = JSON.stringify(ecProposals)
@@ -347,7 +348,14 @@ const inquiryProposals: Proposals = [
   }),
   stringMessageTemplate(
     'ありがとうございます。ご入力いただいた内容でお問い合わせを承りました。後ほど弊社担当からご連絡を差し上げます。'
-  )
+  ),
+  closerTemplate({ job: 'store', notify: false })
 ]
 
 export const inquiry = JSON.stringify(inquiryProposals)
+
+const customProposals: Proposals = [
+  closerTemplate({ job: 'store', notify: false })
+]
+
+export const custom = JSON.stringify(customProposals)
