@@ -1,6 +1,13 @@
 const sgMail = require('@sendgrid/mail')
 const AWS = require('aws-sdk')
 
+const headers = {
+  "Content-Type": 'application/json',
+  "Access-Control-Allow-Headers": "Content-Type",
+  "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT,DELETE",
+  "Access-Control-Allow-Origin": "*"
+}
+
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') return {
     statusCode: 401
@@ -20,7 +27,8 @@ exports.handler = async (event) => {
     await sgMail.send(msg(config.email, data))
     return {
       statusCode: 200,
-      body: 'Succeed'
+      body: JSON.stringify('Succeed'),
+      headers
     }
   } catch (error) {
     console.error(error)
@@ -29,13 +37,15 @@ exports.handler = async (event) => {
       console.log(error.response.body)
       return {
         statusCode: 500,
-        body: error.response.body
+        body: JSON.stringify(error.response.body),
+        headers
       }
     }
 
     return {
       statusCode: 500,
-      body: 'Failed'
+      body: JSON.stringify('Failed'),
+      headers
     }
   }
 }
