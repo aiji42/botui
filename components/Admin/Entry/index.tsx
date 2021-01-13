@@ -7,8 +7,11 @@ import {
   Show,
   SimpleShowLayout,
   ReferenceField,
-  FunctionField
+  FunctionField,
+  FilterProps,
+  TextInput
 } from 'react-admin'
+import { AmplifyFilter } from 'react-admin-amplify'
 import {
   TableContainer,
   Table,
@@ -64,15 +67,36 @@ export const EntryShow: FC = (props) => (
   </Show>
 )
 
+type EntryFilterProps = {
+  defaultQuery: string
+  setQuery?: React.Dispatch<string>
+} & FilterProps
+
+const EntryFilter: FC<Partial<EntryFilterProps>> = (props) => {
+  return (
+    <AmplifyFilter {...(props as EntryFilterProps)}>
+      <TextInput
+        source="entryBySessionAndCreatedAt.sessionId"
+        label="session"
+        alwaysOn
+      />
+    </AmplifyFilter>
+  )
+}
+
 export const EntryList: FC = (props) => {
   return (
-    <List {...props} bulkActionButtons={false}>
+    <List {...props} bulkActionButtons={false} filters={<EntryFilter />}>
       <Datagrid expand={<EntryShow />} rowClick="expand">
         <TextField source="id" sortable={false} />
         <ReferenceField source="sessionId" reference="sessions">
           <TextField source="title" />
         </ReferenceField>
-        <DateField source="createdAt" showTime />
+        <DateField
+          source="createdAt"
+          sortBy="entryBySessionAndCreatedAt"
+          showTime
+        />
       </Datagrid>
     </List>
   )

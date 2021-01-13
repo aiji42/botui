@@ -25,10 +25,11 @@ type Entry
       {allow: public, provider: iam, operations: [create]}
     ]
   )
-  @key(name: "ownerAndSessionIndex", fields: ["owner", "sessionId"], queryField: "entryByOwnerAndSession")
+  @key(name: "sessionAndCreatedAtIndex", fields: ["sessionId", "createdAt"], queryField: "entryBySessionAndCreatedAt")
 {
   id: ID!
   owner: String!
   sessionId: ID!
   inputs: AWSJSON!
+  createdAt: AWSDateTime!
 }

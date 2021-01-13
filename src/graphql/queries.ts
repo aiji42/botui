@@ -33,18 +33,18 @@ export const listEntrys = /* GraphQL */ `
     }
   }
 `;
-export const entryByOwnerAndSession = /* GraphQL */ `
-  query EntryByOwnerAndSession(
-    $owner: String
-    $sessionId: ModelIDKeyConditionInput
+export const entryBySessionAndCreatedAt = /* GraphQL */ `
+  query EntryBySessionAndCreatedAt(
+    $sessionId: ID
+    $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelEntryFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    entryByOwnerAndSession(
-      owner: $owner
+    entryBySessionAndCreatedAt(
       sessionId: $sessionId
+      createdAt: $createdAt
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit

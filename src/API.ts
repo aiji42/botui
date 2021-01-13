@@ -92,11 +92,13 @@ export type UpdateEntryInput = {
   owner?: string | null,
   sessionId?: string | null,
   inputs?: string | null,
+  createdAt?: string | null,
 };
 
 export type ModelEntryConditionInput = {
   sessionId?: ModelIDInput | null,
   inputs?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
   and?: Array< ModelEntryConditionInput | null > | null,
   or?: Array< ModelEntryConditionInput | null > | null,
   not?: ModelEntryConditionInput | null,
@@ -127,6 +129,7 @@ export type CreateEntryInput = {
   owner: string,
   sessionId: string,
   inputs: string,
+  createdAt?: string | null,
 };
 
 export type ModelEntryFilterInput = {
@@ -134,12 +137,13 @@ export type ModelEntryFilterInput = {
   owner?: ModelStringInput | null,
   sessionId?: ModelIDInput | null,
   inputs?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
   and?: Array< ModelEntryFilterInput | null > | null,
   or?: Array< ModelEntryFilterInput | null > | null,
   not?: ModelEntryFilterInput | null,
 };
 
-export type ModelIDKeyConditionInput = {
+export type ModelStringKeyConditionInput = {
   eq?: string | null,
   le?: string | null,
   lt?: string | null,
@@ -321,17 +325,17 @@ export type ListEntrysQuery = {
   } | null,
 };
 
-export type EntryByOwnerAndSessionQueryVariables = {
-  owner?: string | null,
-  sessionId?: ModelIDKeyConditionInput | null,
+export type EntryBySessionAndCreatedAtQueryVariables = {
+  sessionId?: string | null,
+  createdAt?: ModelStringKeyConditionInput | null,
   sortDirection?: ModelSortDirection | null,
   filter?: ModelEntryFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type EntryByOwnerAndSessionQuery = {
-  entryByOwnerAndSession:  {
+export type EntryBySessionAndCreatedAtQuery = {
+  entryBySessionAndCreatedAt:  {
     __typename: "ModelEntryConnection",
     items:  Array< {
       __typename: "Entry",
