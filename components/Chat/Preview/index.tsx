@@ -5,7 +5,6 @@ import { ChatConfig, Proposals } from '../../../@types/session'
 const Preview: FC<{
   proposals: Proposals
   chatConfig: ChatConfig
-  onStart?: () => void
 }> = (props) => {
   const [iframeElement, setIframeElement] = useState<HTMLIFrameElement | null>(
     null
@@ -26,7 +25,6 @@ const Preview: FC<{
           targetWindow={iframeElement.contentWindow}
           initProposals={initProposals}
           chatConfig={props.chatConfig}
-          onStart={props.onStart}
         />
       )}
     </>

@@ -41,9 +41,12 @@ export interface Session<T = Proposals, U = Theme, V = Images> {
   theme: U
   proposals: T
   images: V
+  email?: string
 }
 
 export interface ChatConfig extends Omit<Session, 'proposals'> {
   messages: Array<Message>
   messagesCount: number
+  onStart?: () => void
+  onClose?: () => void
 }

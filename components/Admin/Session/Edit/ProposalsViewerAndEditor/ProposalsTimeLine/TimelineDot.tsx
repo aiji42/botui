@@ -6,13 +6,11 @@ import {
   RateReview as RateReviewIcon,
   InsertPhoto as InsertPhotoIcon,
   Edit as EditIcon,
-  CallSplit as CallSplitIcon
+  CallSplit as SplitIcon,
+  SettingsEthernet,
+  Flag as FlagIcon
 } from '@material-ui/icons'
 import { Proposal } from '../../../../../../@types/session'
-
-const SplitIcon: FC = (props) => (
-  <CallSplitIcon {...props} style={{ transform: 'rotate(180deg)' }} />
-)
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,6 +40,8 @@ const TimelineDot: FC<Props> = (props) => {
         ? RateReviewIcon
         : InsertPhotoIcon
     }
+    if (proposal.type === 'relayer') return SettingsEthernet
+    if (proposal.type === 'closer') return FlagIcon
     return SplitIcon
   }, [editing, proposal])
 

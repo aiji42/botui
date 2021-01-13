@@ -5,12 +5,17 @@ import ProposalsTimeLine from './ProposalsTimeLine'
 import ProposalEditDialog from './ProposalEditDialog'
 import reducer, { ActionType, EditingProposalAction } from './reducer'
 import {
+  closerTemplate,
+  relayerTemplate,
   skipperTemplate,
   stringMessageTemplate
 } from '../../Create/proposalTemplates'
 
 const initialProposal = (type: Proposal['type']): Proposal => {
   if (type === 'message') return stringMessageTemplate('')
+  if (type === 'relayer') return relayerTemplate({ job: 'script', script: '' })
+  if (type === 'closer')
+    return closerTemplate({ job: 'script', script: '', notify: true })
   return skipperTemplate({
     conditions: [{ key: '', operator: 'eq', pattern: '', negative: false }],
     skipNumber: 1,
@@ -84,6 +89,7 @@ const ProposalViewerAndEditor: FC = () => {
         handleDelete={handleDelete}
         handleInsert={handleInsert}
       />
+      {/* ???? */}
       <Field name="proposals">{() => null}</Field>
       <ProposalEditDialog
         proposal={

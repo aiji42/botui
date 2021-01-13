@@ -1,15 +1,15 @@
-import { FC, useCallback, useEffect, useMemo, useState } from 'react'
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useCorsState } from 'use-cors-state'
 import { ChatConfig, Proposals, Message } from '../../../../@types/session'
 import { effectToProposals } from './effectToProposals'
-import { makeMessage } from './makeMessage'
+import { controlMessage } from './controlMessage'
+import deepEqual from 'deep-equal'
 
 const Communicator: FC<{
   targetWindow: Window
   initProposals: Proposals
   chatConfig: ChatConfig
-  onStart?: () => void
-}> = ({ targetWindow, initProposals, chatConfig, onStart }) => {
+}> = ({ targetWindow, initProposals, chatConfig }) => {
   const [config, setConfig] = useCorsState<ChatConfig | undefined>(
     'chat-config',
     { window: targetWindow },
@@ -25,14 +25,17 @@ const Communicator: FC<{
   const messages = useMemo(() => config?.messages || [], [config?.messages])
 
   useEffect(() => {
-    if (messages.length > 0 && onStart) onStart()
     const [effectedProposals] = effectToProposals(messages, proposals)
     setProposals(effectedProposals)
   }, [messages])
 
+  const prevProposals = useRef<Proposals>()
   useEffect(() => {
-    setMessages(makeMessage(proposals))
-  }, [proposals])
+    // unMount で closer が再実行されることを防止する
+    if (!deepEqual(prevProposals.current, proposals))
+      setMessages(controlMessage(proposals, chatConfig))
+    prevProposals.current = proposals
+  }, [proposals, chatConfig])
 
   return <></>
 }

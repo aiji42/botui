@@ -15,6 +15,7 @@ export const createSession = /* GraphQL */ `
       theme
       proposals
       images
+      email
       createdAt
       updatedAt
     }
@@ -33,6 +34,7 @@ export const updateSession = /* GraphQL */ `
       theme
       proposals
       images
+      email
       createdAt
       updatedAt
     }
@@ -51,6 +53,52 @@ export const deleteSession = /* GraphQL */ `
       theme
       proposals
       images
+      email
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateEntry = /* GraphQL */ `
+  mutation UpdateEntry(
+    $input: UpdateEntryInput!
+    $condition: ModelEntryConditionInput
+  ) {
+    updateEntry(input: $input, condition: $condition) {
+      id
+      owner
+      sessionId
+      inputs
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteEntry = /* GraphQL */ `
+  mutation DeleteEntry(
+    $input: DeleteEntryInput!
+    $condition: ModelEntryConditionInput
+  ) {
+    deleteEntry(input: $input, condition: $condition) {
+      id
+      owner
+      sessionId
+      inputs
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createEntry = /* GraphQL */ `
+  mutation CreateEntry(
+    $input: CreateEntryInput!
+    $condition: ModelEntryConditionInput
+  ) {
+    createEntry(input: $input, condition: $condition) {
+      id
+      owner
+      sessionId
+      inputs
       createdAt
       updatedAt
     }

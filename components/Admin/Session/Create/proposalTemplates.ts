@@ -15,8 +15,11 @@ import {
   FormCustomTextarea,
   FormEmail,
   FormName,
-  FormTel
+  FormTel,
+  ProposalCloser,
+  ProposalRelayer
 } from '../../../../@types/session'
+import { Closer, Relayer } from '../../../../@types/session/action'
 
 export const skipperTemplate = (skipper: Skipper): ProposalSkipper => {
   const id = uuidv4()
@@ -25,6 +28,26 @@ export const skipperTemplate = (skipper: Skipper): ProposalSkipper => {
     type: 'skipper',
     completed: false,
     data: skipper
+  }
+}
+
+export const closerTemplate = (closer: Closer): ProposalCloser => {
+  const id = uuidv4()
+  return {
+    id,
+    type: 'closer',
+    completed: false,
+    data: closer
+  }
+}
+
+export const relayerTemplate = (relayer: Relayer): ProposalRelayer => {
+  const id = uuidv4()
+  return {
+    id,
+    type: 'relayer',
+    completed: false,
+    data: relayer
   }
 }
 
@@ -38,8 +61,6 @@ export const stringMessageTemplate = (
     id,
     type: 'message',
     completed: false,
-    before: '',
-    after: '',
     data: {
       id,
       content: {
@@ -85,8 +106,6 @@ export const formMessageTemplate = (form: OmittedForm): ProposalMessage => {
     id,
     type: 'message',
     completed: false,
-    before: '',
-    after: '',
     data: {
       id,
       content: {
@@ -272,7 +291,8 @@ const ecProposals: Proposals = [
     ],
     type: 'FormCustomSelect',
     status: {}
-  })
+  }),
+  closerTemplate({ job: 'store', notify: false })
 ]
 
 export const ec = JSON.stringify(ecProposals)
@@ -328,7 +348,14 @@ const inquiryProposals: Proposals = [
   }),
   stringMessageTemplate(
     'ありがとうございます。ご入力いただいた内容でお問い合わせを承りました。後ほど弊社担当からご連絡を差し上げます。'
-  )
+  ),
+  closerTemplate({ job: 'store', notify: false })
 ]
 
 export const inquiry = JSON.stringify(inquiryProposals)
+
+const customProposals: Proposals = [
+  closerTemplate({ job: 'store', notify: false })
+]
+
+export const custom = JSON.stringify(customProposals)

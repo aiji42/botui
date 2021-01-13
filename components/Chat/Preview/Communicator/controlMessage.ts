@@ -1,4 +1,11 @@
-import { ProposalMessage, Proposals, Message } from '../../../../@types/session'
+import {
+  ProposalMessage,
+  Proposals,
+  Message,
+  ChatConfig
+} from '../../../../@types/session'
+import { relayerEvaluate } from './relayerEvaluate'
+import { closerEvaluate } from './closerEvaluate'
 import { skipperEvaluate, ValueType } from './skipperEvaluate'
 
 type Values = Record<string, ValueType | undefined>
@@ -12,17 +19,16 @@ const getValues = (proposals: Proposals): Values => {
   }, {})
 }
 
-const evalFunction = (functionString: string, values: Values) => {
-  // eslint-disable-next-line no-new-func
-  const func = new Function('values', functionString)
-  func(values)
-}
+let started = false
 
 export interface MessageWithId extends Message {
   id: number | string
 }
 
-export const makeMessage = (proposals: Proposals): Array<MessageWithId> => {
+export const controlMessage = (
+  proposals: Proposals,
+  chatConfig: ChatConfig
+): Array<MessageWithId> => {
   const values = getValues(proposals)
   const messages: Array<MessageWithId> = []
   let prevMessageProposal: ProposalMessage
@@ -37,22 +43,27 @@ export const makeMessage = (proposals: Proposals): Array<MessageWithId> => {
       skipNumber = skipperEvaluate(skipper, values)
       return false
     }
-    if (proposal.type === 'message' && proposal.completed) {
-      messages.push(proposal.data)
-      prevMessageProposal = proposal
+    if (proposal.type === 'relayer') {
+      !proposal.completed && relayerEvaluate(proposal.data, values)
       return false
     }
-    if (proposal.type === 'message') {
-      // TODO: 非同期を考慮
-      prevMessageProposal?.after &&
-        evalFunction(prevMessageProposal.after, values)
-      proposal.before && evalFunction(proposal.before, values)
-
-      messages.push(messageReplace(proposal.data, values))
+    if (proposal.type === 'closer') {
+      !proposal.completed && closerEvaluate(proposal.data, values, chatConfig)
+      if (chatConfig.onClose) chatConfig.onClose()
       return true
+    }
+    if (proposal.type === 'message') {
+      messages.push(messageReplace(proposal.data, values))
+      prevMessageProposal = proposal
+      return !proposal.completed
     }
     return false
   })
+
+  if (!started && messages.length === 1 && chatConfig.onStart) {
+    chatConfig.onStart()
+    started = true
+  }
 
   return messages
 }
