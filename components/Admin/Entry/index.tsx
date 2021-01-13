@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useMemo, useEffect } from 'react'
 import {
   Datagrid,
   List,
@@ -9,7 +9,8 @@ import {
   ReferenceField,
   FunctionField,
   FilterProps,
-  TextInput
+  SelectInput,
+  useListFilterContext
 } from 'react-admin'
 import { AmplifyFilter } from 'react-admin-amplify'
 import {
@@ -20,6 +21,7 @@ import {
   TableCell
 } from '@material-ui/core'
 import { Entry } from '../../../@types/entry'
+import useSessions from '../../../hooks/use-sessions'
 
 export const EntryShow: FC = (props) => (
   <Show {...props}>
@@ -73,11 +75,27 @@ type EntryFilterProps = {
 } & FilterProps
 
 const EntryFilter: FC<Partial<EntryFilterProps>> = (props) => {
+  const sessions = useSessions()
+  const choices = useMemo(
+    () => sessions.map(({ id, title: name }) => ({ id, name })),
+    [sessions]
+  )
+  const { setFilters, displayedFilters } = useListFilterContext()
+  useEffect(() => {
+    choices.length > 0 &&
+      setFilters(
+        { entryBySessionAndCreatedAt: { sessionId: sessions[0].id } },
+        displayedFilters
+      )
+  }, [choices])
+
   return (
     <AmplifyFilter {...(props as EntryFilterProps)}>
-      <TextInput
+      <SelectInput
+        choices={choices}
         source="entryBySessionAndCreatedAt.sessionId"
         label="session"
+        allowEmpty={false}
         alwaysOn
       />
     </AmplifyFilter>
