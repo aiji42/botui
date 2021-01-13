@@ -31,7 +31,6 @@ export const controlMessage = (
 ): Array<MessageWithId> => {
   const values = getValues(proposals)
   const messages: Array<MessageWithId> = []
-  let prevMessageProposal: ProposalMessage
   let skipNumber: number
   proposals.some((proposal) => {
     if (skipNumber) {
@@ -54,7 +53,6 @@ export const controlMessage = (
     }
     if (proposal.type === 'message') {
       messages.push(messageReplace(proposal.data, values))
-      prevMessageProposal = proposal
       return !proposal.completed
     }
     return false

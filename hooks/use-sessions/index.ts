@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Session } from '../../@types/session'
 import useDataProvider from '../use-react-admin-data-provider'
 
-const useSessions = () => {
+const useSessions = (): Array<Session> => {
   const [sessions, setSessions] = useState<Array<Session>>([])
   const { getList } = useDataProvider()
   useEffect(() => {

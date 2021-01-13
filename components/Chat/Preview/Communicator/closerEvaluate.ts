@@ -32,7 +32,7 @@ export const closerEvaluate = (
   closer: Closer,
   values: Values,
   chatConfig: ChatConfig
-) => {
+): void => {
   if (closer.job === 'store') store(values, chatConfig)
   if (closer.job === 'script') evalFunction(closer.script, values)
   if (closer.job === 'webhook') webhook(closer.endpoint, values)
