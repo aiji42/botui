@@ -39,5 +39,10 @@
     "rollup": "^2.36.1",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-typescript2": "^0.29.0"
+  },
+  "dependencies": {
+    "@bicstone/ra-language-japanese": "^3.8.0",
+    "react-admin": "^3.11.2",
+    "react-admin-amplify": "^1.2.4"
   }
 }

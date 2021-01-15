@@ -3236,6 +3236,14 @@
   dependencies:
     ra-language-english "^3.8.0"
 
+"@botui/types@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@botui/types/-/types-0.5.0.tgz#862d00b4044b0948b0437a9d5cd80bd072aad064"
+  integrity sha512-XEZxCoufCtTiVd3LmEeYe+Cm6WhhM+eh+lYaVSs3hWmeVPnepV3lDm6Mfu1/IqQvYj6LRo8hlhkdx2KMSXFzWA==
+  dependencies:
+    "@types/react" "*"
+    "@types/yup" "*"
+
 "@emotion/babel-plugin-jsx-pragmatic@^0.1.5":
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin-jsx-pragmatic/-/babel-plugin-jsx-pragmatic-0.1.5.tgz#27debfe9c27c4d83574d509787ae553bf8a34d7e"
@@ -4783,7 +4791,7 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@types/yup@^0.29.11":
+"@types/yup@*", "@types/yup@^0.29.11":
   version "0.29.11"
   resolved "https://registry.yarnpkg.com/@types/yup/-/yup-0.29.11.tgz#d654a112973f5e004bf8438122bd7e56a8e5cd7e"
   integrity sha512-9cwk3c87qQKZrT251EDoibiYRILjCmxBvvcb4meofCmx1vdnNcR9gyildy5vOHASpOKMsn42CugxUvcwK5eu1g==
@@ -11456,12 +11464,12 @@ react-ace@^9.2.1:
     lodash.isequal "^4.5.0"
     prop-types "^15.7.2"
 
-react-admin-amplify@^1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/react-admin-amplify/-/react-admin-amplify-1.2.3.tgz#1d1c079642e20d109bdc62332b0b4a8b22d600e6"
-  integrity sha512-5oeLUkscIlVuqZc2TjP869P3iSVUHYQ1ar0ntOl0mc99hwEEnvKRBpXAkBSFyCbFP6oc2x2Up12MS9aoSraqDw==
+react-admin-amplify@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/react-admin-amplify/-/react-admin-amplify-1.2.4.tgz#c89a4ee551f120040e38b9c00e81023a57238d6e"
+  integrity sha512-toMWNtqcZjOPlxqXSlzGUmOGTCzTuTaslfZBBBVjkKFt2E/Mo6NOUc+YM1KjpqrPaGn+h2zSwN0gLAE+Q0bbCQ==
   dependencies:
-    uuid "^8.3.1"
+    uuid "^8.3.2"
 
 react-admin@^3.11.2:
   version "3.11.2"
@@ -13524,7 +13532,7 @@ uuid@^3.0.0, uuid@^3.0.1, uuid@^3.2.1, uuid@^3.3.2:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
 
-uuid@^8.2.0, uuid@^8.3.1:
+uuid@^8.2.0:
   version "8.3.1"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.1.tgz#2ba2e6ca000da60fce5a196954ab241131e05a31"
   integrity sha512-FOmRr+FmWEIG8uhZv6C2bTgEVXsHk08kE7mPlrBbEe+c3r9pjceVPgupIfNIhc4yx55H69OXANrUaSuu9eInKg==

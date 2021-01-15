@@ -1,1 +1,1 @@
-export { App } from './components/index'
+export { Admin } from './components'

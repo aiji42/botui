@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^0.2.34",
-    "@bicstone/ra-language-japanese": "^3.8.0",
     "@emotion/babel-preset-css-prop": "^11.0.0",
     "@emotion/react": "^11.1.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
@@ -45,8 +44,6 @@
     "next": "^9.5.5",
     "react": "^16.13.1",
     "react-ace": "^9.2.1",
-    "react-admin": "^3.11.2",
-    "react-admin-amplify": "^1.2.3",
     "react-dom": "^16.13.1",
     "react-id-generator": "^3.0.1",
     "react-loading": "^2.0.3",
