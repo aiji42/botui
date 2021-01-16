@@ -10,7 +10,16 @@
     "build": "next build && next export",
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "lint:fix": "yarn run lint --fix"
+    "lint:fix": "yarn run lint --fix",
+    "clean": "lerna clean",
+    "bootstrap": "lerna bootstrap",
+    "run:admin": "lerna run --stream --scope @botui/admin",
+    "run:api": "lerna run --stream --scope @botui/api",
+    "run:chat-components": "lerna run --stream --scope @botui/chat-components",
+    "run:chat-controller": "lerna run --stream --scope @botui/chat-controller",
+    "run:chat-host": "lerna run --stream --scope @botui/chat-host",
+    "run:types": "lerna run --stream --scope @botui/types",
+    "run:use-cors-state": "lerna run --stream --scope use-cors-state"
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^0.2.34",
