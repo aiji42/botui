@@ -5,13 +5,11 @@
   "author": "Aiji Uejima <aiji42@gmail.com>",
   "homepage": "https://github.com/aiji42/botui-child-next#readme",
   "license": "MIT",
-  "main": "lib/chat-components.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
+  "main": "build/index.js",
+  "module": "build/index.esm.js",
+  "types": "build/index.d.ts",
   "files": [
-    "lib"
+    "build"
   ],
   "publishConfig": {
     "registry": "https://registry.yarnpkg.com"
@@ -21,12 +19,25 @@
     "url": "git+https://github.com/aiji42/botui-child-next.git"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "build": "rollup -c",
+    "dev": "rollup -c --watch",
+    "prepublishOnly": "yarn build"
   },
   "bugs": {
     "url": "https://github.com/aiji42/botui-child-next/issues"
   },
+  "dependencies": {
+
+  },
   "devDependencies": {
-    "@botui/types": "^2.0.0"
+    "@babel/core": "^7.12.10",
+    "@botui/types": "^2.0.0",
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-node-resolve": "^11.0.1",
+    "babel-loader": "^8.2.2",
+    "babel-preset-react-app": "^10.0.0",
+    "rollup": "^2.36.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-typescript2": "^0.29.0"
   }
 }
