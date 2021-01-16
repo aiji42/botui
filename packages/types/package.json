@@ -1,18 +1,12 @@
 {
   "name": "@botui/types",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "TypeScript definitions for @botui project.",
   "author": "Aiji Uejima <aiji42@gmail.com>",
   "homepage": "https://github.com/aiji42/botui-child-next#readme",
   "license": "MIT",
-  "main": "lib/types.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
-  "files": [
-    "lib"
-  ],
+  "main": "",
+  "types": "index.d.ts",
   "publishConfig": {
     "registry": "https://registry.yarnpkg.com"
   },
@@ -20,9 +14,7 @@
     "type": "git",
     "url": "git+https://github.com/aiji42/botui-child-next.git"
   },
-  "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
-  },
+  "scripts": {},
   "bugs": {
     "url": "https://github.com/aiji42/botui-child-next/issues"
   }
