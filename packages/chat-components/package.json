@@ -38,6 +38,7 @@
     "formik": "^2.2.6",
     "jp-prefecture": "^0.2.1",
     "libphonenumber-js": "^1.9.8",
+    "react-loading": "^2.0.3",
     "react-textarea-autosize": "^8.3.0",
     "react-use-kana": "^2.3.0",
     "use-postal-jp": "^1.1.4",
