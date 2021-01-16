@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, Dispatch, SetStateAction } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import postRobot from 'post-robot'
 
 type CrossDomainWindowType = Window | null;
@@ -21,18 +21,21 @@ interface ServerOptionsType {
   errorOnClose?: boolean
 }
 
-export const useCorsState = <T extends Record<string, unknown>>(
+export const useCorsState = <T>(
   synchronizingKey: string,
   options: ServerOptionsType,
   initialValue: T
-): [T, Dispatch<SetStateAction<T>>] => {
-  const [state, setState] = useState<T>(initialValue)
+): [T, (val: T) => void] => {
+  const [state, setState] = useState<{ value: T }>({ value: initialValue })
+  const setStateWrapper = useCallback((value: T) => {
+    setState({ value: value })
+  }, [setState])
   const sendable = useRef<boolean>(true)
 
   useEffect(() => {
     const listener = postRobot.on(synchronizingKey, options, (...[ , , data]) => {
       sendable.current = false
-      setState(data as T)
+      setState(data as { value: T })
     })
     return () => listener.cancel()
   }, [synchronizingKey, options])
@@ -43,5 +46,5 @@ export const useCorsState = <T extends Record<string, unknown>>(
     sendable.current = true
   }, [state, synchronizingKey, options.window])
 
-  return [state, setState]
+  return [state.value, setStateWrapper]
 }
