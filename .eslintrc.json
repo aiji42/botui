@@ -4,11 +4,12 @@
     "es6": true,
     "node": true,
     "browser": true,
-    "commonjs": true
+    "commonjs": true,
+    "jest/globals": true
   },
   // パーサー
   "parser": "@typescript-eslint/parser",
-  "plugins": ["react-hooks", "react", "@typescript-eslint"],
+  "plugins": ["react-hooks", "react", "@typescript-eslint", "jest"],
   // 基本的にルールは recommended に従う
   // prettier 関連は配列の最後尾に書く
   "extends": [
