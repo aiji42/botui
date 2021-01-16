@@ -1,0 +1,46 @@
+{
+  "name": "@botui/chat-hooks",
+  "version": "1.0.0",
+  "description": "This is a react custome hooks package for chat in the @botui project.",
+  "author": "Aiji Uejima <aiji42@gmail.com>",
+  "homepage": "https://github.com/aiji42/botui-child-next#readme",
+  "license": "MIT",
+  "main": "build/index.js",
+  "module": "build/index.esm.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.yarnpkg.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aiji42/botui-child-next.git"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c --watch",
+    "prepublishOnly": "yarn build"
+  },
+  "bugs": {
+    "url": "https://github.com/aiji42/botui-child-next/issues"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@botui/types": "^2.0.0",
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-node-resolve": "^11.0.1",
+    "@types/yup": "^0.29.11",
+    "babel-loader": "^8.2.2",
+    "babel-preset-react-app": "^10.0.0",
+    "react": "^17.0.1",
+    "rollup": "^2.36.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-typescript2": "^0.29.0"
+  }
+}
