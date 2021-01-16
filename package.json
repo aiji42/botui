@@ -11,7 +11,7 @@
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "yarn run lint --fix",
-    "clean": "lerna clean",
+    "clean": "lerna clean -y",
     "bootstrap": "lerna bootstrap",
     "run:admin": "lerna run --stream --scope @botui/admin",
     "run:api": "lerna run --stream --scope @botui/api",
