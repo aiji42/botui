@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
+    "@botui/types": "^2.0.0",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.1",
     "babel-loader": "^8.2.2",
