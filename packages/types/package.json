@@ -17,5 +17,10 @@
   "scripts": {},
   "bugs": {
     "url": "https://github.com/aiji42/botui-child-next/issues"
-  }
+  },
+  "dependencies": {
+    "@types/react": "*",
+    "@types/yup": "*"
+  },
+  "typeScriptVersion": "4.1"
 }
