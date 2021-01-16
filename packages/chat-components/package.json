@@ -25,5 +25,8 @@
   },
   "bugs": {
     "url": "https://github.com/aiji42/botui-child-next/issues"
+  },
+  "devDependencies": {
+    "@botui/types": "^2.0.0"
   }
 }
