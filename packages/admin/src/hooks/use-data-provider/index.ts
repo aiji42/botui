@@ -7,9 +7,8 @@ import {
 } from 'react-admin'
 import { buildDataProvider } from 'react-admin-amplify'
 import { DataProvider } from 'react-admin-amplify/build/providers/DataProvider'
-import { Session } from '../../@types/session'
-import * as mutations from '../../src/graphql/mutations'
-import * as queries from '../../src/graphql/queries'
+import { Session } from '@botui/types'
+import { mutations, queries } from '@botui/api'
 
 const sessionParse = (data: Session<string, string, string>): Session => {
   const proposals = data.proposals ? JSON.parse(data.proposals) : []
@@ -93,6 +92,4 @@ const dataProvider = {
   }
 } as DataProvider
 
-const useDataProvider = (): DataProvider => dataProvider
-
-export default useDataProvider
+export const useDataProvider = (): DataProvider => dataProvider
