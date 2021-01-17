@@ -20,7 +20,7 @@ interface Props {
   src: string
 }
 
-const OperatorIcon: FC<Props> = (props) => {
+export const ProfileIcon: FC<Props> = (props) => {
   return (
     <img
       css={style(props.color)}
@@ -31,5 +31,3 @@ const OperatorIcon: FC<Props> = (props) => {
     />
   )
 }
-
-export default OperatorIcon
