@@ -4,7 +4,7 @@ import { ChatConfigContextProvider } from '@botui/chat-hooks'
 import { ChatConfig, Message as MessageType } from '@botui/types'
 import { Header, Body, Footer } from './components'
 import Amplify from 'aws-amplify'
-import aws_exports from '../aws-exports'
+import aws_exports from './aws-exports'
 
 Amplify.configure(aws_exports)
 
