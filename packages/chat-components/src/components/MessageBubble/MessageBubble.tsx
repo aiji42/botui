@@ -7,17 +7,17 @@ const style = (human: boolean, msgColor?: string, bkgColor?: string) =>
     lineHeight: 1.3,
     backgroundColor: bkgColor ?? human ? '#eeeeee' : '#0f84fe',
     color: msgColor ?? human ? '#000000' : '#ffffff',
-    padding: 8,
+    padding: 12,
     borderRadius: 12,
     width: 'auto',
-    maxWidth: human ? '80%' : '75%',
-    display: 'inline-block'
+    display: 'inline-block',
+    textAlign: 'left'
   })
 
 interface Props {
   human?: boolean
   baseColor?: string
-  messageColor: string
+  messageColor?: string
 }
 
 export const MessageBubble: FC<Props> = (props) => {
