@@ -6,7 +6,8 @@ const style = {
   footer: css({
     backgroundColor: '#20224a',
     width: '100%',
-    height: '40px',
+    height: '100%',
+    minHeight: 40,
     position: 'relative'
   }),
   progressBarBase: css({
