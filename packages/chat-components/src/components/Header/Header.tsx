@@ -6,7 +6,8 @@ const style = {
   heder: css({
     backgroundColor: '#20224a',
     width: '100%',
-    height: '60px',
+    height: '100%',
+    minHeight: 50,
     position: 'relative'
   }),
   logo: css({
