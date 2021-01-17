@@ -33,15 +33,6 @@
     "use-cors-state": "^1.1.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.10",
-    "@botui/types": "^2.0.0",
-    "@rollup/plugin-commonjs": "^17.0.0",
-    "@rollup/plugin-node-resolve": "^11.0.1",
-    "babel-loader": "^8.2.2",
-    "babel-preset-react-app": "^10.0.0",
-    "react": "^17.0.1",
-    "rollup": "^2.36.1",
-    "rollup-plugin-peer-deps-external": "^2.2.4",
-    "rollup-plugin-typescript2": "^0.29.0"
+    "@botui/types": "^2.0.0"
   }
 }
