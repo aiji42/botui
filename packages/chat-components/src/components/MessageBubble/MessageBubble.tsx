@@ -14,17 +14,13 @@ const style = (human: boolean, msgColor?: string, bkgColor?: string) =>
     textAlign: 'left'
   })
 
-interface Props {
+export  interface MessageBubbleProps {
   human?: boolean
   baseColor?: string
   messageColor?: string
 }
 
-export const MessageBubble: FC<Props> = (props) => {
+export const MessageBubble: FC<MessageBubbleProps> = (props) => {
   const { children, human = false, baseColor, messageColor } = props
-  return (
-    <div css={style(human, messageColor, baseColor)}>
-      {children}
-    </div>
-  )
+  return <div css={style(human, messageColor, baseColor)}>{children}</div>
 }
