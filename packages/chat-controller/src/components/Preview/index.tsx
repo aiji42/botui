@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import { Controller } from '../'
+import { Controller } from '../Controller'
 import { ChatConfig, Proposals } from '@botui/types'
 
 export const Preview: FC<{
