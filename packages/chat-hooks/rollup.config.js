@@ -1,27 +1,32 @@
-import peerDepsExternal from 'rollup-plugin-peer-deps-external'
-import resolve from '@rollup/plugin-node-resolve'
-import commonjs from '@rollup/plugin-commonjs'
 import typescript from 'rollup-plugin-typescript2'
-import packageJson from './package.json'
+import { babel as pluginBabel } from '@rollup/plugin-babel'
+import * as path from 'path'
+import pkg from './package.json'
 
 export default {
   input: 'src/index.ts',
   output: [
     {
-      file: packageJson.main,
-      format: 'cjs',
-      sourcemap: true
+      file: pkg.module,
+      format: 'es',
+      sourcemap: 'inline'
     },
     {
-      file: packageJson.module,
-      format: 'esm',
-      sourcemap: true
+      file: pkg.main,
+      format: 'cjs',
+      sourcemap: 'inline'
     }
   ],
+  external: [
+    ...Object.keys(pkg.dependencies || {}),
+    ...Object.keys(pkg.devDependencies || {}),
+    ...Object.keys(pkg.peerDependencies || {})
+  ],
   plugins: [
-    peerDepsExternal(),
-    resolve(),
-    commonjs(),
-    typescript({ useTsconfigDeclarationDir: true })
+    typescript({ useTsconfigDeclarationDir: true }),
+    pluginBabel({
+      babelHelpers: 'bundled',
+      configFile: path.resolve(__dirname, '.babelrc.js')
+    })
   ]
 }
