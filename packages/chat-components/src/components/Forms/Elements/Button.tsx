@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import React, { FC, ButtonHTMLAttributes } from 'react'
 import { css } from '@emotion/react'
 

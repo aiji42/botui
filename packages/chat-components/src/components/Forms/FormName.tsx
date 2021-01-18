@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import React, { useEffect, FC, KeyboardEvent, useRef } from 'react'
 import { withFormik, Field, ErrorMessage, useField, FormikProps } from 'formik'
 import * as yup from 'yup'
@@ -9,10 +8,7 @@ import ButtonSubmit from './Elements/ButtonSubmit'
 import { css } from '@emotion/react'
 import { useKana } from 'react-use-kana'
 import { customHandleSubmit } from './modules'
-import {
-  FormNameValues,
-  FormName as FormNameType
-} from '@botui/types'
+import { FormNameValues, FormName as FormNameType } from '@botui/types'
 
 const style = {
   formBlockDetailHalf: css`

@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import React, { FC, ReactNode } from 'react'
 import { css } from '@emotion/react'
 
@@ -32,7 +31,13 @@ interface Props {
 
 export const Header: FC<Props> = (props) => {
   return (
-    <div css={props.baseColor ? [style.heder, css({ backgroundColor: props.baseColor })] : style.heder}>
+    <div
+      css={
+        props.baseColor
+          ? [style.heder, css({ backgroundColor: props.baseColor })]
+          : style.heder
+      }
+    >
       <span css={style.logo}>{props.logo ?? <></>}</span>
     </div>
   )

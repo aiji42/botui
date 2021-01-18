@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import React, { FC, ReactNode, InputHTMLAttributes, useMemo } from 'react'
 import { css } from '@emotion/react'
 import { useField, FieldInputProps } from 'formik'

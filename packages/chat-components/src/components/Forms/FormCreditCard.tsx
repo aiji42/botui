@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import React, { FC, useMemo, useEffect } from 'react'
 import { withFormik, Field, ErrorMessage, FormikProps, useField } from 'formik'
 import * as yup from 'yup'
