@@ -19,7 +19,7 @@
     "url": "git+https://github.com/aiji42/botui-child-next.git"
   },
   "scripts": {
-    "build": "rollup -c",
+    "build": "rimraf build && rollup -c",
     "dev": "rollup -c --watch",
     "test": "echo \"Error: run tests from root\" && exit 1",
     "prepublishOnly": "yarn build"
