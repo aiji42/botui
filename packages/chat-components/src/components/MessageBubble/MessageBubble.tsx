@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import React, { FC } from 'react'
 import { css } from '@emotion/react'
 
@@ -13,7 +14,7 @@ const style = (human: boolean, msgColor?: string, bkgColor?: string) =>
     textAlign: 'left'
   })
 
-export interface MessageBubbleProps {
+export  interface MessageBubbleProps {
   human?: boolean
   baseColor?: string
   messageColor?: string

@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import React, { FC } from 'react'
 import { css } from '@emotion/react'
 
@@ -19,13 +20,12 @@ const style = {
     left: '50%',
     transform: 'translateY(-50%) translateX(-50%)'
   }),
-  progressBar: (percent: number) =>
-    css({
-      height: 8,
-      width: `${percent}%`,
-      backgroundColor: '#20224a',
-      borderRadius: 4
-    })
+  progressBar: (percent: number) => css({
+    height: 8,
+    width: `${percent}%`,
+    backgroundColor: '#20224a',
+    borderRadius: 4
+  })
 }
 
 interface Props {
