@@ -23,12 +23,10 @@
     "prettier/@typescript-eslint"
   ],
   "rules": {
-    // TypeScirpt なので prop-types は要らない
-    "react/prop-types": "off",
-    // NexJSなので(後で直す)
-    "react/react-in-jsx-scope": "off"
+    // TypeScript なので prop-types は要らない
+    "react/prop-types": "off"
   },
-  // .js ファイルをオーバーライド （webpack.conig.jsなど）
+  // .js ファイルをオーバーライド （webpack.config.jsなど）
   "overrides": [
     {
       "files": ["*.js"],
