@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Grid, Box } from '@material-ui/core'
+import { Grid, Box, makeStyles } from '@material-ui/core'
 import {
   RadioButtonGroupInput,
   FormDataConsumer,
@@ -15,6 +15,12 @@ import PreviewDialog from './PreviewDialog'
 import { Session } from '@botui/types'
 import { stringMessageTemplate } from '../Create/proposalTemplates'
 
+const useStyles = makeStyles((theme) => ({
+  preview: {
+    height: theme.spacing(70),
+    width: theme.spacing(40)
+  }
+}))
 
 const colorValidator = (color: string) => {
   return isColor(color) ? null : '入力内容が間違っています'
@@ -34,6 +40,7 @@ const sampleProposals = [
 ]
 
 const SessionFormInner: FC = () => {
+  const classes = useStyles()
   return (
     <Grid container spacing={1}>
       <Grid item xs={6}>
@@ -120,14 +127,16 @@ const SessionFormInner: FC = () => {
         <FormDataConsumer>
           {({ formData }) => (
             <Labeled label="プレビュー">
-              <Preview
-                proposals={sampleProposals}
-                chatConfig={{
-                  ...(formData as Session),
-                  messages: sampleProposals.map(({ data }) => data),
-                  messagesCount: 5
-                }}
-              />
+              <div className={classes.preview}>
+                <Preview
+                  proposals={sampleProposals}
+                  chatConfig={{
+                    ...(formData as Session),
+                    messages: sampleProposals.map(({ data }) => data),
+                    messagesCount: 5
+                  }}
+                />
+              </div>
             </Labeled>
           )}
         </FormDataConsumer>
