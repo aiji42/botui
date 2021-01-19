@@ -26,6 +26,7 @@ export const Controller: FC<{
   useEffect(() => {
     const [effectedProposals] = effectToProposals(messages, proposals)
     setProposals(effectedProposals)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages])
 
   const prevProposals = useRef<Proposals>()
@@ -36,6 +37,7 @@ export const Controller: FC<{
       setMessages(controlMessage(proposals, chatConfig))
     prevProposals.current = proposals
     prevChatConfig.current = chatConfig
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [proposals, chatConfig])
 
   return <></>
