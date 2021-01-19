@@ -35,7 +35,6 @@
   },
   "devDependencies": {
     "@botui/types": "^2.0.0",
-    "@types/post-robot": "^10.0.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   }

@@ -1,25 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import postRobot from 'post-robot'
-
-type CrossDomainWindowType = Window | null;
-type DomainMatcher = string | RegExp | string[];
-type HandlerType = (
-  source: CrossDomainWindowType,
-  origin: string,
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  data: object
-) => void | Promise<unknown>
-type ErrorHandlerType = (err: unknown) => void;
-
-interface ServerOptionsType {
-  handler?: HandlerType
-  errorHandler?: ErrorHandlerType
-  window?: CrossDomainWindowType
-  name?: string
-  domain?: DomainMatcher
-  once?: boolean
-  errorOnClose?: boolean
-}
+import postRobot, { ServerOptionsType } from 'post-robot'
 
 type ValueInRecord<T> = { value: T }
 
@@ -37,7 +17,7 @@ export const useCorsState = <T>(
   const sendable = useRef<boolean>(true)
 
   useEffect(() => {
-    const listener = postRobot.on(synchronizingKey, options, (...[ , , data]) => {
+    const listener = postRobot.on(synchronizingKey, options, ({ data }) => {
       if (!isValueInRecord<T>(data)) return
       sendable.current = false
       setState(data)
