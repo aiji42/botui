@@ -15,7 +15,7 @@ export const Preview: FC<{
     <>
       <iframe
         ref={setIframeElement}
-        src="/"
+        src="http://localhost:3000/"
         height="100%"
         width="100%"
         frameBorder="no"
