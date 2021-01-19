@@ -21,21 +21,26 @@ interface ServerOptionsType {
   errorOnClose?: boolean
 }
 
+type ValueInRecord<T> = { value: T }
+
+const isValueInRecord = <T>(data: unknown): data is ValueInRecord<T> => typeof data === 'object' && data !== null && 'value' in data
+
 export const useCorsState = <T>(
   synchronizingKey: string,
   options: ServerOptionsType,
   initialValue: T
 ): [T, (val: T) => void] => {
-  const [state, setState] = useState<{ value: T }>({ value: initialValue })
+  const [state, setState] = useState<ValueInRecord<T>>({ value: initialValue })
   const setStateWrapper = useCallback((value: T) => {
-    setState({ value: value })
+    setState({ value })
   }, [setState])
   const sendable = useRef<boolean>(true)
 
   useEffect(() => {
     const listener = postRobot.on(synchronizingKey, options, (...[ , , data]) => {
+      if (!isValueInRecord<T>(data)) return
       sendable.current = false
-      setState(data as { value: T })
+      setState(data)
     })
     return () => listener.cancel()
   }, [synchronizingKey, options])
