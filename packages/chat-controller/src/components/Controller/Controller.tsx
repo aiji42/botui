@@ -19,7 +19,7 @@ export const Controller: FC<{
     (messages: Array<Message>) => {
       setConfig({ ...chatConfig, messages })
     },
-    [setConfig]
+    [setConfig, chatConfig]
   )
   const messages = useMemo(() => config?.messages || [], [config?.messages])
 
@@ -29,11 +29,13 @@ export const Controller: FC<{
   }, [messages])
 
   const prevProposals = useRef<Proposals>()
+  const prevChatConfig = useRef<ChatConfig>()
   useEffect(() => {
     // unMount で closer が再実行されることを防止する
-    if (!deepEqual(prevProposals.current, proposals))
+    if (!deepEqual(prevProposals.current, proposals) || !deepEqual(prevChatConfig.current, chatConfig))
       setMessages(controlMessage(proposals, chatConfig))
     prevProposals.current = proposals
+    prevChatConfig.current = chatConfig
   }, [proposals, chatConfig])
 
   return <></>
