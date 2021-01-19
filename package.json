@@ -6,9 +6,7 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "next dev",
     "build": "lerna run build --parallel --ignore @botui/types",
-    "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "yarn run lint --fix",
     "clean": "lerna clean -y",
@@ -20,34 +18,21 @@
     "run:chat-hooks": "lerna run --stream --scope @botui/chat-hooks",
     "run:chat-host": "lerna run --stream --scope @botui/chat-host",
     "run:types": "lerna run --stream --scope @botui/types",
-    "run:use-cors-state": "lerna run --stream --scope use-cors-state"
+    "run:use-cors-state": "lerna run --stream --scope use-cors-state",
+    "dev": "lerna run dev --parallel"
   },
-  "dependencies": {
-    "@aws-amplify/ui-react": "^0.2.34",
-    "@material-ui/lab": "^4.0.0-alpha.57",
-    "is-color": "^1.0.2",
-    "material-ui-color": "^0.4.6",
-    "material-ui-dropzone": "^3.5.0",
-    "styled-components": "^5.2.1",
-    "use-cors-state": "^1.1.1",
-    "uuid": "^8.3.2"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.12.10",
-    "@rollup/plugin-commonjs": "^17.0.0",
-    "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^11.0.1",
+    "@rollup/plugin-babel": "^5.2.2",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/react-hooks": "^5.0.0",
     "@testing-library/user-event": "^12.1.10",
-    "@types/is-color": "^1.0.0",
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.20",
     "@types/react": "^16.9.56",
     "@types/react-dom": "^16.9.9",
-    "@types/react-router-dom": "^5.1.7",
-    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.13.0",
     "@typescript-eslint/parser": "^4.13.0",
     "babel-loader": "^8.2.2",
@@ -65,8 +50,8 @@
     "lint-staged": "^10.5.3",
     "prettier": "^2.2.1",
     "react": "^17.0.1",
+    "rimraf": "^3.0.2",
     "rollup": "^2.36.1",
-    "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-typescript2": "^0.29.0",
     "ts-jest": "^26.4.4",
     "typescript": "^4.1.3"
