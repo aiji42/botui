@@ -19,7 +19,7 @@ export const Header: FC = () => {
 
   return (
     <div css={style.root}>
-      <ChatHeader baseColor={header?.backgroundColor} logo={imageURL ? <img src={imageURL} /> : title} />
+      <ChatHeader baseColor={header?.backgroundColor} logo={imageURL ? <img src={imageURL} alt="logo" /> : title} />
     </div>
   )
 }
