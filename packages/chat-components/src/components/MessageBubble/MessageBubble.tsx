@@ -5,8 +5,8 @@ import { css } from '@emotion/react'
 const style = (human: boolean, msgColor?: string, bkgColor?: string) =>
   css({
     lineHeight: 1.3,
-    backgroundColor: bkgColor ?? human ? '#eeeeee' : '#0f84fe',
-    color: msgColor ?? human ? '#000000' : '#ffffff',
+    backgroundColor: bkgColor ?? (human ? '#eeeeee' : '#0f84fe'),
+    color: msgColor ?? (human ? '#000000' : '#ffffff'),
     padding: 12,
     borderRadius: 12,
     width: 'auto',
