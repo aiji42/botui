@@ -21,11 +21,14 @@ type Props = Pick<MessageBubbleProps, 'baseColor' | 'messageColor'> & {
   iconSrc: string
 }
 
-export const AgentMessageWrapper: FC<Props> = (props) => (
-  <div css={style.wrapper}>
-    <div css={style.icon}>
-      <ProfileIcon src={props.iconSrc} />
+export const AgentMessageWrapper: FC<Props> = (props) => {
+  const { iconSrc, ...rest } = props
+  return (
+    <div css={style.wrapper}>
+      <div css={style.icon}>
+        <ProfileIcon src={iconSrc} color={rest.baseColor} />
+      </div>
+      <MessageBubble {...rest} />
     </div>
-    <MessageBubble>{props.children}</MessageBubble>
-  </div>
-)
+  )
+}

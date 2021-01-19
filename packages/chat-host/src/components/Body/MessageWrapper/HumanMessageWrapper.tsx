@@ -15,6 +15,6 @@ type Props = Pick<MessageBubbleProps, 'baseColor' | 'messageColor'>
 
 export const HumanMessageWrapper: FC<Props> = (props) => (
   <div css={style.wrapper}>
-    <MessageBubble human>{props.children}</MessageBubble>
+    <MessageBubble human {...props} />
   </div>
 )
