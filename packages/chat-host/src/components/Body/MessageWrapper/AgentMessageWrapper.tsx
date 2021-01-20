@@ -5,7 +5,7 @@ import { css } from '@emotion/react'
 
 const style = {
   wrapper: css({
-    maxWidth: '75%',
+    width: '100%',
     margin: '4px 0',
     display: 'flex'
   }),
@@ -13,7 +13,10 @@ const style = {
     minWidth: 40,
     width: 40,
     height: 40,
-    marginRight: 16
+    marginRight: 8
+  }),
+  bubble: css({
+    width: '75%'
   })
 }
 
@@ -28,7 +31,9 @@ export const AgentMessageWrapper: FC<Props> = (props) => {
       <div css={style.icon}>
         <ProfileIcon src={iconSrc} color={rest.baseColor} />
       </div>
-      <MessageBubble {...rest} />
+      <div css={style.bubble}>
+        <MessageBubble {...rest} />
+      </div>
     </div>
   )
 }
