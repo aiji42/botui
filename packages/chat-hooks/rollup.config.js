@@ -3,18 +3,22 @@ import { babel as pluginBabel } from '@rollup/plugin-babel'
 import * as path from 'path'
 import pkg from './package.json'
 
+const extensions = [".ts", ".tsx", ".js", ".jsx"]
+
 export default {
   input: 'src/index.ts',
   output: [
     {
       file: pkg.module,
       format: 'es',
-      sourcemap: 'inline'
+      exports: "named",
+      sourcemap: true
     },
     {
       file: pkg.main,
       format: 'cjs',
-      sourcemap: 'inline'
+      exports: "named",
+      sourcemap: true
     }
   ],
   external: [
@@ -26,6 +30,7 @@ export default {
     typescript({ useTsconfigDeclarationDir: true }),
     pluginBabel({
       babelHelpers: 'bundled',
+      extensions,
       configFile: path.resolve(__dirname, '.babelrc.js')
     })
   ]
