@@ -7,7 +7,7 @@ const style = (human: boolean, msgColor?: string, bkgColor?: string) =>
     lineHeight: 1.3,
     backgroundColor: bkgColor ?? (human ? '#eeeeee' : '#0f84fe'),
     color: msgColor ?? (human ? '#000000' : '#ffffff'),
-    padding: 12,
+    padding: 8,
     borderRadius: 12,
     width: 'auto',
     display: 'inline-block',
