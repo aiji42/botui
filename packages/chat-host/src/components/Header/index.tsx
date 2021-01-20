@@ -10,7 +10,10 @@ const style = {
     top: 0,
     height: 60,
     zIndex: 100
-  })
+  }),
+  logoImage: {
+    maxHeight: 55
+  }
 }
 
 export const Header: FC = () => {
@@ -19,7 +22,16 @@ export const Header: FC = () => {
 
   return (
     <div css={style.root}>
-      <ChatHeader baseColor={header?.backgroundColor} logo={imageURL ? <img src={imageURL} alt="logo" /> : title} />
+      <ChatHeader
+        baseColor={header?.backgroundColor}
+        logo={
+          imageURL ? (
+            <img src={imageURL} alt="logo" css={style.logoImage} />
+          ) : (
+            title
+          )
+        }
+      />
     </div>
   )
 }
