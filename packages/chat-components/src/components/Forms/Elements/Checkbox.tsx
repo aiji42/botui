@@ -16,7 +16,6 @@ import { faSquare } from '@fortawesome/free-regular-svg-icons'
 
 const style = {
   base: css`
-    font-size: 1.1em;
     border-radius: 3px;
     background-color: #ffffff;
     display: table;
@@ -50,7 +49,7 @@ const style = {
     background-color: #ffffff;
   `,
   checkedStyle: css`
-    border: solid 3px ${colors.okColor};
+    border: solid 2px ${colors.okColor};
     background-color: #fffdcf;
   `
 }

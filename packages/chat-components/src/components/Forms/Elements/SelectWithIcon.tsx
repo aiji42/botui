@@ -13,7 +13,6 @@ const style = {
     background-color: #ffffff;
     width: 100%;
     height: 42px;
-    font-size: 1.1em;
     font-weight: normal;
     color: #000;
     margin-bottom: 0px;
