@@ -8,20 +8,16 @@ const style = {
     width: '100%',
     height: '100%',
     minHeight: 50,
-    position: 'relative'
+    display: 'table'
   }),
   logo: css({
     maxHeight: '80%',
-    maxWidth: '60%',
-    margin: 'auto',
-    display: 'block',
+    maxWidth: '80%',
     color: 'white',
     fontSize: 'x-large',
     textAlign: 'center',
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)'
+    display: 'table-cell',
+    verticalAlign: 'middle'
   })
 }
 
@@ -33,7 +29,7 @@ interface Props {
 export const Header: FC<Props> = (props) => {
   return (
     <div css={props.baseColor ? [style.heder, css({ backgroundColor: props.baseColor })] : style.heder}>
-      <span css={style.logo}>{props.logo ?? <></>}</span>
+      <div css={style.logo}>{props.logo ?? <></>}</div>
     </div>
   )
 }
