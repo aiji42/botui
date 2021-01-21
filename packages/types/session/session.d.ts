@@ -44,7 +44,7 @@ export interface Session<T = Proposals, U = Theme, V = Images> {
 
 export interface ChatConfig extends Omit<Session, 'proposals'> {
   messages: Array<Message>
-  messagesCount: number
+  percentOfProgress: number
   onStart?: () => void
   onClose?: () => void
 }
