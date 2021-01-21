@@ -14,12 +14,12 @@ const style = {
 }
 
 export const Footer: FC = () => {
-  const { theme: { footer, progressBar } } = useChatConfigContext()
+  const { theme: { footer, progressBar }, percentOfProgress } = useChatConfigContext()
 
   return (
     <div css={style.root}>
       <ChatFooter
-        percent={50}
+        percent={percentOfProgress * 100}
         baseColor={footer?.backgroundColor}
         barColor={progressBar?.backgroundColor}
       />
