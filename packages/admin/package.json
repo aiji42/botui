@@ -22,6 +22,7 @@
     "@bicstone/ra-language-japanese": "^3.8.0",
     "@botui/api": "^1.0.0",
     "@botui/chat-controller": "^1.0.0",
+    "@botui/chat-hooks": "^1.0.0",
     "@material-ui/lab": "^4.0.0-alpha.57",
     "aws-amplify": "^3.3.14",
     "is-color": "^1.0.2",

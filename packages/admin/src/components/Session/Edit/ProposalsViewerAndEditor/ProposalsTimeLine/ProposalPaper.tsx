@@ -1,8 +1,8 @@
-import { FC, CSSProperties } from 'react'
+import { FC } from 'react'
 import { Typography, Paper, makeStyles } from '@material-ui/core'
 import { ProposalMessage } from '@botui/types'
-import { AmplifyS3Image } from '@aws-amplify/ui-react'
 import nl2br from 'react-nl2br'
+import { useImageUrl } from '@botui/chat-hooks'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -41,14 +41,20 @@ const ProposalPaper: FC<Props> = (props) => {
         {proposalData.content.type === 'form' &&
           proposalData.content.props.type}
         {proposalData.content.type === 'image' && (
-          <AmplifyS3Image
-            {...proposalData.content.props}
-            style={({ '--width': '100%' } as unknown) as CSSProperties}
-          />
+          <Image imageKey={proposalData.content.props.imgKey} />
         )}
       </Typography>
     </Paper>
   )
+}
+
+interface ImageProps {
+  imageKey: string
+}
+
+const Image: FC<ImageProps> = (props) => {
+  const src = useImageUrl(props.imageKey)
+  return <img src={src} alt="illustration" width="100%" height="auto" />
 }
 
 export default ProposalPaper
