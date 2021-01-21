@@ -1,7 +1,8 @@
 import {
   Proposals,
   Message,
-  ChatConfig
+  ChatConfig,
+  Proposal
 } from '@botui/types'
 import { relayerEvaluate } from './relayerEvaluate'
 import { closerEvaluate } from './closerEvaluate'
@@ -18,8 +19,6 @@ const getValues = (proposals: Proposals): Values => {
   }, {})
 }
 
-let started = false
-
 export interface MessageWithId extends Message {
   id: number | string
 }
@@ -27,11 +26,13 @@ export interface MessageWithId extends Message {
 export const controlMessage = (
   proposals: Proposals,
   chatConfig: ChatConfig
-): Array<MessageWithId> => {
+): [Array<MessageWithId>, ChatConfig['percentOfProgress']] => {
   const values = getValues(proposals)
   const messages: Array<MessageWithId> = []
   let skipNumber: number
+  let edgeProposal: Proposal | undefined = undefined
   proposals.some((proposal) => {
+    edgeProposal = proposal
     if (skipNumber) {
       --skipNumber
       return false
@@ -57,12 +58,13 @@ export const controlMessage = (
     return false
   })
 
-  if (!started && messages.length === 1 && chatConfig.onStart) {
+  if (messages.length === 1 && chatConfig.onStart) {
     chatConfig.onStart()
-    started = true
   }
 
-  return messages
+  const percent = progressPercent(proposals, edgeProposal)
+
+  return [messages, percent]
 }
 
 const messageReplace = (message: Message, values: Values): Message => {
@@ -81,4 +83,13 @@ const messageReplace = (message: Message, values: Values): Message => {
       }
     }
   }
+}
+
+const progressPercent = (
+  proposals: Proposals,
+  edge?: Proposal
+) => {
+  if (!edge) return 0
+  const edgeIndex = proposals.findIndex(({ id }) => id === edge.id)
+  return (edgeIndex + 1) / proposals.length
 }

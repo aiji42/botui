@@ -1,8 +1,7 @@
-import React, { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { FC, useEffect, useMemo, useRef, useState } from 'react'
 import { useCorsState } from 'use-cors-state'
-import { ChatConfig, Proposals, Message } from '@botui/types'
+import { ChatConfig, Proposals } from '@botui/types'
 import { effectToProposals, controlMessage } from './dependencies'
-import deepEqual from 'fast-deep-equal'
 
 export const Controller: FC<{
   targetWindow: Window
@@ -15,12 +14,6 @@ export const Controller: FC<{
     undefined
   )
   const [proposals, setProposals] = useState<Proposals>(initProposals)
-  const setMessages = useCallback(
-    (messages: Array<Message>) => {
-      setConfig({ ...chatConfig, messages })
-    },
-    [setConfig, chatConfig]
-  )
   const messages = useMemo(() => config?.messages || [], [config?.messages])
 
   useEffect(() => {
@@ -30,15 +23,12 @@ export const Controller: FC<{
   }, [messages])
 
   const prevProposals = useRef<Proposals>()
-  const prevChatConfig = useRef<ChatConfig>()
   useEffect(() => {
-    // unMount で closer が再実行されることを防止する
-    if (!deepEqual(prevProposals.current, proposals) || !deepEqual(prevChatConfig.current, chatConfig))
-      setMessages(controlMessage(proposals, chatConfig))
+    const [messages, percentOfProgress] = controlMessage(proposals, chatConfig)
+    setConfig({ ...chatConfig, percentOfProgress, messages })
     prevProposals.current = proposals
-    prevChatConfig.current = chatConfig
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [proposals, chatConfig])
+  }, [proposals])
 
   return <></>
 }
