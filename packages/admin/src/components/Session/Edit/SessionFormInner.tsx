@@ -29,12 +29,12 @@ const colorValidator = (color: string) => {
 const sampleProposals = [
   stringMessageTemplate(
     'こんにちは！こちらではチャットのデザインをお好みに合わせて変更できます。',
-    0
+    10
   ),
-  stringMessageTemplate('左側のメッセージが「オペレーターメッセージ」です。', 0),
+  stringMessageTemplate('左側のメッセージが「オペレーターメッセージ」です。', 10),
   stringMessageTemplate(
     'そして、こちら右側が「ユーザメッセージ」です。',
-    0,
+    10,
     true
   )
 ]
@@ -133,7 +133,7 @@ const SessionFormInner: FC = () => {
                   chatConfig={{
                     ...(formData as Session),
                     messages: sampleProposals.map(({ data }) => data),
-                    messagesCount: 5
+                    percentOfProgress: 0.5
                   }}
                 />
               </div>

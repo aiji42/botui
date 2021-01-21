@@ -44,7 +44,7 @@ const PreviewDialog: FC = () => {
             chatConfig={{
               ...values,
               messages: [],
-              messagesCount: values.proposals.length,
+              percentOfProgress: 0,
               onClose: () => setTimeout(handleClose, 3000)
             }}
           />
