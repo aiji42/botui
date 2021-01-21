@@ -12,7 +12,7 @@ export const addEntry = (input: AddEntryInput) =>
       input: {
         owner: input.owner,
         sessionId: input.sessionId,
-        inputs: JSON.stringify(input.sessionId)
+        inputs: JSON.stringify(input.inputs)
       }
     },
     authMode: GRAPHQL_AUTH_MODE.AWS_IAM
