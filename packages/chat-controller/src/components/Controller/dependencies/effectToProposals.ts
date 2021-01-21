@@ -1,5 +1,5 @@
 import { Proposals, Message } from '@botui/types'
-import deepEqual from 'fast-deep-equal'
+import deepEqual from 'deep-equal'
 
 type Values = Record<string, unknown>
 type Messages = Array<Message>
