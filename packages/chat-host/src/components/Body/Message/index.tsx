@@ -14,17 +14,13 @@ export const Message: FC = () => {
   const [loading, setLoading] = useState<boolean>(true)
   const mounted = useRef(true)
   useEffect(() => {
-    if (!delay) {
-      setLoading(false)
-      return
-    }
-    setTimeout(() => mounted.current && setLoading(false), delay)
+    setTimeout(() => mounted.current && setLoading(false), delay ?? 0)
     return () => {
       mounted.current = false
     }
-  }, [])
+  }, [delay])
 
-  if (loading) return <MessageLoading />
+  if (loading && type !== 'image') return <MessageLoading />
   if (type === 'form') return <Form />
   if (type === 'image') return <Image />
   if (type === 'string') return <String />
