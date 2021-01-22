@@ -5,6 +5,7 @@ import { ChatConfig, Proposals } from '@botui/types'
 export const Preview: FC<{
   proposals: Proposals
   chatConfig: ChatConfig
+  editing?: boolean
 }> = (props) => {
   const [iframeElement, setIframeElement] = useState<HTMLIFrameElement | null>(
     null
@@ -25,6 +26,7 @@ export const Preview: FC<{
           targetWindow={iframeElement.contentWindow}
           initProposals={initProposals}
           chatConfig={props.chatConfig}
+          editing={props.editing}
         />
       )}
     </>

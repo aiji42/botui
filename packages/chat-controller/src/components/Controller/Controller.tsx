@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo, useRef, useState } from 'react'
+import React, { FC, useEffect, useMemo, useState } from 'react'
 import { useCorsState } from 'use-cors-state'
 import { ChatConfig, Proposals } from '@botui/types'
 import { effectToProposals, controlMessage } from './dependencies'
@@ -7,7 +7,8 @@ export const Controller: FC<{
   targetWindow: Window
   initProposals: Proposals
   chatConfig: ChatConfig
-}> = ({ targetWindow, initProposals, chatConfig }) => {
+  editing?: boolean
+}> = ({ targetWindow, initProposals, chatConfig, editing = false }) => {
   const [config, setConfig] = useCorsState<ChatConfig | undefined>(
     'chat-config',
     { window: targetWindow, name: 'controller' },
@@ -22,13 +23,15 @@ export const Controller: FC<{
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages])
 
-  const prevProposals = useRef<Proposals>()
   useEffect(() => {
     const [messages, percentOfProgress] = controlMessage(proposals, chatConfig)
     setConfig({ ...chatConfig, percentOfProgress, messages })
-    prevProposals.current = proposals
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [proposals])
+
+  useEffect(() => {
+    editing && setConfig(chatConfig)
+  }, [chatConfig, editing, setConfig])
 
   return <></>
 }
