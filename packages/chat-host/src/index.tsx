@@ -141,8 +141,39 @@ const global = css`
     border-collapse: collapse;
     border-spacing: 0;
   }
-  input:focus,button:focus,textarea:focus {
+  input,
+  button,
+  select,
+  textarea {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    font: inherit;
     outline: none;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  input[type='checkbox'],
+  input[type='radio'] {
+    display: none;
+  }
+
+  input[type='submit'],
+  input[type='button'],
+  label,
+  button,
+  select {
+    cursor: pointer;
+  }
+
+  select::-ms-expand {
+    display: none;
   }
 `
 

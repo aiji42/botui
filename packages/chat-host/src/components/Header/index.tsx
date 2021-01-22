@@ -9,11 +9,17 @@ const style = {
     position: 'sticky',
     top: 0,
     height: 60,
+    width: '100%',
     zIndex: 100
   }),
-  logoImage: {
-    maxHeight: 55
-  }
+  logoImage: css({
+    objectFit: 'contain',
+    width: '100%',
+    height: '100%'
+  }),
+  title: css({
+    padding: 15
+  })
 }
 
 export const Header: FC = () => {
@@ -28,7 +34,7 @@ export const Header: FC = () => {
           imageURL ? (
             <img src={imageURL} alt="logo" css={style.logoImage} />
           ) : (
-            title
+              <p css={style.title}>{title}</p>
           )
         }
       />
