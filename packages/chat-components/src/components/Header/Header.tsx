@@ -8,16 +8,13 @@ const style = {
     width: '100%',
     height: '100%',
     minHeight: 50,
-    display: 'table'
   }),
   logo: css({
-    maxHeight: '80%',
-    maxWidth: '80%',
+    height: '100%',
+    width: '100%',
     color: 'white',
     fontSize: 'x-large',
     textAlign: 'center',
-    display: 'table-cell',
-    verticalAlign: 'middle'
   })
 }
 
