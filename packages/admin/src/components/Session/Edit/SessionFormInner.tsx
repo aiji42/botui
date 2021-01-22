@@ -135,6 +135,7 @@ const SessionFormInner: FC = () => {
                     messages: sampleProposals.map(({ data }) => data),
                     percentOfProgress: 0.5
                   }}
+                  editing
                 />
               </div>
             </Labeled>
