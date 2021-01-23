@@ -1,37 +1,28 @@
 {
-  "name": "@botui-domain/chat",
-  "version": "1.0.1",
+  "name": "main",
+  "version": "1.0.0",
   "author": "Aiji Uejima <aiji42@gmail.com>",
   "license": "MIT",
-  "main": "build/index.js",
-  "module": "build/index.esm.js",
-  "types": "build/index.d.ts",
-  "files": [
-    "build"
-  ],
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org",
-    "access": "public"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aiji42/botui-child-next.git"
   },
   "dependencies": {
+    "@botui-domain/admin": "^1.1.1",
+    "@botui-domain/chat": "^1.0.3",
     "aws-amplify": "^3.3.14",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
     "react-scripts": "4.0.1"
   },
   "scripts": {
     "dev": "react-scripts start",
-    "build": "rollup -c",
-    "prepare": "rimraf build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "prepublishOnly": "yarn build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

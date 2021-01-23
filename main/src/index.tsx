@@ -3,7 +3,12 @@ import ReactDOM from 'react-dom'
 import { Global, css } from '@emotion/react'
 import Amplify from 'aws-amplify'
 import aws_exports from './aws-exports'
+import Admin from '@botui-domain/admin'
+import Chat from '@botui-domain/chat'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { setPreviewConfig } from '@botui/chat-controller'
 
+setPreviewConfig({ chatHost: '/' })
 Amplify.configure(aws_exports)
 
 const global = css`
@@ -181,8 +186,16 @@ const global = css`
 `
 
 ReactDOM.render(
-  <>
+  <BrowserRouter>
     <Global styles={global} />
-  </>,
+    <Switch>
+      <Route exact path="/">
+        <Chat />
+      </Route>
+      <Route exact path="/admin">
+        <Admin />
+      </Route>
+    </Switch>
+  </BrowserRouter>,
   document.getElementById('root')
 )
