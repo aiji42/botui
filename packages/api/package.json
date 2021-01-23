@@ -1,0 +1,38 @@
+{
+  "name": "@botui/api",
+  "version": "1.0.0",
+  "description": "Package for managing and requesting storage, authentication and database for @botui project",
+  "author": "Aiji Uejima <aiji42@gmail.com>",
+  "homepage": "https://github.com/aiji42/botui-child-next#readme",
+  "license": "MIT",
+  "main": "build/index.js",
+  "module": "build/index.esm.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.yarnpkg.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aiji42/botui-child-next.git"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "build:pre": "rimraf build",
+    "dev": "rollup -c --watch",
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "prepublishOnly": "yarn build"
+  },
+  "bugs": {
+    "url": "https://github.com/aiji42/botui-child-next/issues"
+  },
+  "dependencies": {
+    "@aws-amplify/api": "^3.2.17",
+    "@aws-amplify/storage": "^3.3.17"
+  },
+  "devDependencies": {
+    "@botui/types": "^2.0.0"
+  }
+}

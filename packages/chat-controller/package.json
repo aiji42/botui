@@ -1,0 +1,43 @@
+{
+  "name": "@botui/chat-controller",
+  "version": "1.0.0",
+  "description": "This is the chat controller package for the @botui project.",
+  "author": "Aiji Uejima <aiji42@gmail.com>",
+  "homepage": "https://github.com/aiji42/botui-child-next#readme",
+  "license": "MIT",
+  "main": "build/index.js",
+  "module": "build/index.esm.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.yarnpkg.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aiji42/botui-child-next.git"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "build:pre": "rimraf build",
+    "dev": "rollup -c --watch",
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "prepublishOnly": "yarn build"
+  },
+  "bugs": {
+    "url": "https://github.com/aiji42/botui-child-next/issues"
+  },
+  "dependencies": {
+    "@botui/api": "^1.0.0",
+    "deep-equal": "^2.0.5",
+    "use-cors-state": "^1.1.2"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  },
+  "devDependencies": {
+    "@botui/types": "^2.0.0",
+    "@types/deep-equal": "^1.0.1"
+  }
+}

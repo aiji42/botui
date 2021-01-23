@@ -1,0 +1,39 @@
+{
+  // 適用する環境
+  "env": {
+    "es6": true,
+    "node": true,
+    "browser": true,
+    "commonjs": true,
+    "jest/globals": true
+  },
+  // パーサー
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["react-hooks", "react", "@typescript-eslint", "jest"],
+  // 基本的にルールは recommended に従う
+  // prettier 関連は配列の最後尾に書く
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "prettier",
+    "prettier/react",
+    "prettier/@typescript-eslint"
+  ],
+  "rules": {
+    // TypeScript なので prop-types は要らない
+    "react/prop-types": "off"
+  },
+  // .js ファイルをオーバーライド （webpack.config.jsなど）
+  "overrides": [
+    {
+      "files": ["*.js"],
+      "rules": {
+        "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/explicit-function-return-type": "off"
+      }
+    }
+  ]
+}
