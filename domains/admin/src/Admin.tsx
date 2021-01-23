@@ -10,10 +10,8 @@ import {
 import { Login, SessionList, SessionCreate, SessionEdit, EntryList } from './components'
 import { useDataProvider } from './hooks'
 import Amplify from 'aws-amplify'
-import awsconfig from './aws-exports'
 import vocabularies from './i18n/amplify/vocabularies'
 
-Amplify.configure(awsconfig)
 Amplify.I18n.putVocabularies(vocabularies)
 Amplify.I18n.setLanguage('ja')
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Session } from '@botui/types'
-import { useDataProvider } from '..'
+import { useDataProvider } from '../use-data-provider'
 
 export const useSessions = (): Array<Session> => {
   const [sessions, setSessions] = useState<Array<Session>>([])
