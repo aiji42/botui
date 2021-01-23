@@ -1,11 +1,5 @@
 version: 1
 applications:
-  - appRoot: ./
-    backend:
-      phases:
-        build:
-          commands:
-            - amplifyPush --simple
   - appRoot: domains/admin
     frontend:
       phases:
