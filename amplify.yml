@@ -8,22 +8,21 @@ frontend:
   phases:
     preBuild:
       commands:
-        - yarn install && yarn bootstrap
-        - cp src/aws-exports.js domains/admin/src
-        - cd domains/admin
-        - echo "REACT_APP_BOTUI_HOST=$REACT_APP_BOTUI_HOST" >> .env
+        - cp src/aws-exports.js main/src
+        - cd main
+        - yarn install
         - echo "SKIP_PREFLIGHT_CHECK=true" >> .env
     build:
       commands:
         - yarn build
   artifacts:
-    baseDirectory: domains/admin/build
+    baseDirectory: main/build
     files:
       - '**/*'
   cache:
     paths:
       - node_modules/**/*
-      - domains/admin/node_modules/**/*
+      - main/node_modules/**/*
 
 # version: 1
 # applications:
