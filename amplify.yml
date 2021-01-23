@@ -12,7 +12,7 @@ frontend:
         - cd domains/admin
         - echo "REACT_APP_BOTUI_HOST=$REACT_APP_BOTUI_HOST" >> .env
         - echo "SKIP_PREFLIGHT_CHECK=true" >> .env
-        - yarn install
+        - yarn install && yarn bootstrap
     build:
       commands:
         - yarn build
@@ -24,3 +24,39 @@ frontend:
     paths:
       - node_modules/**/*
       - domains/admin/node_modules/**/*
+
+# version: 1
+# applications:
+#   - appRoot: domains/admin
+#     frontend:
+#       phases:
+#         preBuild:
+#           commands:
+#             - echo "REACT_APP_BOTUI_HOST=$REACT_APP_BOTUI_HOST" >> .env
+#             - yarn install
+#         build:
+#           commands:
+#             - yarn run build
+#       artifacts:
+#         baseDirectory: build
+#         files:
+#           - '**/*'
+#       cache:
+#         paths:
+#           - node_modules/**/*
+#   - appRoot: domains/chat-host
+#     frontend:
+#       phases:
+#         preBuild:
+#           commands:
+#             - yarn install
+#         build:
+#           commands:
+#             - yarn run build
+#       artifacts:
+#         baseDirectory: build
+#         files:
+#           - '**/*'
+#       cache:
+#         paths:
+#           - node_modules/**/*
