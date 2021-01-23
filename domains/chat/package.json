@@ -3,8 +3,8 @@
   "version": "1.0.3",
   "author": "Aiji Uejima <aiji42@gmail.com>",
   "license": "MIT",
-  "main": "build/index.js",
-  "module": "build/index.esm.js",
+  "main": "build/Chat.js",
+  "module": "build/Chat.esm.js",
   "types": "build/Chat.d.ts",
   "files": [
     "build"

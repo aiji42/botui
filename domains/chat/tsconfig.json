@@ -22,7 +22,5 @@
     "declaration": true,
     "declarationDir": "build"
   },
-  "include": [
-    "src"
-, "i18n"  ]
+  "include": ["src"]
 }
