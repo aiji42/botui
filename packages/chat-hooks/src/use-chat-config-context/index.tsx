@@ -9,7 +9,7 @@ const initialValue: ChatConfig = {
   theme: {},
   images: {},
   messages: [],
-  messagesCount: 0
+  percentOfProgress: 0
 }
 
 const Context = createContext<ChatConfig>(initialValue)
