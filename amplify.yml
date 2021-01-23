@@ -1,0 +1,19 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - cd domains/admin
+        - echo "REACT_APP_BOTUI_HOST=$REACT_APP_BOTUI_HOST" >> .env
+        - yarn install
+    build:
+      commands:
+        - yarn build
+  artifacts:
+    baseDirectory: domains/admin/build
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+      - domains/admin/node_modules/**/*
