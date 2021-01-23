@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "build:packages": "lerna run build --include-dependencies --stream --scope @botui/*",
-    "build:packages:pre": "lerna run build:pre",
+    "build:domain": "lerna run build --include-dependencies --stream --scope @botui-domain/*",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "yarn run lint --fix",
     "clean": "lerna clean -y",
@@ -20,7 +20,7 @@
     "run:types": "lerna run --stream --scope @botui/types",
     "run:use-cors-state": "lerna run --stream --scope use-cors-state",
     "dev:packages": "lerna run dev --parallel --scope @botui/*",
-    "dev:domains": "lerna run dev --parallel --scope admin --scope chat-host",
+    "dev:domains": "lerna run dev --parallel --scope @botui-domain/*",
     "versionup": "lerna version --conventional-commits",
     "versionup:patch": "lerna version patch --conventional-commits",
     "versionup:minor": "lerna version minor --conventional-commits",
