@@ -19,7 +19,8 @@
     "url": "git+https://github.com/aiji42/botui-child-next.git"
   },
   "scripts": {
-    "build": "rimraf build && rollup -c",
+    "build": "rollup -c",
+    "build:pre": "rimraf build",
     "dev": "rollup -c --watch",
     "test": "jest",
     "prepublishOnly": "yarn build"

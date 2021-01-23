@@ -7,6 +7,7 @@
   ],
   "scripts": {
     "build": "lerna run build --include-dependencies --stream",
+    "build:pre": "lerna run build:pre",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "yarn run lint --fix",
     "clean": "lerna clean -y",
