@@ -1,6 +1,6 @@
 {
   "name": "admin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "This is the administration package for the @botui project.",
   "author": "Aiji Uejima <aiji42@gmail.com>",
@@ -21,9 +21,9 @@
   "dependencies": {
     "@aws-amplify/ui-react": "^0.2.34",
     "@bicstone/ra-language-japanese": "^3.8.0",
-    "@botui/api": "^1.0.0",
-    "@botui/chat-controller": "^1.0.0",
-    "@botui/chat-hooks": "^1.0.0",
+    "@botui/api": "^1.1.0",
+    "@botui/chat-controller": "^1.1.0",
+    "@botui/chat-hooks": "^1.1.0",
     "@material-ui/lab": "^4.0.0-alpha.57",
     "aws-amplify": "^3.3.14",
     "is-color": "^1.0.2",
@@ -37,7 +37,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@botui/types": "^2.0.0",
+    "@botui/types": "^2.1.0",
     "@types/is-color": "^1.0.0",
     "@types/react-router-dom": "^5.1.7",
     "@types/uuid": "^8.3.0",
