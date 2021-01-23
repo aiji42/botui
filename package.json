@@ -3,25 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "domains/*"
   ],
   "scripts": {
-    "build": "lerna run build --include-dependencies --stream",
-    "build:pre": "lerna run build:pre",
+    "build:packages": "lerna run build --include-dependencies --stream --scope @botui/*",
+    "build:packages:pre": "lerna run build:pre",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "yarn run lint --fix",
     "clean": "lerna clean -y",
     "bootstrap": "lerna bootstrap",
-    "run:admin": "lerna run --stream --scope @botui/admin",
     "run:api": "lerna run --stream --scope @botui/api",
     "run:chat-components": "lerna run --stream --scope @botui/chat-components",
     "run:chat-controller": "lerna run --stream --scope @botui/chat-controller",
     "run:chat-hooks": "lerna run --stream --scope @botui/chat-hooks",
-    "run:chat-host": "lerna run --stream --scope @botui/chat-host",
     "run:types": "lerna run --stream --scope @botui/types",
     "run:use-cors-state": "lerna run --stream --scope use-cors-state",
-    "dev:all": "lerna run dev --parallel",
-    "dev:admin": "lerna run dev --parallel --scope=@botui/{admin,chat-host,chat-components,chat-controller}"
+    "dev:packages": "lerna run dev --parallel --scope @botui/*",
+    "dev:domains": "lerna run dev --parallel --scope admin --scope chat-host"
   },
   "dependencies": {},
   "devDependencies": {
@@ -64,7 +63,7 @@
     }
   },
   "lint-staged": {
-    "packages/*/src/**/*.{js,jsx,ts,tsx}": [
+    "**/*/src/**/*.{js,jsx,ts,tsx}": [
       "eslint --fix"
     ]
   }
