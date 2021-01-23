@@ -20,7 +20,12 @@
     "run:types": "lerna run --stream --scope @botui/types",
     "run:use-cors-state": "lerna run --stream --scope use-cors-state",
     "dev:packages": "lerna run dev --parallel --scope @botui/*",
-    "dev:domains": "lerna run dev --parallel --scope admin --scope chat-host"
+    "dev:domains": "lerna run dev --parallel --scope admin --scope chat-host",
+    "versionup": "lerna version --conventional-commits",
+    "versionup:patch": "lerna version patch --conventional-commits",
+    "versionup:minor": "lerna version minor --conventional-commits",
+    "versionup:major": "lerna version minor --conventional-commits",
+    "release": "lerna publish from-package"
   },
   "dependencies": {},
   "devDependencies": {
