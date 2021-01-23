@@ -8,11 +8,11 @@ frontend:
   phases:
     preBuild:
       commands:
+        - yarn install && yarn lerna bootstrap
         - cp src/aws-exports.js domains/admin/src
         - cd domains/admin
         - echo "REACT_APP_BOTUI_HOST=$REACT_APP_BOTUI_HOST" >> .env
         - echo "SKIP_PREFLIGHT_CHECK=true" >> .env
-        - yarn install && yarn lerna bootstrap
     build:
       commands:
         - yarn build
