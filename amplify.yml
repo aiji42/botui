@@ -12,7 +12,7 @@ frontend:
         - cd domains/admin
         - echo "REACT_APP_BOTUI_HOST=$REACT_APP_BOTUI_HOST" >> .env
         - echo "SKIP_PREFLIGHT_CHECK=true" >> .env
-        - yarn install && yarn bootstrap
+        - yarn install && yarn lerna bootstrap
     build:
       commands:
         - yarn build
