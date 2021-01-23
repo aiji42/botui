@@ -2,6 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Global, css } from '@emotion/react'
 import App from './Chat'
+import Amplify from 'aws-amplify'
+import aws_exports from './aws-exports'
+
+Amplify.configure(aws_exports)
 
 const global = css`
   body {
@@ -178,9 +182,9 @@ const global = css`
 `
 
 ReactDOM.render(
-  <React.StrictMode>
+  <>
     <Global styles={global} />
     <App />
-  </React.StrictMode>,
+  </>,
   document.getElementById('root')
 )
