@@ -45,7 +45,7 @@ export const MessageWrapper: FC = (props) => {
         }),
       500
     )
-  }, [])
+  }, [message.id])
   return (
     <Scroll.Element css={style.base} name={`${message.id}`}>
       {message.human ? (
