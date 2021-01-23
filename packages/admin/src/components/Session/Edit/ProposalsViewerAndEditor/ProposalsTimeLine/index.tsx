@@ -52,16 +52,16 @@ const ProposalsTimeLine: FC<Props> = ({
   const classes = useStyles()
   const makeHandleEdit = useCallback(
     (index: number) => () => handlers.handleEdit(index),
-    [handlers.handleEdit]
+    [handlers]
   )
   const makeHandleDelete = useCallback(
     (index: number) => () => handlers.handleDelete(index),
-    [handlers.handleDelete]
+    [handlers]
   )
   const makeHandleInsert = useCallback(
     (index: number) => (type: Proposal['type']) =>
       handlers.handleInsert(index, type),
-    [handlers.handleInsert]
+    [handlers]
   )
   return (
     <>

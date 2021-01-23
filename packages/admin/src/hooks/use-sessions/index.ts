@@ -11,7 +11,7 @@ export const useSessions = (): Array<Session> => {
       sort: { field: '', order: '' },
       filter: ''
     }).then(({ data }) => setSessions(data))
-  }, [])
+  }, [getList])
 
   return sessions
 }

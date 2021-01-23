@@ -41,7 +41,7 @@ const ImageInput: FC<Props> = (props) => {
       change(source, res.key)
       handleClose()
     },
-    [change, handleClose, props.sessionId]
+    [change, handleClose, props.sessionId, source]
   )
   const validate = useCallback(
     (value: string) => (required && !value ? '必須' : ''),

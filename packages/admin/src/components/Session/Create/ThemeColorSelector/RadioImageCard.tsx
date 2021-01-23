@@ -22,7 +22,7 @@ const RadioImageCard: FC<Props> = ({ source, value, image }) => {
   } = useField(source)
   const handleClick = useCallback(() => {
     change(source, value)
-  }, [value])
+  }, [change, source, value])
   const classes = useStyles()
   return (
     <Card

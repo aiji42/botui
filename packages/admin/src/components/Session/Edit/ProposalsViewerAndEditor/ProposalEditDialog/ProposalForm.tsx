@@ -51,16 +51,17 @@ export default ProposalForm
 const FormWrapper: FC<
   FormRenderProps<Proposal, Partial<Proposal>> & FormFunctions
 > = (props) => {
+  const { handleTrySubmit, handleSubmittable, trySubmit } = props
   const { submit } = useForm()
   const { pristine, values } = useFormState<Proposal>()
   useEffect(() => {
-    if (!props.trySubmit) return
+    if (!trySubmit) return
     submit()
-    props.handleTrySubmit(false)
-  }, [props.trySubmit])
+    handleTrySubmit(false)
+  }, [handleTrySubmit, trySubmit, submit])
   useEffect(() => {
-    props.handleSubmittable(!pristine)
-  }, [pristine, props.handleSubmittable])
+    handleSubmittable(!pristine)
+  }, [handleSubmittable, pristine])
 
   if (values.type === 'message') return <ProposalMessageFormInner />
   else if (values.type === 'relayer') return <ProposalRelayerFormInner />

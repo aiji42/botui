@@ -15,7 +15,7 @@ const ColorInput: FC<InputProps<TextFieldProps>> = (props) => {
     (color: Color) => {
       change(name, `#${color.hex}`)
     },
-    [change]
+    [change, name]
   )
 
   return (

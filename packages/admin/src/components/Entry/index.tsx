@@ -87,7 +87,8 @@ const EntryFilter: FC<Partial<EntryFilterProps>> = (props) => {
         { entryBySessionAndCreatedAt: { sessionId: sessions[0].id } },
         displayedFilters
       )
-  }, [choices])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [choices, sessions])
 
   return (
     <AmplifyFilter {...(props as EntryFilterProps)}>
