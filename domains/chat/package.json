@@ -1,6 +1,6 @@
 {
   "name": "@botui-domain/chat",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "Aiji Uejima <aiji42@gmail.com>",
   "license": "MIT",
   "main": "build/Chat.js",

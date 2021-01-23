@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.2](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.1.1...@botui-domain/admin@1.1.2) (2021-01-23)
+
+
+### Bug Fixes
+
+* **admin:** change export file name ([d8d667e](https://github.com/aiji42/botui-child-next/commit/d8d667e0efa4f435f022f1730feb4c24a09870f6))
+
+
+
+
+
 ## [1.1.1](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.1.0...@botui-domain/admin@1.1.1) (2021-01-23)
 
 
