@@ -2,6 +2,12 @@ import React, { FC, useState } from 'react'
 import { Controller } from '../Controller'
 import { ChatConfig, Proposals } from '@botui/types'
 
+let host: string = process.env.REACT_APP_BOTUI_HOST ?? 'http://localhost:3000/'
+type PreviewConfig = { chatHost: string }
+export const setPreviewConfig = ({ chatHost }: PreviewConfig): void => {
+  host = chatHost
+}
+
 export const Preview: FC<{
   proposals: Proposals
   chatConfig: ChatConfig
@@ -16,7 +22,7 @@ export const Preview: FC<{
     <>
       <iframe
         ref={setIframeElement}
-        src="http://localhost:3000/"
+        src={host}
         height="100%"
         width="100%"
         frameBorder="no"
