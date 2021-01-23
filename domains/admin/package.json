@@ -4,8 +4,8 @@
   "description": "This is the administration package for the @botui project.",
   "author": "Aiji Uejima <aiji42@gmail.com>",
   "license": "MIT",
-  "main": "build/index.js",
-  "module": "build/index.esm.js",
+  "main": "build/Admin.js",
+  "module": "build/Admin.esm.js",
   "types": "build/Admin.d.ts",
   "files": [
     "build"
