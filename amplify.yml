@@ -1,41 +1,40 @@
 version: 1
 applications:
-  - backend:
-    phases:
-      build:
-        commands:
-          - '# Execute Amplify CLI with the helper script'
-          - amplifyPush --simple
-  # - frontend:
-  #   phases:
-  #     preBuild:
-  #       commands:
-  #         - echo "REACT_APP_BOTUI_HOST=$REACT_APP_BOTUI_HOST" >> .env
-  #         - yarn install
-  #     build:
-  #       commands:
-  #         - yarn run build
-  #   artifacts:
-  #     baseDirectory: build
-  #     files:
-  #       - '**/*'
-  #   cache:
-  #     paths:
-  #       - node_modules/**/*
-  #   appRoot: domains/admin
-  # - frontend:
-  #   phases:
-  #     preBuild:
-  #       commands:
-  #         - yarn install
-  #     build:
-  #       commands:
-  #         - yarn run build
-  #   artifacts:
-  #     baseDirectory: build
-  #     files:
-  #       - '**/*'
-  #   cache:
-  #     paths:
-  #       - node_modules/**/*
-  #   appRoot: domains/chat-host
+  - appRoot: domains/admin
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - echo "REACT_APP_BOTUI_HOST=$REACT_APP_BOTUI_HOST" >> .env
+            - yarn install
+        build:
+          commands:
+            - yarn run build
+      artifacts:
+        baseDirectory: build
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - node_modules/**/*
+  - appRoot: domains/chat-host
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - yarn install
+        build:
+          commands:
+            - yarn run build
+      artifacts:
+        baseDirectory: build
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - node_modules/**/*
+backend:
+  phases:
+    build:
+      commands:
+        - amplifyPush --simple
