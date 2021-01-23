@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.1.0...@botui-domain/admin@1.1.1) (2021-01-23)
+
+
+### Bug Fixes
+
+* **type:** chnage main types ([03a7321](https://github.com/aiji42/botui-child-next/commit/03a7321986322d7ba153c4574a769a92c4335d05))
+
+
+
+
+
 # 1.1.0 (2021-01-23)
 
 
