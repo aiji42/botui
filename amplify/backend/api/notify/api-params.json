@@ -1,0 +1,45 @@
+{
+    "paths": [
+        {
+            "name": "/notify",
+            "lambdaFunction": "notify",
+            "privacy": {
+                "protected": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ],
+                "unauth": [
+                    "/POST"
+                ]
+            },
+            "policyResourceName": "/notify"
+        }
+    ],
+    "resourceName": "notify",
+    "apiName": "notify",
+    "functionArns": [
+        {
+            "lambdaFunction": "notify"
+        }
+    ],
+    "privacy": {
+        "auth": 1,
+        "unauth": 1,
+        "authRoleName": "amplify-botui-dev-143300-authRole",
+        "unAuthRoleName": "amplify-botui-dev-143300-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "notify",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}

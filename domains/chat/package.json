@@ -1,0 +1,68 @@
+{
+  "name": "@botui-domain/chat",
+  "version": "1.0.4",
+  "author": "Aiji Uejima <aiji42@gmail.com>",
+  "license": "MIT",
+  "main": "build/Chat.js",
+  "module": "build/Chat.esm.js",
+  "types": "build/Chat.d.ts",
+  "files": [
+    "build"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aiji42/botui-child-next.git"
+  },
+  "dependencies": {
+    "@botui/chat-components": "^1.1.1",
+    "@botui/chat-hooks": "^1.1.1",
+    "@emotion/react": "^11.1.4",
+    "aws-amplify": "^3.3.14",
+    "react-nl2br": "^1.0.1",
+    "react-scroll": "^1.8.1",
+    "use-cors-state": "^1.1.4"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "devDependencies": {
+    "@botui/types": "^2.1.1",
+    "@types/react-scroll": "^1.8.2",
+    "eslint-plugin-flowtype": "^5.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-testing-library": "^3.10.1",
+    "react-scripts": "4.0.1"
+  },
+  "scripts": {
+    "dev": "react-scripts start",
+    "build": "rollup -c",
+    "prepare": "rimraf build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "prepublishOnly": "yarn build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

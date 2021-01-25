@@ -1,0 +1,43 @@
+{
+  "name": "use-cors-state",
+  "version": "1.1.4",
+  "description": "Custom hooks for synchronizing state between different components, different windows, and cross-domains.",
+  "author": "Aiji Uejima <aiji42@gmail.com>",
+  "homepage": "https://github.com/aiji42/botui-child-next#readme",
+  "license": "MIT",
+  "main": "build/index.js",
+  "module": "build/index.esm.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aiji42/botui-child-next.git"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "prepare": "rimraf build",
+    "dev": "rollup -c --watch",
+    "test": "jest",
+    "prepublishOnly": "yarn build"
+  },
+  "bugs": {
+    "url": "https://github.com/aiji42/botui-child-next/issues"
+  },
+  "dependencies": {
+    "post-robot": "^10.0.42"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  },
+  "devDependencies": {
+    "@botui/types": "^2.1.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  }
+}

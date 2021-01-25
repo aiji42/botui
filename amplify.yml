@@ -1,0 +1,61 @@
+version: 1
+backend:
+  phases:
+    build:
+      commands:
+        - amplifyPush --simple
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - cp src/aws-exports.js main/src
+        - cd main
+        - yarn install
+        - echo "SKIP_PREFLIGHT_CHECK=true" >> .env
+    build:
+      commands:
+        - yarn build
+  artifacts:
+    baseDirectory: main/build
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+      - main/node_modules/**/*
+
+# version: 1
+# applications:
+#   - appRoot: domains/admin
+#     frontend:
+#       phases:
+#         preBuild:
+#           commands:
+#             - echo "REACT_APP_BOTUI_HOST=$REACT_APP_BOTUI_HOST" >> .env
+#             - yarn install
+#         build:
+#           commands:
+#             - yarn run build
+#       artifacts:
+#         baseDirectory: build
+#         files:
+#           - '**/*'
+#       cache:
+#         paths:
+#           - node_modules/**/*
+#   - appRoot: domains/chat-host
+#     frontend:
+#       phases:
+#         preBuild:
+#           commands:
+#             - yarn install
+#         build:
+#           commands:
+#             - yarn run build
+#       artifacts:
+#         baseDirectory: build
+#         files:
+#           - '**/*'
+#       cache:
+#         paths:
+#           - node_modules/**/*
