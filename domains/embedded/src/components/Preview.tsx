@@ -16,14 +16,14 @@ export type SizeType = typeof SIZE[keyof typeof SIZE]
 
 interface Props {
   sessionId: string
-  initialOpen?: boolean
+  defaultOpen?: boolean
   size?: SizeType
 }
 
 export const Preview: FC<Props> = (props) => {
-  const { initialOpen = false, size = SIZE.Auto } = props
+  const { defaultOpen = false, size = SIZE.Auto } = props
   const session = useFetchSession(props.sessionId)
-  const [open, setOpen] = useState<boolean>(initialOpen)
+  const [open, setOpen] = useState<boolean>(defaultOpen)
   const [loaded, setLoaded] = useState<boolean>(false)
   useEffect(() => {
     !open && setLoaded(false)
