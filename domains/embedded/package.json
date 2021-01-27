@@ -4,7 +4,7 @@
   "author": "Aiji Uejima <aiji42@gmail.com>",
   "homepage": "https://github.com/aiji42/botui-child-next#readme",
   "license": "MIT",
-  "main": "lib/embedded.js",
+  "browser": "build/botui.js",
   "files": [
     "build"
   ],
@@ -17,7 +17,10 @@
     "url": "git+https://github.com/aiji42/botui-child-next.git"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "build": "webpack",
+    "prepare": "rimraf build",
+    "dev": "webpack --watch",
+    "prepublishOnly": "yarn build"
   },
   "bugs": {
     "url": "https://github.com/aiji42/botui-child-next/issues"
