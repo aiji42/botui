@@ -4,10 +4,4 @@ import config from './aws-exports'
 
 Amplify.configure(config)
 
-declare global {
-  interface Window {
-    Botui: unknown
-  }
-}
-
-window.Botui = Botui
+export default Botui

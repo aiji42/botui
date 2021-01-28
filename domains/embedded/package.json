@@ -6,7 +6,7 @@
   "license": "MIT",
   "browser": "build/botui.js",
   "files": [
-    "build"
+    "dist"
   ],
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
@@ -18,7 +18,7 @@
   },
   "scripts": {
     "build": "webpack",
-    "prepare": "rimraf build",
+    "prepare": "rimraf dist",
     "dev": "webpack --watch",
     "prepublishOnly": "yarn build"
   },

@@ -6,8 +6,10 @@ module.exports = {
   mode: 'production',
   entry: './src/index.ts',
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'build')
+    library: 'BotuiChat',
+    libraryTarget: 'umd',
+    filename: 'chat.min.js',
+    path: path.resolve(__dirname, 'dist')
   },
   module: {
     rules: [
