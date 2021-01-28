@@ -1,6 +1,6 @@
 {
   "name": "@botui/chat-controller",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "This is the chat controller package for the @botui project.",
   "author": "Aiji Uejima <aiji42@gmail.com>",
   "homepage": "https://github.com/aiji42/botui-child-next#readme",
@@ -30,7 +30,7 @@
     "url": "https://github.com/aiji42/botui-child-next/issues"
   },
   "dependencies": {
-    "@botui/api": "^1.1.1",
+    "@botui/api": "^1.2.0",
     "deep-equal": "^2.0.5",
     "use-cors-state": "^1.1.4"
   },

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/aiji42/botui-child-next/compare/@botui/chat-hooks@1.1.1...@botui/chat-hooks@1.2.0) (2021-01-28)
+
+
+### Features
+
+* **hooks:** add useFetchSession ([8ebf47e](https://github.com/aiji42/botui-child-next/commit/8ebf47e5e7ee9b6fca201a912a0a8993cd8f6844))
+
+
+
+
+
 ## [1.1.1](https://github.com/aiji42/botui-child-next/compare/@botui/chat-hooks@1.1.0...@botui/chat-hooks@1.1.1) (2021-01-23)
 
 **Note:** Version bump only for package @botui/chat-hooks

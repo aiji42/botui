@@ -1,6 +1,6 @@
 {
   "name": "@botui/chat-components",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "This is a component package for chat in the @botui project.",
   "author": "Aiji Uejima <aiji42@gmail.com>",
   "homepage": "https://github.com/aiji42/botui-child-next#readme",
@@ -29,7 +29,7 @@
     "url": "https://github.com/aiji42/botui-child-next/issues"
   },
   "dependencies": {
-    "@botui/chat-hooks": "^1.1.1",
+    "@botui/chat-hooks": "^1.2.0",
     "@emotion/react": "^11.1.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-regular-svg-icons": "^5.15.2",
