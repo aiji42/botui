@@ -1,11 +1,11 @@
 {
-  "AppSyncApiName": "botui",
-  "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false,
-  "AuthCognitoUserPoolId": {
-    "Fn::GetAtt": [
-      "authbotui",
-      "Outputs.UserPoolId"
-    ]
-  }
+    "AppSyncApiName": "botui",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authbotui",
+            "Outputs.UserPoolId"
+        ]
+    }
 }
