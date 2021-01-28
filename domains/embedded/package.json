@@ -4,7 +4,7 @@
   "author": "Aiji Uejima <aiji42@gmail.com>",
   "homepage": "https://github.com/aiji42/botui-child-next#readme",
   "license": "MIT",
-  "browser": "build/botui.js",
+  "browser": "dist/chat.min.js",
   "files": [
     "dist"
   ],
