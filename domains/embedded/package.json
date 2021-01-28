@@ -1,0 +1,35 @@
+{
+  "name": "@botui-domain/embedded",
+  "version": "1.0.0",
+  "author": "Aiji Uejima <aiji42@gmail.com>",
+  "homepage": "https://github.com/aiji42/botui-child-next#readme",
+  "license": "MIT",
+  "browser": "build/botui.js",
+  "files": [
+    "build"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aiji42/botui-child-next.git"
+  },
+  "scripts": {
+    "build": "webpack",
+    "prepare": "rimraf build",
+    "dev": "webpack --watch",
+    "prepublishOnly": "yarn build"
+  },
+  "bugs": {
+    "url": "https://github.com/aiji42/botui-child-next/issues"
+  },
+  "dependencies": {
+    "@botui/chat-controller": "^1.1.1",
+    "@botui/chat-hooks": "^1.1.1",
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
+    "aws-amplify": "^3.3.14"
+  }
+}
