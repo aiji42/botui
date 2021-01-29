@@ -18,9 +18,8 @@ const embeddedScript = (
   sessionId: string,
   size: Size,
   defaultOpen: boolean
-) => `<script src="https://unpkg.com/@botui-domain/embedded" type="text/javascript">
-  new BotuiChat.default('${sessionId}',{defaultOpen:${defaultOpen},size:'${size}'}).start()
-</script>`
+) => `<script src="https://unpkg.com/@botui-domain/embedded"></script>
+<script type="text/javascript">new BotuiChat.default('${sessionId}',{defaultOpen:${defaultOpen},size:'${size}'}).start()</script>`
 
 const assignable = (arg: unknown): arg is Size =>
   typeof arg === 'string' && ['auto', 'widget', 'full'].includes(arg)
