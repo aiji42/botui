@@ -12,11 +12,13 @@ import {
 } from 'react-admin'
 import EditForm from './Edit'
 import CreateForm from './Create'
+import { EmbeddedScriptPanel } from './EmbeddedScriptPanel'
+
 
 export const SessionList: FC = (props) => {
   return (
     <List {...props} bulkActionButtons={false} exporter={false}>
-      <Datagrid rowClick="edit">
+      <Datagrid rowClick="edit" expand={<EmbeddedScriptPanel />}>
         <TextField source="title" sortable={false} />
         <BooleanField source="active" />
       </Datagrid>

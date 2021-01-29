@@ -22,7 +22,7 @@ export const Fab: FC<FabProps> = (props) => {
   const classes = useStyles()
   return (
     <FabMU onClick={onClick} className={classes.fab} color="primary">
-      {isOpen ? <ClearIcon /> : <ChatIcon />}
+      {isOpen ? <ClearIcon fontSize="large" /> : <ChatIcon fontSize="large" />}
     </FabMU>
   )
 }
