@@ -26,7 +26,9 @@ export default {
     ...Object.keys(pkg.dependencies || {}),
     ...Object.keys(pkg.devDependencies || {}),
     ...Object.keys(pkg.peerDependencies || {}),
-    'react/jsx-runtime'
+    'react/jsx-runtime',
+    '@material-ui/icons',
+    '@material-ui/core'
   ],
   plugins: [
     typescript({ useTsconfigDeclarationDir: true }),
