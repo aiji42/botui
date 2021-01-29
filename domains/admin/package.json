@@ -1,6 +1,6 @@
 {
   "name": "@botui-domain/admin",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "This is the administration package for the @botui project.",
   "author": "Aiji Uejima <aiji42@gmail.com>",
   "license": "MIT",

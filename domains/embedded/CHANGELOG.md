@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.4](https://github.com/aiji42/botui-child-next/compare/@botui-domain/embedded@1.1.3...@botui-domain/embedded@1.1.4) (2021-01-29)
+
+
+### Bug Fixes
+
+* **embeded:** update endpoint chat host ([03494a4](https://github.com/aiji42/botui-child-next/commit/03494a4ce5c81f066a11ef273afaddb8d3f518ea))
+
+
+
+
+
 ## [1.1.3](https://github.com/aiji42/botui-child-next/compare/@botui-domain/embedded@1.1.2...@botui-domain/embedded@1.1.3) (2021-01-29)
 
 
