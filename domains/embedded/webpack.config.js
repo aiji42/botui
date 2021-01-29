@@ -33,7 +33,7 @@ module.exports = {
   plugins: [
     // new BundleAnalyzerPlugin(),
     new webpack.EnvironmentPlugin({
-      REACT_APP_BOTUI_HOST: 'https://chachat-dev.survaq.com'
+      REACT_APP_BOTUI_HOST: 'https://chachat.survaq.com'
     })
   ]
 }
