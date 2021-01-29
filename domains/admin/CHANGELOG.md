@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.1.3...@botui-domain/admin@1.2.0) (2021-01-29)
+
+
+### Bug Fixes
+
+* **admin/embedded:** fix bug with @material-ui/style ([cd309b2](https://github.com/aiji42/botui-child-next/commit/cd309b2ad04bd0859494f7eb729c6e825692582e))
+
+
+### Features
+
+* **admin:** add embedded script panel ([de994e9](https://github.com/aiji42/botui-child-next/commit/de994e9843af01ce427cc6928883760834f59ec8))
+
+
+
+
+
 ## [1.1.3](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.1.2...@botui-domain/admin@1.1.3) (2021-01-28)
 
 **Note:** Version bump only for package @botui-domain/admin
