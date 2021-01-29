@@ -19,6 +19,9 @@
     "run:chat-hooks": "lerna run --stream --scope @botui/chat-hooks",
     "run:types": "lerna run --stream --scope @botui/types",
     "run:use-cors-state": "lerna run --stream --scope use-cors-state",
+    "run:admin": "lerna run --stream --scope @botui-domain/admin",
+    "run:chat-host": "lerna run --stream --scope @botui-domain/chat",
+    "run:embedded": "lerna run --stream --scope @botui-domain/embedded",
     "dev:packages": "lerna run dev --parallel --scope @botui/*",
     "dev:domains": "lerna run dev --parallel --scope @botui-domain/*",
     "versionup": "lerna version --conventional-commits",
@@ -27,7 +30,11 @@
     "versionup:major": "lerna version minor --conventional-commits",
     "release": "lerna publish from-package"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@material-ui/core": "^4.11.1",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/styles": "^4.11.1"
+  },
   "devDependencies": {
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
