@@ -1,12 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import Admin from './Admin'
+import Admin, { initAmplifyConfig } from './Admin'
 import { setPreviewConfig } from '@botui/chat-controller'
 import awsconfig from './aws-exports'
-import Amplify from 'aws-amplify'
 
-Amplify.configure(awsconfig)
+initAmplifyConfig(awsconfig)
 
 setPreviewConfig({ chatHost: process.env.REACT_APP_BOTUI_HOST ?? 'http://localhost:3000/' })
 

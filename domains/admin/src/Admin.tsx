@@ -15,6 +15,10 @@ import vocabularies from './i18n/amplify/vocabularies'
 Amplify.I18n.putVocabularies(vocabularies)
 Amplify.I18n.setLanguage('ja')
 
+export const initAmplifyConfig = (awsconfig :Record<string, unknown>): void => {
+  Amplify.configure(awsconfig)
+}
+
 const i18nProvider = polyglotI18nProvider(() => japaneseMessages)
 
 const Admin: FC = () => {
