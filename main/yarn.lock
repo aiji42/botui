@@ -2567,10 +2567,10 @@
   dependencies:
     ra-language-english "^3.8.0"
 
-"@botui-domain/admin@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@botui-domain/admin/-/admin-1.2.0.tgz#d46f8bf9d1483fe20947c26a2bd05c6c1fc22814"
-  integrity sha512-Q67Qr8+IxHuKTAlqjRYjtSgi3gQCwbmhkoDzykarvooQJvOvUEB5+XhgIaphDPTM8DGczP+HQSTleV61uYv6Iw==
+"@botui-domain/admin@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@botui-domain/admin/-/admin-1.2.1.tgz#6d9140adb2c20b02aec50712e35165ddc472a3aa"
+  integrity sha512-7UseZsdyvD43NSXQH7aG68BLcmcDEdAjNxUSCS2E20x0OchPzK3xxQ6TvaFueEhfrInulIcE3K+y0M2ZxZtG8Q==
   dependencies:
     "@aws-amplify/ui-components" "^0.10.0"
     "@aws-amplify/ui-react" "^0.2.34"
