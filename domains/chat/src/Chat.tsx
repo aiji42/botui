@@ -3,6 +3,11 @@ import { useCorsState } from 'use-cors-state'
 import { ChatConfigContextProvider } from '@botui/chat-hooks'
 import { ChatConfig, Message as MessageType } from '@botui/types'
 import { Header, Body, Footer } from './components'
+import Amplify from 'aws-amplify'
+
+export const initAmplifyConfig = (awsconfig: Record<string, unknown>): void => {
+  Amplify.configure(awsconfig)
+}
 
 const manageUpdatedMessage = (
   config: ChatConfig,

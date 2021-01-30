@@ -1,11 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Global, css } from '@emotion/react'
-import App from './Chat'
-import Amplify from 'aws-amplify'
+import App, { initAmplifyConfig } from './Chat'
 import aws_exports from './aws-exports'
 
-Amplify.configure(aws_exports)
+initAmplifyConfig(aws_exports)
 
 const global = css`
   body {
