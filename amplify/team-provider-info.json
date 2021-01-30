@@ -1,4 +1,26 @@
 {
+  "production": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-botui-production-185011-authRole",
+      "UnauthRoleArn": "arn:aws:iam::998366166562:role/amplify-botui-production-185011-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::998366166562:role/amplify-botui-production-185011-authRole",
+      "Region": "ap-northeast-1",
+      "DeploymentBucketName": "amplify-botui-production-185011-deployment",
+      "UnauthRoleName": "amplify-botui-production-185011-unauthRole",
+      "StackName": "amplify-botui-production-185011",
+      "StackId": "arn:aws:cloudformation:ap-northeast-1:998366166562:stack/amplify-botui-production-185011/6597acb0-6265-11eb-bf31-06255f79192a",
+      "AmplifyAppId": "d1n6ynnjubnjrs"
+    },
+    "categories": {
+      "auth": {
+        "userPoolGroups": {},
+        "botui": {}
+      },
+      "function": {
+        "notify": {}
+      }
+    }
+  },
   "dev": {
     "awscloudformation": {
       "AuthRoleName": "amplify-botui-dev-143300-authRole",
@@ -8,13 +30,16 @@
       "DeploymentBucketName": "amplify-botui-dev-143300-deployment",
       "UnauthRoleName": "amplify-botui-dev-143300-unauthRole",
       "StackName": "amplify-botui-dev-143300",
-      "StackId": "arn:aws:cloudformation:ap-northeast-1:998366166562:stack/amplify-botui-dev-143300/50db3650-1861-11eb-8f90-06c1e14cac70",
+      "StackId": "arn:aws:cloudformation:ap-northeast-1:998366166562:stack/amplify-botui-dev-143300/7d2f1800-62f5-11eb-a899-0a6a4edc26e4",
       "AmplifyAppId": "d1n6ynnjubnjrs"
     },
     "categories": {
       "auth": {
         "userPoolGroups": {},
         "botui": {}
+      },
+      "function": {
+        "notify": {}
       }
     }
   }
