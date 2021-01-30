@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.2.1...@botui-domain/admin@1.3.0) (2021-01-30)
+
+
+### Features
+
+* **admin:** export initAmplifyConfig ([8388d97](https://github.com/aiji42/botui-child-next/commit/8388d973fc80a2035a2a9ffd207b99d20398c0e4))
+
+
+
+
+
 ## [1.2.1](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.2.0...@botui-domain/admin@1.2.1) (2021-01-29)
 
 **Note:** Version bump only for package @botui-domain/admin

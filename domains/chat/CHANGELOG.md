@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/aiji42/botui-child-next/compare/@botui-domain/chat@1.0.5...@botui-domain/chat@1.1.0) (2021-01-30)
+
+
+### Features
+
+* **admin:** export initAmplifyConfig ([60bd8c1](https://github.com/aiji42/botui-child-next/commit/60bd8c12e37b3b3cf01ed3384cd4936493e3fac6))
+
+
+
+
+
 ## [1.0.5](https://github.com/aiji42/botui-child-next/compare/@botui-domain/chat@1.0.4...@botui-domain/chat@1.0.5) (2021-01-28)
 
 **Note:** Version bump only for package @botui-domain/chat
