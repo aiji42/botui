@@ -15,6 +15,7 @@ type Session
   proposals: AWSJSON!
   images: AWSJSON!
   email: String
+  launcher: AWSJSON!
 }
 
 type Entry
