@@ -33,7 +33,7 @@ const manageUpdatedMessage = (
 const Chat: FC = () => {
   const [config, setConfig] = useCorsState<ChatConfig | undefined>(
     'chat-config',
-    { window: window.parent },
+    { window: window.parent, domain: /.*/ },
     undefined
   )
 
