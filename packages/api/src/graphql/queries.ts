@@ -73,6 +73,7 @@ export const getSession = /* GraphQL */ `
       proposals
       images
       email
+      launcher
       createdAt
       updatedAt
     }
@@ -94,6 +95,7 @@ export const listSessions = /* GraphQL */ `
         proposals
         images
         email
+        launcher
         createdAt
         updatedAt
       }

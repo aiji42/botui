@@ -16,8 +16,8 @@ const formTypeChoices = [
   { id: 'FormName', name: '氏名' },
   { id: 'FormAddress', name: '住所' },
   { id: 'FormBirthDay', name: '生年月日' },
-  { id: 'FormConfirm', name: '確認' },
-  { id: 'FormCreditCard', name: 'クレジットカード' },
+  // { id: 'FormConfirm', name: '確認' },
+  // { id: 'FormCreditCard', name: 'クレジットカード' },
   { id: 'FormCustomInput', name: 'カスタムインプット' },
   { id: 'FormCustomSelect', name: 'カスタムセレクト' },
   {

@@ -1,17 +1,18 @@
 import React from 'react'
-import { Preview, SizeType, SIZE } from './components'
+import { Preview } from './components'
 import { render } from 'react-dom'
+import { Launcher } from '@botui/types'
 
 export class Botui {
   sessionId: string
-  size: SizeType
+  size: Launcher['size']
   defaultOpen: boolean
 
   constructor(
     sessionId: string,
-    config: { size?: SizeType; defaultOpen?: boolean } = {}
+    config: { size?: Launcher['size']; defaultOpen?: boolean } = {}
   ) {
-    const { size = SIZE.Auto, defaultOpen = false } = config
+    const { size = 'auto', defaultOpen = false } = config
     this.sessionId = sessionId
     this.size = size
     this.defaultOpen = defaultOpen

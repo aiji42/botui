@@ -11,7 +11,6 @@ import {
 import { ImageInput, ColorInput } from '../parts'
 import isColor from 'is-color'
 import { Preview } from '@botui/chat-controller'
-import PreviewDialog from './PreviewDialog'
 import { Session } from '@botui/types'
 import { stringMessageTemplate } from '../Create/proposalTemplates'
 
@@ -45,9 +44,13 @@ const SessionFormInner: FC = () => {
     <Grid container spacing={1}>
       <Grid item xs={6}>
         <Box p={2}>
-          <TextInput source="title" resource="sessions" fullWidth />
-          <BooleanInput source="active" resource="sessions" />
-          <PreviewDialog />
+          <TextInput
+            label="タイトル"
+            source="title"
+            resource="sessions"
+            fullWidth
+          />
+          <BooleanInput label="アクティブ" source="active" resource="sessions" />
         </Box>
       </Grid>
       <Grid item xs={6} />

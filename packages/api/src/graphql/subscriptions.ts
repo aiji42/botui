@@ -49,6 +49,7 @@ export const onCreateSession = /* GraphQL */ `
       proposals
       images
       email
+      launcher
       createdAt
       updatedAt
     }
@@ -65,6 +66,7 @@ export const onUpdateSession = /* GraphQL */ `
       proposals
       images
       email
+      launcher
       createdAt
       updatedAt
     }
@@ -81,6 +83,7 @@ export const onDeleteSession = /* GraphQL */ `
       proposals
       images
       email
+      launcher
       createdAt
       updatedAt
     }

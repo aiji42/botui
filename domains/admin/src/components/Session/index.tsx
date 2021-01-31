@@ -8,19 +8,46 @@ import {
   useRefresh,
   CreateProps,
   Edit,
-  Create
+  Create,
+  FunctionField,
+  EditButton,
+  Toolbar,
+  SaveButton,
+  DeleteButton,
+  ToolbarProps
 } from 'react-admin'
 import EditForm from './Edit'
 import CreateForm from './Create'
-import { EmbeddedScriptPanel } from './EmbeddedScriptPanel'
+import EmbeddedScriptDialog from './EmbeddedScriptDialog'
+import { Session } from '@botui/types'
+import PreviewDialog from './PreviewDialog'
+import { useFormState } from 'react-final-form'
 
+const EditToolbar: FC<Omit<ToolbarProps, 'width'>> = (props) => {
+  const { values: session } = useFormState<Session>()
+  return (
+    <Toolbar {...props}>
+      <SaveButton disabled={props.pristine} style={{ marginRight: 8 }} />
+      <PreviewDialog session={session} />
+      <EmbeddedScriptDialog session={session} disabled={!props.pristine} />
+    </Toolbar>
+  )
+}
 
 export const SessionList: FC = (props) => {
   return (
     <List {...props} bulkActionButtons={false} exporter={false}>
-      <Datagrid rowClick="edit" expand={<EmbeddedScriptPanel />}>
-        <TextField source="title" sortable={false} />
-        <BooleanField source="active" />
+      <Datagrid>
+        <TextField label="タイトル" source="title" sortable={false} />
+        <BooleanField label="アクティブ" source="active" />
+        <FunctionField<Session>
+          label="プレビュー"
+          render={(record) =>
+            record ? <PreviewDialog session={record} /> : <></>
+          }
+        />
+        <EditButton />
+        <DeleteButton />
       </Datagrid>
     </List>
   )
@@ -46,7 +73,7 @@ export const SessionEdit: FC = (props) => {
         refresh()
       }}
     >
-      <EditForm warnWhenUnsavedChanges />
+      <EditForm warnWhenUnsavedChanges toolbar={<EditToolbar />} />
     </Edit>
   )
 }
