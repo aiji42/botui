@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.3.1...@botui-domain/admin@1.4.0) (2021-01-31)
+
+
+### Bug Fixes
+
+* **admin:** hide FormConfirm and FormCreditCard ([033ca5d](https://github.com/aiji42/botui-child-next/commit/033ca5d12515e129aecdc69e9bda64a9eab40668))
+* **admin:** move embedded script panel to edit view ([2106323](https://github.com/aiji42/botui-child-next/commit/21063235d01077200c7fa3a9fd107f97908ab212))
+* **admin:** move preview dialog to list view ([7ac9298](https://github.com/aiji42/botui-child-next/commit/7ac92986e58d2e23aa606da042d42e480e6bfcd4))
+
+
+### Features
+
+* **admin:** add launcher setting form ([30f2f03](https://github.com/aiji42/botui-child-next/commit/30f2f03279094289ae6b3b3a3322a4020ccd93de))
+
+
+
+
+
 ## [1.3.1](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.3.0...@botui-domain/admin@1.3.1) (2021-01-31)
 
 **Note:** Version bump only for package @botui-domain/admin

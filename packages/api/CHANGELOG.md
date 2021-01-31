@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/aiji42/botui-child-next/compare/@botui/api@1.2.0...@botui/api@1.3.0) (2021-01-31)
+
+
+### Features
+
+* **api:** add launcher setting value in session ([14e5b8e](https://github.com/aiji42/botui-child-next/commit/14e5b8e12d3655f7c618d96e1a3f9e90708773f8))
+
+
+
+
+
 # [1.2.0](https://github.com/aiji42/botui-child-next/compare/@botui/api@1.1.1...@botui/api@1.2.0) (2021-01-28)
 
 

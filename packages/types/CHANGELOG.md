@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/aiji42/botui-child-next/compare/@botui/types@2.1.1...@botui/types@2.2.0) (2021-01-31)
+
+
+### Features
+
+* **type:** add Launcher ([ca05423](https://github.com/aiji42/botui-child-next/commit/ca054236cb144b5c5e095230788c35e546444308))
+
+
+
+
+
 ## [2.1.1](https://github.com/aiji42/botui-child-next/compare/@botui/types@2.1.0...@botui/types@2.1.1) (2021-01-23)
 
 **Note:** Version bump only for package @botui/types
