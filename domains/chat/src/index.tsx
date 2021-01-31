@@ -7,11 +7,6 @@ import aws_exports from './aws-exports'
 initAmplifyConfig(aws_exports)
 
 const global = css`
-  body {
-    margin: 0;
-    font-family: 'Noto Sans JP', sans-serif;
-  }
-
   html,
   body,
   div,
@@ -123,6 +118,8 @@ const global = css`
   }
   body {
     line-height: 1;
+    margin: 0;
+    font-family: 'Noto Sans JP', sans-serif;
   }
   menu,
   ol,

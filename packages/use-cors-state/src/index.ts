@@ -5,6 +5,21 @@ type ValueInRecord<T> = { value: T }
 
 const isValueInRecord = <T>(data: unknown): data is ValueInRecord<T> => typeof data === 'object' && data !== null && 'value' in data
 
+const postRobotSend = (targetWindow: Window | undefined, synchronizingKey: string, state: Record<string, unknown>, retriedCount = 0) => {
+  postRobot
+    .send(targetWindow || window, synchronizingKey, state)
+    .catch((e) => {
+      if (retriedCount > 2) {
+        console.error(e)
+        return
+      }
+      setTimeout(
+        () => postRobotSend(targetWindow, synchronizingKey, state, retriedCount + 1),
+        100 + Math.pow(10, retriedCount + 1)
+      )
+    })
+}
+
 export const useCorsState = <T>(
   synchronizingKey: string,
   options: ServerOptionsType,
@@ -26,8 +41,7 @@ export const useCorsState = <T>(
   }, [synchronizingKey, options])
 
   useEffect(() => {
-    sendable.current &&
-      postRobot.send(options?.window || window, synchronizingKey, state)
+    sendable.current && postRobotSend(options?.window, synchronizingKey, state)
     sendable.current = true
   }, [state, synchronizingKey, options.window])
 

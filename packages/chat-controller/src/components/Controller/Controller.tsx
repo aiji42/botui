@@ -11,7 +11,7 @@ export const Controller: FC<{
 }> = ({ targetWindow, initProposals, chatConfig, editing = false }) => {
   const [config, setConfig] = useCorsState<ChatConfig | undefined>(
     'chat-config',
-    { window: targetWindow, name: 'controller' },
+  { window: targetWindow, domain: /.*/ },
     undefined
   )
   const [proposals, setProposals] = useState<Proposals>(initProposals)

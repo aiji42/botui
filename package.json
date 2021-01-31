@@ -7,7 +7,7 @@
     "domains/*"
   ],
   "scripts": {
-    "build:packages": "lerna run build --include-dependencies --stream --scope @botui/*",
+    "build:packages": "lerna run build --include-dependencies --stream --scope @botui/* --scope use-cors-state",
     "build:domain": "lerna run build --include-dependencies --stream --scope @botui-domain/*",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "yarn run lint --fix",
