@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.3](https://github.com/aiji42/botui-child-next/compare/@botui/chat-controller@1.1.2...@botui/chat-controller@1.1.3) (2021-01-31)
+
+
+### Bug Fixes
+
+* **chat-controller:** fix bug: display collapse bug on IOS ([2e6ec3f](https://github.com/aiji42/botui-child-next/commit/2e6ec3faba13c1ebc38d50619180c28a1e3acd44))
+
+
+
+
+
 ## [1.1.2](https://github.com/aiji42/botui-child-next/compare/@botui/chat-controller@1.1.1...@botui/chat-controller@1.1.2) (2021-01-28)
 
 **Note:** Version bump only for package @botui/chat-controller

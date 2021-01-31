@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.5](https://github.com/aiji42/botui-child-next/compare/use-cors-state@1.1.4...use-cors-state@1.1.5) (2021-01-31)
+
+
+### Bug Fixes
+
+* **use-cors-state:** add exponential error handling ([bbf604d](https://github.com/aiji42/botui-child-next/commit/bbf604d607d6ecfe38b3d8391af7627c0d9a9952))
+
+
+
+
+
 ## [1.1.4](https://github.com/aiji42/botui-child-next/compare/use-cors-state@1.1.3...use-cors-state@1.1.4) (2021-01-23)
 
 **Note:** Version bump only for package use-cors-state

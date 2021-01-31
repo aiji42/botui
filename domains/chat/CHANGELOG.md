@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1](https://github.com/aiji42/botui-child-next/compare/@botui-domain/chat@1.1.0...@botui-domain/chat@1.1.1) (2021-01-31)
+
+
+### Bug Fixes
+
+* **chat:** fix bug: display collapse bug on IOS ([7cde9c1](https://github.com/aiji42/botui-child-next/commit/7cde9c18a63a3b757523cb477ebfe73b6c4fbf67))
+
+
+
+
+
 # [1.1.0](https://github.com/aiji42/botui-child-next/compare/@botui-domain/chat@1.0.5...@botui-domain/chat@1.1.0) (2021-01-30)
 
 
