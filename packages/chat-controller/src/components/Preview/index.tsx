@@ -26,6 +26,7 @@ export const Preview: FC<{
         height="100%"
         width="100%"
         frameBorder="no"
+        style={{ minHeight: '-webkit-fill-available' }}
       />
       {!!iframeElement?.contentWindow && initProposals.length && (
         <Controller
