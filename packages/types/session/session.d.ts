@@ -31,7 +31,12 @@ export interface Images {
   agent?: string
 }
 
-export interface Session<T = Proposals, U = Theme, V = Images> {
+export interface Launcher {
+  defaultOpen: boolean
+  size: 'full' | 'widget' | 'auto'
+}
+
+export interface Session<T = Proposals, U = Theme, V = Images, W = Launcher> {
   id: string
   title: string
   owner: string
@@ -40,6 +45,7 @@ export interface Session<T = Proposals, U = Theme, V = Images> {
   proposals: T
   images: V
   email?: string
+  launcher: W
 }
 
 export interface ChatConfig extends Omit<Session, 'proposals'> {
