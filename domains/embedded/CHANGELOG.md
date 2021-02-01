@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.8](https://github.com/aiji42/botui-child-next/compare/@botui-domain/embedded@1.1.7...@botui-domain/embedded@1.1.8) (2021-02-01)
+
+
+### Bug Fixes
+
+* **embedded:** fix loading spinner ([5656232](https://github.com/aiji42/botui-child-next/commit/56562323ac04b7db1a004c51339e4905b3a41d30))
+
+
+
+
+
 ## [1.1.7](https://github.com/aiji42/botui-child-next/compare/@botui-domain/embedded@1.1.6...@botui-domain/embedded@1.1.7) (2021-01-31)
 
 **Note:** Version bump only for package @botui-domain/embedded

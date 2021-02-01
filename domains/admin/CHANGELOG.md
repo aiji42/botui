@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.1](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.4.0...@botui-domain/admin@1.4.1) (2021-02-01)
+
+
+### Bug Fixes
+
+* **admin:** update proposalTemplates ([9838485](https://github.com/aiji42/botui-child-next/commit/9838485780601d6dd682aaf3453ed18f6a9b487f))
+
+
+
+
+
 # [1.4.0](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.3.1...@botui-domain/admin@1.4.0) (2021-01-31)
 
 

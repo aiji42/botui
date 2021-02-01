@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.5](https://github.com/aiji42/botui-child-next/compare/@botui/chat-controller@1.1.4...@botui/chat-controller@1.1.5) (2021-02-01)
+
+
+### Bug Fixes
+
+* **chat-controller:** controll state of loading iframe ([05f7139](https://github.com/aiji42/botui-child-next/commit/05f71396c3ed24a0a00eb99640c51e38814f8aea))
+
+
+
+
+
 ## [1.1.4](https://github.com/aiji42/botui-child-next/compare/@botui/chat-controller@1.1.3...@botui/chat-controller@1.1.4) (2021-01-31)
 
 **Note:** Version bump only for package @botui/chat-controller
