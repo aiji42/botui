@@ -28,9 +28,9 @@ export const Preview: FC<Props> = (props) => {
 
   return (
     <>
-      {session && (
-        <Wrapper isFull={isFull} isOpen={open}>
-          {!loaded && <Spinner />}
+      <Wrapper isFull={isFull} isOpen={open}>
+        {!loaded && <Spinner />}
+        {session && (
           <BotuiPreview
             proposals={session.proposals}
             chatConfig={{
@@ -41,8 +41,8 @@ export const Preview: FC<Props> = (props) => {
               onClose: handleClose
             }}
           />
-        </Wrapper>
-      )}
+        )}
+      </Wrapper>
       <Fab onClick={toggleOpen} isOpen={open} />
     </>
   )

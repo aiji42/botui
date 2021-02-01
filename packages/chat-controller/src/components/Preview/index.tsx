@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useCallback, useState } from 'react'
 import { Controller } from '../Controller'
 import { ChatConfig, Proposals } from '@botui/types'
 
@@ -17,6 +17,8 @@ export const Preview: FC<{
     null
   )
   const [initProposals] = useState<Proposals>(props.proposals)
+  const [loaded, setLoaded] = useState(false)
+  const handleLoaded = useCallback(() => setLoaded(true), [setLoaded])
 
   return (
     <>
@@ -26,9 +28,10 @@ export const Preview: FC<{
         height="100%"
         width="100%"
         frameBorder="no"
+        onLoad={handleLoaded}
         style={{ minHeight: '-webkit-fill-available' }}
       />
-      {!!iframeElement?.contentWindow && initProposals.length && (
+      {!!iframeElement?.contentWindow && initProposals.length && loaded && (
         <Controller
           targetWindow={iframeElement.contentWindow}
           initProposals={initProposals}
