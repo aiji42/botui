@@ -1,5 +1,6 @@
 import typescript from 'rollup-plugin-typescript2'
 import { babel as pluginBabel } from '@rollup/plugin-babel'
+import image from '@rollup/plugin-image'
 import * as path from 'path'
 import pkg from './package.json'
 
@@ -36,6 +37,7 @@ export default {
       babelHelpers: 'bundled',
       extensions,
       configFile: path.resolve(__dirname, '.babelrc.js')
-    })
+    }),
+    image()
   ]
 }
