@@ -7,10 +7,18 @@ import {
   AssignmentOutlined as AssignmentIcon,
   ChatBubbleOutline as ChatBubbleIcon
 } from '@material-ui/icons'
-import { Login, SessionList, SessionCreate, SessionEdit, EntryList } from './components'
+import {
+  Login,
+  SessionList,
+  SessionCreate,
+  SessionEdit,
+  EntryList,
+  CustomizedLayout
+} from './components'
 import { useDataProvider } from './hooks'
 import Amplify from 'aws-amplify'
 import vocabularies from './i18n/amplify/vocabularies'
+import { customizedTheme } from './customizedTheme'
 
 Amplify.I18n.putVocabularies(vocabularies)
 Amplify.I18n.setLanguage('ja')
@@ -29,6 +37,8 @@ const Admin: FC = () => {
       authProvider={buildAuthProvider()}
       i18nProvider={i18nProvider}
       loginPage={Login}
+      layout={CustomizedLayout}
+      theme={customizedTheme}
     >
       <Resource
         name="sessions"
