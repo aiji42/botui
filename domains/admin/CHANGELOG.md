@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.2](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.4.1...@botui-domain/admin@1.4.2) (2021-02-02)
+
+
+### Bug Fixes
+
+* **admin:** bug: unable to register a new session ([1581414](https://github.com/aiji42/botui-child-next/commit/158141455b3418eb3ab6c764ebc8f43cf9acb46e))
+* **admin:** set validation on title of session ([f4f72ad](https://github.com/aiji42/botui-child-next/commit/f4f72ade3579fcaa2a29460575d0515c1a376f85))
+* **admin:** update AppBar: insert logo image ([2b1b255](https://github.com/aiji42/botui-child-next/commit/2b1b255fb26ed442ba90ac1a7f2269efd427e1d9))
+* **admin:** update theme color ([6949878](https://github.com/aiji42/botui-child-next/commit/69498784dfe59603c7a4c54c3dedfb60c693e189))
+
+
+
+
+
 ## [1.4.1](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.4.0...@botui-domain/admin@1.4.1) (2021-02-01)
 
 
