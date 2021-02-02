@@ -10,6 +10,7 @@ import { Grid, Typography, Tooltip } from '@material-ui/core'
 import { useForm } from 'react-final-form'
 import { ec, inquiry, custom } from './proposalTemplates'
 import ThemeColorSelector from './ThemeColorSelector'
+import { Launcher } from '@botui/types'
 
 const proposalsChoices = [
   {
@@ -43,6 +44,10 @@ const FormInner: FC = () => {
   const { change } = useForm()
   change('active', false)
   change('images', '{}')
+  change(
+    'launcher',
+    JSON.stringify({ size: 'auto', defaultOpen: false } as Launcher)
+  )
   return (
     <Grid container spacing={1}>
       <Grid item xs={5}>
