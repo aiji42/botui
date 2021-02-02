@@ -22,6 +22,7 @@ import EmbeddedScriptDialog from './EmbeddedScriptDialog'
 import { Session } from '@botui/types'
 import PreviewDialog from './PreviewDialog'
 import { useFormState } from 'react-final-form'
+import Empty from './Empty'
 
 const EditToolbar: FC<Omit<ToolbarProps, 'width'>> = (props) => {
   const { values: session } = useFormState<Session>()
@@ -36,12 +37,11 @@ const EditToolbar: FC<Omit<ToolbarProps, 'width'>> = (props) => {
 
 export const SessionList: FC = (props) => {
   return (
-    <List {...props} bulkActionButtons={false} exporter={false}>
+    <List {...props} bulkActionButtons={false} exporter={false} empty={<Empty />}>
       <Datagrid>
         <TextField label="タイトル" source="title" sortable={false} />
         <BooleanField label="アクティブ" source="active" />
         <FunctionField<Session>
-          label="プレビュー"
           render={(record) =>
             record ? <PreviewDialog session={record} /> : <></>
           }

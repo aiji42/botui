@@ -48,9 +48,14 @@ const SessionFormInner: FC = () => {
             label="タイトル"
             source="title"
             resource="sessions"
+            validate={[required()]}
             fullWidth
           />
-          <BooleanInput label="アクティブ" source="active" resource="sessions" />
+          <BooleanInput
+            label="アクティブ"
+            source="active"
+            resource="sessions"
+          />
         </Box>
       </Grid>
       <Grid item xs={6} />
