@@ -22,6 +22,7 @@ import {
 } from '@material-ui/core'
 import { Entry } from '@botui/types'
 import { useSessions } from '../../hooks'
+import Empty from './Entry'
 
 export const EntryShow: FC = (props) => (
   <Show {...props}>
@@ -105,7 +106,7 @@ const EntryFilter: FC<Partial<EntryFilterProps>> = (props) => {
 
 export const EntryList: FC = (props) => {
   return (
-    <List {...props} bulkActionButtons={false} filters={<EntryFilter />}>
+    <List {...props} bulkActionButtons={false} filters={<EntryFilter />} empty={<Empty />}>
       <Datagrid expand={<EntryShow />} rowClick="expand">
         <TextField source="id" sortable={false} />
         <ReferenceField source="sessionId" reference="sessions">
