@@ -11,7 +11,6 @@ import { Session } from '@botui/types'
 import { mutations, queries } from '@botui/api'
 
 const sessionParse = (data: Session<string, string, string, string>): Session => {
-  console.log(data)
   const proposals = data.proposals ? JSON.parse(data.proposals) : []
   const theme = data.theme ? JSON.parse(data.theme) : {}
   const images = data.images ? JSON.parse(data.images) : {}
@@ -20,7 +19,6 @@ const sessionParse = (data: Session<string, string, string, string>): Session =>
 }
 
 const sessionFormat = (data: Session): Session<string, string, string, string> => {
-  console.log(data)
   const proposals = data.proposals ? JSON.stringify(data.proposals) : '[]'
   const theme = data.theme ? JSON.stringify(data.theme) : '{}'
   const images = data.images ? JSON.stringify(data.images) : '{}'
