@@ -5,7 +5,7 @@ import { Card, CardMedia, CardActionArea, makeStyles } from '@material-ui/core'
 const useStyles = makeStyles((theme) => ({
   selectedRadioImageCard: {
     border: 'solid',
-    borderColor: theme.palette.secondary.main
+    borderColor: theme.palette.primary.main
   }
 }))
 
