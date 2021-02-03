@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/aiji42/botui-child-next/compare/@botui-domain/embedded@1.1.8...@botui-domain/embedded@1.2.0) (2021-02-03)
+
+
+### Bug Fixes
+
+* **embedded:** onClose delay 3 seconds ([006673c](https://github.com/aiji42/botui-child-next/commit/006673c5ef614321108d4038ee210eadf20d5759))
+
+
+### Features
+
+* **embedded:** add ClearButton when full size ([a60e85f](https://github.com/aiji42/botui-child-next/commit/a60e85f9574801e6edd3a81dba28befe2f006771))
+* **embedded:** use active data flag sessin ([55be6d3](https://github.com/aiji42/botui-child-next/commit/55be6d36ca870ad0cdb64508738dbaede42fe038))
+* **embedded:** use launcher data of session ([31f6557](https://github.com/aiji42/botui-child-next/commit/31f655703b4fd523d605cba6b9e220638c9f7f96))
+
+
+
+
+
 ## [1.1.8](https://github.com/aiji42/botui-child-next/compare/@botui-domain/embedded@1.1.7...@botui-domain/embedded@1.1.8) (2021-02-01)
 
 

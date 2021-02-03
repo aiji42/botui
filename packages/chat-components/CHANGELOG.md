@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.4](https://github.com/aiji42/botui-child-next/compare/@botui/chat-components@1.1.3...@botui/chat-components@1.1.4) (2021-02-03)
+
+
+### Bug Fixes
+
+* **chat-components:** fix text color of radio group and checkbox ([dc8f299](https://github.com/aiji42/botui-child-next/commit/dc8f299df94a2de593e15f05ae0fb69aa623cd8e))
+
+
+
+
+
 ## [1.1.3](https://github.com/aiji42/botui-child-next/compare/@botui/chat-components@1.1.2...@botui/chat-components@1.1.3) (2021-01-31)
 
 **Note:** Version bump only for package @botui/chat-components

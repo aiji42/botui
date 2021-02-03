@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.4](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.4.3...@botui-domain/admin@1.4.4) (2021-02-03)
+
+
+### Bug Fixes
+
+* **admin:** update EmbeddedScriptDialog ([1a457c0](https://github.com/aiji42/botui-child-next/commit/1a457c0de4a8dd21df46d1bae214642deac74314))
+
+
+
+
+
 ## [1.4.3](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.4.2...@botui-domain/admin@1.4.3) (2021-02-02)
 
 **Note:** Version bump only for package @botui-domain/admin
