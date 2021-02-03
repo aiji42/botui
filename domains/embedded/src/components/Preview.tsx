@@ -26,25 +26,25 @@ export const Preview: FC<Props> = (props) => {
   const narrow = useRef(window.innerWidth < 600)
   const isFull = size === 'full' || (narrow.current && size === 'auto')
 
-  return (
+  return session?.active ? (
     <>
       <Wrapper isFull={isFull} isOpen={open}>
         {!loaded && <Spinner />}
-        {session && (
-          <BotuiPreview
-            proposals={session.proposals}
-            chatConfig={{
-              ...omitProposal(session),
-              percentOfProgress: 0,
-              messages: [],
-              onStart: handleStart,
-              onClose: handleClose
-            }}
-          />
-        )}
+        <BotuiPreview
+          proposals={session.proposals}
+          chatConfig={{
+            ...omitProposal(session),
+            percentOfProgress: 0,
+            messages: [],
+            onStart: handleStart,
+            onClose: handleClose
+          }}
+        />
       </Wrapper>
       <Fab onClick={toggleOpen} isOpen={open} />
     </>
+  ) : (
+    <></>
   )
 }
 
