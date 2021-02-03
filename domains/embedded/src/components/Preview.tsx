@@ -18,7 +18,7 @@ export const Preview: FC<Props> = ({ sessionId }) => {
     !open && setLoaded(false)
   }, [open])
   const handleStart = useCallback(() => setLoaded(true), [setLoaded])
-  const handleClose = useCallback(() => setOpen(false), [setOpen])
+  const handleClose = useCallback(() => setTimeout(() => setOpen(false), 3000), [setOpen])
   const toggleOpen = useCallback(() => setOpen((prev) => !prev), [setOpen])
   const narrow = useRef(window.innerWidth < 600)
   const isFull = useMemo(
