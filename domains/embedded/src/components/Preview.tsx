@@ -1,50 +1,61 @@
-import React, { FC, useEffect, useState, useCallback, useRef } from 'react'
+import React, { FC, useEffect, useState, useCallback, useRef, useMemo } from 'react'
 import { Spinner } from './Spinner'
 import { Wrapper } from './Wrapper'
+import { ClearButton } from './ClearButton'
 import { Preview as BotuiPreview } from '@botui/chat-controller'
 import { Fab } from './Fab'
 import { useFetchSession } from '@botui/chat-hooks'
-import { Session, Launcher } from '@botui/types'
+import { Session } from '@botui/types'
 
 interface Props {
   sessionId: string
-  defaultOpen?: boolean
-  size?: Launcher['size']
 }
 
-export const Preview: FC<Props> = (props) => {
-  const { defaultOpen = false, size = 'auto' } = props
-  const session = useFetchSession(props.sessionId)
-  const [open, setOpen] = useState<boolean>(defaultOpen)
+export const Preview: FC<Props> = ({ sessionId }) => {
+  const session = useFetchSession(sessionId)
+  const [open, setOpen] = useState<boolean>(false)
   const [loaded, setLoaded] = useState<boolean>(false)
   useEffect(() => {
     !open && setLoaded(false)
   }, [open])
   const handleStart = useCallback(() => setLoaded(true), [setLoaded])
-  const handleClose = useCallback(() => setOpen(false), [setOpen])
+  const handleClose = useCallback(() => setTimeout(() => setOpen(false), 3000), [setOpen])
   const toggleOpen = useCallback(() => setOpen((prev) => !prev), [setOpen])
   const narrow = useRef(window.innerWidth < 600)
-  const isFull = size === 'full' || (narrow.current && size === 'auto')
+  const isFull = useMemo(
+    () =>
+      session?.launcher.size === 'full' ||
+      (narrow.current && session?.launcher.size === 'auto'),
+    [session]
+  )
+  const isSessionLoaded = useRef(false)
+  useEffect(() => {
+    if (session && !isSessionLoaded.current) {
+      session.launcher.defaultOpen && setOpen(true)
+      isSessionLoaded.current = true
+    }
+  }, [session])
 
-  return (
+  return session?.active ? (
     <>
       <Wrapper isFull={isFull} isOpen={open}>
         {!loaded && <Spinner />}
-        {session && (
-          <BotuiPreview
-            proposals={session.proposals}
-            chatConfig={{
-              ...omitProposal(session),
-              percentOfProgress: 0,
-              messages: [],
-              onStart: handleStart,
-              onClose: handleClose
-            }}
-          />
-        )}
+        {isFull && <ClearButton onClick={toggleOpen} />}
+        <BotuiPreview
+          proposals={session.proposals}
+          chatConfig={{
+            ...omitProposal(session),
+            percentOfProgress: 0,
+            messages: [],
+            onStart: handleStart,
+            onClose: handleClose
+          }}
+        />
       </Wrapper>
       <Fab onClick={toggleOpen} isOpen={open} />
     </>
+  ) : (
+    <></>
   )
 }
 

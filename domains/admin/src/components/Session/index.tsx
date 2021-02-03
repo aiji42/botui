@@ -30,7 +30,7 @@ const EditToolbar: FC<Omit<ToolbarProps, 'width'>> = (props) => {
     <Toolbar {...props}>
       <SaveButton disabled={props.pristine} style={{ marginRight: 8 }} />
       <PreviewDialog session={session} />
-      <EmbeddedScriptDialog session={session} disabled={!props.pristine} />
+      <EmbeddedScriptDialog session={session} />
     </Toolbar>
   )
 }
