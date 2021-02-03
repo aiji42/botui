@@ -13,6 +13,9 @@ import {
 } from '@botui/types'
 
 const style = {
+  base: css({
+    color: '#757575'
+  }),
   margin: css({
     marginTop: 5
   })
@@ -26,7 +29,7 @@ const Form: FC<
   return (
     <form onSubmit={handleSubmit}>
       {inputs.map(({ title, ...attributes }, index) => (
-        <div key={index} css={index > 0 ? style.margin : ''}>
+        <div key={index} css={[style.base, index > 0 ? style.margin : '']}>
           <Field title={title} {...attributes} name={name} as={RadioInput} />
         </div>
       ))}
