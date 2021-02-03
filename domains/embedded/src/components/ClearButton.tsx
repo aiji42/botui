@@ -6,8 +6,8 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 const useStyles = makeStyles((theme) => ({
   iconButton: {
     position: 'absolute',
-    top: 0,
-    right: 0,
+    top: theme.spacing(1),
+    right: theme.spacing(1),
     color: theme.palette.primary.contrastText
   }
 }))

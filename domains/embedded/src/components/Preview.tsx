@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState, useCallback, useRef, useMemo } from 'react'
 import { Spinner } from './Spinner'
 import { Wrapper } from './Wrapper'
+import { ClearButton } from './ClearButton'
 import { Preview as BotuiPreview } from '@botui/chat-controller'
 import { Fab } from './Fab'
 import { useFetchSession } from '@botui/chat-hooks'
@@ -39,6 +40,7 @@ export const Preview: FC<Props> = ({ sessionId }) => {
     <>
       <Wrapper isFull={isFull} isOpen={open}>
         {!loaded && <Spinner />}
+        {isFull && <ClearButton onClick={toggleOpen} />}
         <BotuiPreview
           proposals={session.proposals}
           chatConfig={{
