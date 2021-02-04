@@ -40,24 +40,39 @@ const useStyles = makeStyles((theme) => ({
 
 export function Login() {
   const classes = useStyles()
+  const [{ mode, email }, controller] = useState({ mode: 'SignIn', email: '' })
 
   return (
     <Grid container component="main" className={classes.root}>
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <SignIn />
-        <SignUp />
-        <ConfirmSignUp email="aaaaaa" />
-        <ForgotPassword />
-        <ResetPassword email="aaaaaa" />
+        {mode === 'SignIn' && <SignIn email={email} controller={controller} />}
+        {mode === 'SignUp' && <SignUp controller={controller} />}
+        {mode === 'ConfirmSignUp' && (
+          <ConfirmSignUp email={email} controller={controller} />
+        )}
+        {mode === 'ForgotPassword' && (
+          <ForgotPassword email={email} controller={controller} />
+        )}
+        {mode === 'ResetPassword' && (
+          <ResetPassword email={email} controller={controller} />
+        )}
       </Grid>
     </Grid>
   )
 }
 
-const SignIn: FC = () => {
+type Controller = React.Dispatch<React.SetStateAction<{
+    mode: string
+    email: string
+}>>
+
+const SignIn: FC<{ controller: Controller; email: string }> = ({ controller, email: defaultEmail }) => {
   const classes = useStyles()
-  const [{ email, password }, setDataset] = useState({ email: '', password: '' })
+  const [{ email, password }, setDataset] = useState({
+    email: defaultEmail,
+    password: ''
+  })
   const [errorMessage, setErrorMessage] = useState('')
   const handleSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
@@ -74,7 +89,7 @@ const SignIn: FC = () => {
         <LockOutlinedIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
-        Sign in
+        サインイン
       </Typography>
       <form onSubmit={handleSubmit}>
         <TextField
@@ -83,11 +98,14 @@ const SignIn: FC = () => {
           required
           fullWidth
           id="email"
-          label="Email Address"
+          label="メールアドレス"
           name="email"
           autoComplete="email"
           autoFocus
-          onChange={(e) => setDataset((prev) => ({ ...prev, email: e.target.value }))}
+          defaultValue={defaultEmail}
+          onChange={(e) =>
+            setDataset((prev) => ({ ...prev, email: e.target.value }))
+          }
         />
         <TextField
           variant="outlined"
@@ -95,11 +113,13 @@ const SignIn: FC = () => {
           required
           fullWidth
           name="password"
-          label="Password"
+          label="パスワード"
           type="password"
           id="password"
           autoComplete="current-password"
-          onChange={(e) => setDataset((prev) => ({ ...prev, password: e.target.value }))}
+          onChange={(e) =>
+            setDataset((prev) => ({ ...prev, password: e.target.value }))
+          }
         />
         <Button
           fullWidth
@@ -108,19 +128,35 @@ const SignIn: FC = () => {
           color="primary"
           className={classes.submit}
         >
-          Sign In
+          サインイン
         </Button>
-        <Box textAlign="center" mb={2}><Typography variant="caption" color="error">{errorMessage}</Typography></Box>
+        <Box textAlign="center" mb={2}>
+          <Typography variant="caption" color="error">
+            {errorMessage}
+          </Typography>
+        </Box>
       </form>
       <Grid container>
         <Grid item xs>
-          <Link href="#" variant="body2">
-            Forgot password?
+          <Link
+            variant="body2"
+            onClick={(e: React.SyntheticEvent) => {
+              e.preventDefault()
+              controller({ mode: 'ForgotPassword', email })
+            }}
+          >
+            パスワードを忘れた場合はこちら
           </Link>
         </Grid>
         <Grid item>
-          <Link href="#" variant="body2">
-            Don't have an account? Sign Up
+          <Link
+            variant="body2"
+            onClick={(e: React.SyntheticEvent) => {
+              e.preventDefault()
+              controller({ mode: 'SignUp', email })
+            }}
+          >
+            新規登録
           </Link>
         </Grid>
       </Grid>
@@ -128,7 +164,7 @@ const SignIn: FC = () => {
   )
 }
 
-const SignUp: FC = () => {
+const SignUp: FC<{ controller: Controller }> = ({ controller }) => {
   const classes = useStyles()
   const [{ email, password }, setDataset] = useState({
     email: '',
@@ -138,9 +174,11 @@ const SignUp: FC = () => {
   const handleSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      Auth.signUp(email, password).then(console.log).catch((err) => setErrorMessage(I18n.get(err.message)))
+      Auth.signUp(email, password)
+        .then(() => controller({ mode: 'ConfirmSignUp', email }))
+        .catch((err) => setErrorMessage(I18n.get(err.message)))
     },
-    [email, password]
+    [email, password, controller]
   )
   return (
     <div className={classes.paper}>
@@ -148,7 +186,7 @@ const SignUp: FC = () => {
         <LockOutlinedIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
-        Sign Up
+        新規登録
       </Typography>
       <form onSubmit={handleSubmit}>
         <TextField
@@ -157,7 +195,7 @@ const SignUp: FC = () => {
           required
           fullWidth
           id="email"
-          label="Email Address"
+          label="メールアドレス"
           name="email"
           autoComplete="email"
           autoFocus
@@ -171,7 +209,7 @@ const SignUp: FC = () => {
           required
           fullWidth
           name="password"
-          label="Password"
+          label="パスワード"
           type="password"
           id="password"
           autoComplete="new-password"
@@ -186,19 +224,24 @@ const SignUp: FC = () => {
           color="primary"
           className={classes.submit}
         >
-          Sign Up
+          確認コードを受取る
         </Button>
-        <Box textAlign="center" mb={2}><Typography variant="caption" color="error">{errorMessage}</Typography></Box>
+        <Box textAlign="center" mb={2}>
+          <Typography variant="caption" color="error">
+            {errorMessage}
+          </Typography>
+        </Box>
       </form>
       <Grid container>
         <Grid item xs>
-          <Link href="#" variant="body2">
-            Forgot password?
-          </Link>
-        </Grid>
-        <Grid item>
-          <Link href="#" variant="body2">
-            Don't have an account? Sign Up
+          <Link
+            variant="body2"
+            onClick={(e: React.SyntheticEvent) => {
+              e.preventDefault()
+              controller({ mode: 'SignIn', email })
+            }}
+          >
+            サインイン
           </Link>
         </Grid>
       </Grid>
@@ -206,7 +249,7 @@ const SignUp: FC = () => {
   )
 }
 
-const ConfirmSignUp: FC<{ email: string }> = ({ email }) => {
+const ConfirmSignUp: FC<{ email: string, controller: Controller }> = ({ email, controller }) => {
   // メアド・コード
   const classes = useStyles()
   const [{ code }, setDataset] = useState({
@@ -226,7 +269,7 @@ const ConfirmSignUp: FC<{ email: string }> = ({ email }) => {
         <LockOutlinedIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
-        Sign Up
+        アカウント認証
       </Typography>
       <form onSubmit={handleSubmit}>
         <TextField
@@ -235,7 +278,7 @@ const ConfirmSignUp: FC<{ email: string }> = ({ email }) => {
           required
           fullWidth
           name="code"
-          label="code"
+          label="確認コード(メールをご確認ください)"
           id="code"
           autoComplete="one-time-code"
           onChange={(e) =>
@@ -249,19 +292,18 @@ const ConfirmSignUp: FC<{ email: string }> = ({ email }) => {
           color="primary"
           className={classes.submit}
         >
-          Sign Up
+          アカウントを認証する
         </Button>
-        <Box textAlign="center" mb={2}><Typography variant="caption" color="error">{errorMessage}</Typography></Box>
+        <Box textAlign="center" mb={2}>
+          <Typography variant="caption" color="error">
+            {errorMessage}
+          </Typography>
+        </Box>
       </form>
       <Grid container>
         <Grid item xs>
           <Link href="#" variant="body2">
-            Forgot password?
-          </Link>
-        </Grid>
-        <Grid item>
-          <Link href="#" variant="body2">
-            Don't have an account? Sign Up
+            確認コードを再送する
           </Link>
         </Grid>
       </Grid>
@@ -269,17 +311,21 @@ const ConfirmSignUp: FC<{ email: string }> = ({ email }) => {
   )
 }
 
-const ForgotPassword: FC = () => {
+const ForgotPassword: FC<{ controller: Controller; email: string }> = ({
+  controller, email: defaultEmail
+}) => {
   // メアド
   const classes = useStyles()
-  const [{ email }, setDataset] = useState({ email: '' })
+  const [{ email }, setDataset] = useState({ email: defaultEmail })
   const [errorMessage, setErrorMessage] = useState('')
   const handleSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      Auth.forgotPassword(email).then(console.log).catch((err) => setErrorMessage(I18n.get(err.message)))
+      Auth.forgotPassword(email)
+        .then(() => controller({ mode: 'ResetPassword', email }))
+        .catch((err) => setErrorMessage(I18n.get(err.message)))
     },
-    [email]
+    [email, controller]
   )
   return (
     <div className={classes.paper}>
@@ -287,7 +333,7 @@ const ForgotPassword: FC = () => {
         <LockOutlinedIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
-        Forgot Password
+        パスワードリセット
       </Typography>
       <form onSubmit={handleSubmit}>
         <TextField
@@ -296,10 +342,11 @@ const ForgotPassword: FC = () => {
           required
           fullWidth
           id="email"
-          label="Email Address"
+          label="メールアドレス"
           name="email"
           autoComplete="email"
           autoFocus
+          defaultValue={defaultEmail}
           onChange={(e) =>
             setDataset((prev) => ({ ...prev, email: e.target.value }))
           }
@@ -311,19 +358,35 @@ const ForgotPassword: FC = () => {
           color="primary"
           className={classes.submit}
         >
-          Forgot Password
+          リセット用の確認コードを受取る
         </Button>
-        <Box textAlign="center" mb={2}><Typography variant="caption" color="error">{errorMessage}</Typography></Box>
+        <Box textAlign="center" mb={2}>
+          <Typography variant="caption" color="error">
+            {errorMessage}
+          </Typography>
+        </Box>
       </form>
       <Grid container>
         <Grid item xs>
-          <Link href="#" variant="body2">
-            Forgot password?
+          <Link
+            variant="body2"
+            onClick={(e: React.SyntheticEvent) => {
+              e.preventDefault()
+              controller((prev) => ({ ...prev, mode: 'SignIn' }))
+            }}
+          >
+            サインイン
           </Link>
         </Grid>
         <Grid item>
-          <Link href="#" variant="body2">
-            Don't have an account? Sign Up
+          <Link
+            variant="body2"
+            onClick={(e: React.SyntheticEvent) => {
+              e.preventDefault()
+              controller((prev) => ({ ...prev, mode: 'SignUp' }))
+            }}
+          >
+            新規登録
           </Link>
         </Grid>
       </Grid>
@@ -331,7 +394,7 @@ const ForgotPassword: FC = () => {
   )
 }
 
-const ResetPassword: FC<{ email: string }> = ({ email }) => {
+const ResetPassword: FC<{ email: string; controller: Controller }> = ({ email, controller }) => {
   // メアド・コード・newパスワード
   const classes = useStyles()
   const [{ code, password }, setDataset] = useState({
@@ -343,10 +406,10 @@ const ResetPassword: FC<{ email: string }> = ({ email }) => {
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
       Auth.forgotPasswordSubmit(email, code, password)
-        .then(console.log)
+        .then(() => controller({ mode: 'SignIn', email }))
         .catch((err) => setErrorMessage(I18n.get(err.message)))
     },
-    [email, code, password]
+    [email, code, password, controller]
   )
   return (
     <div className={classes.paper}>
@@ -354,7 +417,7 @@ const ResetPassword: FC<{ email: string }> = ({ email }) => {
         <LockOutlinedIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
-        Reset Password
+        パスワードリセット
       </Typography>
       <form onSubmit={handleSubmit}>
         <TextField
@@ -363,7 +426,7 @@ const ResetPassword: FC<{ email: string }> = ({ email }) => {
           required
           fullWidth
           name="code"
-          label="code"
+          label="確認コード(メールをご確認ください)"
           id="code"
           autoComplete="one-time-code"
           onChange={(e) =>
@@ -376,7 +439,7 @@ const ResetPassword: FC<{ email: string }> = ({ email }) => {
           required
           fullWidth
           name="password"
-          label="New Password"
+          label="新しいパスワード"
           type="password"
           id="password"
           autoComplete="new-password"
@@ -391,20 +454,17 @@ const ResetPassword: FC<{ email: string }> = ({ email }) => {
           color="primary"
           className={classes.submit}
         >
-          Reset Password
+          パスワードをリセットする
         </Button>
-        <Box textAlign="center" mb={2}><Typography variant="caption" color="error">{errorMessage}</Typography></Box>
+        <Box textAlign="center" mb={2}>
+          <Typography variant="caption" color="error">
+            {errorMessage}
+          </Typography>
+        </Box>
       </form>
       <Grid container>
         <Grid item xs>
-          <Link href="#" variant="body2">
-            Forgot password?
-          </Link>
-        </Grid>
-        <Grid item>
-          <Link href="#" variant="body2">
-            Don't have an account? Sign Up
-          </Link>
+          <Link variant="body2">コードを再送する</Link>
         </Grid>
       </Grid>
     </div>
