@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 export function Login() {
   const classes = useStyles()
-  const [{ mode, email }, controller] = useState({ mode: 'SignIn', email: '' })
+  const [{ mode, email, password }, controller] = useState({ mode: 'SignIn', email: '', password: '' })
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -49,7 +49,7 @@ export function Login() {
         {mode === 'SignIn' && <SignIn email={email} controller={controller} />}
         {mode === 'SignUp' && <SignUp controller={controller} />}
         {mode === 'ConfirmSignUp' && (
-          <ConfirmSignUp email={email} controller={controller} />
+          <ConfirmSignUp email={email} controller={controller} password={password} />
         )}
         {mode === 'ForgotPassword' && (
           <ForgotPassword email={email} controller={controller} />
@@ -63,8 +63,9 @@ export function Login() {
 }
 
 type Controller = React.Dispatch<React.SetStateAction<{
-    mode: string
-    email: string
+  mode: string
+  email: string
+  password: string
 }>>
 
 const SignIn: FC<{ controller: Controller; email: string }> = ({ controller, email: defaultEmail }) => {
@@ -73,15 +74,21 @@ const SignIn: FC<{ controller: Controller; email: string }> = ({ controller, ema
     email: defaultEmail,
     password: ''
   })
+  const history = useHistory()
   const [errorMessage, setErrorMessage] = useState('')
   const handleSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
       Auth.signIn(email, password)
-        .then(console.log)
-        .catch((err) => setErrorMessage(I18n.get(err.message)))
+        .then(() => history.push('/'))
+        .catch((err) => {
+          if (err.code === 'UserNotConfirmedException') {
+            controller({ mode: 'ConfirmSignUp', email, password: '' })
+          }
+          setErrorMessage(I18n.get(err.message))
+        })
     },
-    [email, password]
+    [email, password, history, controller]
   )
   return (
     <div className={classes.paper}>
@@ -142,7 +149,7 @@ const SignIn: FC<{ controller: Controller; email: string }> = ({ controller, ema
             variant="body2"
             onClick={(e: React.SyntheticEvent) => {
               e.preventDefault()
-              controller({ mode: 'ForgotPassword', email })
+              controller({ mode: 'ForgotPassword', email, password: '' })
             }}
           >
             パスワードを忘れた場合はこちら
@@ -153,7 +160,7 @@ const SignIn: FC<{ controller: Controller; email: string }> = ({ controller, ema
             variant="body2"
             onClick={(e: React.SyntheticEvent) => {
               e.preventDefault()
-              controller({ mode: 'SignUp', email })
+              controller({ mode: 'SignUp', email, password: '' })
             }}
           >
             新規登録
@@ -175,7 +182,7 @@ const SignUp: FC<{ controller: Controller }> = ({ controller }) => {
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
       Auth.signUp(email, password)
-        .then(() => controller({ mode: 'ConfirmSignUp', email }))
+        .then(() => controller({ mode: 'ConfirmSignUp', email, password }))
         .catch((err) => setErrorMessage(I18n.get(err.message)))
     },
     [email, password, controller]
@@ -238,7 +245,7 @@ const SignUp: FC<{ controller: Controller }> = ({ controller }) => {
             variant="body2"
             onClick={(e: React.SyntheticEvent) => {
               e.preventDefault()
-              controller({ mode: 'SignIn', email })
+              controller({ mode: 'SignIn', email, password: '' })
             }}
           >
             サインイン
@@ -249,19 +256,38 @@ const SignUp: FC<{ controller: Controller }> = ({ controller }) => {
   )
 }
 
-const ConfirmSignUp: FC<{ email: string, controller: Controller }> = ({ email, controller }) => {
-  // メアド・コード
+const ConfirmSignUp: FC<{ email: string; password: string; controller: Controller }> = ({ email, password, controller }) => {
   const classes = useStyles()
   const [{ code }, setDataset] = useState({
     code: ''
   })
+  const history = useHistory()
   const [errorMessage, setErrorMessage] = useState('')
   const handleSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      Auth.confirmSignUp(email, code).then(console.log).catch((err) => setErrorMessage(I18n.get(err.message)))
+      Auth.confirmSignUp(email, code)
+        .then(() => {
+          if (!password) {
+            controller({ mode: 'SignIn', email, password: '' })
+            return
+          }
+          Auth.signIn(email, password)
+            .then(() => history.push('/'))
+            .catch((err) => setErrorMessage(I18n.get(err.message)))
+        })
+        .catch((err) => setErrorMessage(I18n.get(err.message)))
     },
-    [email, code]
+    [email, code, password, history, controller]
+  )
+  const handleResendCode = useCallback(
+    (e: React.SyntheticEvent) => {
+      e.preventDefault()
+      Auth.resendSignUp(email).catch((err) =>
+        setErrorMessage(I18n.get(err.message))
+      )
+    },
+    [email]
   )
   return (
     <div className={classes.paper}>
@@ -302,7 +328,7 @@ const ConfirmSignUp: FC<{ email: string, controller: Controller }> = ({ email, c
       </form>
       <Grid container>
         <Grid item xs>
-          <Link href="#" variant="body2">
+          <Link variant="body2" onClick={handleResendCode}>
             確認コードを再送する
           </Link>
         </Grid>
@@ -322,7 +348,7 @@ const ForgotPassword: FC<{ controller: Controller; email: string }> = ({
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
       Auth.forgotPassword(email)
-        .then(() => controller({ mode: 'ResetPassword', email }))
+        .then(() => controller({ mode: 'ResetPassword', email, password: '' }))
         .catch((err) => setErrorMessage(I18n.get(err.message)))
     },
     [email, controller]
@@ -406,10 +432,18 @@ const ResetPassword: FC<{ email: string; controller: Controller }> = ({ email, c
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
       Auth.forgotPasswordSubmit(email, code, password)
-        .then(() => controller({ mode: 'SignIn', email }))
+        .then(() => controller({ mode: 'SignIn', email, password: '' }))
         .catch((err) => setErrorMessage(I18n.get(err.message)))
     },
     [email, code, password, controller]
+  )
+  const handleResendCode = useCallback(
+    (e: React.SyntheticEvent) => {
+      e.preventDefault()
+      Auth.forgotPassword(email)
+        .catch((err) => setErrorMessage(I18n.get(err.message)))
+    },
+    [email]
   )
   return (
     <div className={classes.paper}>
@@ -464,7 +498,9 @@ const ResetPassword: FC<{ email: string; controller: Controller }> = ({ email, c
       </form>
       <Grid container>
         <Grid item xs>
-          <Link variant="body2">コードを再送する</Link>
+          <Link variant="body2" onClick={handleResendCode}>
+            コードを再送する
+          </Link>
         </Grid>
       </Grid>
     </div>
