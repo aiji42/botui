@@ -1,6 +1,6 @@
 {
   "name": "@botui-domain/chat",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "author": "Aiji Uejima <aiji42@gmail.com>",
   "license": "MIT",
   "main": "build/Chat.js",
@@ -18,20 +18,20 @@
     "url": "git+https://github.com/aiji42/botui-child-next.git"
   },
   "dependencies": {
-    "@botui/chat-components": "^1.1.4",
-    "@botui/chat-hooks": "^1.2.1",
+    "@botui/chat-components": "^1.1.5",
+    "@botui/chat-hooks": "^1.2.2",
     "@emotion/react": "^11.1.4",
     "aws-amplify": "^3.3.17",
     "react-nl2br": "^1.0.1",
     "react-scroll": "^1.8.1",
-    "use-cors-state": "^1.1.6"
+    "use-cors-state": "^1.1.7"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
   "devDependencies": {
-    "@botui/types": "^2.2.0",
+    "@botui/types": "^2.2.1",
     "@types/react-scroll": "^1.8.2",
     "eslint-plugin-flowtype": "^5.2.0",
     "eslint-plugin-import": "^2.22.1",

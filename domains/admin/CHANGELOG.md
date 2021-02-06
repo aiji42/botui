@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.6](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.4.5...@botui-domain/admin@1.4.6) (2021-02-06)
+
+
+### Bug Fixes
+
+* **admin:** remove @aws-amplify/ui-components ([1f85d95](https://github.com/aiji42/botui-child-next/commit/1f85d95f7071c979d297f769b3f31785d8f5c8c7))
+
+
+
+
+
 ## [1.4.5](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.4.4...@botui-domain/admin@1.4.5) (2021-02-06)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@botui/types",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "TypeScript definitions for @botui project.",
   "author": "Aiji Uejima <aiji42@gmail.com>",
   "homepage": "https://github.com/aiji42/botui-child-next#readme",
