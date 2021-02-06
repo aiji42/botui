@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.8](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.4.7...@botui-domain/admin@1.4.8) (2021-02-06)
+
+
+### Bug Fixes
+
+* **admin:** require email in session ([f6b3bd1](https://github.com/aiji42/botui-child-next/commit/f6b3bd1dba2b6bc23d5713e43435572b56198573))
+
+
+
+
+
 ## [1.4.7](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.4.6...@botui-domain/admin@1.4.7) (2021-02-06)
 
 **Note:** Version bump only for package @botui-domain/admin
