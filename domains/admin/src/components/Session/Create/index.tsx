@@ -4,7 +4,8 @@ import {
   required,
   RadioButtonGroupInput,
   SimpleForm,
-  SimpleFormProps
+  SimpleFormProps,
+  email
 } from 'react-admin'
 import { Grid, Typography, Tooltip } from '@material-ui/core'
 import { useForm } from 'react-final-form'
@@ -42,7 +43,7 @@ const Create: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
 
 const FormInner: FC = () => {
   const { change } = useForm()
-  change('active', false)
+  change('active', true)
   change('images', '{}')
   change(
     'launcher',
@@ -51,7 +52,12 @@ const FormInner: FC = () => {
   return (
     <Grid container spacing={1}>
       <Grid item xs={5}>
-        <TextInput source="title" fullWidth validate={[required()]} />
+        <TextInput
+          source="title"
+          label="タイトル"
+          fullWidth
+          validate={[required()]}
+        />
       </Grid>
       <Grid item xs={7} />
       <Grid item xs={12}>
@@ -77,6 +83,16 @@ const FormInner: FC = () => {
           </Grid>
         </Grid>
       </Grid>
+      <Grid item xs={5}>
+        <TextInput
+          source="email"
+          type="email"
+          label="通知用メールアドレス"
+          validate={[required(), email()]}
+          fullWidth
+        />
+      </Grid>
+      <Grid item xs={7} />
     </Grid>
   )
 }

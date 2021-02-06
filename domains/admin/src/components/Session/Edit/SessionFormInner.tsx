@@ -6,7 +6,8 @@ import {
   TextInput,
   BooleanInput,
   required,
-  Labeled
+  Labeled,
+  email
 } from 'react-admin'
 import { ImageInput, ColorInput } from '../parts'
 import isColor from 'is-color'
@@ -128,10 +129,16 @@ const SessionFormInner: FC = () => {
               { id: '/operator_bot1.jpg', name: 'ボット' }
             ]}
           />
-          <TextInput source="email" type="email" fullWidth />
+          <TextInput
+            source="email"
+            type="email"
+            label="通知用メールアドレス"
+            validate={[required(), email()]}
+            fullWidth
+          />
         </Box>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={false}>
         <FormDataConsumer>
           {({ formData }) => (
             <Labeled label="プレビュー">
