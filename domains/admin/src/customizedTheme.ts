@@ -1,11 +1,11 @@
 import { defaultTheme } from 'react-admin'
-import { blue, lightBlue } from '@material-ui/core/colors'
+import { colors } from '@material-ui/core'
 
 export const customizedTheme = {
   ...defaultTheme,
   palette: {
     ...defaultTheme.palette,
-    primary: blue,
-    secondary: lightBlue
+    primary: colors.blue,
+    secondary: colors.lightBlue
   }
 }

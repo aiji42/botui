@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { AppBar } from 'react-admin'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core'
 import logo from './logo.png'
 
 const useStyles = makeStyles({

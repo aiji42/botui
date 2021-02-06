@@ -7,7 +7,7 @@ import {
   createMuiTheme
 } from '@material-ui/core'
 import { customizedTheme } from '../../customizedTheme'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core'
 import { EyeCatch } from './EyeCatch'
 import { Mode, useLoginContext, LoginContextProvider } from './use-login-context'
 import { SignInForm } from './SignInForm'
