@@ -28,6 +28,6 @@
   "dependencies": {
     "@botui/chat-controller": "^1.1.5",
     "@botui/chat-hooks": "^1.2.1",
-    "aws-amplify": "^3.3.14"
+    "aws-amplify": "^3.3.17"
   }
 }
