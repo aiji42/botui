@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.5](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.4.4...@botui-domain/admin@1.4.5) (2021-02-06)
+
+
+### Bug Fixes
+
+* **admin:** update Login page design ([c9cc559](https://github.com/aiji42/botui-child-next/commit/c9cc559420b1f1368b1c09f40cb0dbb21f14026c))
+
+
+
+
+
 ## [1.4.4](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.4.3...@botui-domain/admin@1.4.4) (2021-02-03)
 
 
