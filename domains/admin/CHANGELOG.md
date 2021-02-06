@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.9](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.4.8...@botui-domain/admin@1.4.9) (2021-02-06)
+
+
+### Bug Fixes
+
+* **admin:** fix build error ([b674eaa](https://github.com/aiji42/botui-child-next/commit/b674eaa9f9e5cacdc8cf459a08e2806976113c5e))
+
+
+
+
+
 ## [1.4.8](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.4.7...@botui-domain/admin@1.4.8) (2021-02-06)
 
 
