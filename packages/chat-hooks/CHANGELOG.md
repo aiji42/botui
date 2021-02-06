@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.3](https://github.com/aiji42/botui-child-next/compare/@botui/chat-hooks@1.2.2...@botui/chat-hooks@1.2.3) (2021-02-06)
+
+
+### Bug Fixes
+
+* **chat-hooks:** fix build error ([e0d31ab](https://github.com/aiji42/botui-child-next/commit/e0d31abeb14da4a7550c9e4411b2fec6b6b4c87b))
+
+
+
+
+
 ## [1.2.2](https://github.com/aiji42/botui-child-next/compare/@botui/chat-hooks@1.2.1...@botui/chat-hooks@1.2.2) (2021-02-06)
 
 **Note:** Version bump only for package @botui/chat-hooks

@@ -1,6 +1,6 @@
 {
   "name": "@botui-domain/embedded",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "author": "Aiji Uejima <aiji42@gmail.com>",
   "homepage": "https://github.com/aiji42/botui-child-next#readme",
   "license": "MIT",
@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@botui/chat-controller": "^1.1.6",
-    "@botui/chat-hooks": "^1.2.2",
+    "@botui/chat-hooks": "^1.2.3",
     "aws-amplify": "^3.3.17"
   }
 }

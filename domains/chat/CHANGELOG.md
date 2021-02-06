@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.5](https://github.com/aiji42/botui-child-next/compare/@botui-domain/chat@1.1.4...@botui-domain/chat@1.1.5) (2021-02-06)
+
+**Note:** Version bump only for package @botui-domain/chat
+
+
+
+
+
 ## [1.1.4](https://github.com/aiji42/botui-child-next/compare/@botui-domain/chat@1.1.3...@botui-domain/chat@1.1.4) (2021-02-06)
 
 **Note:** Version bump only for package @botui-domain/chat

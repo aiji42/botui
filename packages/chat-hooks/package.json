@@ -1,6 +1,6 @@
 {
   "name": "@botui/chat-hooks",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "This is a react custom hooks package for chat in the @botui project.",
   "author": "Aiji Uejima <aiji42@gmail.com>",
   "homepage": "https://github.com/aiji42/botui-child-next#readme",
