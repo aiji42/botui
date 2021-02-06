@@ -41,7 +41,6 @@
     "material-ui-color": "^0.4.8",
     "material-ui-dropzone": "^3.5.0",
     "ra-i18n-polyglot": "^3.11.4",
-    "react-admin": "^3.11.4",
     "react-admin-amplify": "^1.2.4",
     "react-final-form": "^6.5.2",
     "react-nl2br": "^1.0.1",

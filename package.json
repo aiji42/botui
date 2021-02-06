@@ -31,9 +31,7 @@
     "release": "lerna publish from-package"
   },
   "dependencies": {
-    "@material-ui/core": "^4.11.3",
-    "@material-ui/icons": "^4.9.1",
-    "@material-ui/styles": "^4.11.3"
+    "react-admin": "^3.11.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.13",
