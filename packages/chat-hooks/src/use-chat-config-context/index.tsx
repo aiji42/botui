@@ -9,7 +9,8 @@ const initialValue: ChatConfig = {
   theme: {},
   images: {},
   messages: [],
-  percentOfProgress: 0
+  percentOfProgress: 0,
+  launcher: { defaultOpen: false, size: 'auto' }
 }
 
 const Context = createContext<ChatConfig>(initialValue)
