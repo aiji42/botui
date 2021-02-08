@@ -36,7 +36,9 @@
     "categories": {
       "auth": {
         "userPoolGroups": {},
-        "botui": {}
+        "botui": {
+          "googleClientId": "676309030528-1p971giko85dl3a1k192l3fu7l86fu4v.apps.googleusercontent.com"
+        }
       },
       "function": {
         "notify": {}

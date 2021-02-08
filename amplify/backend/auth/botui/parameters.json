@@ -29,7 +29,7 @@
         "email"
     ],
     "userpoolClientLambdaRole": "botui554d1d8b_userpoolclient_lambda_role",
-    "userpoolClientSetAttributes": false,
+    "userpoolClientSetAttributes": true,
     "sharedId": "554d1d8b",
     "resourceName": "botui",
     "authSelections": "identityPoolAndUserPool",
@@ -63,5 +63,7 @@
     "permissions": [],
     "dependsOn": [],
     "thirdPartyAuth": true,
-    "authProviders": []
+    "authProviders": [
+        "accounts.google.com"
+    ]
 }

@@ -59,7 +59,7 @@ export const SignInForm: FC = () => {
 }
 
 const Footer: FC = () => {
-  const [, { setDataset }] = useLoginContext()
+  const [, { setDataset, signInByGoogle }] = useLoginContext()
   const handleForgotPassword = (e: React.SyntheticEvent) => {
     e.preventDefault()
     setDataset((prev) => ({ ...prev, mode: Mode.FORGOT_PASSWORD }))
@@ -67,6 +67,10 @@ const Footer: FC = () => {
   const handleSignUp = (e: React.SyntheticEvent) => {
     e.preventDefault()
     setDataset((prev) => ({ ...prev, mode: Mode.SIGN_UP }))
+  }
+  const federateGoogle = (e: React.SyntheticEvent) => {
+    e.preventDefault()
+    signInByGoogle()
   }
   return (
     <Grid container>
@@ -78,6 +82,11 @@ const Footer: FC = () => {
       <Grid item>
         <Link variant="body2" onClick={handleSignUp}>
           新規登録
+        </Link>
+      </Grid>
+      <Grid item>
+        <Link variant="body2" onClick={federateGoogle}>
+          Google
         </Link>
       </Grid>
     </Grid>
