@@ -103,7 +103,7 @@ export const useLoginContext: UseLogin = () => {
   }, [email, password, setAuthSucceed, setError, setLoading, setMode])
 
   const signInByGoogle = useCallback(() => {
-    Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Google }).then(console.log).catch(console.error)
+    Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Google })
   }, [])
 
   const signUp = useCallback(() => {
