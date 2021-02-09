@@ -43,6 +43,7 @@
     "ra-i18n-polyglot": "^3.11.4",
     "react-admin-amplify": "^1.2.4",
     "react-final-form": "^6.5.2",
+    "react-google-button": "^0.7.2",
     "react-nl2br": "^1.0.1",
     "react-router-dom": "^5.2.0",
     "react-syntax-highlighter": "^15.4.3",
