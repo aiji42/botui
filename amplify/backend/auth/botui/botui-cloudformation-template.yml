@@ -157,10 +157,6 @@ Parameters:
   thirdPartyAuth:
     Type: String
             
-        
-  authProviders:
-    Type: CommaDelimitedList
-      
   hostedUIDomainName:
     Type: String
   
@@ -173,6 +169,10 @@ Parameters:
     Type: String
   
             
+        
+  authProviders:
+    Type: CommaDelimitedList
+      
   hostedUIProviderCreds:
     Type: String
   

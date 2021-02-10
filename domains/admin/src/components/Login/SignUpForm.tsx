@@ -1,5 +1,5 @@
 import React, { FC, FormEvent, useCallback } from 'react'
-import { TextField, Link, Grid, Box } from '@material-ui/core'
+import { TextField, Link, Grid, Box, Divider } from '@material-ui/core'
 import { FormWrapper } from './FormWrapper'
 import { Mode, useLoginContext } from './use-login-context'
 import GoogleButton from 'react-google-button'
@@ -29,6 +29,7 @@ export const SignUpForm: FC = () => {
           label="Googleアカウントでサインアップ"
         />
       </Box>
+      <Divider />
       <TextField
         variant="outlined"
         margin="normal"

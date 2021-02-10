@@ -3,7 +3,8 @@ import {
   TextField,
   Link,
   Grid,
-  Box
+  Box,
+  Divider
 } from '@material-ui/core'
 import { FormWrapper } from './FormWrapper'
 import { Mode, useLoginContext } from './use-login-context'
@@ -37,6 +38,7 @@ export const SignInForm: FC = () => {
           label="Googleアカウントでサインイン"
         />
       </Box>
+      <Divider />
       <TextField
         variant="outlined"
         margin="normal"

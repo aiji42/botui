@@ -63,13 +63,13 @@
     "permissions": [],
     "dependsOn": [],
     "thirdPartyAuth": true,
-    "authProviders": [
-        "accounts.google.com"
-    ],
     "hostedUIDomainName": "botui",
     "authProvidersUserPool": [
         "Google"
     ],
     "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"implicit\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3001/\",\"https://dev.chachat.survaq.com/admin/\",\"https://www.chachat.survaq.com/admin/\"],\"LogoutURLs\":[\"http://localhost:3001/logout/\",\"https://dev.chachat.survaq.com/admin/logout/\",\"https://www.chachat.survaq.com/admin/logout/\"]}"
+    "authProviders": [
+        "accounts.google.com"
+    ],
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3001/\",\"https://dev.chachat.survaq.com/admin/\",\"https://www.chachat.survaq.com/admin/\"],\"LogoutURLs\":[\"http://localhost:3001/\",\"https://dev.chachat.survaq.com/admin/\",\"https://www.chachat.survaq.com/admin/\"]}"
 }
