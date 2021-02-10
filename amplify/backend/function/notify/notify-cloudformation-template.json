@@ -68,7 +68,7 @@
         "Layers": [],
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "amplify-botui-dev-143300-deployment",
+          "S3Bucket": "amplify-botui-production-185011-deployment",
           "S3Key": "amplify-builds/notify-2b6669744a434e783850-build.zip"
         }
       }
