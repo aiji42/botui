@@ -3,12 +3,18 @@ import {
   TextField,
   Link,
   Grid,
+  Box,
+  Divider
 } from '@material-ui/core'
 import { FormWrapper } from './FormWrapper'
 import { Mode, useLoginContext } from './use-login-context'
+import GoogleButton from 'react-google-button'
 
 export const SignInForm: FC = () => {
-  const [{ loading, error, email }, { signIn, setDataset }] = useLoginContext()
+  const [
+    { loading, error, email },
+    { signIn, setDataset, signInByGoogle }
+  ] = useLoginContext()
   const handleSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
@@ -25,6 +31,14 @@ export const SignInForm: FC = () => {
       loading={loading}
       footerContent={<Footer />}
     >
+      <Box mb={2}>
+        <GoogleButton
+          onClick={signInByGoogle}
+          style={{ width: '100%' }}
+          label="Googleアカウントでサインイン"
+        />
+      </Box>
+      <Divider />
       <TextField
         variant="outlined"
         margin="normal"

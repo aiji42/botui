@@ -14,7 +14,9 @@
     "categories": {
       "auth": {
         "userPoolGroups": {},
-        "botui": {}
+        "botui": {
+          "googleClientId": "676309030528-4ch5j57cbje5a3tkcsslh1r6iilts7ul.apps.googleusercontent.com"
+        }
       },
       "function": {
         "notify": {}
@@ -36,7 +38,9 @@
     "categories": {
       "auth": {
         "userPoolGroups": {},
-        "botui": {}
+        "botui": {
+          "googleClientId": "676309030528-1p971giko85dl3a1k192l3fu7l86fu4v.apps.googleusercontent.com"
+        }
       },
       "function": {
         "notify": {}

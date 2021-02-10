@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useState, Dispatch, SetStateAction, FC } from 'react'
 import { Auth, I18n } from 'aws-amplify'
+import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth'
 
 export const Mode = {
   SIGN_IN: 0,
@@ -54,6 +55,7 @@ export const LoginContextProvider: FC = ({ children }) => {
 
 interface Helpers {
   signIn: () => void
+  signInByGoogle: () => void
   signUp: () => void
   confirmSignUp: () => void
   forgotPassword: () => void
@@ -99,6 +101,10 @@ export const useLoginContext: UseLogin = () => {
       })
       .finally(() => setLoading(false))
   }, [email, password, setAuthSucceed, setError, setLoading, setMode])
+
+  const signInByGoogle = useCallback(() => {
+    Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Google })
+  }, [])
 
   const signUp = useCallback(() => {
     setLoading(true)
@@ -154,6 +160,7 @@ export const useLoginContext: UseLogin = () => {
     { error, loading, mode, authSucceed, email, password, code },
     {
       signIn,
+      signInByGoogle,
       signUp,
       confirmSignUp,
       forgotPassword,

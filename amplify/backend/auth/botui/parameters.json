@@ -29,7 +29,7 @@
         "email"
     ],
     "userpoolClientLambdaRole": "botui554d1d8b_userpoolclient_lambda_role",
-    "userpoolClientSetAttributes": false,
+    "userpoolClientSetAttributes": true,
     "sharedId": "554d1d8b",
     "resourceName": "botui",
     "authSelections": "identityPoolAndUserPool",
@@ -52,7 +52,7 @@
     "userPoolGroups": true,
     "adminQueries": false,
     "triggers": "{}",
-    "hostedUI": false,
+    "hostedUI": true,
     "userPoolGroupList": [
         "admin"
     ],
@@ -63,5 +63,13 @@
     "permissions": [],
     "dependsOn": [],
     "thirdPartyAuth": true,
-    "authProviders": []
+    "hostedUIDomainName": "botui",
+    "authProvidersUserPool": [
+        "Google"
+    ],
+    "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
+    "authProviders": [
+        "accounts.google.com"
+    ],
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3001/\",\"https://dev.chachat.survaq.com/admin/\",\"https://www.chachat.survaq.com/admin/\"],\"LogoutURLs\":[\"http://localhost:3001/\",\"https://dev.chachat.survaq.com/admin/\",\"https://www.chachat.survaq.com/admin/\"]}"
 }
