@@ -3090,15 +3090,15 @@
   dependencies:
     ra-language-english "^3.8.0"
 
-"@botui-domain/admin@^1.4.9":
-  version "1.4.9"
-  resolved "https://registry.yarnpkg.com/@botui-domain/admin/-/admin-1.4.9.tgz#a8384aa06c4a1b471fbf110db730667513a0f4a4"
-  integrity sha512-83DO0XRZFzbxbICzpwJlIBtl2JIcDRZh34hObxCaBRvN7eIk3YHuUAcrR+x/uxFzqUV7TTSSp4k+UpxFqG38mA==
+"@botui-domain/admin@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@botui-domain/admin/-/admin-1.5.0.tgz#902ceae7861e8b11c6bc4d0bb8315a3556842aaa"
+  integrity sha512-Ea2u7Wnd1Ch4DpHFwqkvooeLfCHVNiziUC5TC086E0zF88cgI5AKgYg4DMXg+RjmCtuD1nj0EV6/e2RCBGBR/g==
   dependencies:
     "@bicstone/ra-language-japanese" "^3.8.0"
-    "@botui/api" "^1.3.1"
-    "@botui/chat-controller" "^1.1.6"
-    "@botui/chat-hooks" "^1.2.3"
+    "@botui/api" "^1.3.2"
+    "@botui/chat-controller" "^1.1.7"
+    "@botui/chat-hooks" "^1.2.4"
     "@material-ui/lab" "^4.0.0-alpha.57"
     aws-amplify "^3.3.17"
     final-form-arrays "^3.0.2"
@@ -3108,39 +3108,40 @@
     ra-i18n-polyglot "^3.11.4"
     react-admin-amplify "^1.2.4"
     react-final-form "^6.5.2"
+    react-google-button "^0.7.2"
     react-nl2br "^1.0.1"
     react-router-dom "^5.2.0"
     react-syntax-highlighter "^15.4.3"
     styled-components "^5.2.1"
     uuid "^8.3.2"
 
-"@botui-domain/chat@^1.1.5":
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/@botui-domain/chat/-/chat-1.1.5.tgz#8058ce9cea49885a81b6a8516942a810a3def477"
-  integrity sha512-Upw7CHKToS4eTveL9sQSOg1WGDvhUCv71wX8LLAIZgbkLjTK8v/PAt9Sec+yGyX2oaaNt1+gz1Ec5trCK6++nw==
+"@botui-domain/chat@^1.1.6":
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/@botui-domain/chat/-/chat-1.1.6.tgz#b7ab9dc1aba7d436ac528585c6d6fb142e173077"
+  integrity sha512-XlI/5O5P/5NTQygBDLpRvzaUdFtdjp6o9l9PYWt+OWJ7rnuTmUGCqaLt2+DPiDa23zuv1hs7YG8IqNyTAe0yXA==
   dependencies:
-    "@botui/chat-components" "^1.1.6"
-    "@botui/chat-hooks" "^1.2.3"
+    "@botui/chat-components" "^1.1.7"
+    "@botui/chat-hooks" "^1.2.4"
     "@emotion/react" "^11.1.4"
     aws-amplify "^3.3.17"
     react-nl2br "^1.0.1"
     react-scroll "^1.8.1"
     use-cors-state "^1.1.7"
 
-"@botui/api@^1.3.1":
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/@botui/api/-/api-1.3.1.tgz#2080b61d2d3ddabac3b318dd9ee854a16ff851f9"
-  integrity sha512-e+ksdlnYyOs/jCtN4+HLqmEim5sgKeFGQ6Dfw+cx+cI2JlEBWBUA41ZVf6M+w5IOVt/qVZk7TtRr9dYqrUdhbw==
+"@botui/api@^1.3.2":
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/@botui/api/-/api-1.3.2.tgz#392a8273efa0a515ad7c17060938feb26869dd64"
+  integrity sha512-lCXZb4iZ2scZPdd+nM7DwuB0kBjjsh3pYOtJQV1idhrtXiGu0wBF6AuwVxWoi9TJAzJxI7fyEkh2LWZgNMfCXQ==
   dependencies:
     "@aws-amplify/api" "^3.2.20"
     "@aws-amplify/storage" "^3.3.20"
 
-"@botui/chat-components@^1.1.6":
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/@botui/chat-components/-/chat-components-1.1.6.tgz#3ecbab8f6f0ddf7f3c56400f5a7fa0c74ed15586"
-  integrity sha512-Fw0jXOxd86ld7yHq6BWPc4DkNXZUJF9XHCSvajhD4qi4rjcC2f9uLjBILB2URDCM1VcwIuO/E/GcJAOxut4/3Q==
+"@botui/chat-components@^1.1.7":
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/@botui/chat-components/-/chat-components-1.1.7.tgz#a218ba7634d7978ddd98271f56f1a827f2d20334"
+  integrity sha512-svsud0K9Xri8WVbCSfT2CqV4vgJBQI8rFIhZsiZxf1EzFB4639aBdsttIWr/oUCv7fzVvzm/0TC4ZtkY0vpulg==
   dependencies:
-    "@botui/chat-hooks" "^1.2.3"
+    "@botui/chat-hooks" "^1.2.4"
     "@emotion/react" "^11.1.4"
     "@fortawesome/fontawesome-svg-core" "^1.2.34"
     "@fortawesome/free-regular-svg-icons" "^5.15.2"
@@ -3157,21 +3158,21 @@
     use-postal-jp "^1.1.4"
     yup "^0.32.8"
 
-"@botui/chat-controller@^1.1.6":
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/@botui/chat-controller/-/chat-controller-1.1.6.tgz#75497d454f3aee45217c88a90748429aa186e812"
-  integrity sha512-x55uAQzSjmx05Qxt423ICHyLn8wxOj+/baympzMDkqpyuosWhaovzJeqoL18d4cjlfFbT0kaYrPeumkckkRuaQ==
+"@botui/chat-controller@^1.1.7":
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/@botui/chat-controller/-/chat-controller-1.1.7.tgz#0707729e1bb500d31402b79f111e105191654b29"
+  integrity sha512-FTNG2qdBBaw9lpMYKzy+U5CiyJfd8HA4HyRBya7RnA1k8l5xjsXue2rew+PhM1iPBoIesf/r1N91PFyx6axT0A==
   dependencies:
-    "@botui/api" "^1.3.1"
+    "@botui/api" "^1.3.2"
     deep-equal "^2.0.5"
     use-cors-state "^1.1.7"
 
-"@botui/chat-hooks@^1.2.3":
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/@botui/chat-hooks/-/chat-hooks-1.2.3.tgz#693fb00ef0df5c6382be44a2eaee731d00758531"
-  integrity sha512-koz4V2uXIsMLuoEiymyd3SSFeDcVXMJXdoKCrhL8vpt+3V1uHgCxT7Gkn9DSKVOCuD941Nz/YX2LJDwNME5Vuw==
+"@botui/chat-hooks@^1.2.4":
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/@botui/chat-hooks/-/chat-hooks-1.2.4.tgz#815c5100c5b7af41d93cab9dcec0c963386163d4"
+  integrity sha512-6gC6VegVadYb2jYzpSVr5WagYSjczcHu7gKbET08Ce1nx3c0JkQlAba0fBkG2ck8WuLbl1+mNUd33AoiS5sXVQ==
   dependencies:
-    "@botui/api" "^1.3.1"
+    "@botui/api" "^1.3.2"
 
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
@@ -12296,6 +12297,13 @@ react-final-form@^6.3.3, react-final-form@^6.5.2:
   dependencies:
     "@babel/runtime" "^7.12.1"
 
+react-google-button@^0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/react-google-button/-/react-google-button-0.7.2.tgz#5bb2bcb0d54e36da3cd3b712a6fac4f9209b764c"
+  integrity sha512-LPIqU2hIlc212kqks8MtKjRstquVkP3SIjxlK5B1nIfg2R7YqSusJAxZUkJA5dv/z6QeSuGyI9ujwV/VWMTyAA==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-is@^16.13.1, react-is@^16.5.2, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
@@ -14185,10 +14193,10 @@ typescript-tuple@^2.2.1:
   dependencies:
     typescript-compare "^0.0.2"
 
-typescript@^4.1.3:
-  version "4.1.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.1.3.tgz#519d582bd94cba0cf8934c7d8e8467e473f53bb7"
-  integrity sha512-B3ZIOf1IKeH2ixgHhj6la6xdwR9QrLC5d1VKeCSY4tvkqhF2eqd9O7txNlS0PO3GrBAFIdr3L1ndNwteUbZLYg==
+typescript@^4.1.4:
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.1.4.tgz#f058636e2f4f83f94ddaae07b20fd5e14598432f"
+  integrity sha512-+Uru0t8qIRgjuCpiSPpfGuhHecMllk5Zsazj5LZvVsEStEjmIRRBZe+jHjGQvsgS7M1wONy2PQXd67EMyV6acg==
 
 ulid@2.3.0:
   version "2.3.0"
