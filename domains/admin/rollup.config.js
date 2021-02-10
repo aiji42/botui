@@ -29,7 +29,8 @@ export default {
     ...Object.keys(pkg.peerDependencies || {}),
     'react/jsx-runtime',
     '@material-ui/icons',
-    '@material-ui/core'
+    '@material-ui/core',
+    '@aws-amplify/auth'
   ],
   plugins: [
     typescript({ useTsconfigDeclarationDir: true }),
