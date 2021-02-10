@@ -1,6 +1,6 @@
 {
   "name": "@botui-domain/chat",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "author": "Aiji Uejima <aiji42@gmail.com>",
   "license": "MIT",
   "main": "build/Chat.js",
@@ -18,8 +18,8 @@
     "url": "git+https://github.com/aiji42/botui-child-next.git"
   },
   "dependencies": {
-    "@botui/chat-components": "^1.1.6",
-    "@botui/chat-hooks": "^1.2.3",
+    "@botui/chat-components": "^1.1.7",
+    "@botui/chat-hooks": "^1.2.4",
     "@emotion/react": "^11.1.4",
     "aws-amplify": "^3.3.17",
     "react-nl2br": "^1.0.1",

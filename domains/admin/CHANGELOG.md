@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.4.9...@botui-domain/admin@1.5.0) (2021-02-10)
+
+
+### Features
+
+* **admin:** login with google auth ([f51d778](https://github.com/aiji42/botui-child-next/commit/f51d778cd7014db94d92269644fed7487a934a64))
+
+
+
+
+
 ## [1.4.9](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.4.8...@botui-domain/admin@1.4.9) (2021-02-06)
 
 
