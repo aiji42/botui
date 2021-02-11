@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.5.0...@botui-domain/admin@1.6.0) (2021-02-11)
+
+
+### Features
+
+* **admin:** add javascript editor in proposals form ([b371dfb](https://github.com/aiji42/botui-child-next/commit/b371dfb599e02b80eb8f6d09bc79e48aef94ed8f))
+
+
+
+
+
 # [1.5.0](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.4.9...@botui-domain/admin@1.5.0) (2021-02-10)
 
 
