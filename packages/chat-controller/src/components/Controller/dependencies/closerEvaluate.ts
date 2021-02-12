@@ -4,19 +4,22 @@ import { notifyEntryByMail, addEntry } from '@botui/api'
 
 type Values = Record<string, unknown>
 
-const notify = (values: Values, chatConfig: ChatConfig): void => {
+const notify = async (
+  values: Values,
+  chatConfig: ChatConfig
+): Promise<void> => {
   const { id, title, email } = chatConfig
   if (!email) return
-  notifyEntryByMail(values, { id, title, email })
+  await notifyEntryByMail(values, { id, title, email })
 }
 
-export const closerEvaluate = (
+export const closerEvaluate = async (
   closer: Closer,
   values: Values,
   chatConfig: ChatConfig
-): void => {
-  if (closer.job === 'store') addEntry({ sessionId: chatConfig.id, owner: chatConfig.owner, inputs: values })
-  if (closer.job === 'script') evalFunction(closer.script, values)
-  if (closer.job === 'webhook') webhook(closer.endpoint, values)
-  if (closer.notify && chatConfig.email) notify(values, chatConfig)
+): Promise<void> => {
+  if (closer.job === 'store') await addEntry({ sessionId: chatConfig.id, owner: chatConfig.owner, inputs: values })
+  if (closer.job === 'script') await evalFunction(closer.script, values)
+  if (closer.job === 'webhook') await webhook(closer.endpoint, values)
+  if (closer.notify && chatConfig.email) await notify(values, chatConfig)
 }

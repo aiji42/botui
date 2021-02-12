@@ -24,8 +24,12 @@ export const Controller: FC<{
   }, [messages])
 
   useEffect(() => {
-    const [messages, percentOfProgress] = controlMessage(proposals, chatConfig)
-    setConfig({ ...chatConfig, percentOfProgress, messages })
+    controlMessage(
+      proposals,
+      chatConfig
+    ).then(([messages, percentOfProgress]) =>
+      setConfig({ ...chatConfig, percentOfProgress, messages })
+    )
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [proposals])
 

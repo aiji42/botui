@@ -23,40 +23,40 @@ export interface MessageWithId extends Message {
   id: number | string
 }
 
-export const controlMessage = (
+export const controlMessage = async (
   proposals: Proposals,
   chatConfig: ChatConfig
-): [Array<MessageWithId>, ChatConfig['percentOfProgress']] => {
+): Promise<[Array<MessageWithId>, ChatConfig['percentOfProgress']]> => {
   const values = getValues(proposals)
   const messages: Array<MessageWithId> = []
-  let skipNumber: number
+  let skipNumber = 0
   let edgeProposal: Proposal | undefined = undefined
-  proposals.some((proposal) => {
+
+  for await (const proposal of proposals) {
     edgeProposal = proposal
     if (skipNumber) {
       --skipNumber
-      return false
+      continue
     }
     if (proposal.type === 'skipper') {
       const { data: skipper } = proposal
       skipNumber = skipperEvaluate(skipper, values)
-      return false
+      continue
     }
     if (proposal.type === 'relayer') {
-      !proposal.completed && relayerEvaluate(proposal.data, values)
-      return false
+      !proposal.completed && await relayerEvaluate(proposal.data, values)
+      continue
     }
     if (proposal.type === 'closer') {
-      !proposal.completed && closerEvaluate(proposal.data, values, chatConfig)
+      !proposal.completed && await closerEvaluate(proposal.data, values, chatConfig)
       if (chatConfig.onClose) chatConfig.onClose()
-      return true
+      break
     }
     if (proposal.type === 'message') {
       messages.push(messageReplace(proposal.data, values))
-      return !proposal.completed
+      if (!proposal.completed) break
     }
-    return false
-  })
+  }
 
   if (messages.length === 1 && chatConfig.onStart) {
     chatConfig.onStart()
