@@ -10,7 +10,6 @@ export const evalFunction = async (
   const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor
   const func = new AsyncFunction('values', functionString)
   await func(values)
-  // TODO: 非同期を考慮
 }
 
 export const webhook = async (endpoint: string, values: Values): Promise<void> => {
@@ -19,6 +18,6 @@ export const webhook = async (endpoint: string, values: Values): Promise<void> =
 }
 
 export const relayerEvaluate = async (relayer: Relayer, values: Values): Promise<void> => {
-  if (relayer.job === 'script') evalFunction(relayer.script, values)
-  if (relayer.job === 'webhook') webhook(relayer.endpoint, values)
+  if (relayer.job === 'script') await evalFunction(relayer.script, values)
+  if (relayer.job === 'webhook') await webhook(relayer.endpoint, values)
 }
