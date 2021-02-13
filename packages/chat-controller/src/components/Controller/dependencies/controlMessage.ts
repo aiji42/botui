@@ -2,7 +2,10 @@ import {
   Proposals,
   Message,
   ChatConfig,
-  Proposal
+  Proposal,
+  ContentString,
+  ContentForm,
+  CustomSelect
 } from '@botui/types'
 import { relayerEvaluate } from './relayerEvaluate'
 import { closerEvaluate } from './closerEvaluate'
@@ -53,13 +56,14 @@ export const controlMessage = async (
       break
     }
     if (proposal.type === 'message') {
-      messages.push(messageReplace(proposal.data, values))
+      messages.push(prepareMessage(proposal.data, values))
       if (!proposal.completed) break
     }
   }
 
-  if (messages.length === 1 && chatConfig.onStart) {
-    chatConfig.onStart()
+  if (messages.length === 1) {
+    windowInitialize()
+    chatConfig.onStart?.()
   }
 
   const percent = progressPercent(proposals, edgeProposal)
@@ -67,8 +71,36 @@ export const controlMessage = async (
   return [messages, percent]
 }
 
-const messageReplace = (message: Message, values: Values): Message => {
-  if (message.content.type !== 'string') return message
+const isStringMessage = (message: Message): message is Message<ContentString> =>
+  message.content.type === 'string'
+const isFormMessage = (message: Message): message is Message<ContentForm> =>
+  message.content.type === 'form'
+
+const prepareMessage = (message: Message, values: Values): Message => {
+  if (isStringMessage(message)) return messageReplace(message, values)
+  if (isFormMessage(message)) return fillFormMessage(message)
+  return message
+}
+
+interface Window {
+  botui?: {
+    customChoice?: Record<string, Array<{ value: string; label: string }>>
+    customMessage?: Record<string, string>
+  }
+}
+declare const window: Window
+
+const windowInitialize = () => {
+  window.botui = {
+    customChoice: {},
+    customMessage: {}
+  }
+}
+
+const messageReplace = (
+  message: Message<ContentString>,
+  values: Values
+): Message<ContentString> => {
   if (typeof message.content.props.children !== 'string') return message
   return {
     ...message,
@@ -78,11 +110,52 @@ const messageReplace = (message: Message, values: Values): Message => {
         ...message.content.props,
         children: message.content.props.children.replace(
           /\{\{(.+?)\}\}/g,
-          (_, key) => `${values[key] ?? ''}`
+          (_, key) => `${window.botui?.customMessage?.[key] ?? values[key] ?? ''}`
         )
       }
     }
   }
+}
+
+const fillFormMessage = (
+  message: Message<ContentForm>
+): Message<ContentForm> => {
+  if (
+    message.content.props.type === 'FormCustomCheckbox' ||
+    message.content.props.type === 'FormCustomRadioGroup'
+  ) {
+    const choices = window.botui?.customChoice?.[message.content.props.name]
+    if (!choices) return message
+    return {
+      ...message,
+      content: {
+        ...message.content,
+        props: {
+          ...message.content.props,
+          inputs: choices.map(({ label, value }) => ({ value, title: label }))
+        }
+      }
+    }
+  }
+  if (message.content.props.type === 'FormCustomSelect') {
+    const selects = message.content.props.selects.map<CustomSelect>((select) => {
+      const choices = window.botui?.customChoice?.[select.name]
+      if (!choices) return select
+      return { ...select, options: choices }
+    })
+
+    return {
+      ...message,
+      content: {
+        ...message.content,
+        props: {
+          ...message.content.props,
+          selects
+        }
+      }
+    }
+  }
+  return message
 }
 
 const progressPercent = (
