@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import {
   BooleanInput,
   SelectInput,
@@ -9,8 +9,9 @@ import {
   SimpleFormIterator,
   useRecordContext
 } from 'react-admin'
-import { Session } from '@botui/types'
+import { FormCustomCheckbox, FormCustomRadioGroup, FormCustomSelect, Session } from '@botui/types'
 import { ImageInput, DelayNumberSlider } from '../../../parts'
+import { useForm, useFormState } from 'react-final-form'
 
 const formTypeChoices = [
   { id: 'FormName', name: '氏名' },
@@ -163,6 +164,14 @@ const FormBirthDayState: FC = (props) => {
 }
 
 const FormCustomRadioGroupOption: FC = (props) => {
+  const { change } = useForm()
+  const { values } = useFormState<{
+    data: { content: { props: FormCustomRadioGroup } }
+  }>()
+  useEffect(() => {
+    if (!values.data.content.props.inputs)
+      change('data.content.props.inputs', [])
+  }, [values.data.content.props.inputs, change])
   return (
     <>
       <TextInput
@@ -175,7 +184,6 @@ const FormCustomRadioGroupOption: FC = (props) => {
         {...props}
         source="data.content.props.inputs"
         label="radio buttons"
-        validate={[required()]}
       >
         <SimpleFormIterator>
           <TextInput source="title" label="title" validate={[required()]} />
@@ -187,6 +195,14 @@ const FormCustomRadioGroupOption: FC = (props) => {
 }
 
 const FormCustomCheckboxOption: FC = (props) => {
+  const { change } = useForm()
+  const { values } = useFormState<{
+    data: { content: { props: FormCustomCheckbox } }
+  }>()
+  useEffect(() => {
+    if (!values.data.content.props.inputs)
+      change('data.content.props.inputs', [])
+  }, [values.data.content.props.inputs, change])
   return (
     <>
       <TextInput
@@ -200,7 +216,6 @@ const FormCustomCheckboxOption: FC = (props) => {
         {...props}
         source="data.content.props.inputs"
         label="checkboxes"
-        validate={[required()]}
       >
         <SimpleFormIterator>
           <TextInput source="title" label="title" validate={[required()]} />
@@ -212,6 +227,15 @@ const FormCustomCheckboxOption: FC = (props) => {
 }
 
 const FormCustomSelectOption: FC = (props) => {
+  const { change } = useForm()
+  const { values } = useFormState<{ data: { content: { props: FormCustomSelect } } }>()
+  useEffect(() => {
+    if (!values.data.content.props.selects) return
+    values.data.content.props.selects.forEach((select, index) => {
+      if (select && !select.options)
+        change(`data.content.props.selects.${index}.options`, [])
+    })
+  }, [values.data.content.props.selects, change])
   return (
     <ArrayInput
       {...props}
@@ -222,7 +246,7 @@ const FormCustomSelectOption: FC = (props) => {
       <SimpleFormIterator>
         <TextInput source="name" label="name" validate={[required()]} />
         <TextInput source="title" label="title" />
-        <ArrayInput source="options" label="options" validate={[required()]}>
+        <ArrayInput source="options" label="options">
           <SimpleFormIterator>
             <TextInput source="label" label="label" />
             <TextInput source="value" label="value" validate={[required()]} />
