@@ -12,6 +12,8 @@ import {
 import { FormCustomCheckbox, FormCustomRadioGroup, FormCustomSelect, Session } from '@botui/types'
 import { ImageInput, DelayNumberSlider } from '../../../parts'
 import { useForm, useFormState } from 'react-final-form'
+import { Tooltip, Badge, Typography } from '@material-ui/core'
+import { HelpOutline } from '@material-ui/icons'
 
 const formTypeChoices = [
   { id: 'FormName', name: '氏名' },
@@ -64,14 +66,27 @@ const ProposalMessageFormInner: FC = () => {
         {({ formData }) => (
           <>
             {formData.data?.content?.type === 'string' && (
-              <TextInput
-                source="data.content.props.children"
-                label="メッセージ本文"
-                validate={[required()]}
-                fullWidth
-                multiline
-                rows={3}
-              />
+              <>
+                <TextInput
+                  source="data.content.props.children"
+                  label="メッセージ本文"
+                  validate={[required()]}
+                  fullWidth
+                  multiline
+                  rows={3}
+                />
+                <Typography variant="body2" color="textSecondary">
+                  文章中に {'{{値名}}'}{' '}
+                  を挿入すると、ユーザの入力値によって置換されます。
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  例えば {'{{familyName}}{{firstName}}'}{' '}
+                  と挿入すると、氏名フォームに入力された値が表示されます。'
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  カスタムスクリプトを使って動的な値に置換することも可能です。
+                </Typography>
+              </>
             )}
             {formData.data?.content?.type === 'image' && (
               <ImageInput
@@ -174,12 +189,20 @@ const FormCustomRadioGroupOption: FC = (props) => {
   }, [values.data.content.props.inputs, change])
   return (
     <>
-      <TextInput
-        {...props}
-        source="data.content.props.name"
-        label="name"
-        validate={[required()]}
-      />
+      <Badge
+        badgeContent={
+          <Tooltip title="カスタムスクリプトで動的な選択肢の挿入が可能です。こちらで指定した'name'と同じ値のものが適応されます。">
+            <HelpOutline />
+          </Tooltip>
+        }
+      >
+        <TextInput
+          {...props}
+          source="data.content.props.name"
+          label="name"
+          validate={[required()]}
+        />
+      </Badge>
       <ArrayInput
         {...props}
         source="data.content.props.inputs"
@@ -205,12 +228,20 @@ const FormCustomCheckboxOption: FC = (props) => {
   }, [values.data.content.props.inputs, change])
   return (
     <>
-      <TextInput
-        {...props}
-        source="data.content.props.name"
-        label="name"
-        validate={[required()]}
-      />
+      <Badge
+        badgeContent={
+          <Tooltip title="カスタムスクリプトで動的な選択肢の挿入が可能です。こちらで指定した'name'と同じ値のものが適応されます。">
+            <HelpOutline />
+          </Tooltip>
+        }
+      >
+        <TextInput
+          {...props}
+          source="data.content.props.name"
+          label="name"
+          validate={[required()]}
+        />
+      </Badge>
       <BooleanInput source="data.content.props.required" label="required" />
       <ArrayInput
         {...props}
