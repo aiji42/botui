@@ -3090,10 +3090,10 @@
   dependencies:
     ra-language-english "^3.8.0"
 
-"@botui-domain/admin@^1.7.0":
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/@botui-domain/admin/-/admin-1.7.0.tgz#a90d9f9f7e14783eca4e8e35054aeef1dd2095c0"
-  integrity sha512-0mNDRp57BAfj2rpwYe6yTSh4i/TaiW+OfEQiMVt1+TqorQz96PTN8vcCmsQ8wrHVkNRa4GKSKanVt9J0cVXh+w==
+"@botui-domain/admin@^1.8.0":
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@botui-domain/admin/-/admin-1.8.0.tgz#a6723f77f635bf5225b7aab232b94fbfa1e15ff7"
+  integrity sha512-kWfPyg0ERLgG6sSInECRlz4aEZIZZZHpnAkCDJAJq8lPcpmqIxhtGwCszwL6obfM0T0WpjKmJBvILMxo0jxMvQ==
   dependencies:
     "@bicstone/ra-language-japanese" "^3.8.0"
     "@botui/api" "^1.3.2"
