@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.7.0...@botui-domain/admin@1.8.0) (2021-02-14)
+
+
+### Bug Fixes
+
+* **admin:** fix style closer script form editor ([c2caa85](https://github.com/aiji42/botui-child-next/commit/c2caa856960436b3edc75191fcede5c0fd5a9ec5))
+
+
+### Features
+
+* **admin:** add autocomplete key on message form and skipper form ([b6d7a11](https://github.com/aiji42/botui-child-next/commit/b6d7a1142fa4a88380a7be083c0764e67e688afd))
+
+
+
+
+
 # [1.7.0](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.6.0...@botui-domain/admin@1.7.0) (2021-02-14)
 
 
