@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.6.0...@botui-domain/admin@1.7.0) (2021-02-14)
+
+
+### Bug Fixes
+
+* **admin:** fix ace editor error ([3c0420d](https://github.com/aiji42/botui-child-next/commit/3c0420dd0fe1e86529dee1d671e3b1252e0be9eb))
+
+
+### Features
+
+* **admin:** change option settings as desired on custmSelect, customRadioGroup and customCheckbox ([3611cca](https://github.com/aiji42/botui-child-next/commit/3611ccadec73b4c9ac9d798009b29390a743a6c5))
+
+
+
+
+
 # [1.6.0](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.5.0...@botui-domain/admin@1.6.0) (2021-02-11)
 
 

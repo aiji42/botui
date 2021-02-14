@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/aiji42/botui-child-next/compare/@botui/chat-controller@1.1.7...@botui/chat-controller@1.2.0) (2021-02-14)
+
+
+### Features
+
+* **chat-controller:** add async relayer function ([3c37fac](https://github.com/aiji42/botui-child-next/commit/3c37faceb55b467efec7e5ebee74ed8bcb014b68))
+* **chat-controller:** add feature of filler form choices ([757dfb2](https://github.com/aiji42/botui-child-next/commit/757dfb2c1888d9225f680d329b816e0fb4658f9d))
+
+
+
+
+
 ## [1.1.7](https://github.com/aiji42/botui-child-next/compare/@botui/chat-controller@1.1.6...@botui/chat-controller@1.1.7) (2021-02-10)
 
 **Note:** Version bump only for package @botui/chat-controller
