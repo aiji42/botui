@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import {
   BooleanInput,
   SelectInput,
@@ -6,6 +6,24 @@ import {
   TextInput,
   FormDataConsumer
 } from 'react-admin'
+import { Field, useForm, useFormState } from 'react-final-form'
+import JavascriptEditor from './JavascriptEditor'
+
+const scriptInitialValue = `// Javascript で記載してください。
+
+// このスクリプト以前にユーザが入力した値は values オブジェクトに格納されています。
+// 例えばユーザの姓は values.familyName でアクセスできます。
+
+console.log(values.familyName, values.firstName)
+
+// Promise を return することで、サーバ通信などの非同期処理を同期的に取り扱えます。
+/**
+const timer = (time) =>
+  new Promise((resolve) => setTimeout(resolve, time))
+
+return timer(3000) // 3秒待つ
+*/
+`
 
 const jobChoices = [
   { id: 'none', name: '何もしない' },
@@ -15,6 +33,15 @@ const jobChoices = [
 ]
 
 const ProposalCloserFormInner: FC = () => {
+  const { change } = useForm()
+  const { values } = useFormState<{
+    data: { job: string; [x: string]: string }
+  }>()
+  useEffect(() => {
+    if (values.data.job === 'script' && !values.data.script)
+      change('data.script', scriptInitialValue)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [values.data.job])
   return (
     <>
       <SelectInput
@@ -29,12 +56,9 @@ const ProposalCloserFormInner: FC = () => {
         {({ formData }) => (
           <>
             {formData.data.job === 'script' && (
-              <TextInput
-                source="data.script"
-                validate={[required()]}
-                label="カスタムスクリプト"
-                fullWidth
-                multiline
+               <Field
+                name="data.script"
+                component={JavascriptEditor}
               />
             )}
             {formData.data.job === 'webhook' && (
