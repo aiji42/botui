@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import {
   BooleanInput,
   SelectInput,
@@ -9,8 +9,11 @@ import {
   SimpleFormIterator,
   useRecordContext
 } from 'react-admin'
-import { Session } from '@botui/types'
+import { FormCustomCheckbox, FormCustomRadioGroup, FormCustomSelect, Session } from '@botui/types'
 import { ImageInput, DelayNumberSlider } from '../../../parts'
+import { useForm, useFormState } from 'react-final-form'
+import { Tooltip, Badge, Typography } from '@material-ui/core'
+import { HelpOutline } from '@material-ui/icons'
 
 const formTypeChoices = [
   { id: 'FormName', name: '氏名' },
@@ -63,14 +66,27 @@ const ProposalMessageFormInner: FC = () => {
         {({ formData }) => (
           <>
             {formData.data?.content?.type === 'string' && (
-              <TextInput
-                source="data.content.props.children"
-                label="メッセージ本文"
-                validate={[required()]}
-                fullWidth
-                multiline
-                rows={3}
-              />
+              <>
+                <TextInput
+                  source="data.content.props.children"
+                  label="メッセージ本文"
+                  validate={[required()]}
+                  fullWidth
+                  multiline
+                  rows={3}
+                />
+                <Typography variant="body2" color="textSecondary">
+                  文章中に {'{{値名}}'}{' '}
+                  を挿入すると、ユーザの入力値によって置換されます。
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  例えば {'{{familyName}}{{firstName}}'}{' '}
+                  と挿入すると、氏名フォームに入力された値が表示されます。'
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  カスタムスクリプトを使って動的な値に置換することも可能です。
+                </Typography>
+              </>
             )}
             {formData.data?.content?.type === 'image' && (
               <ImageInput
@@ -163,19 +179,34 @@ const FormBirthDayState: FC = (props) => {
 }
 
 const FormCustomRadioGroupOption: FC = (props) => {
+  const { change } = useForm()
+  const { values } = useFormState<{
+    data: { content: { props: FormCustomRadioGroup } }
+  }>()
+  useEffect(() => {
+    if (!values.data.content.props.inputs)
+      change('data.content.props.inputs', [])
+  }, [values.data.content.props.inputs, change])
   return (
     <>
-      <TextInput
-        {...props}
-        source="data.content.props.name"
-        label="name"
-        validate={[required()]}
-      />
+      <Badge
+        badgeContent={
+          <Tooltip title="カスタムスクリプトで動的な選択肢の挿入が可能です。こちらで指定した'name'と同じ値のものが適応されます。">
+            <HelpOutline />
+          </Tooltip>
+        }
+      >
+        <TextInput
+          {...props}
+          source="data.content.props.name"
+          label="name"
+          validate={[required()]}
+        />
+      </Badge>
       <ArrayInput
         {...props}
         source="data.content.props.inputs"
         label="radio buttons"
-        validate={[required()]}
       >
         <SimpleFormIterator>
           <TextInput source="title" label="title" validate={[required()]} />
@@ -187,20 +218,35 @@ const FormCustomRadioGroupOption: FC = (props) => {
 }
 
 const FormCustomCheckboxOption: FC = (props) => {
+  const { change } = useForm()
+  const { values } = useFormState<{
+    data: { content: { props: FormCustomCheckbox } }
+  }>()
+  useEffect(() => {
+    if (!values.data.content.props.inputs)
+      change('data.content.props.inputs', [])
+  }, [values.data.content.props.inputs, change])
   return (
     <>
-      <TextInput
-        {...props}
-        source="data.content.props.name"
-        label="name"
-        validate={[required()]}
-      />
+      <Badge
+        badgeContent={
+          <Tooltip title="カスタムスクリプトで動的な選択肢の挿入が可能です。こちらで指定した'name'と同じ値のものが適応されます。">
+            <HelpOutline />
+          </Tooltip>
+        }
+      >
+        <TextInput
+          {...props}
+          source="data.content.props.name"
+          label="name"
+          validate={[required()]}
+        />
+      </Badge>
       <BooleanInput source="data.content.props.required" label="required" />
       <ArrayInput
         {...props}
         source="data.content.props.inputs"
         label="checkboxes"
-        validate={[required()]}
       >
         <SimpleFormIterator>
           <TextInput source="title" label="title" validate={[required()]} />
@@ -212,6 +258,15 @@ const FormCustomCheckboxOption: FC = (props) => {
 }
 
 const FormCustomSelectOption: FC = (props) => {
+  const { change } = useForm()
+  const { values } = useFormState<{ data: { content: { props: FormCustomSelect } } }>()
+  useEffect(() => {
+    if (!values.data.content.props.selects) return
+    values.data.content.props.selects.forEach((select, index) => {
+      if (select && !select.options)
+        change(`data.content.props.selects.${index}.options`, [])
+    })
+  }, [values.data.content.props.selects, change])
   return (
     <ArrayInput
       {...props}
@@ -222,7 +277,7 @@ const FormCustomSelectOption: FC = (props) => {
       <SimpleFormIterator>
         <TextInput source="name" label="name" validate={[required()]} />
         <TextInput source="title" label="title" />
-        <ArrayInput source="options" label="options" validate={[required()]}>
+        <ArrayInput source="options" label="options">
           <SimpleFormIterator>
             <TextInput source="label" label="label" />
             <TextInput source="value" label="value" validate={[required()]} />

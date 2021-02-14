@@ -33,6 +33,7 @@ const JavascriptEditor: FC<FieldRenderProps<string>> = ({ input }) => {
       enableBasicAutocompletion
       enableLiveAutocompletion
       tabSize={2}
+      width="100%"
       editorProps={{ $blockScrolling: true }}
       setOptions={{
         enableSnippets: true
