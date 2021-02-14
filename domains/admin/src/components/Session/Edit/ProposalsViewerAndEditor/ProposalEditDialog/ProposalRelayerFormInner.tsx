@@ -15,6 +15,15 @@ const scriptInitialValue = `// Javascript で記載してください。
 // 例えばユーザの姓は values.familyName でアクセスできます。
 
 console.log(values)
+
+// Promise や async/await を利用することで、
+// サーバ通信などの処理を同期的に取り扱えます。
+/**
+const timer = (time) =>
+  new Promise((resolve) => setTimeout(resolve, time))
+
+return timer(3000) // 3秒待つ
+*/
 `
 
 const ProposalRelayerFormInner: FC = () => {
