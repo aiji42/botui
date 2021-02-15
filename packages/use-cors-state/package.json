@@ -36,7 +36,6 @@
     "react": ">=16.8.0"
   },
   "devDependencies": {
-    "@botui/types": "^2.3.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   }
