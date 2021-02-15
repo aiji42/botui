@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.0](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.8.0...@botui-domain/admin@1.9.0) (2021-02-15)
+
+
+### Features
+
+* **admin:** update launcher form for load scripts ([32f5158](https://github.com/aiji42/botui-child-next/commit/32f515895bbc2a215e1c0f13d4de3b0d35229cdc))
+
+
+
+
+
 # [1.8.0](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.7.0...@botui-domain/admin@1.8.0) (2021-02-14)
 
 

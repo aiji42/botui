@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/aiji42/botui-child-next/compare/@botui/types@2.2.1...@botui/types@2.3.0) (2021-02-15)
+
+
+### Features
+
+* **types:** add loadScripts in session launcher ([604edef](https://github.com/aiji42/botui-child-next/commit/604edeff48258f5ee5e70a7e9ff6a6f0a5917421))
+
+
+
+
+
 ## [2.2.1](https://github.com/aiji42/botui-child-next/compare/@botui/types@2.2.0...@botui/types@2.2.1) (2021-02-06)
 
 **Note:** Version bump only for package @botui/types

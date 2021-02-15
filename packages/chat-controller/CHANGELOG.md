@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/aiji42/botui-child-next/compare/@botui/chat-controller@1.2.0...@botui/chat-controller@1.3.0) (2021-02-15)
+
+
+### Features
+
+* **chat-controller:** load scripts when chat launch ([09040cd](https://github.com/aiji42/botui-child-next/commit/09040cd89ab1f43dce8979e10972f545dbdfa027))
+
+
+
+
+
 # [1.2.0](https://github.com/aiji42/botui-child-next/compare/@botui/chat-controller@1.1.7...@botui/chat-controller@1.2.0) (2021-02-14)
 
 
