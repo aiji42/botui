@@ -1,6 +1,7 @@
 import React, { FC, useCallback, useState } from 'react'
 import { Controller } from '../Controller'
 import { ChatConfig, Proposals } from '@botui/types'
+import ScriptTag from 'react-script-tag'
 
 let host: string = process.env.REACT_APP_BOTUI_HOST ?? 'http://localhost:3000/'
 type PreviewConfig = { chatHost: string }
@@ -12,16 +13,21 @@ export const Preview: FC<{
   proposals: Proposals
   chatConfig: ChatConfig
   editing?: boolean
-}> = (props) => {
+}> = ({ proposals, chatConfig, editing }) => {
   const [iframeElement, setIframeElement] = useState<HTMLIFrameElement | null>(
     null
   )
-  const [initProposals] = useState<Proposals>(props.proposals)
+  const [initProposals] = useState<Proposals>(proposals)
   const [loaded, setLoaded] = useState(false)
   const handleLoaded = useCallback(() => setLoaded(true), [setLoaded])
 
   return (
     <>
+      {!editing &&
+        chatConfig.launcher.loadScripts?.map((url) => (
+          <ScriptTag key={url} isHydrating={true} src={url} />
+        ))
+      }
       <iframe
         ref={setIframeElement}
         src={host}
@@ -35,8 +41,8 @@ export const Preview: FC<{
         <Controller
           targetWindow={iframeElement.contentWindow}
           initProposals={initProposals}
-          chatConfig={props.chatConfig}
-          editing={props.editing}
+          chatConfig={chatConfig}
+          editing={editing}
         />
       )}
     </>

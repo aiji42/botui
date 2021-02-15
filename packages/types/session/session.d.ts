@@ -34,6 +34,7 @@ export interface Images {
 export interface Launcher {
   defaultOpen: boolean
   size: 'full' | 'widget' | 'auto'
+  loadScripts?: Array<string>
 }
 
 export interface Session<T = Proposals, U = Theme, V = Images, W = Launcher> {
