@@ -1,6 +1,6 @@
 {
   "name": "@botui-domain/chat",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "author": "Aiji Uejima <aiji42@gmail.com>",
   "license": "MIT",
   "main": "build/Chat.js",
@@ -24,7 +24,7 @@
     "aws-amplify": "^3.3.17",
     "react-nl2br": "^1.0.1",
     "react-scroll": "^1.8.1",
-    "use-cors-state": "^1.1.8"
+    "use-cors-state": "^1.1.9"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
