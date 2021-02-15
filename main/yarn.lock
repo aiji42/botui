@@ -3090,15 +3090,15 @@
   dependencies:
     ra-language-english "^3.8.0"
 
-"@botui-domain/admin@^1.8.0":
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/@botui-domain/admin/-/admin-1.8.0.tgz#a6723f77f635bf5225b7aab232b94fbfa1e15ff7"
-  integrity sha512-kWfPyg0ERLgG6sSInECRlz4aEZIZZZHpnAkCDJAJq8lPcpmqIxhtGwCszwL6obfM0T0WpjKmJBvILMxo0jxMvQ==
+"@botui-domain/admin@^1.9.1":
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/@botui-domain/admin/-/admin-1.9.1.tgz#4fe4ac544cb4d4532fc1bb0dfa2ad06ef28e9c64"
+  integrity sha512-zn3Mn08wd0+dZmMa+R2q+YVEsRGraU+Mj4GXkZyo7N8lvL33UP69TnFkTE4FEj91LdquJMbQpGmqFOY7uHDutQ==
   dependencies:
     "@bicstone/ra-language-japanese" "^3.8.0"
-    "@botui/api" "^1.3.2"
-    "@botui/chat-controller" "^1.2.0"
-    "@botui/chat-hooks" "^1.2.4"
+    "@botui/api" "^1.3.3"
+    "@botui/chat-controller" "^1.3.1"
+    "@botui/chat-hooks" "^1.2.5"
     "@material-ui/lab" "^4.0.0-alpha.57"
     ace-builds "^1.4.12"
     aws-amplify "^3.3.17"
@@ -3117,33 +3117,33 @@
     styled-components "^5.2.1"
     uuid "^8.3.2"
 
-"@botui-domain/chat@^1.1.6":
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/@botui-domain/chat/-/chat-1.1.6.tgz#b7ab9dc1aba7d436ac528585c6d6fb142e173077"
-  integrity sha512-XlI/5O5P/5NTQygBDLpRvzaUdFtdjp6o9l9PYWt+OWJ7rnuTmUGCqaLt2+DPiDa23zuv1hs7YG8IqNyTAe0yXA==
+"@botui-domain/chat@^1.1.8":
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/@botui-domain/chat/-/chat-1.1.8.tgz#2009bc5b8cc13c4e68f2dd4c942bf323c7a05a33"
+  integrity sha512-kJTRroeDtPMlPnEyTklqt2X9EHI2iVKh3hEM/oMi2TUCrJSVNmynD/ObgzXIVTT/94kQdEhL/RrvK+bMTjbI4w==
   dependencies:
-    "@botui/chat-components" "^1.1.7"
-    "@botui/chat-hooks" "^1.2.4"
+    "@botui/chat-components" "^1.1.8"
+    "@botui/chat-hooks" "^1.2.5"
     "@emotion/react" "^11.1.4"
     aws-amplify "^3.3.17"
     react-nl2br "^1.0.1"
     react-scroll "^1.8.1"
-    use-cors-state "^1.1.7"
+    use-cors-state "^1.1.9"
 
-"@botui/api@^1.3.2":
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@botui/api/-/api-1.3.2.tgz#392a8273efa0a515ad7c17060938feb26869dd64"
-  integrity sha512-lCXZb4iZ2scZPdd+nM7DwuB0kBjjsh3pYOtJQV1idhrtXiGu0wBF6AuwVxWoi9TJAzJxI7fyEkh2LWZgNMfCXQ==
+"@botui/api@^1.3.3":
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@botui/api/-/api-1.3.3.tgz#379bed8b8e19d1ddeb9ede2cabde114fdf6c81a6"
+  integrity sha512-9+IM1AtISwkd2Nk3UcIT75MSevmtbFsFMcig0LJYLRgp7nNQOsHPHkWMiJ/taDo1/gR2mkl+IePUUenbTYSvjg==
   dependencies:
     "@aws-amplify/api" "^3.2.20"
     "@aws-amplify/storage" "^3.3.20"
 
-"@botui/chat-components@^1.1.7":
-  version "1.1.7"
-  resolved "https://registry.yarnpkg.com/@botui/chat-components/-/chat-components-1.1.7.tgz#a218ba7634d7978ddd98271f56f1a827f2d20334"
-  integrity sha512-svsud0K9Xri8WVbCSfT2CqV4vgJBQI8rFIhZsiZxf1EzFB4639aBdsttIWr/oUCv7fzVvzm/0TC4ZtkY0vpulg==
+"@botui/chat-components@^1.1.8":
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/@botui/chat-components/-/chat-components-1.1.8.tgz#8955176a5aad35c419f07d4c581c449fa9fbfe10"
+  integrity sha512-N6wjsCF21aTJ1LUnMnyiHsvOyhDIGYBC8rbbtC6IPDnNU3d6pKXQMDqBXdO+aYYCMutoZS9Ie0jSVRFiiNWgCQ==
   dependencies:
-    "@botui/chat-hooks" "^1.2.4"
+    "@botui/chat-hooks" "^1.2.5"
     "@emotion/react" "^11.1.4"
     "@fortawesome/fontawesome-svg-core" "^1.2.34"
     "@fortawesome/free-regular-svg-icons" "^5.15.2"
@@ -3160,21 +3160,22 @@
     use-postal-jp "^1.1.4"
     yup "^0.32.8"
 
-"@botui/chat-controller@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@botui/chat-controller/-/chat-controller-1.2.0.tgz#04e2bb2f529f7898979a9886edf3279d46dec1f5"
-  integrity sha512-G8Z/LRylPPQUqiMaspEHkupDfUAD9EHHFvaXE68WPS24Ddc1jFyPGU2FzSxHub7I2xuob8Fw//ksoQExXaeCSg==
+"@botui/chat-controller@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@botui/chat-controller/-/chat-controller-1.3.1.tgz#c50e49b580461989bc42200ed40e1a6b678a4b95"
+  integrity sha512-KS27eTsBZASvYpFoBDySzu1DDaBm2/Uxf6F5xXbkgDk+BsNi+lQpRjL4lNoOucvhZMIHGd9QK+QTqj0yhlM7nw==
   dependencies:
-    "@botui/api" "^1.3.2"
+    "@botui/api" "^1.3.3"
     deep-equal "^2.0.5"
-    use-cors-state "^1.1.7"
+    react-script-tag "^1.1.2"
+    use-cors-state "^1.1.9"
 
-"@botui/chat-hooks@^1.2.4":
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/@botui/chat-hooks/-/chat-hooks-1.2.4.tgz#815c5100c5b7af41d93cab9dcec0c963386163d4"
-  integrity sha512-6gC6VegVadYb2jYzpSVr5WagYSjczcHu7gKbET08Ce1nx3c0JkQlAba0fBkG2ck8WuLbl1+mNUd33AoiS5sXVQ==
+"@botui/chat-hooks@^1.2.5":
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/@botui/chat-hooks/-/chat-hooks-1.2.5.tgz#21166dea417c2615f5abd5aa19c2e0fda8f20344"
+  integrity sha512-dIWyWBb/ryDXKuiiuh2KmDkLLjWKCNRU444tvDMndfWmC5/4DyJ4vI/W56RypEazqOH0kmO0zuIjfiltM+jqGQ==
   dependencies:
-    "@botui/api" "^1.3.2"
+    "@botui/api" "^1.3.3"
 
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
@@ -12409,6 +12410,11 @@ react-router@5.2.0, react-router@^5.1.0:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
+react-script-tag@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/react-script-tag/-/react-script-tag-1.1.2.tgz#be0fa3a22dfae8165d083f6bc1ff6f9799b20d44"
+  integrity sha512-4oR9ntvGfX4igiP77vK310ru5Oa77xO7CeYB3Xi9lu0qsikpGpK1Kq1WMFocvy8U4fQFq8ovtrZS/8adfCziFw==
+
 react-scripts@4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/react-scripts/-/react-scripts-4.0.2.tgz#530fd934dfdf31c355e366df40bf488347c28de7"
@@ -14395,10 +14401,10 @@ use-composed-ref@^1.0.0:
   dependencies:
     ts-essentials "^2.0.3"
 
-use-cors-state@^1.1.7:
-  version "1.1.7"
-  resolved "https://registry.yarnpkg.com/use-cors-state/-/use-cors-state-1.1.7.tgz#65d7e9fcf449f0175c497f7a9ef51ff090828204"
-  integrity sha512-OCCNIfUgi+9u9rQB3dAmFDUgaojRjmO95Nd8nC+iOplTRbbL02qaOA4p601fwNb3qRQbBXqpf/Hm4p5cHJZY+Q==
+use-cors-state@^1.1.9:
+  version "1.1.9"
+  resolved "https://registry.yarnpkg.com/use-cors-state/-/use-cors-state-1.1.9.tgz#12de6a89beab509f3a0914e22d1edf7b56ea049f"
+  integrity sha512-V5V/wPgolhWTKESXZHhVEjtM/IjxqyE6gx7miiLi+mu5yoOUuh7kOQVjkT/fRsDVTn6tzoTh/YjecbnYqpNwsw==
   dependencies:
     post-robot "^10.0.42"
 
