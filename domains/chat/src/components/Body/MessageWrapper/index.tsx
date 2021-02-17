@@ -9,7 +9,7 @@ import { AgentMessageWrapper } from './AgentMessageWrapper'
 const keyFrames = {
   slideIn: keyframes({
     '0%': {
-      marginTop: 50,
+      marginTop: 20,
       opacity: 0
     },
     '100%': {
@@ -22,7 +22,7 @@ const keyFrames = {
 const style = {
   base: css({
     margin: '10px 0',
-    animation: `${keyFrames.slideIn} .5s ease-out`,
+    animation: `${keyFrames.slideIn} .5s ease-in-out`,
     ':after': {
       display: 'block',
       content: '""',
@@ -41,11 +41,12 @@ export const MessageWrapper: FC = (props) => {
       () =>
         Scroll.scroller.scrollTo(`${message.id}`, {
           smooth: true,
-          duration: 700
+          duration: 1000,
+          offset: -60
         }),
-      500
+      message.content.delay ?? 0
     )
-  }, [message.id])
+  }, [message.id, message.content.delay])
   return (
     <Scroll.Element css={style.base} name={`${message.id}`}>
       {message.human ? (

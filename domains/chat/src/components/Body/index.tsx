@@ -8,7 +8,7 @@ import { Message as MessageType } from '@botui/types'
 
 const style = {
   root: css({
-    padding: '5px 15px 100px 15px',
+    padding: '5px 15px 150px 15px',
     overflow: 'scroll'
   })
 }
