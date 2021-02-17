@@ -20,9 +20,9 @@
   "dependencies": {
     "@botui/chat-components": "^1.1.8",
     "@botui/chat-hooks": "^1.2.5",
-    "@emotion/react": "^11.1.4",
-    "aws-amplify": "^3.3.17",
-    "react-nl2br": "^1.0.1",
+    "@emotion/react": "^11.1.5",
+    "aws-amplify": "^3.3.19",
+    "react-nl2br": "^1.0.2",
     "react-scroll": "^1.8.1",
     "use-cors-state": "^1.1.9"
   },

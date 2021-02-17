@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@botui/chat-hooks": "^1.2.5",
-    "@emotion/react": "^11.1.4",
+    "@emotion/react": "^11.1.5",
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-regular-svg-icons": "^5.15.2",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
@@ -39,12 +39,12 @@
     "fill-range": "^7.0.1",
     "formik": "^2.2.6",
     "jp-prefecture": "^0.2.1",
-    "libphonenumber-js": "^1.9.9",
+    "libphonenumber-js": "^1.9.11",
     "react-loading": "^2.0.3",
-    "react-textarea-autosize": "^8.3.0",
+    "react-textarea-autosize": "^8.3.1",
     "react-use-kana": "^2.3.0",
     "use-postal-jp": "^1.1.4",
-    "yup": "^0.32.8"
+    "yup": "^0.32.9"
   },
   "peerDependencies": {
     "react": ">=16.8.0"
