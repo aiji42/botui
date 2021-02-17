@@ -3117,10 +3117,10 @@
     styled-components "^5.2.1"
     uuid "^8.3.2"
 
-"@botui-domain/chat@^1.1.8":
-  version "1.1.8"
-  resolved "https://registry.yarnpkg.com/@botui-domain/chat/-/chat-1.1.8.tgz#2009bc5b8cc13c4e68f2dd4c942bf323c7a05a33"
-  integrity sha512-kJTRroeDtPMlPnEyTklqt2X9EHI2iVKh3hEM/oMi2TUCrJSVNmynD/ObgzXIVTT/94kQdEhL/RrvK+bMTjbI4w==
+"@botui-domain/chat@^1.1.9":
+  version "1.1.9"
+  resolved "https://registry.yarnpkg.com/@botui-domain/chat/-/chat-1.1.9.tgz#9934244e5721f1261adf4ff40186c46adf36b83b"
+  integrity sha512-/UAmFnyFxtBItwZjWSHdU5vDVQ9Y7o3r3QKdFyVjWH/jAIJ+oUew8+cSoMsGQSO6e2tJBPgaTHD3TFfpLK6uNg==
   dependencies:
     "@botui/chat-components" "^1.1.8"
     "@botui/chat-hooks" "^1.2.5"
