@@ -11,7 +11,7 @@ import {
 } from 'react-admin'
 import { FormCustomCheckbox, FormCustomRadioGroup, FormCustomSelect, Session } from '@botui/types'
 import { ImageInput, DelayNumberSlider } from '../../../parts'
-import { useForm, useFormState } from 'react-final-form'
+import { useForm, useFormState, Field } from 'react-final-form'
 import {
   Tooltip,
   Badge,
@@ -22,6 +22,7 @@ import {
   makeStyles
 } from '@material-ui/core'
 import { HelpOutline, Add } from '@material-ui/icons'
+import JavascriptEditor from './JavascriptEditor'
 
 const formTypeChoices = [
   { id: 'FormName', name: '氏名' },
@@ -112,7 +113,7 @@ const ProposalMessageFormInner: FC = () => {
               <SelectInput
                 fullWidth
                 source="data.content.props.type"
-                label="form type"
+                label="フォームタイプ"
                 choices={formTypeChoices}
                 validate={[required()]}
               />
@@ -268,7 +269,7 @@ const FormBirthDayState: FC = (props) => {
       {...props}
       source="data.content.props.status.paddingZero"
       initialValue={false}
-      label="zero padding"
+      label="値をゼロ詰めする"
       validate={[required()]}
     />
   )
@@ -295,18 +296,18 @@ const FormCustomRadioGroupOption: FC = (props) => {
         <TextInput
           {...props}
           source="data.content.props.name"
-          label="name"
+          label="値名"
           validate={[required()]}
         />
       </Badge>
       <ArrayInput
         {...props}
         source="data.content.props.inputs"
-        label="radio buttons"
+        label="ラジオボタン"
       >
         <SimpleFormIterator>
-          <TextInput source="title" label="title" validate={[required()]} />
-          <TextInput source="value" label="value" validate={[required()]} />
+          <TextInput source="title" label="タイトル" validate={[required()]} />
+          <TextInput source="value" label="値" validate={[required()]} />
         </SimpleFormIterator>
       </ArrayInput>
     </>
@@ -334,19 +335,19 @@ const FormCustomCheckboxOption: FC = (props) => {
         <TextInput
           {...props}
           source="data.content.props.name"
-          label="name"
+          label="値名"
           validate={[required()]}
         />
       </Badge>
-      <BooleanInput source="data.content.props.required" label="required" />
+      <BooleanInput source="data.content.props.required" label="入力を必須にする" />
       <ArrayInput
         {...props}
         source="data.content.props.inputs"
-        label="checkboxes"
+        label="チェックボックス"
       >
         <SimpleFormIterator>
-          <TextInput source="title" label="title" validate={[required()]} />
-          <TextInput source="value" label="value" validate={[required()]} />
+          <TextInput source="title" label="タイトル" validate={[required()]} />
+          <TextInput source="value" label="値" validate={[required()]} />
         </SimpleFormIterator>
       </ArrayInput>
     </>
@@ -367,16 +368,16 @@ const FormCustomSelectOption: FC = (props) => {
     <ArrayInput
       {...props}
       source="data.content.props.selects"
-      label="select box"
+      label="セレクトボックス"
       validate={[required()]}
     >
       <SimpleFormIterator>
-        <TextInput source="name" label="name" validate={[required()]} />
-        <TextInput source="title" label="title" />
-        <ArrayInput source="options" label="options">
+        <TextInput source="name" label="値名" validate={[required()]} />
+        <TextInput source="title" label="タイトル" />
+        <ArrayInput source="options" label="選択肢">
           <SimpleFormIterator>
-            <TextInput source="label" label="label" />
-            <TextInput source="value" label="value" validate={[required()]} />
+            <TextInput source="label" label="ラベル" />
+            <TextInput source="value" label="値" validate={[required()]} />
           </SimpleFormIterator>
         </ArrayInput>
       </SimpleFormIterator>
@@ -393,7 +394,7 @@ const FormCustomInputOption: FC = (props) => {
       validate={[required()]}
     >
       <SimpleFormIterator>
-        <TextInput source="name" label="name" validate={[required()]} />
+        <TextInput source="name" label="値名" validate={[required()]} />
         <SelectInput
           source="type"
           validate={[required()]}
@@ -404,12 +405,16 @@ const FormCustomInputOption: FC = (props) => {
             { id: 'email', name: 'email' },
             { id: 'password', name: 'password' }
           ]}
-          label="type"
+          label="入力タイプ"
         />
-        <TextInput source="title" label="title" />
-        <TextInput source="placeholder" label="placeholder" />
-        <BooleanInput source="required" label="required" />
-        <TextInput source="validation" multiline label="validation" />
+        <TextInput source="title" label="タイトル" />
+        <TextInput source="placeholder" label="プレースホルダー" />
+        <BooleanInput source="required" label="入力を必須にする" />
+        <Field
+          label="カスタムバリデーション"
+          name="validation"
+          component={JavascriptEditor}
+        />
       </SimpleFormIterator>
     </ArrayInput>
   )
@@ -421,25 +426,24 @@ const FormCustomTextareaOption: FC = (props) => {
       <TextInput
         {...props}
         source="data.content.props.name"
-        label="name"
+        label="値名"
         validate={[required()]}
       />
-      <TextInput {...props} source="data.content.props.title" label="title" />
+      <TextInput {...props} source="data.content.props.title" label="タイトル" />
       <TextInput
         {...props}
         source="data.content.props.placeholder"
-        label="placeholder"
+        label="プレースホルダー"
       />
       <BooleanInput
         {...props}
         source="data.content.props.required"
-        label="required"
+        label="入力を必須にする"
       />
-      <TextInput
-        {...props}
-        source="data.content.props.validation"
-        multiline
-        label="validation"
+      <Field
+        label="カスタムバリデーション"
+        name="data.content.props.validation"
+        component={JavascriptEditor}
       />
     </>
   )
