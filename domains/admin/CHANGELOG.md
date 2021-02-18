@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.2](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.9.1...@botui-domain/admin@1.9.2) (2021-02-18)
+
+**Note:** Version bump only for package @botui-domain/admin
+
+
+
+
+
 ## [1.9.1](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.9.0...@botui-domain/admin@1.9.1) (2021-02-15)
 
 **Note:** Version bump only for package @botui-domain/admin

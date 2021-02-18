@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.9](https://github.com/aiji42/botui-child-next/compare/@botui/chat-components@1.1.8...@botui/chat-components@1.1.9) (2021-02-18)
+
+
+### Bug Fixes
+
+* **chat-components:** bug fix: select box choices are not displayed ([77fba51](https://github.com/aiji42/botui-child-next/commit/77fba515e916e5686b3eb9cdb10e5cac94c3efba))
+
+
+
+
+
 ## [1.1.8](https://github.com/aiji42/botui-child-next/compare/@botui/chat-components@1.1.7...@botui/chat-components@1.1.8) (2021-02-15)
 
 **Note:** Version bump only for package @botui/chat-components
