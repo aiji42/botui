@@ -21,9 +21,9 @@ const Form: FC<FormikProps<FormCustomSelectValues> & FormCustomSelectType> = (
         <Fragment key={index}>
           <Field as={SelectWithIcon} {...select}>
             <>
-              <option label="選択してください" />
+              <option label="選択してください">選択してください</option>
               {options.map((attributes, index) => (
-                <option key={index} {...attributes} />
+                <option key={index} {...attributes}>{attributes.label}</option>
               ))}
             </>
           </Field>
