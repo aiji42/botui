@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.10.0](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.9.2...@botui-domain/admin@1.10.0) (2021-02-20)
+
+
+### Features
+
+* **admin:** create custom validation editor ([6ec25df](https://github.com/aiji42/botui-child-next/commit/6ec25dfdf1f15e8cc1684c4830d5cac5916d1847))
+
+
+
+
+
 ## [1.9.2](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.9.1...@botui-domain/admin@1.9.2) (2021-02-18)
 
 **Note:** Version bump only for package @botui-domain/admin
