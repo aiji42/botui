@@ -417,15 +417,21 @@ const FormCustomInputOption: FC = (props) => {
         <TextInput source="title" label="タイトル" />
         <TextInput source="placeholder" label="プレースホルダー" />
         <BooleanInput source="required" label="入力を必須にする" />
-        <Typography variant="subtitle2" color="textSecondary">
-          カスタムバリデーション
-        </Typography>
-        <Field
-          label="カスタムバリデーション"
-          name="validation"
-          initialValue={customValidatorInitial}
-          component={JavascriptEditor}
-        />
+        <FormDataConsumer>
+          {({ getSource }) => (
+            <>
+              <Typography variant="subtitle2" color="textSecondary">
+                カスタムバリデーション
+              </Typography>
+              <Field
+                label="カスタムバリデーション"
+                name={getSource?.('validation') ?? ''}
+                initialValue={customValidatorInitial}
+                component={JavascriptEditor}
+              />
+            </>
+          )}
+        </FormDataConsumer>
       </SimpleFormIterator>
     </ArrayInput>
   )
