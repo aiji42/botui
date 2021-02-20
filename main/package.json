@@ -8,7 +8,7 @@
     "url": "git+https://github.com/aiji42/botui-child-next.git"
   },
   "dependencies": {
-    "@botui-domain/admin": "^1.9.2",
+    "@botui-domain/admin": "^1.10.0",
     "@botui-domain/chat": "^1.1.10",
     "react": "^17.0.1",
     "react-admin": "^3.12.4",
