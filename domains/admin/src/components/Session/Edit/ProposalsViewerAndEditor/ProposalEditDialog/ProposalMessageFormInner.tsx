@@ -19,7 +19,8 @@ import {
   MenuItem,
   Fab,
   FabProps,
-  makeStyles
+  makeStyles,
+  Typography
 } from '@material-ui/core'
 import { HelpOutline, Add } from '@material-ui/icons'
 import JavascriptEditor from './JavascriptEditor'
@@ -47,6 +48,12 @@ const formTypeChoices = [
   { id: 'FormEmail', name: 'メールアドレス' },
   { id: 'FormTel', name: '電話番号' }
 ]
+
+const customValidatorInitial = `// JavaScript で記載してください。
+// value に入力値が入っています。
+// return で、1文字以上の文字列を返却するとエラーメッセージとしてフォーム下部に表示されます。
+// 文字列以外を返却すると、ユーザが確定ボタンを押下できるようになります。
+`
 
 const useStyle = makeStyles((theme) => ({
   foundationForFab: {
@@ -410,9 +417,13 @@ const FormCustomInputOption: FC = (props) => {
         <TextInput source="title" label="タイトル" />
         <TextInput source="placeholder" label="プレースホルダー" />
         <BooleanInput source="required" label="入力を必須にする" />
+        <Typography variant="subtitle2" color="textSecondary">
+          カスタムバリデーション
+        </Typography>
         <Field
           label="カスタムバリデーション"
           name="validation"
+          initialValue={customValidatorInitial}
           component={JavascriptEditor}
         />
       </SimpleFormIterator>
@@ -429,7 +440,11 @@ const FormCustomTextareaOption: FC = (props) => {
         label="値名"
         validate={[required()]}
       />
-      <TextInput {...props} source="data.content.props.title" label="タイトル" />
+      <TextInput
+        {...props}
+        source="data.content.props.title"
+        label="タイトル"
+      />
       <TextInput
         {...props}
         source="data.content.props.placeholder"
@@ -440,10 +455,13 @@ const FormCustomTextareaOption: FC = (props) => {
         source="data.content.props.required"
         label="入力を必須にする"
       />
+      <Typography variant="subtitle2" color="textSecondary">
+        カスタムバリデーション
+      </Typography>
       <Field
-        label="カスタムバリデーション"
         name="data.content.props.validation"
         component={JavascriptEditor}
+        initialValue={customValidatorInitial}
       />
     </>
   )
