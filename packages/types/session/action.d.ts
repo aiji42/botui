@@ -1,5 +1,3 @@
-import { StringLocale } from "yup/lib/locale"
-
 type URL = string
 type Script = string
 
