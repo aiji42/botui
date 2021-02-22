@@ -16,13 +16,9 @@ export interface JobFormPush extends Job<'formPush'> {
   formSelector: string
   dataMapper: Array<{ from: string; to: string; converter?: string }>
   conditionOfComplete: string
-  onCompleted: 'script' | 'message' | 'redirect'
-  onFailed: 'script' | 'message' | 'retry' | 'redirect'
   completedScript?: string
   failedScript?: string
   maxRetry?: number
-  completedMessage?: string
-  failedMessage?: string
 }
 
 export type Relayer = JobScript | JobWebhook | JobFormPush
