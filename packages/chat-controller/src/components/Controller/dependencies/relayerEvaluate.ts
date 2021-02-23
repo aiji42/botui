@@ -18,8 +18,8 @@ export const formPush = async (job: JobFormPush, values: Values, retried = 0): P
     const form = document.querySelector<HTMLFormElement>(job.formSelector)
     if (!form) return
     job.dataMapper.forEach(({ from, to, converter }) => {
-      const converterFunction = converter ? new Function('value', converter) : String
-      if (form[to]) form[to].value = converterFunction(values[from])
+      const converterFunction = converter ? new Function('value', 'values', converter) : String
+      if (form[to]) form[to].value = converterFunction(values[from], values)
     })
     const res = await pushForm(form)
     const isCompleted = res.ok && new Function('response', job.conditionOfComplete)(res)
