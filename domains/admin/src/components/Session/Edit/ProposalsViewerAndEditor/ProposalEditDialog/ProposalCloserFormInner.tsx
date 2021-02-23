@@ -8,6 +8,7 @@ import {
 } from 'react-admin'
 import { Field, useForm, useFormState } from 'react-final-form'
 import JavascriptEditor from './JavascriptEditor'
+import { PushForm } from './ProposalRelayerFormInner'
 
 const scriptInitialValue = `// Javascript で記載してください。
 
@@ -28,7 +29,8 @@ return timer(3000) // 3秒待つ
 const jobChoices = [
   { id: 'none', name: '何もしない' },
   { id: 'script', name: 'カスタムスクリプト' },
-  { id: 'store', name: 'データベースへの保存' }
+  { id: 'store', name: 'データベースへの保存' },
+  { id: 'formPush', name: 'フォーム送信' }
   // { id: 'webhook', name: 'Webhook' }
 ]
 
@@ -56,10 +58,7 @@ const ProposalCloserFormInner: FC = () => {
         {({ formData }) => (
           <>
             {formData.data.job === 'script' && (
-               <Field
-                name="data.script"
-                component={JavascriptEditor}
-              />
+              <Field name="data.script" component={JavascriptEditor} />
             )}
             {formData.data.job === 'webhook' && (
               <TextInput
@@ -69,6 +68,7 @@ const ProposalCloserFormInner: FC = () => {
                 fullWidth
               />
             )}
+            {formData.data.job === 'formPush' && <PushForm />}
           </>
         )}
       </FormDataConsumer>

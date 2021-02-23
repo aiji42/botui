@@ -1,10 +1,12 @@
 import { FC, useEffect } from 'react'
-import { SelectInput, required, TextInput, FormDataConsumer } from 'react-admin'
+import { SelectInput, required, TextInput, ArrayInput, SimpleFormIterator, FormDataConsumer } from 'react-admin'
 import { Field, useForm, useFormState } from 'react-final-form'
 import JavascriptEditor from './JavascriptEditor'
+import { Grid, Typography } from '@material-ui/core'
 
 const jobChoices = [
-  { id: 'script', name: 'カスタムスクリプト' }
+  { id: 'script', name: 'カスタムスクリプト' },
+  { id: 'formPush', name: 'フォーム送信' }
   // { id: 'webhook', name: 'Webhook' }
 ]
 
@@ -78,6 +80,9 @@ const ProposalRelayerFormInner: FC = () => {
                 fullWidth
               />
             )}
+            {formData.data.job === 'formPush' && (
+              <PushForm />
+            )}
           </>
         )}
       </FormDataConsumer>
@@ -86,3 +91,74 @@ const ProposalRelayerFormInner: FC = () => {
 }
 
 export default ProposalRelayerFormInner
+
+export const PushForm: FC = () => {
+  return (
+    <>
+      <TextInput
+        source="data.formSelector"
+        label="フォームのDOMセレクタ"
+        placeholder="#form"
+        validate={[required()]}
+        fullWidth
+      />
+      <TextInput
+        type="number"
+        source="data.maxRetry"
+        label="リトライ上限回数"
+      />
+      <ArrayInput source="data.dataMapper">
+        <SimpleFormIterator>
+          <TextInput
+            source="from"
+            label="元の値のキー"
+            validate={[required()]}
+          />
+          <TextInput source="to" label="割当先のキー" validate={[required()]} />
+          <FormDataConsumer>
+            {({ getSource }) => (
+              <>
+                <Typography variant="subtitle2" color="textSecondary">
+                  変換
+                </Typography>
+                <Field
+                  name={getSource?.('converter') ?? ''}
+                  component={JavascriptEditor}
+                  maxLines={10}
+                  minLines={5}
+                />
+              </>
+            )}
+          </FormDataConsumer>
+        </SimpleFormIterator>
+      </ArrayInput>
+      <Typography variant="subtitle2" color="textSecondary">
+        成功判定
+      </Typography>
+      <Field
+        name="data.conditionOfComplete"
+        component={JavascriptEditor}
+        maxLines={10}
+        minLines={5}
+      />
+      <Typography variant="subtitle2" color="textSecondary">
+        成功時スクリプト
+      </Typography>
+      <Field
+        name="data.completedScript"
+        component={JavascriptEditor}
+        maxLines={10}
+        minLines={5}
+      />
+      <Typography variant="subtitle2" color="textSecondary">
+        失敗時スクリプト
+      </Typography>
+      <Field
+        name="data.failedScript"
+        component={JavascriptEditor}
+        maxLines={10}
+        minLines={5}
+      />
+    </>
+  )
+}

@@ -16,7 +16,7 @@ config.setModuleUrl(
   'https://cdn.jsdelivr.net/npm/ace-builds@latest/src-noconflict/worker-javascript.js'
 )
 
-const JavascriptEditor: FC<FieldRenderProps<string>> = ({ input }) => {
+const JavascriptEditor: FC<FieldRenderProps<string>> = ({ input, maxLines = 40, minLines = 20 }) => {
   const handleChange = useCallback(
     (value: string) => {
       input.onChange(value)
@@ -32,6 +32,8 @@ const JavascriptEditor: FC<FieldRenderProps<string>> = ({ input }) => {
       highlightActiveLine
       enableBasicAutocompletion
       enableLiveAutocompletion
+      maxLines={maxLines}
+      minLines={minLines}
       tabSize={2}
       width="100%"
       editorProps={{ $blockScrolling: true }}
