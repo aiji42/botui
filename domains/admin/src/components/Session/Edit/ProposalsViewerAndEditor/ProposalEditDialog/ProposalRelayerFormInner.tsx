@@ -2,7 +2,8 @@ import { FC, useEffect } from 'react'
 import { SelectInput, required, TextInput, ArrayInput, SimpleFormIterator, FormDataConsumer } from 'react-admin'
 import { Field, useForm, useFormState } from 'react-final-form'
 import JavascriptEditor from './JavascriptEditor'
-import { Grid, Typography } from '@material-ui/core'
+import { Typography, makeStyles } from '@material-ui/core'
+import { InsertKeyMenu } from './ProposalSkipperFormInner'
 
 const jobChoices = [
   { id: 'script', name: 'カスタムスクリプト' },
@@ -92,7 +93,19 @@ const ProposalRelayerFormInner: FC = () => {
 
 export default ProposalRelayerFormInner
 
+const useStyle = makeStyles((theme) => ({
+  foundationForFab: {
+    position: 'relative'
+  },
+  fab: {
+    position: 'absolute',
+    bottom: theme.spacing(4),
+    right: theme.spacing(1)
+  }
+}))
+
 export const PushForm: FC = () => {
+  const classes = useStyle()
   return (
     <>
       <TextInput
@@ -109,12 +122,23 @@ export const PushForm: FC = () => {
       />
       <ArrayInput source="data.dataMapper">
         <SimpleFormIterator>
-          <TextInput
-            source="from"
-            label="元の値のキー"
-            validate={[required()]}
-          />
-          <TextInput source="to" label="割当先のキー" validate={[required()]} />
+          <FormDataConsumer>
+            {({ getSource }) => (
+              <div className={classes.foundationForFab}>
+                <TextInput
+                  source={getSource?.('from') ?? ''}
+                  label="元の値のキー"
+                  fullWidth
+                  validate={[required()]}
+                />
+                <InsertKeyMenu
+                  source={getSource?.('from') ?? ''}
+                  className={classes.fab}
+                />
+              </div>
+            )}
+          </FormDataConsumer>
+          <TextInput source="to" label="割当先のキー" validate={[required()]} fullWidth />
           <FormDataConsumer>
             {({ getSource }) => (
               <>

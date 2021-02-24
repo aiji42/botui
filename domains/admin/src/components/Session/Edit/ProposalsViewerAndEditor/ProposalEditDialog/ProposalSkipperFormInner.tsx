@@ -130,7 +130,7 @@ interface InsertKeyMenuProps extends Partial<FabProps> {
   source: string
 }
 
-const InsertKeyMenu: FC<InsertKeyMenuProps> = ({ source, ...res }) => {
+export const InsertKeyMenu: FC<InsertKeyMenuProps> = ({ source, ...res }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
@@ -145,12 +145,7 @@ const InsertKeyMenu: FC<InsertKeyMenuProps> = ({ source, ...res }) => {
   }
   return (
     <>
-      <Fab
-        {...res}
-        color="primary"
-        onClick={handleClick}
-        size="small"
-      >
+      <Fab {...res} color="primary" onClick={handleClick} size="small">
         <Add fontSize="small" />
       </Fab>
       <Menu
@@ -176,6 +171,9 @@ const InsertKeyMenu: FC<InsertKeyMenuProps> = ({ source, ...res }) => {
         </MenuItem>
         <MenuItem onClick={handleClickMenu} data-value="prefecture">
           住所:都道府県
+        </MenuItem>
+        <MenuItem onClick={handleClickMenu} data-value="prefectureId">
+          住所:都道府県ID
         </MenuItem>
         <MenuItem onClick={handleClickMenu} data-value="city">
           住所:市区町村
