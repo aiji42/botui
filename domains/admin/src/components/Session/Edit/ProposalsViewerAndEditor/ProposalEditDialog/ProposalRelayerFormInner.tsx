@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react'
-import { SelectInput, required, TextInput, ArrayInput, SimpleFormIterator, FormDataConsumer } from 'react-admin'
+import { SelectInput, required, TextInput, ArrayInput, SimpleFormIterator, FormDataConsumer, BooleanInput } from 'react-admin'
 import { Field, useForm, useFormState } from 'react-final-form'
 import JavascriptEditor from './JavascriptEditor'
 import { Typography, makeStyles } from '@material-ui/core'
@@ -46,6 +46,21 @@ window.botui.customMessage['特定のキー'] = '置換したいメッセージ'
 */
 `
 
+const converterInitialValue = `// JavaScriptで記載してください。
+// value には、このフォームで取り扱う値
+// values にはすべてのユーザの入力値が格納されています。
+// 変更後の値は return で返却してください
+// ex) return values.birthdayYear + '-' + values.birthdayMonth + '-' + values.birthdayDay
+`
+
+const conditionOfCompleteInitialValue = `// JavaScriptで記載してください。
+// response にフォームの送信結果レスポンスが格納されています。
+// boolean を return で返却してください。
+// true: 送信成功; false: 送信失敗
+// ex) return response.status === 200
+// ex) return response.url === 'https://example.com/form/submitted'
+`
+
 const ProposalRelayerFormInner: FC = () => {
   const { change } = useForm()
   const { values } = useFormState<{ data: { job: string; [x: string]: string } }>()
@@ -81,9 +96,7 @@ const ProposalRelayerFormInner: FC = () => {
                 fullWidth
               />
             )}
-            {formData.data.job === 'formPush' && (
-              <PushForm />
-            )}
+            {formData.data.job === 'formPush' && <PushForm />}
           </>
         )}
       </FormDataConsumer>
@@ -138,21 +151,30 @@ export const PushForm: FC = () => {
               </div>
             )}
           </FormDataConsumer>
-          <TextInput source="to" label="割当先のキー" validate={[required()]} fullWidth />
+          <TextInput
+            source="to"
+            label="割当先のキー"
+            validate={[required()]}
+            fullWidth
+          />
+          <BooleanInput source="convertable" label="変換する" />
           <FormDataConsumer>
-            {({ getSource }) => (
-              <>
-                <Typography variant="subtitle2" color="textSecondary">
-                  変換
-                </Typography>
-                <Field
-                  name={getSource?.('converter') ?? ''}
-                  component={JavascriptEditor}
-                  maxLines={10}
-                  minLines={5}
-                />
-              </>
-            )}
+            {({ getSource, scopedFormData }) =>
+              scopedFormData?.convertable && (
+                <>
+                  <Typography variant="subtitle2" color="textSecondary">
+                    変換
+                  </Typography>
+                  <Field
+                    name={getSource?.('converter') ?? ''}
+                    component={JavascriptEditor}
+                    defaultValue={converterInitialValue}
+                    maxLines={10}
+                    minLines={5}
+                  />
+                </>
+              )
+            }
           </FormDataConsumer>
         </SimpleFormIterator>
       </ArrayInput>
@@ -162,6 +184,7 @@ export const PushForm: FC = () => {
       <Field
         name="data.conditionOfComplete"
         component={JavascriptEditor}
+        defaultValue={conditionOfCompleteInitialValue}
         maxLines={10}
         minLines={5}
       />
