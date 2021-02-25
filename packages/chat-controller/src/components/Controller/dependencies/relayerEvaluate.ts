@@ -24,7 +24,7 @@ export const formPush = async (job: JobFormPush, values: Values, retried = 0): P
     const res = await pushForm(form)
     const isCompleted = res.ok && new Function('response', job.conditionOfComplete)(res)
     if (isCompleted) {
-      if (job.completedScript) new Function(job.completedScript)()
+      if (job.completedScript) new Function('response', job.completedScript)(res)
     } else throw new Error('form push failed.')
   } catch (e) {
     console.error(e)
