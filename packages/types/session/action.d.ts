@@ -14,7 +14,7 @@ export interface JobWebhook extends Job<'webhook'> {
 }
 export interface JobFormPush extends Job<'formPush'> {
   formSelector: string
-  dataMapper: Array<{ from: string; to: string; converter?: string }>
+  dataMapper: Array<{ from: string; to: string; convertable: boolean; converter?: string }>
   conditionOfComplete: string
   completedScript?: string
   failedScript?: string
