@@ -12,9 +12,17 @@ export type JobStore = Job<'store'>
 export interface JobWebhook extends Job<'webhook'> {
   endpoint: URL
 }
+export interface JobFormPush extends Job<'formPush'> {
+  formSelector: string
+  dataMapper: Array<
+    | { from: string; to: string; custom: false }
+    | { customValueScript: string; to: string; custom: true }
+  >
+  onSubmit: string
+}
 
-export type Relayer = JobScript | JobWebhook
+export type Relayer = JobScript | JobWebhook | JobFormPush
 
-export type Closer = (JobScript | JobNone | JobStore | JobWebhook) & {
+export type Closer = (JobScript | JobNone | JobStore | JobWebhook | JobFormPush) & {
   notify: boolean
 }

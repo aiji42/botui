@@ -1,5 +1,5 @@
 import { ChatConfig, Closer } from '@botui/types'
-import { evalFunction, webhook } from './relayerEvaluate'
+import { evalFunction, webhook, formPush } from './relayerEvaluate'
 import { notifyEntryByMail, addEntry } from '@botui/api'
 
 type Values = Record<string, unknown>
@@ -20,6 +20,7 @@ export const closerEvaluate = async (
 ): Promise<void> => {
   if (closer.job === 'store') await addEntry({ sessionId: chatConfig.id, owner: chatConfig.owner, inputs: values })
   if (closer.job === 'script') await evalFunction(closer.script, values)
+  if (closer.job === 'formPush') await formPush(closer, values)
   if (closer.job === 'webhook') await webhook(closer.endpoint, values)
   if (closer.notify && chatConfig.email) await notify(values, chatConfig)
 }

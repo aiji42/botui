@@ -1,10 +1,13 @@
 import { FC, useEffect } from 'react'
-import { SelectInput, required, TextInput, FormDataConsumer } from 'react-admin'
+import { SelectInput, required, TextInput, ArrayInput, SimpleFormIterator, FormDataConsumer, BooleanInput } from 'react-admin'
 import { Field, useForm, useFormState } from 'react-final-form'
 import JavascriptEditor from './JavascriptEditor'
+import { Typography, makeStyles } from '@material-ui/core'
+import { InsertKeyMenu } from './ProposalSkipperFormInner'
 
 const jobChoices = [
-  { id: 'script', name: 'カスタムスクリプト' }
+  { id: 'script', name: 'カスタムスクリプト' },
+  { id: 'formPush', name: 'フォーム送信' }
   // { id: 'webhook', name: 'Webhook' }
 ]
 
@@ -43,6 +46,21 @@ window.botui.customMessage['特定のキー'] = '置換したいメッセージ'
 */
 `
 
+const converterInitialValue = `// JavaScriptで記載してください。
+// values にユーザの入力値が格納されています。
+// 値は return で返却してください
+
+// 誕生日を連結する例
+return values.birthdayYear + '-' + values.birthdayMonth + '-' + values.birthdayDay
+`
+
+const conditionOfCompleteInitialValue = `// JavaScriptで記載してください。
+// response にフォームの送信結果レスポンスが格納されています。
+
+// フォーム送信フォのページに遷移する例
+window.location.href = response.url
+`
+
 const ProposalRelayerFormInner: FC = () => {
   const { change } = useForm()
   const { values } = useFormState<{ data: { job: string; [x: string]: string } }>()
@@ -78,6 +96,7 @@ const ProposalRelayerFormInner: FC = () => {
                 fullWidth
               />
             )}
+            {formData.data.job === 'formPush' && <PushForm />}
           </>
         )}
       </FormDataConsumer>
@@ -86,3 +105,84 @@ const ProposalRelayerFormInner: FC = () => {
 }
 
 export default ProposalRelayerFormInner
+
+const useStyle = makeStyles((theme) => ({
+  foundationForFab: {
+    position: 'relative'
+  },
+  fab: {
+    position: 'absolute',
+    bottom: theme.spacing(4),
+    right: theme.spacing(1)
+  }
+}))
+
+export const PushForm: FC = () => {
+  const classes = useStyle()
+  return (
+    <>
+      <TextInput
+        source="data.formSelector"
+        label="フォームのDOMセレクタ"
+        placeholder="#form"
+        validate={[required()]}
+        fullWidth
+      />
+      <ArrayInput source="data.dataMapper" label="データマッピング">
+        <SimpleFormIterator>
+          <TextInput
+            source="to"
+            label="マッピング先フォーム内のキー"
+            validate={[required()]}
+            fullWidth
+          />
+          <BooleanInput
+            source="custom"
+            label="カスタム値を採用"
+            defaultValue={false}
+          />
+          <FormDataConsumer>
+            {({ getSource, scopedFormData }) =>
+              !scopedFormData?.custom ? (
+                <div className={classes.foundationForFab}>
+                  <TextInput
+                    source={getSource?.('from') ?? ''}
+                    label="マッピング元のデータキー"
+                    fullWidth
+                    validate={[required()]}
+                  />
+                  <InsertKeyMenu
+                    source={getSource?.('from') ?? ''}
+                    className={classes.fab}
+                  />
+                </div>
+              ) : (
+                <>
+                  <Typography variant="subtitle2" color="textSecondary">
+                    カスタム値
+                  </Typography>
+                  <Field
+                    name={getSource?.('customValueScript') ?? ''}
+                    component={JavascriptEditor}
+                    defaultValue={converterInitialValue}
+                    maxLines={10}
+                    minLines={5}
+                  />
+                </>
+              )
+            }
+          </FormDataConsumer>
+        </SimpleFormIterator>
+      </ArrayInput>
+      <Typography variant="subtitle2" color="textSecondary">
+        フォーム送信後スクリプト
+      </Typography>
+      <Field
+        name="data.onSubmit"
+        component={JavascriptEditor}
+        defaultValue={conditionOfCompleteInitialValue}
+        minLines={10}
+      />
+    </>
+  )
+}
