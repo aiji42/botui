@@ -61,6 +61,16 @@ const conditionOfCompleteInitialValue = `// JavaScriptで記載してくださ�
 // ex) return response.url === 'https://example.com/form/submitted'
 `
 
+const completedScriptInitialValue = `// JavaScriptで記載してください。
+// response にフォームの送信結果レスポンスが格納されています。
+// ex) window.location.href = response.url
+// ex) window.botui.customMessage['formPushResult'] = '申込みに成功しました。'
+`
+
+const failedScriptInitialValue = `// JavaScriptで記載してください。
+// ex) window.botui.customMessage['formPushResult'] = '申込みに失敗しました。'
+`
+
 const ProposalRelayerFormInner: FC = () => {
   const { change } = useForm()
   const { values } = useFormState<{ data: { job: string; [x: string]: string } }>()
@@ -194,6 +204,7 @@ export const PushForm: FC = () => {
       <Field
         name="data.completedScript"
         component={JavascriptEditor}
+        defaultValue={completedScriptInitialValue}
         maxLines={10}
         minLines={5}
       />
@@ -203,6 +214,7 @@ export const PushForm: FC = () => {
       <Field
         name="data.failedScript"
         component={JavascriptEditor}
+        defaultValue={failedScriptInitialValue}
         maxLines={10}
         minLines={5}
       />
