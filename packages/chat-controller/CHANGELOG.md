@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/aiji42/botui-child-next/compare/@botui/chat-controller@1.3.2...@botui/chat-controller@1.4.0) (2021-02-26)
+
+
+### Features
+
+* **chat-controller:** add form push action ([4cd8fef](https://github.com/aiji42/botui-child-next/commit/4cd8fef5e1515cfe46347da229da5262446d6c1d))
+
+
+
+
+
 ## [1.3.2](https://github.com/aiji42/botui-child-next/compare/@botui/chat-controller@1.3.1...@botui/chat-controller@1.3.2) (2021-02-18)
 
 **Note:** Version bump only for package @botui/chat-controller

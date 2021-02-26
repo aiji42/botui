@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.10.0...@botui-domain/admin@1.11.0) (2021-02-26)
+
+
+### Features
+
+* **admin:** add form for data of pushing form job ([f977954](https://github.com/aiji42/botui-child-next/commit/f977954c63120b161f0269041f151ff029c1849f))
+
+
+
+
+
 # [1.10.0](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.9.2...@botui-domain/admin@1.10.0) (2021-02-20)
 
 
