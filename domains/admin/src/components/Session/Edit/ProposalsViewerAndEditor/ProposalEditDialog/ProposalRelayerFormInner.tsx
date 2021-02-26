@@ -47,28 +47,18 @@ window.botui.customMessage['特定のキー'] = '置換したいメッセージ'
 `
 
 const converterInitialValue = `// JavaScriptで記載してください。
-// value には、このフォームで取り扱う値
-// values にはすべてのユーザの入力値が格納されています。
-// 変更後の値は return で返却してください
-// ex) return values.birthdayYear + '-' + values.birthdayMonth + '-' + values.birthdayDay
+// values にユーザの入力値が格納されています。
+// 値は return で返却してください
+
+// 誕生日を連結する例
+return values.birthdayYear + '-' + values.birthdayMonth + '-' + values.birthdayDay
 `
 
 const conditionOfCompleteInitialValue = `// JavaScriptで記載してください。
 // response にフォームの送信結果レスポンスが格納されています。
-// boolean を return で返却してください。
-// true: 送信成功; false: 送信失敗
-// ex) return response.status === 200
-// ex) return response.url === 'https://example.com/form/submitted'
-`
 
-const completedScriptInitialValue = `// JavaScriptで記載してください。
-// response にフォームの送信結果レスポンスが格納されています。
-// ex) window.location.href = response.url
-// ex) window.botui.customMessage['formPushResult'] = '申込みに成功しました。'
-`
-
-const failedScriptInitialValue = `// JavaScriptで記載してください。
-// ex) window.botui.customMessage['formPushResult'] = '申込みに失敗しました。'
+// フォーム送信フォのページに遷移する例
+window.location.href = response.url
 `
 
 const ProposalRelayerFormInner: FC = () => {
@@ -138,45 +128,41 @@ export const PushForm: FC = () => {
         validate={[required()]}
         fullWidth
       />
-      <TextInput
-        type="number"
-        source="data.maxRetry"
-        label="リトライ上限回数"
-      />
-      <ArrayInput source="data.dataMapper">
+      <ArrayInput source="data.dataMapper" label="データマッピング">
         <SimpleFormIterator>
-          <FormDataConsumer>
-            {({ getSource }) => (
-              <div className={classes.foundationForFab}>
-                <TextInput
-                  source={getSource?.('from') ?? ''}
-                  label="元の値のキー"
-                  fullWidth
-                  validate={[required()]}
-                />
-                <InsertKeyMenu
-                  source={getSource?.('from') ?? ''}
-                  className={classes.fab}
-                />
-              </div>
-            )}
-          </FormDataConsumer>
           <TextInput
             source="to"
-            label="割当先のキー"
+            label="マッピング先フォーム内のキー"
             validate={[required()]}
             fullWidth
           />
-          <BooleanInput source="convertable" label="変換する" />
+          <BooleanInput
+            source="custom"
+            label="カスタム値を採用"
+            defaultValue={false}
+          />
           <FormDataConsumer>
             {({ getSource, scopedFormData }) =>
-              scopedFormData?.convertable && (
+              !scopedFormData?.custom ? (
+                <div className={classes.foundationForFab}>
+                  <TextInput
+                    source={getSource?.('from') ?? ''}
+                    label="マッピング元のデータキー"
+                    fullWidth
+                    validate={[required()]}
+                  />
+                  <InsertKeyMenu
+                    source={getSource?.('from') ?? ''}
+                    className={classes.fab}
+                  />
+                </div>
+              ) : (
                 <>
                   <Typography variant="subtitle2" color="textSecondary">
-                    変換
+                    カスタム値
                   </Typography>
                   <Field
-                    name={getSource?.('converter') ?? ''}
+                    name={getSource?.('customValueScript') ?? ''}
                     component={JavascriptEditor}
                     defaultValue={converterInitialValue}
                     maxLines={10}
@@ -189,34 +175,13 @@ export const PushForm: FC = () => {
         </SimpleFormIterator>
       </ArrayInput>
       <Typography variant="subtitle2" color="textSecondary">
-        成功判定
+        フォーム送信後スクリプト
       </Typography>
       <Field
-        name="data.conditionOfComplete"
+        name="data.onSubmit"
         component={JavascriptEditor}
         defaultValue={conditionOfCompleteInitialValue}
-        maxLines={10}
-        minLines={5}
-      />
-      <Typography variant="subtitle2" color="textSecondary">
-        成功時スクリプト
-      </Typography>
-      <Field
-        name="data.completedScript"
-        component={JavascriptEditor}
-        defaultValue={completedScriptInitialValue}
-        maxLines={10}
-        minLines={5}
-      />
-      <Typography variant="subtitle2" color="textSecondary">
-        失敗時スクリプト
-      </Typography>
-      <Field
-        name="data.failedScript"
-        component={JavascriptEditor}
-        defaultValue={failedScriptInitialValue}
-        maxLines={10}
-        minLines={5}
+        minLines={10}
       />
     </>
   )
