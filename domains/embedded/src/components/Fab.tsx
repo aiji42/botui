@@ -7,8 +7,10 @@ import ClearIcon from '@material-ui/icons/Clear'
 const useStyles = makeStyles((theme) => ({
   fab: {
     position: 'fixed',
+    zIndex: 100,
     bottom: theme.spacing(2),
-    right: theme.spacing(2)
+    right: theme.spacing(2),
+    backgroundImage: 'none' // reset style
   }
 }))
 
