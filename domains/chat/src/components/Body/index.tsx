@@ -9,7 +9,12 @@ import { Message as MessageType } from '@botui/types'
 const style = {
   root: css({
     padding: '5px 15px 150px 15px',
-    overflow: 'scroll'
+    overflowY: 'scroll',
+    msOverflowStyle: 'none', // スクロールバーを隠す(IE、Edge)
+    scrollbarWidth: 'none', // スクロールバーを隠す(Firefox)
+    '&::-webkit-scrollbar': {
+      display: 'none' // スクロールバーを隠す(Chrome、Safari)
+    }
   })
 }
 
