@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.12](https://github.com/aiji42/botui-child-next/compare/@botui-domain/chat@1.1.11...@botui-domain/chat@1.1.12) (2021-03-01)
+
+
+### Bug Fixes
+
+* **chat-host:** hide scrollbar ([b8c509c](https://github.com/aiji42/botui-child-next/commit/b8c509cc03672a99e2fc8fe21323b8f2f722a0d3))
+
+
+
+
+
 ## [1.1.11](https://github.com/aiji42/botui-child-next/compare/@botui-domain/chat@1.1.10...@botui-domain/chat@1.1.11) (2021-02-26)
 
 **Note:** Version bump only for package @botui-domain/chat

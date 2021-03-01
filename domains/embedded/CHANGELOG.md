@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.10](https://github.com/aiji42/botui-child-next/compare/@botui-domain/embedded@1.2.9...@botui-domain/embedded@1.2.10) (2021-03-01)
+
+
+### Bug Fixes
+
+* **embedded:** fix style ([0f27e65](https://github.com/aiji42/botui-child-next/commit/0f27e653254674db1d699bc8f31fadb9ebb6be5a))
+
+
+
+
+
 ## [1.2.9](https://github.com/aiji42/botui-child-next/compare/@botui-domain/embedded@1.2.8...@botui-domain/embedded@1.2.9) (2021-02-26)
 
 **Note:** Version bump only for package @botui-domain/embedded

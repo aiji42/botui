@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.1](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.11.0...@botui-domain/admin@1.11.1) (2021-03-01)
+
+
+### Bug Fixes
+
+* **admin:** fix launch script ([4442389](https://github.com/aiji42/botui-child-next/commit/4442389d16ff32f1aa419c7d6e4d4cd379f8e067))
+* **admin:** initial agent image ([e90a01c](https://github.com/aiji42/botui-child-next/commit/e90a01cf565e28cce28b019f3203d764a6af2a9d))
+
+
+
+
+
 # [1.11.0](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.10.0...@botui-domain/admin@1.11.0) (2021-02-26)
 
 
