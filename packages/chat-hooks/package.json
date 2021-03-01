@@ -1,6 +1,6 @@
 {
   "name": "@botui/chat-hooks",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "description": "This is a react custom hooks package for chat in the @botui project.",
   "author": "Aiji Uejima <aiji42@gmail.com>",
   "homepage": "https://github.com/aiji42/botui-child-next#readme",
@@ -29,13 +29,13 @@
     "url": "https://github.com/aiji42/botui-child-next/issues"
   },
   "dependencies": {
-    "@botui/api": "^1.3.5"
+    "@botui/api": "^1.3.6"
   },
   "peerDependencies": {
     "react": ">=16.8.0"
   },
   "devDependencies": {
-    "@botui/types": "^2.4.0",
+    "@botui/types": "^2.5.0",
     "@types/yup": "^0.29.11"
   }
 }

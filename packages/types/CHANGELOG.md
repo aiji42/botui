@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0](https://github.com/aiji42/botui-child-next/compare/@botui/types@2.4.0...@botui/types@2.5.0) (2021-03-01)
+
+
+### Features
+
+* **types:** boolean data ajax in JobFormPush ([b0e6e04](https://github.com/aiji42/botui-child-next/commit/b0e6e0456c86553825ea3efcac46fcacc950f6fb))
+
+
+
+
+
 # [2.4.0](https://github.com/aiji42/botui-child-next/compare/@botui/types@2.3.1...@botui/types@2.4.0) (2021-02-26)
 
 

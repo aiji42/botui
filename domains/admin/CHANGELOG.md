@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.11.1...@botui-domain/admin@1.12.0) (2021-03-01)
+
+
+### Features
+
+* **admin:** PushForm for direct submit (not ajax) ([63ab9ca](https://github.com/aiji42/botui-child-next/commit/63ab9ca066aec6d237d03235bb57192d8985fdd6))
+
+
+
+
+
 ## [1.11.1](https://github.com/aiji42/botui-child-next/compare/@botui-domain/admin@1.11.0...@botui-domain/admin@1.11.1) (2021-03-01)
 
 

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.8](https://github.com/aiji42/botui-child-next/compare/@botui/chat-hooks@1.2.7...@botui/chat-hooks@1.2.8) (2021-03-01)
+
+**Note:** Version bump only for package @botui/chat-hooks
+
+
+
+
+
 ## [1.2.7](https://github.com/aiji42/botui-child-next/compare/@botui/chat-hooks@1.2.6...@botui/chat-hooks@1.2.7) (2021-02-26)
 
 **Note:** Version bump only for package @botui/chat-hooks
