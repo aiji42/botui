@@ -6,10 +6,10 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 const useStyles = makeStyles((theme) => ({
   iconButton: {
     position: 'absolute',
-    top: theme.spacing(0.5),
+    top: theme.spacing(1),
     right: theme.spacing(1),
-    width: theme.spacing(3),
-    height: theme.spacing(3),
+    width: theme.spacing(5),
+    height: theme.spacing(5),
     color: theme.palette.primary.contrastText,
     backgroundImage: 'none' // reset style
   }
