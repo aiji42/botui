@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.11](https://github.com/aiji42/botui-child-next/compare/@botui-domain/embedded@1.2.10...@botui-domain/embedded@1.2.11) (2021-03-01)
+
+
+### Bug Fixes
+
+* **embedded:** close button style ([165cb82](https://github.com/aiji42/botui-child-next/commit/165cb82ec111594c759f0b44793fe4ef0ded7c6d))
+
+
+
+
+
 ## [1.2.10](https://github.com/aiji42/botui-child-next/compare/@botui-domain/embedded@1.2.9...@botui-domain/embedded@1.2.10) (2021-03-01)
 
 
