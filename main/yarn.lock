@@ -3105,10 +3105,10 @@
   dependencies:
     ra-language-english "^3.8.4"
 
-"@botui-domain/admin@^1.11.0":
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/@botui-domain/admin/-/admin-1.11.0.tgz#42960f9a52f4da8cd83df3956913c0111ce9ad8a"
-  integrity sha512-zFhr98vp/jj4DDCr9KQ9oNenUFn9BVsukT8C55vqGeZGYznfWPybVj0soMNtUoHE0JKcWvsGOGUR4ogC9w2o7g==
+"@botui-domain/admin@^1.11.1":
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/@botui-domain/admin/-/admin-1.11.1.tgz#4714b766a88f3df43d66db42361d9a503265db56"
+  integrity sha512-bArP7xrVgSj5ZZoItn14GuyjY3HMbSVLnZ8ada9nmbaPMf8k37X+o+jXOOR2rJxH8rkMAdhuIKsKDaR9tjUFZQ==
   dependencies:
     "@bicstone/ra-language-japanese" "^3.12.0"
     "@botui/api" "^1.3.5"
@@ -3132,10 +3132,10 @@
     styled-components "^5.2.1"
     uuid "^8.3.2"
 
-"@botui-domain/chat@^1.1.11":
-  version "1.1.11"
-  resolved "https://registry.yarnpkg.com/@botui-domain/chat/-/chat-1.1.11.tgz#10aaef37ca0de9efa1ec2f9a907c623b69c793e8"
-  integrity sha512-KDSH47u7PxSnw0d+At/wsXEHTDLyYpdUChVkdwt+r1Jna+Nag3kRkKa26f7zQIBsurpvma0ingxWbF2Eq+kP/A==
+"@botui-domain/chat@^1.1.12":
+  version "1.1.12"
+  resolved "https://registry.yarnpkg.com/@botui-domain/chat/-/chat-1.1.12.tgz#841e2c6db5f55aeb91d997bdc8837d50f3c70cb2"
+  integrity sha512-6EFkcUKAi3ibpe0LzG4g881OjiSLJqrxgSOQ9OPfUZazex+6FVyUnbz81/POqcbAbF2f8SE8ZWM6tWJIgNvyIA==
   dependencies:
     "@botui/chat-components" "^1.1.10"
     "@botui/chat-hooks" "^1.2.7"
