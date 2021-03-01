@@ -11,7 +11,7 @@ import { Grid, Typography, Tooltip } from '@material-ui/core'
 import { useForm } from 'react-final-form'
 import { ec, inquiry, custom } from './proposalTemplates'
 import ThemeColorSelector from './ThemeColorSelector'
-import { Launcher } from '@botui/types'
+import { Launcher, Images } from '@botui/types'
 
 const proposalsChoices = [
   {
@@ -44,7 +44,7 @@ const Create: FC<Omit<SimpleFormProps, 'children'>> = (props) => {
 const FormInner: FC = () => {
   const { change } = useForm()
   change('active', true)
-  change('images', '{}')
+  change('images', JSON.stringify({ agent: '/operator_female1.jpg' } as Images))
   change(
     'launcher',
     JSON.stringify({ size: 'auto', defaultOpen: false } as Launcher)
