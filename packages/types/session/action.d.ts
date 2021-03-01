@@ -14,11 +14,12 @@ export interface JobWebhook extends Job<'webhook'> {
 }
 export interface JobFormPush extends Job<'formPush'> {
   formSelector: string
+  ajax: boolean
   dataMapper: Array<
     | { from: string; to: string; custom: false }
     | { customValueScript: string; to: string; custom: true }
   >
-  onSubmit: string
+  onSubmit?: string
 }
 
 export type Relayer = JobScript | JobWebhook | JobFormPush

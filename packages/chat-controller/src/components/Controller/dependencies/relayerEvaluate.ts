@@ -23,8 +23,12 @@ export const formPush = async (job: JobFormPush, values: Values): Promise<void> 
     }
     form[mapper.to].value = new Function('values', mapper.customValueScript)(values)
   })
+  if (!job.ajax) {
+    form.submit()
+    return
+  }
   const res = await pushForm(form)
-  new Function('response', job.onSubmit)(res)
+  new Function('response', job.onSubmit ?? '')(res)
 }
 
 export const webhook = async (endpoint: string, values: Values): Promise<void> => {
