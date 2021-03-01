@@ -1,6 +1,6 @@
 {
   "name": "@botui/chat-controller",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "This is the chat controller package for the @botui project.",
   "author": "Aiji Uejima <aiji42@gmail.com>",
   "homepage": "https://github.com/aiji42/botui-child-next#readme",
