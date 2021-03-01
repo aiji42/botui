@@ -128,6 +128,12 @@ export const PushForm: FC = () => {
         validate={[required()]}
         fullWidth
       />
+      <BooleanInput
+        source="data.ajax"
+        label="非同期通信で送信する"
+        defaultValue={true}
+        helperText="オフにすると強制的にページ遷移されます。フォームの送信先が外部サイトであるなど、cors通信が許可されていない場合にはオフにしてください。"
+      />
       <ArrayInput source="data.dataMapper" label="データマッピング">
         <SimpleFormIterator>
           <TextInput
@@ -174,15 +180,23 @@ export const PushForm: FC = () => {
           </FormDataConsumer>
         </SimpleFormIterator>
       </ArrayInput>
-      <Typography variant="subtitle2" color="textSecondary">
-        フォーム送信後スクリプト
-      </Typography>
-      <Field
-        name="data.onSubmit"
-        component={JavascriptEditor}
-        defaultValue={conditionOfCompleteInitialValue}
-        minLines={10}
-      />
+      <FormDataConsumer>
+        {({ formData }) =>
+          formData?.data?.ajax && (
+            <>
+              <Typography variant="subtitle2" color="textSecondary">
+                フォーム送信後スクリプト
+              </Typography>
+              <Field
+                name="data.onSubmit"
+                component={JavascriptEditor}
+                defaultValue={conditionOfCompleteInitialValue}
+                minLines={10}
+              />
+            </>
+          )
+        }
+      </FormDataConsumer>
     </>
   )
 }
