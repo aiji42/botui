@@ -4,8 +4,10 @@ import { Dialog, DialogContent, Button, Typography } from '@material-ui/core'
 import { Code } from '@material-ui/icons'
 import { Session } from '@botui/types'
 
-const embeddedScript = (sessionId: string) => `<script src="https://unpkg.com/@botui-domain/embedded"></script>
-<script type="text/javascript">new BotuiChat.default('${sessionId}').start()</script>`
+const embeddedScript = (sessionId: string) => `
+<script src="https://unpkg.com/@botui-domain/embedded"></script>
+<script type="text/javascript">!function(){new BotuiChat.default('${sessionId}').start()}();</script>
+`
 
 interface EmbeddedScriptDialogProps {
   session: Session
@@ -25,7 +27,7 @@ const EmbeddedScriptDialog: FC<EmbeddedScriptDialogProps> = ({ session }) => {
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
           <Typography color="textSecondary">
-            下記のコードをチャットを起動させたいページのHEADタグ内に埋め込んでください。
+            下記のコードをチャットを起動させたいページBODYタグの開始直後に埋め込んでください。
           </Typography>
           <SyntaxHighlighter language="text">
             {embeddedScript(session.id)}
