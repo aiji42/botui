@@ -38,6 +38,6 @@ export const webhook = async (endpoint: string, values: Values): Promise<void> =
 
 export const relayerEvaluate = async (relayer: Relayer, values: Values): Promise<void> => {
   if (relayer.job === 'script') await evalFunction(relayer.script, values)
-  if (relayer.job === 'formPush') await formPush(relayer, values)
   if (relayer.job === 'webhook') await webhook(relayer.endpoint, values)
+  if (relayer.job === 'formPush') await formPush(relayer, values)
 }
