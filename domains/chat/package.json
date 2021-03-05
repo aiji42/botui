@@ -22,6 +22,7 @@
     "@botui/chat-hooks": "^1.2.8",
     "@emotion/react": "^11.1.5",
     "aws-amplify": "^3.3.19",
+    "react-linkify": "^1.0.0-alpha",
     "react-nl2br": "^1.0.2",
     "react-scroll": "^1.8.1",
     "use-cors-state": "^1.1.9"
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "@botui/types": "^2.5.0",
+    "@types/react-linkify": "^1.0.0",
     "@types/react-scroll": "^1.8.2",
     "eslint-plugin-flowtype": "^5.2.0",
     "eslint-plugin-import": "^2.22.1",
