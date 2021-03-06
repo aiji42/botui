@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/aiji42/botui-child-next/compare/@botui-domain/chat@1.1.13...@botui-domain/chat@1.2.0) (2021-03-06)
+
+
+### Features
+
+* **chat-host:** replace link string to anker in message ([857fa2a](https://github.com/aiji42/botui-child-next/commit/857fa2adca7e731e2649b37f1341d4323f65f48e))
+
+
+
+
+
 ## [1.1.13](https://github.com/aiji42/botui-child-next/compare/@botui-domain/chat@1.1.12...@botui-domain/chat@1.1.13) (2021-03-01)
 
 **Note:** Version bump only for package @botui-domain/chat
